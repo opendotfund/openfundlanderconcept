@@ -5,8 +5,10 @@ import { ArrowRight } from "lucide-react";
 
 const Hero = () => {
   return (
-    <section className="min-h-[80vh] bg-hero-pattern bg-cover bg-center flex items-center">
-      <div className="container mx-auto px-4 py-16 md:py-24">
+    <section className="min-h-[80vh] bg-hero-pattern bg-cover bg-center bg-no-repeat relative overflow-hidden">
+      {/* Background image with zoom effect */}
+      <div className="absolute inset-0 bg-hero-pattern bg-cover bg-center scale-150 transform-gpu -z-10"></div>
+      <div className="relative z-10 container mx-auto px-4 py-16 md:py-24">
         <div className="max-w-3xl">
           <h1 className="text-4xl md:text-6xl font-extrabold mb-8">
             <span className="text-openfund-green">Trade Smarter</span> with OpenFund.
