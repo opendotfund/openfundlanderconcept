@@ -1,0 +1,141 @@
+
+import React from 'react';
+import { Card } from "@/components/ui/card";
+import { 
+  AreaChart, 
+  Area, 
+  XAxis, 
+  YAxis, 
+  CartesianGrid, 
+  Tooltip, 
+  ResponsiveContainer 
+} from 'recharts';
+
+// Sample data for the chart
+const data = [
+  { date: '1 Mar', price: 4000 },
+  { date: '2 Mar', price: 3000 },
+  { date: '3 Mar', price: 5000 },
+  { date: '4 Mar', price: 4780 },
+  { date: '5 Mar', price: 5890 },
+  { date: '6 Mar', price: 4390 },
+  { date: '7 Mar', price: 4490 },
+  { date: '8 Mar', price: 5300 },
+  { date: '9 Mar', price: 6200 },
+  { date: '10 Mar', price: 5300 },
+  { date: '11 Mar', price: 5800 },
+  { date: '12 Mar', price: 6100 },
+  { date: '13 Mar', price: 6600 },
+  { date: '14 Mar', price: 6300 },
+  { date: '15 Mar', price: 6800 },
+];
+
+const CustomTooltip = ({ active, payload, label }: any) => {
+  if (active && payload && payload.length) {
+    return (
+      <div className="bg-openfund-gray-medium p-3 border border-openfund-gray-light rounded-md">
+        <p className="text-sm">{`${label}: $${payload[0].value}`}</p>
+      </div>
+    );
+  }
+  return null;
+};
+
+const ChartPreview = () => {
+  return (
+    <section className="py-20 bg-openfund-gray-medium">
+      <div className="container mx-auto px-4">
+        <div className="text-center mb-12">
+          <h2 className="text-3xl md:text-4xl font-bold mb-4">
+            Advanced <span className="text-openfund-green">Trading Tools</span>
+          </h2>
+          <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+            Access professional-grade charts, analysis tools, and real-time market data to make informed decisions
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
+          <div className="green-glow">
+            <Card className="bg-openfund-gray-dark border-openfund-green/20 overflow-hidden h-80">
+              <div className="p-4">
+                <div className="flex justify-between items-center mb-2">
+                  <div className="flex items-center">
+                    <div className="h-3 w-3 rounded-full bg-openfund-green mr-2"></div>
+                    <span className="font-bold">ETH/USD</span>
+                  </div>
+                  <span className="text-openfund-green">+12.4%</span>
+                </div>
+                <ResponsiveContainer width="100%" height={250}>
+                  <AreaChart
+                    data={data}
+                    margin={{ top: 5, right: 20, left: 0, bottom: 5 }}
+                  >
+                    <defs>
+                      <linearGradient id="colorPrice" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="5%" stopColor="#00FF00" stopOpacity={0.8}/>
+                        <stop offset="95%" stopColor="#00FF00" stopOpacity={0}/>
+                      </linearGradient>
+                    </defs>
+                    <XAxis dataKey="date" tick={{ fill: '#888888' }} />
+                    <YAxis tick={{ fill: '#888888' }} />
+                    <CartesianGrid strokeDasharray="3 3" stroke="#333333" />
+                    <Tooltip content={<CustomTooltip />} />
+                    <Area 
+                      type="monotone" 
+                      dataKey="price" 
+                      stroke="#00FF00" 
+                      fillOpacity={1} 
+                      fill="url(#colorPrice)" 
+                    />
+                  </AreaChart>
+                </ResponsiveContainer>
+              </div>
+            </Card>
+          </div>
+
+          <div className="space-y-6">
+            <div className="bg-openfund-gray-dark p-6 rounded-xl border border-openfund-gray-light">
+              <h3 className="text-2xl font-bold mb-4">Real-Time Data</h3>
+              <p className="text-gray-300 mb-4">
+                Get instant access to market movements with millisecond-precision data feeds
+              </p>
+              <ul className="space-y-3 text-sm">
+                <li className="flex justify-between">
+                  <span>BTC/USD</span>
+                  <span className="text-openfund-green">$66,421 <span className="text-xs">+2.4%</span></span>
+                </li>
+                <li className="flex justify-between">
+                  <span>ETH/USD</span>
+                  <span className="text-openfund-green">$3,773 <span className="text-xs">+1.8%</span></span>
+                </li>
+                <li className="flex justify-between">
+                  <span>GOLD</span>
+                  <span className="text-openfund-green">$2,331 <span className="text-xs">+0.5%</span></span>
+                </li>
+                <li className="flex justify-between">
+                  <span>S&P 500</span>
+                  <span className="text-red-500">$5,079 <span className="text-xs">-0.3%</span></span>
+                </li>
+              </ul>
+            </div>
+            
+            <div className="flex-1 grid grid-cols-2 gap-4">
+              <div className="bg-openfund-gray-dark p-4 rounded-xl border border-openfund-gray-light">
+                <h4 className="font-medium">Trading Volume</h4>
+                <p className="text-openfund-green text-xl font-bold">$12.4B</p>
+                <p className="text-xs text-gray-400">24h change</p>
+              </div>
+              <div className="bg-openfund-gray-dark p-4 rounded-xl border border-openfund-gray-light">
+                <h4 className="font-medium">Active Traders</h4>
+                <p className="text-openfund-green text-xl font-bold">241K+</p>
+                <p className="text-xs text-gray-400">Worldwide</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default ChartPreview;

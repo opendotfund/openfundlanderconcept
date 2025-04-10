@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -61,7 +62,16 @@ export default {
 					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
-				}
+				},
+                // OpenFund custom colors
+                openfund: {
+                    green: "#00FF00",
+                    "green-dark": "#00CC00",
+                    "green-light": "#80FF80",
+                    "gray-dark": "#121212",
+                    "gray-medium": "#1E1E1E",
+                    "gray-light": "#2A2A2A",
+                }
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
@@ -84,12 +94,25 @@ export default {
 					to: {
 						height: '0'
 					}
-				}
+				},
+                'glow': {
+                    '0%, 100%': { 
+                        filter: 'drop-shadow(0 0 0.75rem rgba(0, 255, 0, 0.5))' 
+                    },
+                    '50%': { 
+                        filter: 'drop-shadow(0 0 1.75rem rgba(0, 255, 0, 0.7))' 
+                    },
+                }
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
-				'accordion-up': 'accordion-up 0.2s ease-out'
-			}
+				'accordion-up': 'accordion-up 0.2s ease-out',
+                'glow': 'glow 3s ease-in-out infinite',
+			},
+            backgroundImage: {
+                'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+                'hero-pattern': 'linear-gradient(to bottom, rgba(18, 18, 18, 0.8), rgba(18, 18, 18, 0.95)), url("/public/lovable-uploads/f3855fd6-9275-44ff-a527-991e5c878435.png")',
+            },
 		}
 	},
 	plugins: [require("tailwindcss-animate")],

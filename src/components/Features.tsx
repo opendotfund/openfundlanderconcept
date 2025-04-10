@@ -1,0 +1,63 @@
+
+import React from 'react';
+import { 
+  BarChart3, 
+  TrendingUp, 
+  Shield, 
+  GanttChartSquare 
+} from 'lucide-react';
+
+const Features = () => {
+  const features = [
+    {
+      icon: <BarChart3 className="w-12 h-12 text-openfund-green" />,
+      title: "Commodities",
+      description: "Trade gold, silver, oil, and more with competitive spreads and high liquidity."
+    },
+    {
+      icon: <TrendingUp className="w-12 h-12 text-openfund-green" />,
+      title: "Stocks",
+      description: "Access global markets with fractional shares and zero commission trading."
+    },
+    {
+      icon: <GanttChartSquare className="w-12 h-12 text-openfund-green" />,
+      title: "Crypto",
+      description: "Buy, sell, and store cryptocurrencies with security and ease."
+    },
+    {
+      icon: <Shield className="w-12 h-12 text-openfund-green" />,
+      title: "Security",
+      description: "Your funds are secured with advanced encryption and multi-layer protection."
+    }
+  ];
+
+  return (
+    <section className="py-20 bg-openfund-gray-dark">
+      <div className="container mx-auto px-4">
+        <div className="text-center mb-16">
+          <h2 className="text-3xl md:text-4xl font-bold mb-4">
+            <span className="text-openfund-green">Multiple Markets</span>, One Platform
+          </h2>
+          <p className="text-xl text-gray-300">
+            Take advantage of opportunities across all asset classes
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          {features.map((feature, index) => (
+            <div 
+              key={index}
+              className="card-gradient p-6 rounded-xl border border-openfund-gray-light hover:border-openfund-green transition-colors duration-300"
+            >
+              <div className="mb-4">{feature.icon}</div>
+              <h3 className="text-xl font-bold mb-3">{feature.title}</h3>
+              <p className="text-gray-300">{feature.description}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default Features;
