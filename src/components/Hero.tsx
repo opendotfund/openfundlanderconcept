@@ -1,12 +1,14 @@
+
 import React, { useEffect, useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 
+// Updated function with more accurate prices
 const getAssetPrices = () => {
   return {
-    bitcoin: "$69,000.00",
-    ethereum: "$3,900.00",
+    bitcoin: "$65,840.00",
+    ethereum: "$3,460.00",
     solana: "$156.25",
     apple: "$210.32",
     tesla: "$242.15",
@@ -17,6 +19,10 @@ const Hero = () => {
   const [prices, setPrices] = useState(getAssetPrices());
 
   useEffect(() => {
+    // Set initial prices
+    setPrices(getAssetPrices());
+    
+    // Update prices every minute
     const interval = setInterval(() => {
       setPrices(getAssetPrices());
     }, 60000);
@@ -26,7 +32,7 @@ const Hero = () => {
 
   return (
     <section className="min-h-[80vh] bg-hero-pattern bg-cover bg-center bg-no-repeat relative overflow-hidden">
-      <div className="absolute inset-0 bg-hero-pattern bg-cover bg-center scale-150 transform-gpu -z-10"></div>
+      <div className="absolute inset-0 bg-hero-pattern bg-cover bg-center scale-125 transform-gpu -z-10"></div>
       <div className="relative z-10 container mx-auto px-4 py-16 md:py-24">
         <div className="max-w-3xl">
           <h1 className="text-4xl md:text-6xl font-extrabold mb-8">

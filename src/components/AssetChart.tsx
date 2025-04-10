@@ -29,10 +29,10 @@ const generateChartData = (asset: string, timeframe: string): PriceData[] => {
     timeframe === '90d' ? 90 : 
     365;
   
-  // More accurate base prices
+  // More accurate base prices as of April 2025
   const baseValues: Record<string, number> = {
-    'bitcoin': 69000,
-    'ethereum': 3900,
+    'bitcoin': 65840,
+    'ethereum': 3460,
     'solana': 156,
     'apple': 210,
     'tesla': 242,
@@ -114,7 +114,7 @@ export const AssetChart = ({ asset, timeframe }: AssetChartProps) => {
         <ResponsiveContainer width="100%" height={300}>
           <AreaChart
             data={chartData}
-            margin={{ top: 10, right: 10, left: 10, bottom: 20 }}
+            margin={{ top: 10, right: 10, left: 30, bottom: 20 }}
           >
             <defs>
               <linearGradient id="colorPrice" x1="0" y1="0" x2="0" y2="1">
@@ -135,6 +135,7 @@ export const AssetChart = ({ asset, timeframe }: AssetChartProps) => {
               tick={{ fill: '#888', fontSize: 12 }}
               domain={['auto', 'auto']}
               dx={-10}
+              width={60}
             />
             <Tooltip content={<ChartTooltipContent />} />
             <Area 

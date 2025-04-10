@@ -30,12 +30,13 @@ export const SwapWidget = ({ selectedAsset = 'bitcoin' }: SwapWidgetProps) => {
   const [stopLossPrice, setStopLossPrice] = useState<string>('');
   const [slippage, setSlippage] = useState<number>(0.5);
   const [gasOption, setGasOption] = useState<'standard' | 'fast' | 'rapid'>('standard');
+  const [limitPrice, setLimitPrice] = useState<string>('');
 
-  // Sample exchange rate calculation
+  // Sample exchange rate calculation with more accurate prices
   const calculateExchangeRate = (from: string, to: string, amount: string): string => {
     const rates: Record<string, number> = {
-      'bitcoin': 69000,
-      'ethereum': 3900,
+      'bitcoin': 65840,
+      'ethereum': 3460,
       'solana': 156,
       'apple': 210,
       'tesla': 242,
@@ -72,6 +73,14 @@ export const SwapWidget = ({ selectedAsset = 'bitcoin' }: SwapWidgetProps) => {
     }
   }, [toAmount]);
 
+  // Initialize limit price with the current market price
+  useEffect(() => {
+    if (swapMode === 'limit') {
+      const currentPrice = calculateExchangeRate(fromAsset, toAsset, '1');
+      setLimitPrice(currentPrice);
+    }
+  }, [swapMode, fromAsset, toAsset]);
+
   const handleFromAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setFromAmount(value);
@@ -100,6 +109,10 @@ export const SwapWidget = ({ selectedAsset = 'bitcoin' }: SwapWidgetProps) => {
 
   const handleStopLossChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setStopLossPrice(e.target.value);
+  };
+
+  const handleLimitPriceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setLimitPrice(e.target.value);
   };
 
   const handleSwapClick = () => {
@@ -132,7 +145,11 @@ export const SwapWidget = ({ selectedAsset = 'bitcoin' }: SwapWidgetProps) => {
     }
 
     const orderDetails = [];
-    orderDetails.push(`Swapping ${fromAmount} ${fromAsset.toUpperCase()} for ${toAmount} ${toAsset.toUpperCase()}`);
+    if (swapMode === 'market') {
+      orderDetails.push(`Market order: ${fromAmount} ${fromAsset.toUpperCase()} for ${toAmount} ${toAsset.toUpperCase()}`);
+    } else {
+      orderDetails.push(`Limit order: ${fromAmount} ${fromAsset.toUpperCase()} for ${toAmount} ${toAsset.toUpperCase()} at ${limitPrice} ${toAsset.toUpperCase()}`);
+    }
     
     if (takeProfitPrice && parseFloat(takeProfitPrice) > 0) {
       orderDetails.push(`Take Profit at: ${takeProfitPrice}`);
@@ -143,7 +160,7 @@ export const SwapWidget = ({ selectedAsset = 'bitcoin' }: SwapWidgetProps) => {
     }
 
     toast({
-      title: "Swap Initiated",
+      title: "Order Placed",
       description: orderDetails.join('\n'),
       variant: "default"
     });
@@ -161,9 +178,9 @@ export const SwapWidget = ({ selectedAsset = 'bitcoin' }: SwapWidgetProps) => {
 
   const getGasFee = () => {
     switch (gasOption) {
-      case 'rapid': return '0.00500 ETH ($19.50)';
-      case 'fast': return '0.00300 ETH ($11.70)';
-      default: return '0.00150 ETH ($5.85)';
+      case 'rapid': return '0.00500 ETH ($17.30)';
+      case 'fast': return '0.00300 ETH ($10.38)';
+      default: return '0.00150 ETH ($5.19)';
     }
   };
 
@@ -318,35 +335,49 @@ export const SwapWidget = ({ selectedAsset = 'bitcoin' }: SwapWidgetProps) => {
           </div>
         </div>
 
-        {/* Take Profit and Stop Loss */}
-        {swapMode === 'market' && (
-          <div className="grid grid-cols-2 gap-3">
-            <div className="bg-openfund-gray-medium p-3 rounded-lg">
-              <div className="mb-2">
-                <label className="text-gray-400 text-sm">Take Profit (TP)</label>
-              </div>
-              <Input
-                type="number"
-                placeholder="Price"
-                value={takeProfitPrice}
-                onChange={handleTakeProfitChange}
-                className="bg-openfund-gray-dark border-openfund-gray-light"
-              />
+        {/* Limit Price */}
+        {swapMode === 'limit' && (
+          <div className="bg-openfund-gray-medium p-4 rounded-lg">
+            <div className="mb-2">
+              <label className="text-gray-400 text-sm">Limit Price</label>
             </div>
-            <div className="bg-openfund-gray-medium p-3 rounded-lg">
-              <div className="mb-2">
-                <label className="text-gray-400 text-sm">Stop Loss (SL)</label>
-              </div>
-              <Input
-                type="number"
-                placeholder="Price"
-                onChange={handleStopLossChange}
-                value={stopLossPrice}
-                className="bg-openfund-gray-dark border-openfund-gray-light"
-              />
-            </div>
+            <Input
+              type="number"
+              placeholder="Set price"
+              value={limitPrice}
+              onChange={handleLimitPriceChange}
+              className="bg-openfund-gray-dark border-openfund-gray-light"
+            />
           </div>
         )}
+
+        {/* Take Profit and Stop Loss */}
+        <div className="grid grid-cols-2 gap-3">
+          <div className="bg-openfund-gray-medium p-3 rounded-lg">
+            <div className="mb-2">
+              <label className="text-gray-400 text-sm">Take Profit (TP)</label>
+            </div>
+            <Input
+              type="number"
+              placeholder="Price"
+              value={takeProfitPrice}
+              onChange={handleTakeProfitChange}
+              className="bg-openfund-gray-dark border-openfund-gray-light"
+            />
+          </div>
+          <div className="bg-openfund-gray-medium p-3 rounded-lg">
+            <div className="mb-2">
+              <label className="text-gray-400 text-sm">Stop Loss (SL)</label>
+            </div>
+            <Input
+              type="number"
+              placeholder="Price"
+              onChange={handleStopLossChange}
+              value={stopLossPrice}
+              className="bg-openfund-gray-dark border-openfund-gray-light"
+            />
+          </div>
+        </div>
 
         {/* Exchange rate */}
         <div className="text-sm text-gray-400 flex justify-between items-center">
@@ -359,7 +390,7 @@ export const SwapWidget = ({ selectedAsset = 'bitcoin' }: SwapWidgetProps) => {
           className="w-full bg-openfund-green hover:bg-openfund-green-dark text-openfund-gray-dark"
           onClick={handleSwap}
         >
-          Swap
+          {swapMode === 'market' ? 'Swap' : 'Place Limit Order'}
         </Button>
       </div>
     </Card>

@@ -31,7 +31,7 @@ const Assets = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [selectedAsset, setSelectedAsset] = useState<string>("bitcoin");
   const [timeframe, setTimeframe] = useState<string>("24h");
-  const [assetType, setAssetType] = useState<string>("crypto");
+  const [assetType, setAssetType] = useState<"crypto" | "stocks" | "commodities">("crypto");
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [expandedCategory, setExpandedCategory] = useState<string | null>(null);
 
@@ -50,7 +50,7 @@ const Assets = () => {
 
     // Get asset type from URL or use default
     const typeParam = searchParams.get('type');
-    if (typeParam) {
+    if (typeParam === 'crypto' || typeParam === 'stocks' || typeParam === 'commodities') {
       setAssetType(typeParam);
     }
   }, [searchParams]);
@@ -69,7 +69,7 @@ const Assets = () => {
     setSearchParams(searchParams);
   };
 
-  const handleAssetTypeChange = (type: string) => {
+  const handleAssetTypeChange = (type: "crypto" | "stocks" | "commodities") => {
     setAssetType(type);
     // Update URL params
     searchParams.set('type', type);
@@ -82,7 +82,7 @@ const Assets = () => {
     // Implement search functionality
   };
 
-  const handleSeeMore = (category: string) => {
+  const handleSeeMore = (category: "crypto" | "stocks" | "commodities") => {
     setExpandedCategory(category === expandedCategory ? null : category);
   };
 
@@ -145,8 +145,8 @@ const Assets = () => {
                     <h1 className="text-2xl font-bold">{selectedAsset.charAt(0).toUpperCase() + selectedAsset.slice(1)}</h1>
                     <div className="flex items-center mt-2">
                       <span className="text-xl font-bold text-openfund-green mr-2">
-                        {selectedAsset === 'bitcoin' ? '$69,000.00' : 
-                         selectedAsset === 'ethereum' ? '$3,900.00' : 
+                        {selectedAsset === 'bitcoin' ? '$65,840.00' : 
+                         selectedAsset === 'ethereum' ? '$3,460.00' : 
                          selectedAsset === 'solana' ? '$156.25' : 
                          selectedAsset === 'apple' ? '$210.32' : 
                          selectedAsset === 'tesla' ? '$242.15' : 
@@ -171,8 +171,8 @@ const Assets = () => {
                 />
               </div>
 
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
-                {/* Swap Widget - Now placed side by side with asset info on larger screens */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                {/* Swap Widget */}
                 <div className="bg-openfund-gray-medium rounded-lg p-6">
                   <h2 className="text-xl font-bold mb-4">Trade {selectedAsset.charAt(0).toUpperCase() + selectedAsset.slice(1)}</h2>
                   <SwapWidget selectedAsset={selectedAsset} />
@@ -188,8 +188,8 @@ const Assets = () => {
                     <div>
                       <p className="text-gray-400">Market Cap</p>
                       <p className="text-lg font-medium">
-                        {selectedAsset === 'bitcoin' ? '$1.34T' : 
-                         selectedAsset === 'ethereum' ? '$468.2B' : 
+                        {selectedAsset === 'bitcoin' ? '$1.28T' : 
+                         selectedAsset === 'ethereum' ? '$415.7B' : 
                          selectedAsset === 'solana' ? '$78.5B' : 
                          selectedAsset === 'apple' ? '$3.2T' : 
                          selectedAsset === 'tesla' ? '$764.5B' : 
@@ -246,7 +246,7 @@ const Assets = () => {
                     <CardHeader className="pb-2">
                       <CardTitle className="text-lg flex justify-between items-center">
                         <span>Top Cryptocurrencies</span>
-                        <Button variant="ghost" size="sm" className="text-openfund-green" onClick={() => handleSeeMore('crypto')}>
+                        <Button variant="ghost" size="sm" className="text-openfund-green" onClick={() => handleSeeMore("crypto")}>
                           View All
                         </Button>
                       </CardTitle>
@@ -266,7 +266,7 @@ const Assets = () => {
                     <CardHeader className="pb-2">
                       <CardTitle className="text-lg flex justify-between items-center">
                         <span>Top Stocks</span>
-                        <Button variant="ghost" size="sm" className="text-openfund-green" onClick={() => handleSeeMore('stocks')}>
+                        <Button variant="ghost" size="sm" className="text-openfund-green" onClick={() => handleSeeMore("stocks")}>
                           View All
                         </Button>
                       </CardTitle>
@@ -286,7 +286,7 @@ const Assets = () => {
                     <CardHeader className="pb-2">
                       <CardTitle className="text-lg flex justify-between items-center">
                         <span>Top Commodities</span>
-                        <Button variant="ghost" size="sm" className="text-openfund-green" onClick={() => handleSeeMore('commodities')}>
+                        <Button variant="ghost" size="sm" className="text-openfund-green" onClick={() => handleSeeMore("commodities")}>
                           View All
                         </Button>
                       </CardTitle>
