@@ -13,7 +13,7 @@ const Navbar = () => {
     { name: 'Home', href: '/' },
     { name: 'Assets', href: '/assets' },
     { name: 'Start a Fund', href: '/fund' },
-    { name: 'Learn', href: '/learn' },
+    { name: 'Explore Funds', href: '/explore' },
   ];
   
   const isActive = (path: string) => {

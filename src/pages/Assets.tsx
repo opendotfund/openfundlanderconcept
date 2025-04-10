@@ -13,6 +13,7 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { AssetChart } from '@/components/AssetChart';
 import { AssetList } from '@/components/AssetList';
+import { SwapWidget } from '@/components/SwapWidget';
 import { TimeframeSelector } from '@/components/TimeframeSelector';
 import { 
   Select,
@@ -24,6 +25,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 const Assets = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -75,7 +77,7 @@ const Assets = () => {
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
-    // We'll implement search functionality here
+    // Implement search functionality
   };
 
   return (
@@ -83,9 +85,9 @@ const Assets = () => {
       <Navbar />
 
       <main className="flex-grow container mx-auto px-4 py-8">
-        <div className="flex flex-col lg:flex-row gap-8">
-          {/* Chart Section - 2/3 width on large screens */}
-          <div className="lg:w-2/3">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          {/* Left Section - Asset Chart */}
+          <div className="lg:col-span-2">
             <div className="bg-openfund-gray-medium rounded-lg p-6 mb-6">
               <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6">
                 <div>
@@ -111,7 +113,7 @@ const Assets = () => {
               />
             </div>
 
-            <div className="bg-openfund-gray-medium rounded-lg p-6">
+            <div className="bg-openfund-gray-medium rounded-lg p-6 mb-6">
               <h2 className="text-xl font-bold mb-4">About {selectedAsset.charAt(0).toUpperCase() + selectedAsset.slice(1)}</h2>
               <p className="text-gray-300 mb-4">
                 This is a placeholder description for {selectedAsset}. The actual content would contain relevant information about the asset, its history, use cases, and other important details that investors might be interested in.
@@ -131,10 +133,16 @@ const Assets = () => {
                 </div>
               </div>
             </div>
+            
+            {/* Swap Widget */}
+            <div className="bg-openfund-gray-medium rounded-lg p-6">
+              <h2 className="text-xl font-bold mb-4">Trade {selectedAsset.charAt(0).toUpperCase() + selectedAsset.slice(1)}</h2>
+              <SwapWidget selectedAsset={selectedAsset} />
+            </div>
           </div>
 
-          {/* Asset List Section - 1/3 width on large screens */}
-          <div className="lg:w-1/3">
+          {/* Right Section - Asset Categories */}
+          <div className="lg:col-span-1">
             <div className="bg-openfund-gray-medium rounded-lg p-6">
               <div className="mb-6">
                 <form onSubmit={handleSearch} className="flex gap-2">
@@ -150,76 +158,67 @@ const Assets = () => {
                 </form>
               </div>
               
-              <Tabs defaultValue="crypto" onValueChange={handleAssetTypeChange} value={assetType}>
-                <TabsList className="w-full mb-4 bg-openfund-gray-dark">
-                  <TabsTrigger value="crypto" className="flex-1">Crypto</TabsTrigger>
-                  <TabsTrigger value="stocks" className="flex-1">Stocks</TabsTrigger>
-                  <TabsTrigger value="commodities" className="flex-1">Commodities</TabsTrigger>
-                </TabsList>
+              <div className="space-y-6">
+                {/* Crypto Section */}
+                <Card className="bg-openfund-gray-dark border-openfund-gray-light">
+                  <CardHeader className="pb-2">
+                    <CardTitle className="text-lg flex justify-between items-center">
+                      <span>Top Cryptocurrencies</span>
+                      <Button variant="ghost" size="sm" className="text-openfund-green" onClick={() => handleAssetTypeChange('crypto')}>
+                        View All
+                      </Button>
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <AssetList 
+                      type="crypto" 
+                      onSelect={handleAssetSelect}
+                      selectedAsset={selectedAsset}
+                      limit={10}
+                    />
+                  </CardContent>
+                </Card>
                 
-                <TabsContent value="crypto">
-                  <div className="flex justify-between items-center mb-4">
-                    <h2 className="text-lg font-medium">Top Cryptocurrencies</h2>
-                    <div className="flex items-center">
-                      <Button variant="ghost" size="sm">
-                        <Filter className="h-4 w-4 mr-1" />
-                        Filter
+                {/* Stocks Section */}
+                <Card className="bg-openfund-gray-dark border-openfund-gray-light">
+                  <CardHeader className="pb-2">
+                    <CardTitle className="text-lg flex justify-between items-center">
+                      <span>Top Stocks</span>
+                      <Button variant="ghost" size="sm" className="text-openfund-green" onClick={() => handleAssetTypeChange('stocks')}>
+                        View All
                       </Button>
-                      <Button variant="ghost" size="sm">
-                        <ArrowUpDown className="h-4 w-4 mr-1" />
-                        Sort
-                      </Button>
-                    </div>
-                  </div>
-                  <AssetList 
-                    type="crypto" 
-                    onSelect={handleAssetSelect}
-                    selectedAsset={selectedAsset}
-                  />
-                </TabsContent>
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <AssetList 
+                      type="stocks" 
+                      onSelect={handleAssetSelect}
+                      selectedAsset={selectedAsset}
+                      limit={10}
+                    />
+                  </CardContent>
+                </Card>
                 
-                <TabsContent value="stocks">
-                  <div className="flex justify-between items-center mb-4">
-                    <h2 className="text-lg font-medium">Top Stocks</h2>
-                    <div className="flex items-center">
-                      <Button variant="ghost" size="sm">
-                        <Filter className="h-4 w-4 mr-1" />
-                        Filter
+                {/* Commodities Section */}
+                <Card className="bg-openfund-gray-dark border-openfund-gray-light">
+                  <CardHeader className="pb-2">
+                    <CardTitle className="text-lg flex justify-between items-center">
+                      <span>Top Commodities</span>
+                      <Button variant="ghost" size="sm" className="text-openfund-green" onClick={() => handleAssetTypeChange('commodities')}>
+                        View All
                       </Button>
-                      <Button variant="ghost" size="sm">
-                        <ArrowUpDown className="h-4 w-4 mr-1" />
-                        Sort
-                      </Button>
-                    </div>
-                  </div>
-                  <AssetList 
-                    type="stocks" 
-                    onSelect={handleAssetSelect}
-                    selectedAsset={selectedAsset}
-                  />
-                </TabsContent>
-                
-                <TabsContent value="commodities">
-                  <div className="flex justify-between items-center mb-4">
-                    <h2 className="text-lg font-medium">Top Commodities</h2>
-                    <div className="flex items-center">
-                      <Button variant="ghost" size="sm">
-                        <Filter className="h-4 w-4 mr-1" />
-                        Filter
-                      </Button>
-                      <Button variant="ghost" size="sm">
-                        <ArrowUpDown className="h-4 w-4 mr-1" />
-                        Sort
-                      </Button>
-                    </div>
-                  </div>
-                  <AssetList 
-                    type="commodities" 
-                    onSelect={handleAssetSelect}
-                    selectedAsset={selectedAsset}
-                  />
-                </TabsContent>
-              </Tabs>
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <AssetList 
+                      type="commodities" 
+                      onSelect={handleAssetSelect}
+                      selectedAsset={selectedAsset}
+                      limit={10}
+                    />
+                  </CardContent>
+                </Card>
+              </div>
             </div>
           </div>
         </div>

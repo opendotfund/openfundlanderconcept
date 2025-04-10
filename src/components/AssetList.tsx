@@ -69,13 +69,15 @@ interface AssetListProps {
   type: 'crypto' | 'stocks' | 'commodities';
   onSelect: (asset: string) => void;
   selectedAsset: string;
+  limit?: number;
 }
 
-export const AssetList = ({ type, onSelect, selectedAsset }: AssetListProps) => {
-  const assets = generateAssets(type);
+export const AssetList = ({ type, onSelect, selectedAsset, limit }: AssetListProps) => {
+  const allAssets = generateAssets(type);
+  const assets = limit ? allAssets.slice(0, limit) : allAssets;
   
   return (
-    <ScrollArea className="h-[500px]">
+    <ScrollArea className={limit ? 'h-[300px]' : 'h-[500px]'}>
       <Table>
         <TableHeader>
           <TableRow className="hover:bg-transparent">
