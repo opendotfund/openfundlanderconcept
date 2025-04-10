@@ -1,5 +1,6 @@
 
 import React from 'react';
+import { Link } from 'react-router-dom';
 import Navbar from '@/components/Navbar';
 import Hero from '@/components/Hero';
 import Features from '@/components/Features';
@@ -26,9 +27,24 @@ const Index = () => {
             <p className="text-xl text-gray-300 mb-10">
               Join thousands of traders worldwide using OpenFund to access global markets.
             </p>
-            <Button className="bg-openfund-green hover:bg-openfund-green-dark text-openfund-gray-dark text-lg px-8 py-6">
-              Create Free Account
-            </Button>
+            <div className="flex flex-col sm:flex-row justify-center gap-4">
+              <Button 
+                className="bg-openfund-green hover:bg-openfund-green-dark text-openfund-gray-dark text-lg px-8 py-6"
+                asChild
+              >
+                <Link to="/assets">
+                  Explore Assets
+                </Link>
+              </Button>
+              <Button 
+                className="bg-transparent border-2 border-openfund-green text-openfund-green hover:bg-openfund-green/10 text-lg px-8 py-6"
+                asChild
+              >
+                <Link to="/fund">
+                  Start a Fund
+                </Link>
+              </Button>
+            </div>
           </div>
         </div>
         {/* Decorative elements */}
