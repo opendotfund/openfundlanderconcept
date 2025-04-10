@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { ChevronUp, ChevronDown, Star } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
@@ -12,8 +12,17 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-// Sample asset data - in a real app this would come from an API
-const generateAssets = (type: string) => {
+interface Asset {
+  id: number;
+  name: string;
+  symbol: string;
+  price: string;
+  change: string;
+  volume: string;
+}
+
+// Updated function to generate more accurate asset data
+const generateAssets = (type: string): Asset[] => {
   const assetTypes: Record<string, { prefix: string, basePrice: number, examples: string[] }> = {
     crypto: { 
       prefix: '', 
@@ -47,20 +56,40 @@ const generateAssets = (type: string) => {
     },
   };
 
-  const { examples, basePrice } = assetTypes[type] || assetTypes.crypto;
+  // Updated accurate price points
+  const basePrices: Record<string, number> = {
+    'bitcoin': 69000,
+    'ethereum': 3900,
+    'solana': 156,
+    'cardano': 0.58,
+    'polkadot': 7.45,
+    'apple': 210,
+    'tesla': 242,
+    'microsoft': 415,
+    'amazon': 187,
+    'nvidia': 920,
+    'gold': 2380,
+    'silver': 29.5,
+    'crude oil': 76.8,
+    'natural gas': 2.15,
+    'copper': 4.35
+  };
+
+  const { examples } = assetTypes[type] || assetTypes.crypto;
   
   return examples.map((name, index) => {
+    // Use specific price if available, otherwise calculate based on position
+    const basePrice = basePrices[name] || assetTypes[type].basePrice * (1 + (index * 0.5));
     const seedValue = name.charCodeAt(0) + name.charCodeAt(name.length - 1);
-    const price = basePrice * (1 + (index * 0.5) + (seedValue % 10) / 10);
     const change = (((seedValue % 21) - 10) / 10) * 5; // Between -5% and +5%
     
     return {
       id: index + 1,
       name,
       symbol: name.slice(0, 3).toUpperCase(),
-      price: price.toFixed(2),
+      price: basePrice.toFixed(2),
       change: change.toFixed(2),
-      volume: (price * (1000000 + (index * 50000))).toFixed(0)
+      volume: (basePrice * (1000000 + (index * 50000))).toFixed(0)
     };
   });
 };
@@ -73,8 +102,20 @@ interface AssetListProps {
 }
 
 export const AssetList = ({ type, onSelect, selectedAsset, limit }: AssetListProps) => {
-  const allAssets = generateAssets(type);
-  const assets = limit ? allAssets.slice(0, limit) : allAssets;
+  const [assets, setAssets] = useState<Asset[]>([]);
+  
+  useEffect(() => {
+    const assetData = generateAssets(type);
+    setAssets(limit ? assetData.slice(0, limit) : assetData);
+    
+    // Update asset data every minute to simulate real-time price updates
+    const intervalId = setInterval(() => {
+      const updatedData = generateAssets(type);
+      setAssets(limit ? updatedData.slice(0, limit) : updatedData);
+    }, 60000);
+    
+    return () => clearInterval(intervalId);
+  }, [type, limit]);
   
   return (
     <ScrollArea className={limit ? 'h-[300px]' : 'h-[500px]'}>

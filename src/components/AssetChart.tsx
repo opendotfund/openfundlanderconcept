@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Area,
   AreaChart,
@@ -12,8 +12,14 @@ import {
 } from 'recharts';
 import { ChartContainer, ChartTooltipContent } from '@/components/ui/chart';
 
-// Sample data - in a real app this would come from an API
-const generateChartData = (asset: string, timeframe: string) => {
+interface PriceData {
+  name: string;
+  value: number;
+  volume: number;
+}
+
+// Updated function to generate more accurate and consistent price data
+const generateChartData = (asset: string, timeframe: string): PriceData[] => {
   // Different patterns based on timeframe
   const dataPoints = 
     timeframe === '1h' ? 60 : 
@@ -23,23 +29,26 @@ const generateChartData = (asset: string, timeframe: string) => {
     timeframe === '90d' ? 90 : 
     365;
   
-  let baseValue = 0;
-  switch(asset) {
-    case 'bitcoin': baseValue = 29000; break;
-    case 'ethereum': baseValue = 2000; break;
-    case 'tesla': baseValue = 235; break;
-    case 'apple': baseValue = 185; break;
-    case 'gold': baseValue = 2100; break;
-    default: baseValue = 100;
-  }
+  // More accurate base prices
+  const baseValues: Record<string, number> = {
+    'bitcoin': 69000,
+    'ethereum': 3900,
+    'solana': 156,
+    'apple': 210,
+    'tesla': 242,
+    'gold': 2380
+  };
   
-  // Generate random-ish data with a general trend based on asset name hash
+  const baseValue = baseValues[asset] || 100;
+  
+  // Generate random-ish data with a general trend based on asset name
   let lastValue = baseValue;
-  const variance = baseValue * 0.1; // 10% variance
+  // Reduce variance for more realistic charts - smaller percentage of price
+  const variance = baseValue * 0.02; // 2% variance
   const seedValue = asset.charCodeAt(0) + asset.charCodeAt(asset.length - 1);
   const trend = (seedValue % 3) - 1; // -1, 0, or 1 (down, sideways, or up)
   
-  const data = [];
+  const data: PriceData[] = [];
   for (let i = 0; i < dataPoints; i++) {
     // Random movement with slight trend bias
     const change = (Math.random() - 0.5 + trend * 0.1) * variance;
@@ -47,13 +56,15 @@ const generateChartData = (asset: string, timeframe: string) => {
     
     let label = '';
     if (timeframe === '1h') {
-      label = `${i}m`;
+      label = `${59-i}m`;
     } else if (timeframe === '24h') {
-      label = `${i}h`;
+      label = `${23-i}h`;
     } else if (timeframe === '7d') {
-      label = `Day ${i+1}`;
+      label = `Day ${7-i}`;
+    } else if (timeframe === '30d') {
+      label = `Week ${Math.ceil((30-i)/7)}`;
     } else {
-      label = `Week ${i+1}`;
+      label = `Week ${Math.ceil((90-i)/7)}`;
     }
     
     data.push({
@@ -63,7 +74,8 @@ const generateChartData = (asset: string, timeframe: string) => {
     });
   }
   
-  return data;
+  // Reverse the data so it displays in chronological order
+  return data.reverse();
 };
 
 interface AssetChartProps {
@@ -72,10 +84,21 @@ interface AssetChartProps {
 }
 
 export const AssetChart = ({ asset, timeframe }: AssetChartProps) => {
-  const chartData = generateChartData(asset, timeframe);
+  const [chartData, setChartData] = useState<PriceData[]>([]);
+  
+  useEffect(() => {
+    setChartData(generateChartData(asset, timeframe));
+    
+    // Update chart data every 30 seconds to simulate real-time updates
+    const intervalId = setInterval(() => {
+      setChartData(generateChartData(asset, timeframe));
+    }, 30000);
+    
+    return () => clearInterval(intervalId);
+  }, [asset, timeframe]);
 
   return (
-    <div className="w-full h-[400px]">
+    <div className="w-full h-[300px]">
       <ChartContainer
         config={{
           value: {
@@ -88,10 +111,10 @@ export const AssetChart = ({ asset, timeframe }: AssetChartProps) => {
           }
         }}
       >
-        <ResponsiveContainer width="100%" height={400}>
+        <ResponsiveContainer width="100%" height={300}>
           <AreaChart
             data={chartData}
-            margin={{ top: 10, right: 10, left: 10, bottom: 0 }}
+            margin={{ top: 10, right: 10, left: 10, bottom: 20 }}
           >
             <defs>
               <linearGradient id="colorPrice" x1="0" y1="0" x2="0" y2="1">

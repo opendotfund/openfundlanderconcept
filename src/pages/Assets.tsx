@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams, Link } from 'react-router-dom';
 import { 
   Search,
   Filter, 
@@ -33,6 +33,7 @@ const Assets = () => {
   const [timeframe, setTimeframe] = useState<string>("24h");
   const [assetType, setAssetType] = useState<string>("crypto");
   const [searchQuery, setSearchQuery] = useState<string>("");
+  const [expandedCategory, setExpandedCategory] = useState<string | null>(null);
 
   useEffect(() => {
     // Get asset from URL or use default
@@ -73,6 +74,7 @@ const Assets = () => {
     // Update URL params
     searchParams.set('type', type);
     setSearchParams(searchParams);
+    setExpandedCategory(null); // Reset expanded category when changing asset type
   };
 
   const handleSearch = (e: React.FormEvent) => {
@@ -80,148 +82,229 @@ const Assets = () => {
     // Implement search functionality
   };
 
+  const handleSeeMore = (category: string) => {
+    setExpandedCategory(category === expandedCategory ? null : category);
+  };
+
+  const getCategoryTitle = (category: string) => {
+    switch(category) {
+      case 'crypto': return 'Cryptocurrencies';
+      case 'stocks': return 'Stocks';
+      case 'commodities': return 'Commodities';
+      default: return 'Assets';
+    }
+  };
+
   return (
     <div className="min-h-screen bg-openfund-gray-dark text-white flex flex-col">
       <Navbar />
 
       <main className="flex-grow container mx-auto px-4 py-8">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Left Section - Asset Chart */}
-          <div className="lg:col-span-2">
-            <div className="bg-openfund-gray-medium rounded-lg p-6 mb-6">
-              <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6">
-                <div>
-                  <h1 className="text-2xl font-bold">{selectedAsset.charAt(0).toUpperCase() + selectedAsset.slice(1)}</h1>
-                  <div className="flex items-center mt-2">
-                    <span className="text-xl font-bold text-openfund-green mr-2">$29,245.32</span>
-                    <span className="bg-openfund-green/20 text-openfund-green px-2 py-1 rounded-md text-sm flex items-center">
-                      <ChevronUp size={14} />
-                      2.45%
-                    </span>
+        {expandedCategory ? (
+          // Expanded category view
+          <div>
+            <div className="flex justify-between items-center mb-6">
+              <h1 className="text-2xl font-bold">All {getCategoryTitle(expandedCategory)}</h1>
+              <Button variant="outline" onClick={() => setExpandedCategory(null)}>
+                Back to Overview
+              </Button>
+            </div>
+            
+            <div className="mb-6">
+              <form onSubmit={handleSearch} className="flex gap-2">
+                <Input
+                  placeholder={`Search ${expandedCategory}...`}
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="bg-openfund-gray-dark"
+                />
+                <Button type="submit" variant="outline" size="icon">
+                  <Search className="h-4 w-4" />
+                </Button>
+              </form>
+            </div>
+            
+            <Card className="bg-openfund-gray-dark border-openfund-gray-light">
+              <CardContent className="p-6">
+                <AssetList 
+                  type={expandedCategory} 
+                  onSelect={handleAssetSelect}
+                  selectedAsset={selectedAsset}
+                />
+              </CardContent>
+            </Card>
+          </div>
+        ) : (
+          // Regular asset detail view
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            {/* Left Section - Asset Chart and Swap */}
+            <div className="lg:col-span-2">
+              <div className="bg-openfund-gray-medium rounded-lg p-6 mb-6">
+                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6">
+                  <div>
+                    <h1 className="text-2xl font-bold">{selectedAsset.charAt(0).toUpperCase() + selectedAsset.slice(1)}</h1>
+                    <div className="flex items-center mt-2">
+                      <span className="text-xl font-bold text-openfund-green mr-2">
+                        {selectedAsset === 'bitcoin' ? '$69,000.00' : 
+                         selectedAsset === 'ethereum' ? '$3,900.00' : 
+                         selectedAsset === 'solana' ? '$156.25' : 
+                         selectedAsset === 'apple' ? '$210.32' : 
+                         selectedAsset === 'tesla' ? '$242.15' : 
+                         selectedAsset === 'gold' ? '$2,380.50' : '$100.00'}
+                      </span>
+                      <span className="bg-openfund-green/20 text-openfund-green px-2 py-1 rounded-md text-sm flex items-center">
+                        <ChevronUp size={14} />
+                        2.45%
+                      </span>
+                    </div>
                   </div>
+
+                  <TimeframeSelector 
+                    timeframe={timeframe} 
+                    onChange={handleTimeframeChange} 
+                  />
                 </div>
 
-                <TimeframeSelector 
+                <AssetChart 
+                  asset={selectedAsset} 
                   timeframe={timeframe} 
-                  onChange={handleTimeframeChange} 
                 />
               </div>
 
-              <AssetChart 
-                asset={selectedAsset} 
-                timeframe={timeframe} 
-              />
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+                {/* Swap Widget - Now placed side by side with asset info on larger screens */}
+                <div className="bg-openfund-gray-medium rounded-lg p-6">
+                  <h2 className="text-xl font-bold mb-4">Trade {selectedAsset.charAt(0).toUpperCase() + selectedAsset.slice(1)}</h2>
+                  <SwapWidget selectedAsset={selectedAsset} />
+                </div>
+
+                {/* Asset Info */}
+                <div className="bg-openfund-gray-medium rounded-lg p-6">
+                  <h2 className="text-xl font-bold mb-4">About {selectedAsset.charAt(0).toUpperCase() + selectedAsset.slice(1)}</h2>
+                  <p className="text-gray-300 mb-4">
+                    This is a placeholder description for {selectedAsset}. The actual content would contain relevant information about the asset, its history, use cases, and other important details that investors might be interested in.
+                  </p>
+                  <div className="grid grid-cols-1 gap-4">
+                    <div>
+                      <p className="text-gray-400">Market Cap</p>
+                      <p className="text-lg font-medium">
+                        {selectedAsset === 'bitcoin' ? '$1.34T' : 
+                         selectedAsset === 'ethereum' ? '$468.2B' : 
+                         selectedAsset === 'solana' ? '$78.5B' : 
+                         selectedAsset === 'apple' ? '$3.2T' : 
+                         selectedAsset === 'tesla' ? '$764.5B' : 
+                         selectedAsset === 'gold' ? '$14.8T' : '$100M'}
+                      </p>
+                    </div>
+                    <div>
+                      <p className="text-gray-400">Volume (24h)</p>
+                      <p className="text-lg font-medium">
+                        {selectedAsset === 'bitcoin' ? '$42.8B' : 
+                         selectedAsset === 'ethereum' ? '$25.2B' : 
+                         selectedAsset === 'solana' ? '$3.6B' : 
+                         selectedAsset === 'apple' ? '$8.7B' : 
+                         selectedAsset === 'tesla' ? '$14.2B' : 
+                         selectedAsset === 'gold' ? '$86.3B' : '$10M'}
+                      </p>
+                    </div>
+                    <div>
+                      <p className="text-gray-400">Circulating Supply</p>
+                      <p className="text-lg font-medium">
+                        {selectedAsset === 'bitcoin' ? '19.5M BTC' : 
+                         selectedAsset === 'ethereum' ? '120.2M ETH' : 
+                         selectedAsset === 'solana' ? '445.8M SOL' : 
+                         selectedAsset === 'apple' ? '15.7B shares' : 
+                         selectedAsset === 'tesla' ? '3.2B shares' : 
+                         selectedAsset === 'gold' ? '205.5K tonnes' : 'N/A'}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
 
-            <div className="bg-openfund-gray-medium rounded-lg p-6 mb-6">
-              <h2 className="text-xl font-bold mb-4">About {selectedAsset.charAt(0).toUpperCase() + selectedAsset.slice(1)}</h2>
-              <p className="text-gray-300 mb-4">
-                This is a placeholder description for {selectedAsset}. The actual content would contain relevant information about the asset, its history, use cases, and other important details that investors might be interested in.
-              </p>
-              <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                <div>
-                  <p className="text-gray-400">Market Cap</p>
-                  <p className="text-lg font-medium">$564.2B</p>
-                </div>
-                <div>
-                  <p className="text-gray-400">Volume (24h)</p>
-                  <p className="text-lg font-medium">$25.8B</p>
-                </div>
-                <div>
-                  <p className="text-gray-400">Circulating Supply</p>
-                  <p className="text-lg font-medium">19.5M</p>
-                </div>
-              </div>
-            </div>
-            
-            {/* Swap Widget */}
-            <div className="bg-openfund-gray-medium rounded-lg p-6">
-              <h2 className="text-xl font-bold mb-4">Trade {selectedAsset.charAt(0).toUpperCase() + selectedAsset.slice(1)}</h2>
-              <SwapWidget selectedAsset={selectedAsset} />
-            </div>
-          </div>
-
-          {/* Right Section - Asset Categories */}
-          <div className="lg:col-span-1">
-            <div className="bg-openfund-gray-medium rounded-lg p-6">
-              <div className="mb-6">
-                <form onSubmit={handleSearch} className="flex gap-2">
-                  <Input
-                    placeholder="Search assets..."
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    className="bg-openfund-gray-dark"
-                  />
-                  <Button type="submit" variant="outline" size="icon">
-                    <Search className="h-4 w-4" />
-                  </Button>
-                </form>
-              </div>
-              
-              <div className="space-y-6">
-                {/* Crypto Section */}
-                <Card className="bg-openfund-gray-dark border-openfund-gray-light">
-                  <CardHeader className="pb-2">
-                    <CardTitle className="text-lg flex justify-between items-center">
-                      <span>Top Cryptocurrencies</span>
-                      <Button variant="ghost" size="sm" className="text-openfund-green" onClick={() => handleAssetTypeChange('crypto')}>
-                        View All
-                      </Button>
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <AssetList 
-                      type="crypto" 
-                      onSelect={handleAssetSelect}
-                      selectedAsset={selectedAsset}
-                      limit={10}
+            {/* Right Section - Asset Categories */}
+            <div className="lg:col-span-1">
+              <div className="bg-openfund-gray-medium rounded-lg p-6">
+                <div className="mb-6">
+                  <form onSubmit={handleSearch} className="flex gap-2">
+                    <Input
+                      placeholder="Search assets..."
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                      className="bg-openfund-gray-dark"
                     />
-                  </CardContent>
-                </Card>
+                    <Button type="submit" variant="outline" size="icon">
+                      <Search className="h-4 w-4" />
+                    </Button>
+                  </form>
+                </div>
                 
-                {/* Stocks Section */}
-                <Card className="bg-openfund-gray-dark border-openfund-gray-light">
-                  <CardHeader className="pb-2">
-                    <CardTitle className="text-lg flex justify-between items-center">
-                      <span>Top Stocks</span>
-                      <Button variant="ghost" size="sm" className="text-openfund-green" onClick={() => handleAssetTypeChange('stocks')}>
-                        View All
-                      </Button>
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <AssetList 
-                      type="stocks" 
-                      onSelect={handleAssetSelect}
-                      selectedAsset={selectedAsset}
-                      limit={10}
-                    />
-                  </CardContent>
-                </Card>
-                
-                {/* Commodities Section */}
-                <Card className="bg-openfund-gray-dark border-openfund-gray-light">
-                  <CardHeader className="pb-2">
-                    <CardTitle className="text-lg flex justify-between items-center">
-                      <span>Top Commodities</span>
-                      <Button variant="ghost" size="sm" className="text-openfund-green" onClick={() => handleAssetTypeChange('commodities')}>
-                        View All
-                      </Button>
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <AssetList 
-                      type="commodities" 
-                      onSelect={handleAssetSelect}
-                      selectedAsset={selectedAsset}
-                      limit={10}
-                    />
-                  </CardContent>
-                </Card>
+                <div className="space-y-6">
+                  {/* Crypto Section */}
+                  <Card className="bg-openfund-gray-dark border-openfund-gray-light">
+                    <CardHeader className="pb-2">
+                      <CardTitle className="text-lg flex justify-between items-center">
+                        <span>Top Cryptocurrencies</span>
+                        <Button variant="ghost" size="sm" className="text-openfund-green" onClick={() => handleSeeMore('crypto')}>
+                          View All
+                        </Button>
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <AssetList 
+                        type="crypto" 
+                        onSelect={handleAssetSelect}
+                        selectedAsset={selectedAsset}
+                        limit={10}
+                      />
+                    </CardContent>
+                  </Card>
+                  
+                  {/* Stocks Section */}
+                  <Card className="bg-openfund-gray-dark border-openfund-gray-light">
+                    <CardHeader className="pb-2">
+                      <CardTitle className="text-lg flex justify-between items-center">
+                        <span>Top Stocks</span>
+                        <Button variant="ghost" size="sm" className="text-openfund-green" onClick={() => handleSeeMore('stocks')}>
+                          View All
+                        </Button>
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <AssetList 
+                        type="stocks" 
+                        onSelect={handleAssetSelect}
+                        selectedAsset={selectedAsset}
+                        limit={10}
+                      />
+                    </CardContent>
+                  </Card>
+                  
+                  {/* Commodities Section */}
+                  <Card className="bg-openfund-gray-dark border-openfund-gray-light">
+                    <CardHeader className="pb-2">
+                      <CardTitle className="text-lg flex justify-between items-center">
+                        <span>Top Commodities</span>
+                        <Button variant="ghost" size="sm" className="text-openfund-green" onClick={() => handleSeeMore('commodities')}>
+                          View All
+                        </Button>
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <AssetList 
+                        type="commodities" 
+                        onSelect={handleAssetSelect}
+                        selectedAsset={selectedAsset}
+                        limit={10}
+                      />
+                    </CardContent>
+                  </Card>
+                </div>
               </div>
             </div>
           </div>
-        </div>
+        )}
       </main>
 
       <Footer />

@@ -1,12 +1,31 @@
-
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
+import { Link } from "react-router-dom";
+
+const getAssetPrices = () => {
+  return {
+    bitcoin: "$69,000.00",
+    ethereum: "$3,900.00",
+    solana: "$156.25",
+    apple: "$210.32",
+    tesla: "$242.15",
+  };
+};
 
 const Hero = () => {
+  const [prices, setPrices] = useState(getAssetPrices());
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setPrices(getAssetPrices());
+    }, 60000);
+
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <section className="min-h-[80vh] bg-hero-pattern bg-cover bg-center bg-no-repeat relative overflow-hidden">
-      {/* Background image with zoom effect */}
       <div className="absolute inset-0 bg-hero-pattern bg-cover bg-center scale-150 transform-gpu -z-10"></div>
       <div className="relative z-10 container mx-auto px-4 py-16 md:py-24">
         <div className="max-w-3xl">
@@ -17,11 +36,13 @@ const Hero = () => {
             The next generation platform for commodities, stocks, and crypto trading, all in one place.
           </p>
           <div className="flex flex-col sm:flex-row gap-4">
-            <Button className="bg-openfund-green hover:bg-openfund-green-dark text-openfund-gray-dark text-lg px-8 py-6">
-              Start Trading
+            <Button className="bg-openfund-green hover:bg-openfund-green-dark text-openfund-gray-dark text-lg px-8 py-6" asChild>
+              <Link to="/assets">Start Trading</Link>
             </Button>
-            <Button variant="outline" className="border-openfund-green text-openfund-green hover:bg-openfund-green/10 text-lg px-8 py-6">
-              Explore Funds <ArrowRight className="ml-2 h-5 w-5" />
+            <Button variant="outline" className="border-openfund-green text-openfund-green hover:bg-openfund-green/10 text-lg px-8 py-6" asChild>
+              <Link to="/explore">
+                Explore Funds <ArrowRight className="ml-2 h-5 w-5" />
+              </Link>
             </Button>
           </div>
           <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
@@ -40,6 +61,32 @@ const Hero = () => {
             <div className="p-4">
               <p className="text-openfund-green text-3xl font-bold">0.1%</p>
               <p className="text-gray-400">Low Spreads</p>
+            </div>
+          </div>
+          
+          <div className="mt-10 p-4 bg-black/30 backdrop-blur-md rounded-lg">
+            <h3 className="text-lg font-semibold mb-3">Live Market Prices</h3>
+            <div className="flex flex-wrap justify-between gap-4">
+              <div>
+                <span className="text-gray-400">BTC</span>
+                <p className="font-bold text-openfund-green">{prices.bitcoin}</p>
+              </div>
+              <div>
+                <span className="text-gray-400">ETH</span>
+                <p className="font-bold text-openfund-green">{prices.ethereum}</p>
+              </div>
+              <div>
+                <span className="text-gray-400">SOL</span>
+                <p className="font-bold text-openfund-green">{prices.solana}</p>
+              </div>
+              <div>
+                <span className="text-gray-400">AAPL</span>
+                <p className="font-bold text-openfund-green">{prices.apple}</p>
+              </div>
+              <div>
+                <span className="text-gray-400">TSLA</span>
+                <p className="font-bold text-openfund-green">{prices.tesla}</p>
+              </div>
             </div>
           </div>
         </div>
