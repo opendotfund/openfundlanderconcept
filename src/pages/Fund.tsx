@@ -10,7 +10,10 @@ import {
   Wallet,
   CreditCard,
   UserPlus,
-  Percent
+  Percent,
+  Settings,
+  Sliders,
+  BarChart
 } from 'lucide-react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
@@ -41,7 +44,7 @@ const Fund = () => {
             <TabsList className="w-full mb-8 bg-openfund-gray-medium">
               <TabsTrigger value="explore" className="flex-1">Explore Funds</TabsTrigger>
               <TabsTrigger value="create" className="flex-1">Create Fund</TabsTrigger>
-              <TabsTrigger value="my-investments" className="flex-1">My Investments</TabsTrigger>
+              <TabsTrigger value="my-fund" className="flex-1">My Fund</TabsTrigger>
             </TabsList>
             
             <TabsContent value="explore">
@@ -117,62 +120,113 @@ const Fund = () => {
               </Card>
             </TabsContent>
             
-            <TabsContent value="my-investments">
+            <TabsContent value="my-fund">
               <div className="space-y-6">
                 <Card className="bg-openfund-gray-medium border-openfund-gray-light">
                   <CardHeader>
-                    <CardTitle>Your Portfolio Overview</CardTitle>
+                    <CardTitle>Fund Manager Dashboard</CardTitle>
+                    <CardDescription>Manage your fund's investments and settings</CardDescription>
                   </CardHeader>
                   <CardContent>
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                       <div className="bg-openfund-gray-dark p-4 rounded-lg">
                         <div className="flex items-center mb-2">
                           <Briefcase size={16} className="mr-2 text-openfund-green" />
-                          <span className="text-gray-400">Total Invested</span>
+                          <span className="text-gray-400">AUM</span>
                         </div>
-                        <div className="text-xl font-bold">$12,500</div>
+                        <div className="text-xl font-bold">$1,250,500</div>
                       </div>
                       <div className="bg-openfund-gray-dark p-4 rounded-lg">
                         <div className="flex items-center mb-2">
-                          <TrendingUp size={16} className="mr-2 text-openfund-green" />
-                          <span className="text-gray-400">Current Value</span>
+                          <Users size={16} className="mr-2 text-openfund-green" />
+                          <span className="text-gray-400">Investors</span>
                         </div>
-                        <div className="text-xl font-bold">$14,250</div>
+                        <div className="text-xl font-bold">124</div>
                       </div>
                       <div className="bg-openfund-gray-dark p-4 rounded-lg">
                         <div className="flex items-center mb-2">
                           <Percent size={16} className="mr-2 text-openfund-green" />
-                          <span className="text-gray-400">Total Return</span>
+                          <span className="text-gray-400">Performance</span>
                         </div>
-                        <div className="text-xl font-bold text-openfund-green">+14%</div>
+                        <div className="text-xl font-bold text-openfund-green">+17.5%</div>
                       </div>
                       <div className="bg-openfund-gray-dark p-4 rounded-lg">
                         <div className="flex items-center mb-2">
-                          <Briefcase size={16} className="mr-2 text-openfund-green" />
-                          <span className="text-gray-400">Active Funds</span>
+                          <CreditCard size={16} className="mr-2 text-openfund-green" />
+                          <span className="text-gray-400">Fees Earned</span>
                         </div>
-                        <div className="text-xl font-bold">3</div>
+                        <div className="text-xl font-bold">$35,750</div>
                       </div>
                     </div>
                     
-                    <div className="mt-6">
-                      <h3 className="text-lg font-medium mb-4">Your Active Investments</h3>
-                      <div className="space-y-4">
-                        {[1, 2, 3].map((investment) => (
-                          <div 
-                            key={investment}
-                            className="bg-openfund-gray-dark p-4 rounded-lg flex justify-between items-center"
-                          >
-                            <div>
-                              <div className="font-medium">Alpha Seekers #{investment}</div>
-                              <div className="text-sm text-gray-400">Invested: $4,{investment}00</div>
+                    <div className="mt-8">
+                      <h3 className="text-lg font-medium mb-4">Fund Portfolio Allocation</h3>
+                      <div className="bg-openfund-gray-dark rounded-lg p-6">
+                        <div className="flex flex-wrap gap-4">
+                          {["Bitcoin", "Ethereum", "Apple", "Tesla", "Gold"].map((asset, index) => (
+                            <div key={asset} className="flex-1 min-w-[180px] bg-openfund-gray-medium p-4 rounded-lg">
+                              <div className="flex justify-between items-center mb-2">
+                                <span>{asset}</span>
+                                <span className="text-openfund-green">{15 - index * 2}%</span>
+                              </div>
+                              <div className="h-2 bg-openfund-gray-light rounded-full overflow-hidden">
+                                <div 
+                                  className="h-full bg-openfund-green rounded-full" 
+                                  style={{ width: `${15 - index * 2}%` }} 
+                                />
+                              </div>
                             </div>
-                            <div className="text-right">
-                              <div className="text-openfund-green font-medium">+{12 + investment * 4}%</div>
-                              <div className="text-sm text-gray-400">Current: ${(4000 + investment * 400 + investment * 200).toLocaleString()}</div>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
+                      <div>
+                        <h3 className="text-lg font-medium mb-4">Fund Management</h3>
+                        <div className="space-y-4">
+                          <Button className="w-full flex justify-between items-center bg-openfund-gray-dark hover:bg-openfund-gray-light">
+                            <div className="flex items-center">
+                              <BarChart size={16} className="mr-2" />
+                              <span>Rebalance Portfolio</span>
                             </div>
-                          </div>
-                        ))}
+                            <span className="text-xs text-gray-400">Last: 7d ago</span>
+                          </Button>
+                          <Button className="w-full flex justify-between items-center bg-openfund-gray-dark hover:bg-openfund-gray-light">
+                            <div className="flex items-center">
+                              <Sliders size={16} className="mr-2" />
+                              <span>Update Strategy</span>
+                            </div>
+                            <span className="text-xs text-gray-400">DeFi Focus</span>
+                          </Button>
+                          <Button className="w-full flex justify-between items-center bg-openfund-gray-dark hover:bg-openfund-gray-light">
+                            <div className="flex items-center">
+                              <Settings size={16} className="mr-2" />
+                              <span>Fund Settings</span>
+                            </div>
+                            <span className="text-xs text-gray-400">2/20 fee structure</span>
+                          </Button>
+                        </div>
+                      </div>
+                      
+                      <div>
+                        <h3 className="text-lg font-medium mb-4">Recent Activities</h3>
+                        <div className="space-y-2">
+                          {[
+                            { type: "New Investor", amount: "$15,000", time: "2h ago" },
+                            { type: "Bought ETH", amount: "$25,000", time: "1d ago" },
+                            { type: "Sold TSLA", amount: "$12,500", time: "3d ago" },
+                            { type: "Fee Collection", amount: "$3,250", time: "7d ago" },
+                          ].map((activity, i) => (
+                            <div key={i} className="flex justify-between items-center bg-openfund-gray-dark p-3 rounded-lg">
+                              <span>{activity.type}</span>
+                              <div className="text-right">
+                                <div className="font-medium">{activity.amount}</div>
+                                <div className="text-xs text-gray-400">{activity.time}</div>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
                       </div>
                     </div>
                   </CardContent>

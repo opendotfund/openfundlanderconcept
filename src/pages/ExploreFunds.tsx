@@ -10,7 +10,8 @@ import {
   TrendingUp, 
   DollarSign, 
   Users,
-  BarChart3
+  BarChart3,
+  Percent
 } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -192,6 +193,7 @@ const ExploreFunds = () => {
             <TabsTrigger value="traditional" className="flex-1">Traditional Hedge Funds</TabsTrigger>
             <TabsTrigger value="crypto" className="flex-1">Crypto Funds</TabsTrigger>
             <TabsTrigger value="openfund" className="flex-1">OpenFund DeFi Funds</TabsTrigger>
+            <TabsTrigger value="my-investments" className="flex-1">My Investments</TabsTrigger>
           </TabsList>
           
           <TabsContent value="traditional">
@@ -355,6 +357,69 @@ const ExploreFunds = () => {
                   </CardFooter>
                 </Card>
               ))}
+            </div>
+          </TabsContent>
+          
+          <TabsContent value="my-investments">
+            <div className="space-y-6">
+              <Card className="bg-openfund-gray-medium border-openfund-gray-light">
+                <CardHeader>
+                  <CardTitle>Your Portfolio Overview</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <div className="bg-openfund-gray-dark p-4 rounded-lg">
+                      <div className="flex items-center mb-2">
+                        <Briefcase size={16} className="mr-2 text-openfund-green" />
+                        <span className="text-gray-400">Total Invested</span>
+                      </div>
+                      <div className="text-xl font-bold">$12,500</div>
+                    </div>
+                    <div className="bg-openfund-gray-dark p-4 rounded-lg">
+                      <div className="flex items-center mb-2">
+                        <TrendingUp size={16} className="mr-2 text-openfund-green" />
+                        <span className="text-gray-400">Current Value</span>
+                      </div>
+                      <div className="text-xl font-bold">$14,250</div>
+                    </div>
+                    <div className="bg-openfund-gray-dark p-4 rounded-lg">
+                      <div className="flex items-center mb-2">
+                        <Percent size={16} className="mr-2 text-openfund-green" />
+                        <span className="text-gray-400">Total Return</span>
+                      </div>
+                      <div className="text-xl font-bold text-openfund-green">+14%</div>
+                    </div>
+                    <div className="bg-openfund-gray-dark p-4 rounded-lg">
+                      <div className="flex items-center mb-2">
+                        <Briefcase size={16} className="mr-2 text-openfund-green" />
+                        <span className="text-gray-400">Active Funds</span>
+                      </div>
+                      <div className="text-xl font-bold">3</div>
+                    </div>
+                  </div>
+                  
+                  <div className="mt-6">
+                    <h3 className="text-lg font-medium mb-4">Your Active Investments</h3>
+                    <div className="space-y-4">
+                      {[1, 2, 3].map((investment) => (
+                        <div 
+                          key={investment}
+                          className="bg-openfund-gray-dark p-4 rounded-lg flex justify-between items-center"
+                        >
+                          <div>
+                            <div className="font-medium">Alpha Seekers #{investment}</div>
+                            <div className="text-sm text-gray-400">Invested: $4,{investment}00</div>
+                          </div>
+                          <div className="text-right">
+                            <div className="text-openfund-green font-medium">+{12 + investment * 4}%</div>
+                            <div className="text-sm text-gray-400">Current: ${(4000 + investment * 400 + investment * 200).toLocaleString()}</div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
             </div>
           </TabsContent>
         </Tabs>
