@@ -13,7 +13,8 @@ import {
   Settings, 
   ChevronDown,
   Share,
-  Star
+  Star,
+  CheckCircle
 } from 'lucide-react';
 import {
   DropdownMenu,
@@ -104,6 +105,10 @@ const Navbar = () => {
                     <Wallet className="mr-2 h-4 w-4" />
                     <span>My Portfolio</span>
                   </DropdownMenuItem>
+                  <DropdownMenuItem className="cursor-pointer" onClick={() => navigateToAccount('kyc')}>
+                    <CheckCircle className="mr-2 h-4 w-4" />
+                    <span>Complete KYC</span>
+                  </DropdownMenuItem>
                   <DropdownMenuItem className="cursor-pointer" onClick={() => navigateToAccount('settings')}>
                     <Settings className="mr-2 h-4 w-4" />
                     <span>Settings</span>
@@ -173,6 +178,15 @@ const Navbar = () => {
                   </AvatarFallback>
                 </Avatar>
                 My Account
+              </div>
+            </div>
+            <div 
+              className="block px-3 py-2 rounded-md text-base font-medium text-muted-foreground hover:text-foreground cursor-pointer"
+              onClick={() => navigateToAccount('kyc')}
+            >
+              <div className="flex items-center">
+                <CheckCircle className="h-5 w-5 mr-2" />
+                Complete KYC
               </div>
             </div>
             <div className="mt-4">
