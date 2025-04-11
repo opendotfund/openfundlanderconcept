@@ -236,7 +236,7 @@ const FundManager = () => {
                                     <div className="w-8 h-8 rounded-full bg-muted flex items-center justify-center mr-2">
                                       {holding.symbol ? holding.symbol[0] : "?"}
                                     </div>
-                                    <div>
+                                    <div className="flex flex-col">
                                       <div className="font-medium">{holding.name}</div>
                                       <div className="text-muted-foreground text-sm">{holding.symbol}</div>
                                     </div>
