@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Logo from './Logo';
@@ -10,12 +9,12 @@ const Footer = () => {
     <footer className="bg-background pt-16 pb-8 border-t border-gray-200 dark:border-openfund-gray-light transition-colors duration-300">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
-          <div className="space-y-4">
+          <div className="space-y-4 flex flex-col items-center text-center">
             <Logo size="lg" />
             <p className="text-gray-700 dark:text-gray-400 mt-4 transition-colors duration-300">
               The next generation platform for commodities, stocks, and crypto trading.
             </p>
-            <div className="flex space-x-4">
+            <div className="flex space-x-4 justify-center">
               <a 
                 href="https://x.com/OpendotFund" 
                 target="_blank" 

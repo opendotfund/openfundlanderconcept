@@ -16,7 +16,7 @@ const Hero = () => {
               Trade stocks, crypto, commodities and more on a single platform. 
               Create or join community-managed funds with transparent performance.
             </p>
-            <div className="flex flex-wrap gap-4 justify-center sm:justify-start">
+            <div className="flex flex-wrap gap-4 justify-center">
               <Button 
                 className="bg-primary hover:bg-primary/90 text-primary-foreground text-lg px-8 py-3 transition-colors duration-300"
                 asChild
