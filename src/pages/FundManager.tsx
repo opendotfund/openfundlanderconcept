@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { 
@@ -244,9 +245,9 @@ const FundManager = () => {
                                       <div className="w-8 h-8 rounded-full bg-muted flex items-center justify-center mr-2 flex-shrink-0">
                                         {holding.symbol ? holding.symbol[0] : "?"}
                                       </div>
-                                      <div className="flex flex-col items-start">
+                                      <div>
                                         <div className="font-medium">{holding.name}</div>
-                                        <div className="text-muted-foreground text-sm text-left">{holding.symbol}</div>
+                                        <div className="text-muted-foreground text-sm">{holding.symbol}</div>
                                       </div>
                                     </div>
                                   </TableCell>
