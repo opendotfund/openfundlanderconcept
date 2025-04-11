@@ -10,10 +10,10 @@ const Hero = () => {
         <div className="grid md:grid-cols-2 gap-12 items-center">
           <div className="flex flex-col items-center text-center">
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 transition-colors duration-300">
-              <span className="text-primary transition-colors duration-300">OpenFund:</span> The Modern Platform for Global Investments
+              The Modern Platform for <span className="text-primary transition-colors duration-300">Global Investments</span>
             </h1>
             <p className="text-xl text-muted-foreground mb-8 transition-colors duration-300">
-              Trade stocks, crypto, commodities and more on OpenFund's unified platform. 
+              Trade stocks, crypto, commodities and more on a single platform. 
               Create or join community-managed funds with transparent performance.
             </p>
             <div className="flex flex-wrap gap-4 justify-center">
@@ -22,7 +22,7 @@ const Hero = () => {
                 asChild
               >
                 <Link to="/trade">
-                  Start Trading with OpenFund
+                  Start Trading
                 </Link>
               </Button>
               <Button 
@@ -31,7 +31,7 @@ const Hero = () => {
                 asChild
               >
                 <Link to="/explore">
-                  Explore OpenFund Investments
+                  Explore Funds
                 </Link>
               </Button>
             </div>

@@ -1,9 +1,9 @@
+
 import React from 'react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import TeamMemberCard from '@/components/TeamMemberCard';
 import { Users } from 'lucide-react';
-import { Helmet } from 'react-helmet-async';
 
 const AboutUs = () => {
   const teamMembers = {
@@ -40,12 +40,6 @@ const AboutUs = () => {
 
   return (
     <div className="min-h-screen bg-background text-foreground flex flex-col">
-      <Helmet>
-        <title>About OpenFund | The Global Investment Platform</title>
-        <meta name="description" content="Meet the OpenFund team - the visionaries bridging traditional finance with crypto. Learn about our mission to democratize global investments." />
-        <link rel="canonical" href="https://openfund.io/about-us" />
-      </Helmet>
-      
       <Navbar />
       
       <main className="flex-grow container mx-auto px-4 py-12">
@@ -55,30 +49,23 @@ const AboutUs = () => {
               <Users className="text-primary h-6 w-6" />
             </div>
           </div>
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">About the OpenFund Team</h1>
+          <h1 className="text-4xl md:text-5xl font-bold mb-4">Our Team</h1>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
             Meet the visionaries behind OpenFund, bringing together expertise from both traditional finance and the crypto world.
           </p>
         </div>
         
-        <section 
-          className="mb-16" 
-          itemScope 
-          itemType="https://schema.org/Organization"
-        >
-          <meta itemProp="name" content="OpenFund" />
-          <meta itemProp="description" content="The Modern Platform for Global Investments" />
-          <h2 className="text-2xl font-bold mb-6 text-center">OpenFund Co-Founders</h2>
+        {/* Co-Founders Section */}
+        <div className="mb-16">
+          <h2 className="text-2xl font-bold mb-6 text-center">Co-Founders</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {teamMembers.founders.map((member, index) => (
-              <TeamMemberCard 
-                key={`founder-${index}`} 
-                {...member} 
-              />
+              <TeamMemberCard key={`founder-${index}`} {...member} />
             ))}
           </div>
-        </section>
+        </div>
         
+        {/* Advisors Section */}
         <div className="mb-16">
           <h2 className="text-2xl font-bold mb-6 text-center">Advisors</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
@@ -90,7 +77,7 @@ const AboutUs = () => {
         
         <div className="mt-16 bg-card p-8 rounded-lg border border-border">
           <div className="text-center mb-8">
-            <h2 className="text-3xl font-bold mb-2">OpenFund's Mission</h2>
+            <h2 className="text-3xl font-bold mb-2">Our Mission</h2>
             <div className="w-20 h-1 bg-primary mx-auto"></div>
           </div>
           <div className="max-w-3xl mx-auto">

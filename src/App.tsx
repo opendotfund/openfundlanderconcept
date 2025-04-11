@@ -2,7 +2,6 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Toaster } from "@/components/ui/toaster";
 import { useEffect } from 'react';
-import { HelmetProvider } from 'react-helmet-async';
 
 import Index from './pages/Index';
 import Account from './pages/Account';
@@ -29,31 +28,29 @@ function App() {
   }, []);
   
   return (
-    <HelmetProvider>
-      <Router>
-        <div className="app">
-          <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/account" element={<Account />} />
-            <Route path="/assets" element={<Assets />} />
-            <Route path="/my-assets" element={<MyAssets />} />
-            <Route path="/trade" element={<Trade />} />
-            <Route path="/explore" element={<ExploreFunds />} />
-            <Route path="/explore-funds" element={<ExploreFunds />} />
-            <Route path="/fund" element={<Fund />} />
-            <Route path="/fund-detail/:type/:fundId" element={<FundDetail />} />
-            <Route path="/fund-manager" element={<FundManager />} />
-            <Route path="/coming-soon" element={<ComingSoon />} />
-            <Route path="/careers" element={<Careers />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/legal" element={<Legal />} />
-            <Route path="/about-us" element={<AboutUs />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </div>
-        <Toaster />
-      </Router>
-    </HelmetProvider>
+    <Router>
+      <div className="app">
+        <Routes>
+          <Route path="/" element={<Index />} />
+          <Route path="/account" element={<Account />} />
+          <Route path="/assets" element={<Assets />} />
+          <Route path="/my-assets" element={<MyAssets />} />
+          <Route path="/trade" element={<Trade />} />
+          <Route path="/explore" element={<ExploreFunds />} />
+          <Route path="/explore-funds" element={<ExploreFunds />} />
+          <Route path="/fund" element={<Fund />} />
+          <Route path="/fund-detail/:type/:fundId" element={<FundDetail />} />
+          <Route path="/fund-manager" element={<FundManager />} />
+          <Route path="/coming-soon" element={<ComingSoon />} />
+          <Route path="/careers" element={<Careers />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/legal" element={<Legal />} />
+          <Route path="/about-us" element={<AboutUs />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </div>
+      <Toaster />
+    </Router>
   );
 }
 

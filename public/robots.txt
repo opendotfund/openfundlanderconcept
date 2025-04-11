@@ -1,13 +1,3 @@
-
-# OpenFund Robots.txt
-# Allow all crawlers full access
-User-agent: *
-Allow: /
-
-# Sitemap location
-Sitemap: https://openfund.io/sitemap.xml
-
-# Specific bot directives
 User-agent: Googlebot
 Allow: /
 
@@ -18,4 +8,7 @@ User-agent: Twitterbot
 Allow: /
 
 User-agent: facebookexternalhit
+Allow: /
+
+User-agent: *
 Allow: /
