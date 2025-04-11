@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from 'react';
 import {
   Area,
@@ -110,13 +111,41 @@ export const AssetChart = ({ asset, timeframe }: AssetChartProps) => {
     return () => clearInterval(intervalId);
   }, [asset, timeframe]);
 
+  // Calculate if the performance is positive by comparing first and last value
+  const isPositive = chartData.length >= 2 && 
+    chartData[chartData.length - 1].value > chartData[0].value;
+  
+  // Calculate percentage change
+  const percentChange = chartData.length >= 2 ? 
+    ((chartData[chartData.length - 1].value - chartData[0].value) / chartData[0].value) * 100 : 0;
+  
+  // Format percentage with + sign for positive values
+  const formattedPercent = percentChange >= 0 ? 
+    `+${percentChange.toFixed(2)}%` : `${percentChange.toFixed(2)}%`;
+
   return (
     <div className="w-full h-full">
+      {chartData.length > 0 && (
+        <div className="flex items-center justify-between mb-4">
+          <div className="text-xl font-medium">
+            {asset.charAt(0).toUpperCase() + asset.slice(1)} Price
+          </div>
+          <div className="flex items-center gap-2">
+            <span className="text-2xl font-bold">
+              ${chartData[chartData.length - 1].value.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}
+            </span>
+            <span className={`text-sm font-medium ${isPositive ? 'text-openfund-green' : 'text-red-500'}`}>
+              {formattedPercent}
+            </span>
+          </div>
+        </div>
+      )}
+      
       <ChartContainer
         config={{
           value: {
             label: "Price",
-            color: "#00FF00",
+            color: isPositive ? "#00FF00" : "#FF4545",
           },
           volume: {
             label: "Volume",
@@ -131,8 +160,8 @@ export const AssetChart = ({ asset, timeframe }: AssetChartProps) => {
           >
             <defs>
               <linearGradient id="colorPrice" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="#00FF00" stopOpacity={0.3} />
-                <stop offset="95%" stopColor="#00FF00" stopOpacity={0} />
+                <stop offset="5%" stopColor={isPositive ? "#00FF00" : "#FF4545"} stopOpacity={0.3} />
+                <stop offset="95%" stopColor={isPositive ? "#00FF00" : "#FF4545"} stopOpacity={0} />
               </linearGradient>
             </defs>
             <XAxis 
@@ -151,21 +180,24 @@ export const AssetChart = ({ asset, timeframe }: AssetChartProps) => {
               width={70}
               tickFormatter={(value) => `$${value.toLocaleString()}`}
             />
-            <Tooltip content={<ChartTooltipContent />} />
+            <Tooltip 
+              content={<ChartTooltipContent />} 
+              cursor={{ stroke: '#666', strokeWidth: 1, strokeDasharray: '5 5' }}
+            />
             <Area 
               type="monotone"
               dataKey="value"
-              stroke="#00FF00"
+              stroke={isPositive ? "#00FF00" : "#FF4545"}
               strokeWidth={2}
               fillOpacity={1}
               fill="url(#colorPrice)"
-              activeDot={{ r: 6, fill: "#00FF00", strokeWidth: 0 }}
+              activeDot={{ r: 6, fill: isPositive ? "#00FF00" : "#FF4545", strokeWidth: 0 }}
             />
             <Bar 
               dataKey="volume" 
               fill="#404040"
               opacity={0.3}
-              barSize={20}
+              barSize={5}
             />
           </AreaChart>
         </ResponsiveContainer>
