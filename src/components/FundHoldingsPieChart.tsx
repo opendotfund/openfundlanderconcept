@@ -87,6 +87,7 @@ export const FundHoldingsPieChart: React.FC<FundHoldingsPieChartProps> = ({
                   layout="horizontal" 
                   verticalAlign="bottom" 
                   align="center"
+                  className="mt-4"
                 />
               </PieChart>
             </ResponsiveContainer>
