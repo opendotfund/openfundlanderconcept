@@ -34,15 +34,6 @@ const Hero = () => {
                   Explore Funds
                 </Link>
               </Button>
-              <Button 
-                variant="outline" 
-                className="border-2 border-primary text-primary hover:bg-primary/10 text-lg px-8 py-3 transition-colors duration-300"
-                asChild
-              >
-                <Link to="/account?tab=kyc">
-                  Complete KYC
-                </Link>
-              </Button>
             </div>
           </div>
           <div className="relative">
