@@ -28,7 +28,6 @@ import { useIsMobile } from '@/hooks/use-mobile';
 import { useToast } from '@/hooks/use-toast';
 import { FundShareSwap } from '@/components/FundShareSwap';
 
-// Sample fund data (in a real app this would come from an API)
 const traditionalFunds = [
   {
     id: 1,
@@ -99,7 +98,6 @@ const cryptoFunds = [
   // ... other crypto funds would be defined here
 ];
 
-// OpenFund data - decentralized funds
 const openfundFunds = [1, 2, 3, 4, 5].map((fund) => ({
   id: fund,
   name: `Alpha Seekers #${fund}`,
@@ -136,10 +134,8 @@ const openfundFunds = [1, 2, 3, 4, 5].map((fund) => ({
   topHoldings: fund % 2 === 0 ? ['Ethereum', 'Solana', 'Avalanche', 'Cardano', 'Polkadot'] : ['Uniswap', 'Aave', 'Compound', 'MakerDAO', 'Curve']
 }));
 
-// Combining all fund data for easy lookup
 const allFunds = [...traditionalFunds, ...cryptoFunds, ...openfundFunds];
 
-// Historical performance data (simulated)
 const generateHistoricalData = (baseValue: number, volatility: number, uptrend: boolean) => {
   const data = [];
   let currentValue = baseValue;
@@ -185,7 +181,6 @@ const FundDetail = () => {
   const { toast } = useToast();
 
   useEffect(() => {
-    // Find the fund based on the ID and type
     if (fundId) {
       const numericId = parseInt(fundId);
       
@@ -196,7 +191,6 @@ const FundDetail = () => {
       } else if (type === 'openfund') {
         setFund(openfundFunds.find(f => f.id === numericId));
       } else {
-        // If no type is specified, search all funds
         setFund(allFunds.find(f => f.id === numericId));
       }
     }
@@ -222,7 +216,6 @@ const FundDetail = () => {
       <Navbar />
       
       <main className="container mx-auto px-4 py-8">
-        {/* Back button and fund name */}
         <div className="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4">
           <div>
             <Button 
@@ -259,7 +252,6 @@ const FundDetail = () => {
           </div>
         </div>
         
-        {/* Performance Chart */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <div className="lg:col-span-2">
             <Card className="mb-6">
@@ -498,7 +490,6 @@ const FundDetail = () => {
           </div>
           
           <div className="space-y-6">
-            {/* Fund details card */}
             <Card>
               <CardHeader>
                 <CardTitle>Fund Details</CardTitle>
@@ -628,7 +619,7 @@ const FundDetail = () => {
                   {fund.type === 'Decentralized Fund' ? (
                     <>
                       <Button 
-                        className="w-full bg-openfund-green hover:bg-openfund-green-dark text-openfund-gray-dark font-medium"
+                        className="w-full fund-detail-invest-button"
                         onClick={() => setShowSwapWidget(!showSwapWidget)}
                       >
                         {showSwapWidget ? 'Cancel' : 'Invest Now'}
@@ -643,7 +634,7 @@ const FundDetail = () => {
                       )}
                     </>
                   ) : (
-                    <Button className="w-full bg-openfund-green hover:bg-openfund-green-dark text-openfund-gray-dark font-medium">
+                    <Button className="w-full fund-detail-request-button">
                       Request Investment
                     </Button>
                   )}
@@ -657,7 +648,6 @@ const FundDetail = () => {
               </CardContent>
             </Card>
             
-            {/* Risk disclaimer */}
             <div className="bg-card p-4 rounded-lg border">
               <div className="flex items-start">
                 <AlertTriangle className="h-5 w-5 text-amber-400 mt-0.5 mr-2 flex-shrink-0" />

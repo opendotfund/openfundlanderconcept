@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { 
@@ -69,7 +68,6 @@ const FundManager = () => {
       { investor: "0x92...7b5c", amount: "$18,500", requested: "4d ago", status: "Pending", processingDate: "04/21/2025" },
       { investor: "0x3f...0e4f", amount: "$3,000", requested: "5d ago", status: "Pending", processingDate: "04/21/2025" }
     ],
-    // Adding chart data to show consistent upward trend
     chartData: [
       { date: '2024-01', value: 950000 },
       { date: '2024-02', value: 1000000 },
@@ -182,6 +180,7 @@ const FundManager = () => {
                     timeframe={timeframe}
                     isPortfolio={true}
                     portfolioName={fundData.name} 
+                    portfolioData={fundData.chartData}
                   />
                 </div>
               </CardContent>
