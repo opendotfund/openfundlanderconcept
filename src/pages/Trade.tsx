@@ -48,7 +48,7 @@ const Trade = () => {
                   onChange={setTimeframe}
                 />
               </div>
-              <div>
+              <div className="w-full h-full">
                 <AssetChart asset={selectedAsset} timeframe={timeframe} />
               </div>
             </div>

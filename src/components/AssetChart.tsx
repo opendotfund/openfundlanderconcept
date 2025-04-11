@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import {
   Area,
@@ -126,9 +125,20 @@ const fetchPriceData = async (asset: string, timeframe: string, isPortfolio: boo
         } else if (timeframe === '30d') {
           label = `W${Math.ceil((30-i)/7)}`;
         } else if (timeframe === '90d') {
-          label = i % 7 === 0 ? `W${Math.ceil((90-i)/7)}` : '';
+          const weekNum = Math.floor((90-i)/7);
+          if (i % 7 === 0) {
+            label = `W${weekNum}`;
+          } else {
+            label = '';
+          }
         } else {
-          label = `M${Math.ceil((365-i)/30)}`;
+          const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+          const monthNum = Math.floor((365-i)/30) % 12;
+          if (i % 30 === 0) {
+            label = monthNames[monthNum];
+          } else {
+            label = '';
+          }
         }
         
         data.push({
@@ -185,17 +195,24 @@ const fetchPriceData = async (asset: string, timeframe: string, isPortfolio: boo
         
         let label = '';
         if (timeframe === '1h') {
-          label = i % 5 === 0 ? `${59-i}m` : '';
+          if (i % 5 === 0) label = `${59-i}m`;
         } else if (timeframe === '24h') {
-          label = i % 3 === 0 ? `${23-i}h` : '';
+          if (i % 3 === 0) label = `${23-i}h`;
         } else if (timeframe === '7d') {
           label = `D${7-i}`;
         } else if (timeframe === '30d') {
-          label = `W${Math.ceil((30-i)/7)}`;
+          if (i % 7 === 0) label = `W${Math.ceil((30-i)/7)}`;
         } else if (timeframe === '90d') {
-          label = i % 14 === 0 ? `W${Math.ceil((90-i)/7)}` : '';
+          const weekNum = Math.floor((90-i)/7);
+          if (i % 7 === 0) {
+            label = `W${weekNum}`;
+          }
         } else {
-          label = `M${Math.ceil((365-i)/30)}`;
+          const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+          const monthNum = Math.floor((365-i)/30) % 12;
+          if (i % 30 === 0) {
+            label = monthNames[monthNum];
+          }
         }
         
         data.push({
@@ -266,54 +283,31 @@ export const AssetChart = ({ asset = 'bitcoin', timeframe, isPortfolio = false, 
     ? (isPositive ? "#0EA5E9" : "#FF4545")
     : (isPositive ? "#00FF00" : "#FF4545");
   
-  // Adjust chart height to be more compact on mobile to avoid overflow
-  const chartHeight = isMobile ? '220px' : '380px';
+  const chartHeight = isMobile ? '220px' : '360px';
   
-  // More compact margins on mobile
   const margins = isMobile 
-    ? { top: 5, right: 5, left: 20, bottom: 20 }
-    : { top: 5, right: 10, left: 50, bottom: 30 };
+    ? { top: 5, right: 5, left: 20, bottom: 25 }
+    : { top: 10, right: 10, left: 50, bottom: 30 };
   
-  // Format X-axis labels based on timeframe
   const formatXAxisTick = (value: string) => {
-    if (timeframe === '1h') {
-      // For 1h, show minutes like "50m" or "30m"
-      return value.includes('m') ? value : '';
-    } else if (timeframe === '24h') {
-      // For 24h, show hours like "12h" or "6h"
-      return value.includes('h') ? value : '';
-    } else if (timeframe === '7d') {
-      // For 7d, show days like "Day 3" or "D3"
-      return value;
-    } else if (timeframe === '30d') {
-      // For 30d, show weeks like "W3" or "W1"
-      return value.includes('W') ? value : '';
-    } else if (timeframe === '90d') {
-      // For 90d, always label weeks
-      return value.includes('W') ? value : '';
-    } else if (timeframe === '1y') {
-      // For 1y, show months
-      return value.includes('M') ? value : '';
-    }
     return value;
   };
 
-  // Determine how many ticks to show based on timeframe and screen size
   const getTickInterval = () => {
     if (isMobile) {
-      if (timeframe === '1h') return 10;  // Show every 10th tick (roughly 6 ticks)
-      if (timeframe === '24h') return 4;  // Show every 4th tick (roughly 6 ticks)
-      if (timeframe === '7d') return 1;   // Show every tick (7 ticks)
-      if (timeframe === '30d') return 5;  // Show approximately 6 ticks
-      if (timeframe === '90d') return 15; // Show approximately 6 ticks
-      return 60;                          // For 1y, show approximately 6 ticks
+      if (timeframe === '1h') return 15;
+      if (timeframe === '24h') return 6;
+      if (timeframe === '7d') return 2;
+      if (timeframe === '30d') return 10;
+      if (timeframe === '90d') return 21;
+      return 90;
     } else {
-      if (timeframe === '1h') return 5;   // Show every 5th tick
-      if (timeframe === '24h') return 3;  // Show every 3rd tick
-      if (timeframe === '7d') return 1;   // Show all 7 ticks
-      if (timeframe === '30d') return 4;  // Show approximately 8 ticks
-      if (timeframe === '90d') return 12; // Show approximately 8 ticks
-      return 30;                          // For 1y, show approximately 12 ticks
+      if (timeframe === '1h') return 10;
+      if (timeframe === '24h') return 4;
+      if (timeframe === '7d') return 1;
+      if (timeframe === '30d') return 7;
+      if (timeframe === '90d') return 14;
+      return 60;
     }
   };
 
@@ -347,6 +341,7 @@ export const AssetChart = ({ asset = 'bitcoin', timeframe, isPortfolio = false, 
               color: isLightMode ? "#D1D5DB" : "#404040"
             }
           }}
+          className="pb-2"
         >
           <ResponsiveContainer width="100%" height="100%">
             <AreaChart
@@ -363,16 +358,17 @@ export const AssetChart = ({ asset = 'bitcoin', timeframe, isPortfolio = false, 
                 dataKey="name"
                 tickLine={false}
                 axisLine={false}
-                dy={isMobile ? 5 : 10}
+                dy={isMobile ? 10 : 12}
                 tick={{ 
                   fill: isLightMode ? '#666' : '#888', 
-                  fontSize: isMobile ? 9 : 11
+                  fontSize: isMobile ? 10 : 12
                 }}
-                height={isMobile ? 25 : 40}
+                height={isMobile ? 35 : 40}
                 padding={{ left: 5, right: 5 }}
                 interval={getTickInterval()}
                 tickFormatter={formatXAxisTick}
-                tickMargin={2}
+                tickMargin={5}
+                minTickGap={5}
               />
               <YAxis 
                 tickLine={false}

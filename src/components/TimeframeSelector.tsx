@@ -31,7 +31,7 @@ export const TimeframeSelector = ({ timeframe, onChange }: TimeframeSelectorProp
           className={`${timeframe === tf.value ? 
             'dark:bg-openfund-green dark:text-openfund-gray-dark bg-openfund-blue text-white hover:bg-openfund-blue-dark dark:hover:bg-openfund-green-dark' : 
             'text-gray-500 dark:text-gray-300 hover:text-foreground dark:hover:text-white'
-          } ${isMobile ? 'px-2 py-0.5 h-7 text-xs' : ''}`}
+          } ${isMobile ? 'px-2.5 py-0.5 h-6 text-xs' : ''}`}
         >
           {tf.label}
         </Button>
