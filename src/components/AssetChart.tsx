@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from 'react';
 import {
   Area,
@@ -283,39 +284,76 @@ export const AssetChart = ({ asset = 'bitcoin', timeframe, isPortfolio = false, 
     ? (isPositive ? "#0EA5E9" : "#FF4545")
     : (isPositive ? "#00FF00" : "#FF4545");
   
-  const chartHeight = isMobile ? '220px' : '360px';
+  const chartHeight = isMobile ? '200px' : '360px';
   
   const margins = isMobile 
-    ? { top: 5, right: 5, left: 20, bottom: 25 }
+    ? { top: 5, right: 5, left: 20, bottom: 20 }
     : { top: 10, right: 10, left: 50, bottom: 30 };
   
   const formatXAxisTick = (value: string) => {
     return value;
   };
 
+  const formatXAxisLabel = (timeframe: string, index: number, dataLength: number) => {
+    if (timeframe === '1h') {
+      const minute = 60 - Math.floor(index * (60 / dataLength));
+      return index % 10 === 0 ? `${minute}m` : '';
+    } else if (timeframe === '24h') {
+      const hour = 24 - Math.floor(index * (24 / dataLength));
+      return index % 6 === 0 ? `${hour}h` : '';
+    } else if (timeframe === '7d') {
+      const day = 7 - Math.floor(index * (7 / dataLength));
+      return `D${day}`;
+    } else if (timeframe === '30d') {
+      const day = 30 - Math.floor(index * (30 / dataLength));
+      return day % 7 === 0 ? `W${Math.ceil(day/7)}` : '';
+    } else if (timeframe === '90d') {
+      const day = 90 - Math.floor(index * (90 / dataLength));
+      return day % 15 === 0 ? `W${Math.ceil(day/7)}` : '';
+    } else if (timeframe === '1y') {
+      const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+      const day = 365 - Math.floor(index * (365 / dataLength));
+      const monthIndex = Math.floor(day / 30) % 12;
+      return day % 30 === 0 ? monthNames[monthIndex] : '';
+    }
+    return '';
+  };
+
+  useEffect(() => {
+    if (chartData.length > 0) {
+      const updatedData = chartData.map((point, index) => ({
+        ...point,
+        name: formatXAxisLabel(timeframe, index, chartData.length)
+      }));
+      setChartData(updatedData);
+    }
+  }, [timeframe]);
+
   const getTickInterval = () => {
     if (isMobile) {
       if (timeframe === '1h') return 15;
       if (timeframe === '24h') return 6;
-      if (timeframe === '7d') return 2;
-      if (timeframe === '30d') return 10;
-      if (timeframe === '90d') return 21;
-      return 90;
+      if (timeframe === '7d') return 1;
+      if (timeframe === '30d') return 7;
+      if (timeframe === '90d') return 15;
+      if (timeframe === '1y') return 60;
+      return 10;
     } else {
       if (timeframe === '1h') return 10;
       if (timeframe === '24h') return 4;
       if (timeframe === '7d') return 1;
       if (timeframe === '30d') return 7;
-      if (timeframe === '90d') return 14;
-      return 60;
+      if (timeframe === '90d') return 15;
+      if (timeframe === '1y') return 30;
+      return 5;
     }
   };
 
   return (
-    <div className="w-full h-full">
+    <div className="w-full">
       {chartData.length > 0 && (
-        <div className={`flex ${isMobile ? 'flex-col gap-1' : 'items-center justify-between'} mb-2`}>
-          <div className={`${isMobile ? 'text-lg' : 'text-xl'} font-medium`}>
+        <div className={`flex flex-col md:flex-row md:items-center md:justify-between mb-2`}>
+          <div className={`${isMobile ? 'text-lg' : 'text-xl'} font-medium mb-1 md:mb-0`}>
             {displayName}
           </div>
           <div className="flex items-center gap-2">
@@ -329,7 +367,7 @@ export const AssetChart = ({ asset = 'bitcoin', timeframe, isPortfolio = false, 
         </div>
       )}
       
-      <div style={{ height: chartHeight }} className="mb-0">
+      <div style={{ height: chartHeight }} className="w-full">
         <ChartContainer
           config={{
             value: {
@@ -341,7 +379,6 @@ export const AssetChart = ({ asset = 'bitcoin', timeframe, isPortfolio = false, 
               color: isLightMode ? "#D1D5DB" : "#404040"
             }
           }}
-          className="pb-2"
         >
           <ResponsiveContainer width="100%" height="100%">
             <AreaChart
@@ -358,17 +395,17 @@ export const AssetChart = ({ asset = 'bitcoin', timeframe, isPortfolio = false, 
                 dataKey="name"
                 tickLine={false}
                 axisLine={false}
-                dy={isMobile ? 10 : 12}
+                dy={isMobile ? 8 : 12}
                 tick={{ 
                   fill: isLightMode ? '#666' : '#888', 
-                  fontSize: isMobile ? 10 : 12
+                  fontSize: isMobile ? 10 : 12 
                 }}
-                height={isMobile ? 35 : 40}
+                height={isMobile ? 25 : 40}
                 padding={{ left: 5, right: 5 }}
                 interval={getTickInterval()}
                 tickFormatter={formatXAxisTick}
-                tickMargin={5}
-                minTickGap={5}
+                tickMargin={3}
+                minTickGap={2}
               />
               <YAxis 
                 tickLine={false}
