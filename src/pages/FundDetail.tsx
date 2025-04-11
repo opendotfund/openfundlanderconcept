@@ -13,7 +13,8 @@ import {
   Users,
   BarChart3,
   Percent,
-  ArrowDownToLine
+  ArrowDownToLine,
+  PieChart
 } from 'lucide-react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
@@ -27,6 +28,7 @@ import { TimeframeSelector } from '@/components/TimeframeSelector';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { useToast } from '@/hooks/use-toast';
 import { FundShareSwap } from '@/components/FundShareSwap';
+import { FundHoldingsPieChart } from '@/components/FundHoldingsPieChart';
 
 const traditionalFunds = [
   {
@@ -34,6 +36,7 @@ const traditionalFunds = [
     name: 'Berkshire Hathaway',
     manager: 'Warren Buffett',
     aum: '$700B',
+    aumValue: 700000000000,
     returns: '20.1%',
     returnsValue: 20.1,
     focus: 'Value Investing',
@@ -58,7 +61,14 @@ const traditionalFunds = [
     inceptionDate: 'May 1, 1965',
     benchmarkIndex: 'S&P 500',
     benchmarkPerformance: '+10.5%',
-    topHoldings: ['Apple', 'Bank of America', 'American Express', 'Coca-Cola', 'Chevron']
+    topHoldings: ['Apple', 'Bank of America', 'American Express', 'Coca-Cola', 'Chevron'],
+    holdingsBreakdown: [
+      { name: 'Tech Stocks', value: 35, color: '#2563eb' },
+      { name: 'Financial Services', value: 30, color: '#9333ea' },
+      { name: 'Consumer Goods', value: 20, color: '#16a34a' },
+      { name: 'Energy', value: 10, color: '#d97706' },
+      { name: 'Healthcare', value: 5, color: '#dc2626' }
+    ]
   },
   // ... other traditional funds would be defined here
 ];
@@ -69,6 +79,7 @@ const cryptoFunds = [
     name: 'Grayscale Bitcoin Trust',
     manager: 'Grayscale Investments',
     aum: '$30.3B',
+    aumValue: 30300000000,
     returns: '154%',
     returnsValue: 154,
     focus: 'Bitcoin',
@@ -93,7 +104,10 @@ const cryptoFunds = [
     inceptionDate: 'September 25, 2013',
     benchmarkIndex: 'Bitcoin Price',
     benchmarkPerformance: '+60.8%',
-    topHoldings: ['Bitcoin']
+    topHoldings: ['Bitcoin'],
+    holdingsBreakdown: [
+      { name: 'Bitcoin', value: 100, color: '#f7931a' }
+    ]
   },
   // ... other crypto funds would be defined here
 ];
@@ -131,7 +145,18 @@ const openfundFunds = [1, 2, 3, 4, 5].map((fund) => ({
   inceptionDate: `February ${10 + fund}, 202${fund}`,
   governanceToken: 'AST',
   votingRights: 'Pro-rata based on investment',
-  topHoldings: fund % 2 === 0 ? ['Ethereum', 'Solana', 'Avalanche', 'Cardano', 'Polkadot'] : ['Uniswap', 'Aave', 'Compound', 'MakerDAO', 'Curve']
+  topHoldings: fund % 2 === 0 ? ['Ethereum', 'Solana', 'Avalanche', 'Cardano', 'Polkadot'] : ['Uniswap', 'Aave', 'Compound', 'MakerDAO', 'Curve'],
+  holdingsBreakdown: fund % 2 === 0 
+    ? [
+        { name: 'Major Coins', value: 45, color: '#3b82f6' },  // blue
+        { name: 'Alt Coins', value: 40, color: '#8b5cf6' },    // purple
+        { name: 'Meme Coins', value: 15, color: '#f97316' }    // orange
+      ]
+    : [
+        { name: 'Major Coins', value: 30, color: '#3b82f6' },  // blue 
+        { name: 'Alt Coins', value: 60, color: '#8b5cf6' },    // purple
+        { name: 'Meme Coins', value: 10, color: '#f97316' }    // orange
+      ]
 }));
 
 const allFunds = [...traditionalFunds, ...cryptoFunds, ...openfundFunds];
@@ -449,16 +474,22 @@ const FundDetail = () => {
                 </Card>
               </TabsContent>
               
-              {!isDefiFund && (
-                <TabsContent value="holdings">
-                  <Card className="bg-card border-card">
-                    <CardHeader>
-                      <CardTitle>Top Holdings</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      {fund.topHoldings ? (
+              <TabsContent value="holdings">
+                <Card className="bg-card border-card">
+                  <CardHeader>
+                    <CardTitle>Holdings Breakdown</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    {fund.holdingsBreakdown ? (
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <FundHoldingsPieChart 
+                          holdings={fund.holdingsBreakdown}
+                          title="Asset Allocation"
+                        />
+                        
                         <div className="space-y-4">
-                          {fund.topHoldings.map((holding: string, index: number) => (
+                          <h3 className="text-lg font-medium mb-3">Top Holdings</h3>
+                          {fund.topHoldings && fund.topHoldings.map((holding: string, index: number) => (
                             <div key={index} className="flex items-center justify-between bg-card p-4 rounded-lg">
                               <div className="flex items-center">
                                 <div className="w-10 h-10 bg-card rounded-full flex items-center justify-center mr-3">
@@ -468,18 +499,20 @@ const FundDetail = () => {
                               </div>
                               <div className="text-right">
                                 <div className="font-semibold">{(20 - index * 3).toFixed(1)}%</div>
-                                <div className="text-xs text-gray-400">${((fund.aumValue || 1000000) * (20 - index * 3) / 100).toLocaleString()}</div>
+                                <div className="text-xs text-gray-400">
+                                  ${((fund.aumValue || 1000000) * (20 - index * 3) / 100).toLocaleString()}
+                                </div>
                               </div>
                             </div>
                           ))}
                         </div>
-                      ) : (
-                        <p className="text-gray-400">Detailed holdings information is not available for this fund.</p>
-                      )}
-                    </CardContent>
-                  </Card>
-                </TabsContent>
-              )}
+                      </div>
+                    ) : (
+                      <p className="text-gray-400">Detailed holdings information is not available for this fund.</p>
+                    )}
+                  </CardContent>
+                </Card>
+              </TabsContent>
             </Tabs>
           </div>
           
