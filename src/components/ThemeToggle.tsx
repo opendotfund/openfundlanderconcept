@@ -8,23 +8,42 @@ const ThemeToggle = () => {
   const [isDarkMode, setIsDarkMode] = useState(true);
 
   useEffect(() => {
-    // Initialize with dark mode on first load
-    document.documentElement.classList.add('dark');
+    // Check if theme preference is stored in localStorage
+    const savedTheme = localStorage.getItem('theme');
+    
+    if (savedTheme) {
+      // Apply the saved theme
+      const isDark = savedTheme === 'dark';
+      setIsDarkMode(isDark);
+      applyTheme(isDark);
+    } else {
+      // Initialize with dark mode on first load
+      applyTheme(true);
+      localStorage.setItem('theme', 'dark');
+    }
   }, []);
+
+  const applyTheme = (isDark: boolean) => {
+    if (isDark) {
+      document.documentElement.classList.add('dark');
+      document.documentElement.classList.remove('light');
+    } else {
+      document.documentElement.classList.add('light');
+      document.documentElement.classList.remove('dark');
+    }
+  };
 
   const toggleTheme = () => {
     const newMode = !isDarkMode;
     setIsDarkMode(newMode);
-
-    if (newMode) {
-      document.documentElement.classList.add('dark');
-      document.documentElement.classList.remove('light');
-      toast.success("Dark mode activated");
-    } else {
-      document.documentElement.classList.add('light');
-      document.documentElement.classList.remove('dark');
-      toast.success("Light mode activated");
-    }
+    
+    // Apply theme changes
+    applyTheme(newMode);
+    
+    // Save preference to localStorage
+    localStorage.setItem('theme', newMode ? 'dark' : 'light');
+    
+    toast.success(newMode ? "Dark mode activated" : "Light mode activated");
   };
 
   return (

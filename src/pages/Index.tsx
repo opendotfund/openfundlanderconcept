@@ -5,7 +5,6 @@ import Navbar from '@/components/Navbar';
 import Hero from '@/components/Hero';
 import Features from '@/components/Features';
 import ChartPreview from '@/components/ChartPreview';
-import HowItWorks from '@/components/HowItWorks';
 import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
 import { Hexagon, ArrowRight, Users, TrendingUp, Shield, DollarSign } from 'lucide-react';
@@ -208,8 +207,8 @@ const Index = () => {
                     <span className="text-muted-foreground">Physical Commodities</span>
                   </div>
                 </div>
-                <div className="mb-8 p-4 rounded-lg bg-background border border-border">
-                  <p className="text-xl font-semibold text-primary mb-1">Coming Soon!</p>
+                <div className="mb-8 p-6 rounded-lg bg-background border border-border text-center">
+                  <p className="text-2xl font-semibold text-primary mb-1">Coming Soon!</p>
                   <p className="text-muted-foreground">Join our waitlist to be notified when we launch.</p>
                 </div>
                 <Button 
@@ -252,7 +251,6 @@ const Index = () => {
         <div className="absolute bottom-0 right-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl -z-0"></div>
       </section>
       
-      <HowItWorks />
       <Footer />
     </div>
   );

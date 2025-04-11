@@ -12,7 +12,8 @@ import {
   Wallet, 
   Settings, 
   ChevronDown,
-  Share
+  Share,
+  Star
 } from 'lucide-react';
 import {
   DropdownMenu,
@@ -53,7 +54,7 @@ const Navbar = () => {
           </div>
           
           <div className="hidden md:block">
-            <div className="ml-10 flex items-center space-x-4">
+            <div className="ml-10 flex items-center space-x-4 bg-card px-6 py-2 rounded-full">
               {navigation.map((item) => (
                 <Link
                   key={item.name}
@@ -109,7 +110,7 @@ const Navbar = () => {
                   </DropdownMenuItem>
                   <DropdownMenuItem className="cursor-pointer">
                     <Link to="/account?tab=referral" className="flex items-center w-full">
-                      <Share className="mr-2 h-4 w-4" />
+                      <Star className="mr-2 h-4 w-4" />
                       <span>Referrals</span>
                     </Link>
                   </DropdownMenuItem>
@@ -148,7 +149,7 @@ const Navbar = () => {
       {/* Mobile menu */}
       {isMenuOpen && (
         <div className="md:hidden">
-          <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+          <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 rounded-2xl bg-card mt-2 mx-4">
             {navigation.map((item) => (
               <Link
                 key={item.name}

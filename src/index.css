@@ -93,6 +93,11 @@
     @apply border-border;
   }
 
+  html,
+  body {
+    @apply transition-colors duration-300;
+  }
+
   body {
     @apply bg-background text-foreground;
   }

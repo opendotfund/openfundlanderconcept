@@ -32,13 +32,13 @@ const Features = () => {
   ];
 
   return (
-    <section className="py-20 bg-card">
+    <section className="py-20 bg-card transition-colors duration-300">
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            <span className="text-primary">Multiple Markets</span>, One Platform
+            <span className="text-primary transition-colors duration-300">Multiple Markets</span>, One Platform
           </h2>
-          <p className="text-xl text-muted-foreground">
+          <p className="text-xl text-muted-foreground transition-colors duration-300">
             Take advantage of opportunities across all asset classes
           </p>
         </div>
@@ -47,11 +47,11 @@ const Features = () => {
           {features.map((feature, index) => (
             <div 
               key={index}
-              className="card-gradient p-6 rounded-xl border border-border hover:border-primary transition-colors duration-300"
+              className="card-gradient p-6 rounded-xl border border-border hover:border-primary transition-all duration-300"
             >
-              <div className="mb-4">{feature.icon}</div>
-              <h3 className="text-xl font-bold mb-3">{feature.title}</h3>
-              <p className="text-muted-foreground">{feature.description}</p>
+              <div className="mb-4 transition-colors duration-300">{feature.icon}</div>
+              <h3 className="text-xl font-bold mb-3 transition-colors duration-300">{feature.title}</h3>
+              <p className="text-muted-foreground transition-colors duration-300">{feature.description}</p>
             </div>
           ))}
         </div>
