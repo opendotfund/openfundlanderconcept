@@ -32,8 +32,8 @@ const Index = () => {
                 className="bg-openfund-green hover:bg-openfund-green-dark text-openfund-gray-dark text-lg px-8 py-6"
                 asChild
               >
-                <Link to="/assets">
-                  Explore Assets
+                <Link to="/trade">
+                  Trade Now
                 </Link>
               </Button>
               <Button 

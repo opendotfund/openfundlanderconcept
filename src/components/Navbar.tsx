@@ -11,9 +11,10 @@ const Navbar = () => {
   
   const navigation = [
     { name: 'Home', href: '/' },
-    { name: 'Assets', href: '/assets' },
+    { name: 'Trade', href: '/trade' },
     { name: 'Start a Fund', href: '/fund' },
     { name: 'Explore Funds', href: '/explore' },
+    { name: 'My Assets', href: '/my-assets' },
   ];
   
   const isActive = (path: string) => {
