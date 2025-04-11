@@ -10,7 +10,8 @@ import {
   LogOut, 
   Wallet, 
   Settings, 
-  ChevronDown 
+  ChevronDown,
+  Share
 } from 'lucide-react';
 import {
   DropdownMenu,
@@ -92,15 +93,21 @@ const Navbar = () => {
                     </Link>
                   </DropdownMenuItem>
                   <DropdownMenuItem className="text-gray-300 hover:text-white focus:text-white focus:bg-openfund-gray-light cursor-pointer">
-                    <Link to="/my-assets" className="flex items-center w-full">
+                    <Link to="/account?tab=portfolio" className="flex items-center w-full">
                       <Wallet className="mr-2 h-4 w-4" />
                       <span>My Portfolio</span>
                     </Link>
                   </DropdownMenuItem>
                   <DropdownMenuItem className="text-gray-300 hover:text-white focus:text-white focus:bg-openfund-gray-light cursor-pointer">
-                    <Link to="/" className="flex items-center w-full">
+                    <Link to="/account?tab=settings" className="flex items-center w-full">
                       <Settings className="mr-2 h-4 w-4" />
                       <span>Settings</span>
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem className="text-gray-300 hover:text-white focus:text-white focus:bg-openfund-gray-light cursor-pointer">
+                    <Link to="/account?tab=referral" className="flex items-center w-full">
+                      <Share className="mr-2 h-4 w-4" />
+                      <span>Referrals</span>
                     </Link>
                   </DropdownMenuItem>
                   <DropdownMenuSeparator className="bg-openfund-gray-light" />

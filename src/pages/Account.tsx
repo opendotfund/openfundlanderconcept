@@ -1,17 +1,17 @@
-
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { ArrowUpRight, ArrowDownRight, Briefcase, LineChart, Bitcoin, DollarSign, BarChart4, User, Wallet, Settings, Bell, FileCheck, FileText, BadgeCheck, ShieldCheck, CircleDollarSign } from 'lucide-react';
+import { ArrowUpRight, ArrowDownRight, Briefcase, LineChart, Bitcoin, DollarSign, BarChart4, User, Wallet, Settings, Bell, FileCheck, FileText, BadgeCheck, ShieldCheck, CircleDollarSign, Copy, Share, Link, Users } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { KYCForm } from '@/components/KYCForm';
+import { useToast } from '@/hooks/use-toast';
 
-// Mock data for portfolio overview (using the same data from MyAssets page)
 const portfolioData = {
   totalValue: 248536.42,
   dailyChange: 1243.21,
@@ -84,6 +84,43 @@ const AssetRow = ({ asset, type }: { asset: any, type: string }) => {
 };
 
 const Account = () => {
+  const [searchParams] = useSearchParams();
+  const tabParam = searchParams.get('tab');
+  const [activeTab, setActiveTab] = useState('portfolio');
+  const { toast } = useToast();
+
+  const referralCode = 'OF' + Math.random().toString(36).substring(2, 8).toUpperCase();
+
+  useEffect(() => {
+    if (tabParam === 'portfolio' || tabParam === 'activity' || 
+        tabParam === 'kyc' || tabParam === 'settings' || tabParam === 'referral') {
+      setActiveTab(tabParam);
+    }
+  }, [tabParam]);
+
+  const handleCopyReferralCode = () => {
+    navigator.clipboard.writeText(referralCode);
+    toast({
+      title: "Copied to clipboard!",
+      description: "Referral code copied. Share it with your friends.",
+    });
+  };
+
+  const handleShareReferral = () => {
+    if (navigator.share) {
+      navigator.share({
+        title: 'Join me on OpenFund',
+        text: `Use my referral code ${referralCode} to join OpenFund and we both earn rewards!`,
+        url: 'https://openfund.io',
+      })
+      .catch(() => {
+        handleCopyReferralCode();
+      });
+    } else {
+      handleCopyReferralCode();
+    }
+  };
+
   return (
     <div className="min-h-screen bg-openfund-gray-dark text-white">
       <Navbar />
@@ -91,7 +128,6 @@ const Account = () => {
         <h1 className="text-3xl font-bold mb-8">My Account</h1>
         
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-          {/* Sidebar */}
           <div className="md:col-span-1">
             <Card className="bg-openfund-gray-medium border-openfund-gray-light">
               <CardContent className="p-6">
@@ -105,23 +141,44 @@ const Account = () => {
                 </div>
                 
                 <div className="space-y-2 border-t border-openfund-gray-light pt-4">
-                  <button className="w-full text-left px-3 py-2 rounded flex items-center space-x-3 bg-openfund-gray-light/20 text-openfund-green">
+                  <button 
+                    className={`w-full text-left px-3 py-2 rounded flex items-center space-x-3 ${activeTab === 'portfolio' ? 'bg-openfund-gray-light/20 text-openfund-green' : 'hover:bg-openfund-gray-light/20'}`}
+                    onClick={() => setActiveTab('portfolio')}
+                  >
                     <User size={18} />
                     <span>Profile</span>
                   </button>
-                  <button className="w-full text-left px-3 py-2 rounded flex items-center space-x-3 hover:bg-openfund-gray-light/20">
+                  <button 
+                    className={`w-full text-left px-3 py-2 rounded flex items-center space-x-3 ${activeTab === 'portfolio' ? 'bg-openfund-gray-light/20 text-openfund-green' : 'hover:bg-openfund-gray-light/20'}`}
+                    onClick={() => setActiveTab('portfolio')}
+                  >
                     <Wallet size={18} />
                     <span>Portfolio</span>
                   </button>
-                  <button className="w-full text-left px-3 py-2 rounded flex items-center space-x-3 hover:bg-openfund-gray-light/20">
+                  <button 
+                    className={`w-full text-left px-3 py-2 rounded flex items-center space-x-3 ${activeTab === 'kyc' ? 'bg-openfund-gray-light/20 text-openfund-green' : 'hover:bg-openfund-gray-light/20'}`}
+                    onClick={() => setActiveTab('kyc')}
+                  >
                     <BadgeCheck size={18} />
                     <span>KYC</span>
                   </button>
-                  <button className="w-full text-left px-3 py-2 rounded flex items-center space-x-3 hover:bg-openfund-gray-light/20">
+                  <button 
+                    className={`w-full text-left px-3 py-2 rounded flex items-center space-x-3 ${activeTab === 'referral' ? 'bg-openfund-gray-light/20 text-openfund-green' : 'hover:bg-openfund-gray-light/20'}`}
+                    onClick={() => setActiveTab('referral')}
+                  >
+                    <Share size={18} />
+                    <span>Referrals</span>
+                  </button>
+                  <button 
+                    className={`w-full text-left px-3 py-2 rounded flex items-center space-x-3 ${activeTab === 'settings' ? 'bg-openfund-gray-light/20 text-openfund-green' : 'hover:bg-openfund-gray-light/20'}`}
+                    onClick={() => setActiveTab('settings')}
+                  >
                     <Settings size={18} />
                     <span>Settings</span>
                   </button>
-                  <button className="w-full text-left px-3 py-2 rounded flex items-center space-x-3 hover:bg-openfund-gray-light/20">
+                  <button 
+                    className="w-full text-left px-3 py-2 rounded flex items-center space-x-3 hover:bg-openfund-gray-light/20"
+                  >
                     <Bell size={18} />
                     <span>Notifications</span>
                   </button>
@@ -130,18 +187,17 @@ const Account = () => {
             </Card>
           </div>
           
-          {/* Main Content */}
           <div className="md:col-span-3">
-            <Tabs defaultValue="portfolio" className="w-full">
-              <TabsList className="grid w-full grid-cols-4 bg-openfund-gray-medium">
+            <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+              <TabsList className="grid w-full grid-cols-5 bg-openfund-gray-medium">
                 <TabsTrigger value="portfolio">Portfolio</TabsTrigger>
                 <TabsTrigger value="activity">Activity</TabsTrigger>
                 <TabsTrigger value="kyc">KYC</TabsTrigger>
+                <TabsTrigger value="referral">Referrals</TabsTrigger>
                 <TabsTrigger value="settings">Settings</TabsTrigger>
               </TabsList>
               
               <TabsContent value="portfolio" className="space-y-6">
-                {/* Portfolio Overview */}
                 <Card className="bg-openfund-gray-medium border-openfund-gray-light">
                   <CardHeader className="pb-2">
                     <CardTitle>Portfolio Overview</CardTitle>
@@ -204,9 +260,7 @@ const Account = () => {
                   </CardContent>
                 </Card>
                 
-                {/* Assets */}
                 <div className="space-y-6">
-                  {/* Stocks */}
                   <Card className="bg-openfund-gray-medium border-openfund-gray-light">
                     <CardHeader className="flex flex-row justify-between items-center pb-2">
                       <div className="flex items-center gap-2">
@@ -226,7 +280,6 @@ const Account = () => {
                     </CardContent>
                   </Card>
                   
-                  {/* Crypto */}
                   <Card className="bg-openfund-gray-medium border-openfund-gray-light">
                     <CardHeader className="flex flex-row justify-between items-center pb-2">
                       <div className="flex items-center gap-2">
@@ -246,7 +299,6 @@ const Account = () => {
                     </CardContent>
                   </Card>
                   
-                  {/* Commodities */}
                   <Card className="bg-openfund-gray-medium border-openfund-gray-light">
                     <CardHeader className="flex flex-row justify-between items-center pb-2">
                       <div className="flex items-center gap-2">
@@ -266,7 +318,6 @@ const Account = () => {
                     </CardContent>
                   </Card>
                   
-                  {/* Funds */}
                   <Card className="bg-openfund-gray-medium border-openfund-gray-light">
                     <CardHeader className="flex flex-row justify-between items-center pb-2">
                       <div className="flex items-center gap-2">
@@ -351,6 +402,88 @@ const Account = () => {
                   </CardHeader>
                   <CardContent>
                     <KYCForm />
+                  </CardContent>
+                </Card>
+              </TabsContent>
+              
+              <TabsContent value="referral">
+                <Card className="bg-openfund-gray-medium border-openfund-gray-light mb-6">
+                  <CardHeader>
+                    <CardTitle className="flex items-center">
+                      <Users size={20} className="mr-2 text-openfund-green" />
+                      Referral Program
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="space-y-6">
+                      <div>
+                        <h3 className="text-xl font-medium mb-2">Earn with your network</h3>
+                        <p className="text-gray-300">
+                          Share your referral code with friends and earn rewards when they join OpenFund:
+                        </p>
+                        <ul className="list-disc ml-5 mt-3 space-y-1 text-gray-300">
+                          <li>Earn <span className="text-openfund-green font-medium">10%</span> of trading fees from referred users</li>
+                          <li>Boost your <span className="text-openfund-green font-medium">$OF Airdrop</span> allocation points</li>
+                          <li>Both you and your referral receive <span className="text-openfund-green font-medium">$25 USDC</span> trading credit</li>
+                        </ul>
+                      </div>
+
+                      <div className="bg-openfund-gray-dark p-5 rounded-lg">
+                        <h4 className="text-lg font-medium mb-3">Your Referral Code</h4>
+                        <div className="flex items-center space-x-2">
+                          <div className="bg-openfund-gray-light/20 rounded px-4 py-2 flex-1 font-mono text-center text-xl">
+                            {referralCode}
+                          </div>
+                          <Button 
+                            variant="outline" 
+                            size="icon" 
+                            className="hover:bg-openfund-gray-light/30"
+                            onClick={handleCopyReferralCode}
+                          >
+                            <Copy size={18} />
+                          </Button>
+                        </div>
+                        
+                        <div className="mt-4">
+                          <Button 
+                            className="w-full bg-openfund-green hover:bg-openfund-green-dark text-openfund-gray-dark flex items-center justify-center space-x-2"
+                            onClick={handleShareReferral}
+                          >
+                            <Share className="h-4 w-4" />
+                            <span>Share Your Referral Link</span>
+                          </Button>
+                        </div>
+                      </div>
+
+                      <div className="space-y-4">
+                        <h4 className="text-lg font-medium">Your Referral Stats</h4>
+                        <div className="grid grid-cols-3 gap-4">
+                          <div className="bg-openfund-gray-dark p-4 rounded-lg text-center">
+                            <p className="text-xl font-bold text-openfund-green mb-1">0</p>
+                            <p className="text-gray-400 text-sm">Total Referrals</p>
+                          </div>
+                          <div className="bg-openfund-gray-dark p-4 rounded-lg text-center">
+                            <p className="text-xl font-bold text-openfund-green mb-1">0 USDC</p>
+                            <p className="text-gray-400 text-sm">Earned Rewards</p>
+                          </div>
+                          <div className="bg-openfund-gray-dark p-4 rounded-lg text-center">
+                            <p className="text-xl font-bold text-openfund-green mb-1">0</p>
+                            <p className="text-gray-400 text-sm">Airdrop Points</p>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div>
+                        <h4 className="text-lg font-medium mb-3">How It Works</h4>
+                        <ol className="space-y-3 text-gray-300 ml-5 list-decimal">
+                          <li>Share your unique referral code with friends and colleagues</li>
+                          <li>They sign up using your code during registration</li>
+                          <li>Both you and your referral receive $25 USDC trading credit</li>
+                          <li>You earn 10% of their trading fees automatically</li>
+                          <li>Both accounts receive additional $OF airdrop points</li>
+                        </ol>
+                      </div>
+                    </div>
                   </CardContent>
                 </Card>
               </TabsContent>
