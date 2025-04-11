@@ -112,17 +112,25 @@ CommandSeparator.displayName = CommandPrimitive.Separator.displayName
 const CommandItem = React.forwardRef<
   React.ElementRef<typeof CommandPrimitive.Item>,
   React.ComponentPropsWithoutRef<typeof CommandPrimitive.Item> & { disabled?: boolean }
->(({ className, disabled, ...props }, ref) => (
-  <CommandPrimitive.Item
-    ref={ref}
-    disabled={disabled}
-    className={cn(
-      "relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none aria-selected:bg-accent aria-selected:text-accent-foreground data-[disabled=true]:pointer-events-none data-[disabled=true]:opacity-50",
-      className
-    )}
-    {...props}
-  />
-))
+>(({ className, disabled, ...props }, ref) => {
+  // Fix: Pass a default object for dataset to ensure it exists
+  const itemProps = {
+    'data-disabled': disabled ? 'true' : undefined,
+    ...props
+  };
+  
+  return (
+    <CommandPrimitive.Item
+      ref={ref}
+      disabled={disabled}
+      className={cn(
+        "relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none aria-selected:bg-accent aria-selected:text-accent-foreground data-[disabled=true]:pointer-events-none data-[disabled=true]:opacity-50",
+        className
+      )}
+      {...itemProps}
+    />
+  );
+})
 
 CommandItem.displayName = CommandPrimitive.Item.displayName
 
