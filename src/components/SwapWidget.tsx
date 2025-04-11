@@ -1,5 +1,6 @@
+
 import React, { useState, useEffect } from 'react';
-import { ArrowDown, Settings, ArrowRight } from 'lucide-react';
+import { ArrowDown, Settings, ArrowRight, Plus } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { 
@@ -13,6 +14,8 @@ import { Card } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Slider } from "@/components/ui/slider";
+import { Switch } from "@/components/ui/switch";
+import { Label } from "@/components/ui/label";
 
 interface SwapWidgetProps {
   selectedAsset?: string;
@@ -30,6 +33,8 @@ export const SwapWidget = ({ selectedAsset = 'bitcoin' }: SwapWidgetProps) => {
   const [slippage, setSlippage] = useState<number>(0.5);
   const [gasOption, setGasOption] = useState<'standard' | 'fast' | 'rapid'>('standard');
   const [limitPrice, setLimitPrice] = useState<string>('');
+  const [showTakeProfit, setShowTakeProfit] = useState<boolean>(false);
+  const [showStopLoss, setShowStopLoss] = useState<boolean>(false);
 
   // Sample exchange rate calculation with more accurate prices
   const calculateExchangeRate = (from: string, to: string, amount: string): string => {
@@ -150,11 +155,11 @@ export const SwapWidget = ({ selectedAsset = 'bitcoin' }: SwapWidgetProps) => {
       orderDetails.push(`Limit order: ${fromAmount} ${fromAsset.toUpperCase()} for ${toAmount} ${toAsset.toUpperCase()} at ${limitPrice} ${toAsset.toUpperCase()}`);
     }
     
-    if (takeProfitPrice && parseFloat(takeProfitPrice) > 0) {
+    if (showTakeProfit && takeProfitPrice && parseFloat(takeProfitPrice) > 0) {
       orderDetails.push(`Take Profit at: ${takeProfitPrice}`);
     }
     
-    if (stopLossPrice && parseFloat(stopLossPrice) > 0) {
+    if (showStopLoss && stopLossPrice && parseFloat(stopLossPrice) > 0) {
       orderDetails.push(`Stop Loss at: ${stopLossPrice}`);
     }
 
@@ -181,6 +186,14 @@ export const SwapWidget = ({ selectedAsset = 'bitcoin' }: SwapWidgetProps) => {
       case 'fast': return '0.00300 ETH ($4.80)';
       default: return '0.00150 ETH ($2.40)';
     }
+  };
+
+  const toggleTakeProfit = () => {
+    setShowTakeProfit(!showTakeProfit);
+  };
+
+  const toggleStopLoss = () => {
+    setShowStopLoss(!showStopLoss);
   };
 
   return (
@@ -350,32 +363,63 @@ export const SwapWidget = ({ selectedAsset = 'bitcoin' }: SwapWidgetProps) => {
           </div>
         )}
 
-        {/* Take Profit and Stop Loss */}
-        <div className="grid grid-cols-2 gap-3">
-          <div className="bg-secondary p-3 rounded-lg">
-            <div className="mb-2">
-              <label className="text-muted-foreground text-sm">Take Profit (TP)</label>
+        {/* Optional Take Profit and Stop Loss toggles */}
+        <div className="space-y-3">
+          {/* Take Profit Toggle */}
+          <div className="flex items-center justify-between bg-secondary p-3 rounded-lg">
+            <div className="flex items-center space-x-2">
+              <Label htmlFor="take-profit" className="text-muted-foreground text-sm">Take Profit</Label>
+              <Switch
+                id="take-profit"
+                checked={showTakeProfit}
+                onCheckedChange={toggleTakeProfit}
+              />
             </div>
-            <Input
-              type="number"
-              placeholder="Price"
-              value={takeProfitPrice}
-              onChange={handleTakeProfitChange}
-              className="bg-background border-border"
-            />
           </div>
-          <div className="bg-secondary p-3 rounded-lg">
-            <div className="mb-2">
-              <label className="text-muted-foreground text-sm">Stop Loss (SL)</label>
+
+          {/* Take Profit Input (conditionally rendered) */}
+          {showTakeProfit && (
+            <div className="bg-secondary p-3 rounded-lg">
+              <div className="mb-2">
+                <label className="text-muted-foreground text-sm">Take Profit Price</label>
+              </div>
+              <Input
+                type="number"
+                placeholder="Price"
+                value={takeProfitPrice}
+                onChange={handleTakeProfitChange}
+                className="bg-background border-border"
+              />
             </div>
-            <Input
-              type="number"
-              placeholder="Price"
-              onChange={handleStopLossChange}
-              value={stopLossPrice}
-              className="bg-background border-border"
-            />
+          )}
+
+          {/* Stop Loss Toggle */}
+          <div className="flex items-center justify-between bg-secondary p-3 rounded-lg">
+            <div className="flex items-center space-x-2">
+              <Label htmlFor="stop-loss" className="text-muted-foreground text-sm">Stop Loss</Label>
+              <Switch
+                id="stop-loss"
+                checked={showStopLoss}
+                onCheckedChange={toggleStopLoss}
+              />
+            </div>
           </div>
+
+          {/* Stop Loss Input (conditionally rendered) */}
+          {showStopLoss && (
+            <div className="bg-secondary p-3 rounded-lg">
+              <div className="mb-2">
+                <label className="text-muted-foreground text-sm">Stop Loss Price</label>
+              </div>
+              <Input
+                type="number"
+                placeholder="Price"
+                onChange={handleStopLossChange}
+                value={stopLossPrice}
+                className="bg-background border-border"
+              />
+            </div>
+          )}
         </div>
 
         {/* Exchange rate */}

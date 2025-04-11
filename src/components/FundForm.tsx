@@ -63,7 +63,7 @@ export const FundForm = () => {
             <FormItem>
               <FormLabel>Fund Name</FormLabel>
               <FormControl>
-                <Input placeholder="Alpha Seekers" {...field} className="bg-openfund-gray-dark" />
+                <Input placeholder="Alpha Seekers" {...field} className="bg-background border-input" />
               </FormControl>
               <FormDescription>
                 Choose a unique name for your fund
@@ -82,7 +82,7 @@ export const FundForm = () => {
               <FormControl>
                 <Textarea 
                   placeholder="Describe your fund strategy, goals, and value proposition..."
-                  className="min-h-[120px] bg-openfund-gray-dark"
+                  className="min-h-[120px] bg-background border-input"
                   {...field} 
                 />
               </FormControl>
@@ -103,7 +103,7 @@ export const FundForm = () => {
                   defaultValue={field.value}
                 >
                   <FormControl>
-                    <SelectTrigger className="bg-openfund-gray-dark">
+                    <SelectTrigger className="bg-background border-input">
                       <SelectValue placeholder="Select a strategy" />
                     </SelectTrigger>
                   </FormControl>
@@ -131,7 +131,7 @@ export const FundForm = () => {
                   <Input 
                     type="number" 
                     placeholder="100000"
-                    className="bg-openfund-gray-dark"
+                    className="bg-background border-input"
                     {...field} 
                   />
                 </FormControl>
@@ -152,7 +152,7 @@ export const FundForm = () => {
                   <Input 
                     type="number" 
                     placeholder="1000"
-                    className="bg-openfund-gray-dark"
+                    className="bg-background border-input"
                     {...field} 
                   />
                 </FormControl>
@@ -171,7 +171,7 @@ export const FundForm = () => {
                   <Input 
                     type="number" 
                     placeholder="2"
-                    className="bg-openfund-gray-dark"
+                    className="bg-background border-input"
                     {...field} 
                   />
                 </FormControl>
@@ -190,7 +190,7 @@ export const FundForm = () => {
                   <Input 
                     type="number" 
                     placeholder="20"
-                    className="bg-openfund-gray-dark"
+                    className="bg-background border-input"
                     {...field} 
                   />
                 </FormControl>
@@ -202,7 +202,7 @@ export const FundForm = () => {
         
         <Button 
           type="submit" 
-          className="w-full bg-openfund-green hover:bg-openfund-green-dark text-openfund-gray-dark"
+          className="w-full"
         >
           Create Fund
         </Button>

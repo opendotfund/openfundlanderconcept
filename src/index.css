@@ -170,4 +170,19 @@
   .light .fund-share-widget button {
     @apply bg-primary hover:bg-primary/90 text-primary-foreground;
   }
+  
+  /* Form input styling consistency */
+  .light input, 
+  .light textarea,
+  .light select,
+  .light [class*="select-trigger"] {
+    @apply bg-background border-input text-foreground;
+  }
+  
+  .dark input, 
+  .dark textarea,
+  .dark select,
+  .dark [class*="select-trigger"] {
+    @apply bg-background border-input text-foreground;
+  }
 }
