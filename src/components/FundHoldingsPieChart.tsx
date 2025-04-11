@@ -95,7 +95,7 @@ export const FundHoldingsPieChart: React.FC<FundHoldingsPieChartProps> = ({
         <div className="w-full" style={{ height: chartHeight }}>
           <ChartContainer config={config} className="h-full w-full">
             <ResponsiveContainer width="100%" height="100%">
-              <PieChart margin={isMobile ? { top: 0, right: 0, bottom: 10, left: 0 } : { top: 5, right: 10, left: 10, bottom: 15 }}>
+              <PieChart margin={isMobile ? { top: 0, right: 0, bottom: 25, left: 0 } : { top: 5, right: 10, left: 10, bottom: 25 }}>
                 <Pie
                   data={enhancedHoldings}
                   cx="50%"
@@ -133,8 +133,8 @@ export const FundHoldingsPieChart: React.FC<FundHoldingsPieChartProps> = ({
                   verticalAlign={legendVerticalAlign}
                   align="center"
                   wrapperStyle={isMobile ? 
-                    { fontSize: "10px", marginTop: "0px", width: "100%" } : 
-                    { marginTop: "10px" }
+                    { fontSize: "10px", marginTop: "10px", width: "100%" } : 
+                    { marginTop: "15px" }
                   }
                   iconSize={isMobile ? 8 : 10}
                   formatter={(value) => {
