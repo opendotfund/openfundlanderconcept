@@ -36,7 +36,26 @@ export const FundHoldingsPieChart: React.FC<FundHoldingsPieChartProps> = ({
     );
   }
 
-  const config = holdings.reduce((acc, item) => {
+  // Improve color contrast for crypto category visualization
+  const enhancedHoldings = holdings.map(item => {
+    // Enhance colors for better differentiation between crypto categories
+    let enhancedColor = item.color;
+    
+    if (item.name === "Major Coins") {
+      enhancedColor = "#3b82f6"; // Bright blue for major coins
+    } else if (item.name === "Alt Coins") {
+      enhancedColor = "#8b5cf6"; // Vibrant purple for alt coins
+    } else if (item.name === "Meme Coins") {
+      enhancedColor = "#f97316"; // Strong orange for meme coins
+    }
+    
+    return {
+      ...item,
+      color: enhancedColor
+    };
+  });
+
+  const config = enhancedHoldings.reduce((acc, item) => {
     acc[item.name] = { 
       label: item.name,
       color: item.color
@@ -55,7 +74,7 @@ export const FundHoldingsPieChart: React.FC<FundHoldingsPieChartProps> = ({
             <ResponsiveContainer width="100%" height="100%">
               <PieChart>
                 <Pie
-                  data={holdings}
+                  data={enhancedHoldings}
                   cx="50%"
                   cy="50%"
                   labelLine={false}
@@ -63,8 +82,8 @@ export const FundHoldingsPieChart: React.FC<FundHoldingsPieChartProps> = ({
                   fill="#8884d8"
                   dataKey="value"
                 >
-                  {holdings.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={entry.color} />
+                  {enhancedHoldings.map((entry, index) => (
+                    <Cell key={`cell-${index}`} fill={entry.color} strokeWidth={2} />
                   ))}
                 </Pie>
                 <Tooltip
@@ -88,6 +107,9 @@ export const FundHoldingsPieChart: React.FC<FundHoldingsPieChartProps> = ({
                   verticalAlign="bottom" 
                   align="center"
                   className="mt-4"
+                  formatter={(value) => {
+                    return <span className="text-sm font-medium">{value}</span>;
+                  }}
                 />
               </PieChart>
             </ResponsiveContainer>
