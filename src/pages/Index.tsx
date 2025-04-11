@@ -8,7 +8,7 @@ import ChartPreview from '@/components/ChartPreview';
 import HowItWorks from '@/components/HowItWorks';
 import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
-import { Hexagon, ArrowRight } from 'lucide-react';
+import { Hexagon, ArrowRight, Users, TrendingUp, Shield, DollarSign } from 'lucide-react';
 
 const Index = () => {
   return (
@@ -17,6 +17,117 @@ const Index = () => {
       <Hero />
       <Features />
       <ChartPreview />
+      
+      {/* Decentralized Funds Section */}
+      <section className="py-20 bg-card relative overflow-hidden">
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="max-w-5xl mx-auto">
+            <div className="text-center mb-10">
+              <h2 className="text-3xl md:text-4xl font-bold mb-4">
+                <span className="text-primary">Decentralized</span> Fund Management
+              </h2>
+              <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+                Crowdsource capital for your trading strategies or invest in top-performing traders
+              </p>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+              <div className="bg-background p-6 rounded-xl border border-border hover:border-primary transition-colors duration-300">
+                <div className="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center mb-4">
+                  <Users className="text-primary" size={24} />
+                </div>
+                <h3 className="text-xl font-bold mb-3">Pooled Capital</h3>
+                <p className="text-muted-foreground mb-4">
+                  Raise funds from hundreds of investors to execute your trading strategy at scale
+                </p>
+                <div className="flex justify-between items-center pt-3 border-t border-border">
+                  <span className="text-sm text-muted-foreground">Active funds</span>
+                  <span className="text-primary font-bold">324</span>
+                </div>
+              </div>
+              
+              <div className="bg-background p-6 rounded-xl border border-border hover:border-primary transition-colors duration-300">
+                <div className="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center mb-4">
+                  <TrendingUp className="text-primary" size={24} />
+                </div>
+                <h3 className="text-xl font-bold mb-3">Track Record</h3>
+                <p className="text-muted-foreground mb-4">
+                  Build a verifiable on-chain performance history to attract more investors
+                </p>
+                <div className="flex justify-between items-center pt-3 border-t border-border">
+                  <span className="text-sm text-muted-foreground">Average ROI</span>
+                  <span className="text-primary font-bold">+32.7%</span>
+                </div>
+              </div>
+              
+              <div className="bg-background p-6 rounded-xl border border-border hover:border-primary transition-colors duration-300">
+                <div className="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center mb-4">
+                  <Shield className="text-primary" size={24} />
+                </div>
+                <h3 className="text-xl font-bold mb-3">Smart Contracts</h3>
+                <p className="text-muted-foreground mb-4">
+                  Secure, transparent fund management with automated performance fees
+                </p>
+                <div className="flex justify-between items-center pt-3 border-t border-border">
+                  <span className="text-sm text-muted-foreground">Total locked value</span>
+                  <span className="text-primary font-bold">$43.2M</span>
+                </div>
+              </div>
+            </div>
+            
+            <div className="bg-background p-8 rounded-xl border border-border relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-primary/10 rounded-full blur-3xl -z-0"></div>
+              <div className="grid md:grid-cols-2 gap-8 items-center relative z-10">
+                <div>
+                  <h3 className="text-2xl font-bold mb-4">Top Performing Strategies</h3>
+                  <p className="text-muted-foreground mb-6">
+                    Browse through verified trading strategies across cryptocurrencies, stocks, and commodities. Invest in funds that match your risk profile.
+                  </p>
+                  <Button 
+                    className="bg-primary hover:bg-primary/90 text-primary-foreground flex items-center"
+                    asChild
+                  >
+                    <Link to="/explore">
+                      Explore Strategies <ArrowRight size={16} className="ml-2" />
+                    </Link>
+                  </Button>
+                </div>
+                <div className="space-y-4">
+                  {[
+                    { name: "Crypto Momentum", return: "+47.3%", aum: "$3.2M", traders: 1876 },
+                    { name: "Commodity Futures", return: "+31.8%", aum: "$5.7M", traders: 2341 },
+                    { name: "Global Stock Index", return: "+22.5%", aum: "$8.1M", traders: 3502 }
+                  ].map((fund, idx) => (
+                    <div key={idx} className="flex items-center justify-between p-3 bg-card rounded-lg border border-border">
+                      <div>
+                        <div className="font-medium">{fund.name}</div>
+                        <div className="text-xs text-muted-foreground">{fund.traders} traders</div>
+                      </div>
+                      <div className="text-right">
+                        <div className="text-primary font-bold">{fund.return}</div>
+                        <div className="text-xs text-muted-foreground">AUM: {fund.aum}</div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+            
+            <div className="flex justify-center mt-10">
+              <Button 
+                variant="outline" 
+                className="border-primary text-primary hover:bg-primary/10"
+                asChild
+              >
+                <Link to="/fund">
+                  Create Your Own Fund <DollarSign size={16} className="ml-2" />
+                </Link>
+              </Button>
+            </div>
+          </div>
+        </div>
+        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-primary/5 rounded-full blur-3xl -z-0"></div>
+      </section>
       
       {/* CTA Section */}
       <section className="py-20 bg-background relative overflow-hidden">

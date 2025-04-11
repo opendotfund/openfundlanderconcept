@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { Sun, Moon } from 'lucide-react';
 import { Toggle } from "@/components/ui/toggle";
+import { toast } from "sonner";
 
 const ThemeToggle = () => {
   const [isDarkMode, setIsDarkMode] = useState(true);
@@ -18,9 +19,11 @@ const ThemeToggle = () => {
     if (newMode) {
       document.documentElement.classList.add('dark');
       document.documentElement.classList.remove('light');
+      toast.success("Dark mode activated");
     } else {
       document.documentElement.classList.add('light');
       document.documentElement.classList.remove('dark');
+      toast.success("Light mode activated");
     }
   };
 

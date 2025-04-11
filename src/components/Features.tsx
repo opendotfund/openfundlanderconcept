@@ -10,35 +10,35 @@ import {
 const Features = () => {
   const features = [
     {
-      icon: <BarChart3 className="w-12 h-12 text-openfund-green" />,
+      icon: <BarChart3 className="w-12 h-12 text-primary" />,
       title: "Commodities",
       description: "Trade gold, silver, oil, and more with competitive spreads and high liquidity."
     },
     {
-      icon: <TrendingUp className="w-12 h-12 text-openfund-green" />,
+      icon: <TrendingUp className="w-12 h-12 text-primary" />,
       title: "Stocks",
       description: "Access global markets with fractional shares and zero commission trading."
     },
     {
-      icon: <GanttChartSquare className="w-12 h-12 text-openfund-green" />,
+      icon: <GanttChartSquare className="w-12 h-12 text-primary" />,
       title: "Crypto",
       description: "Buy, sell, and store cryptocurrencies with security and ease."
     },
     {
-      icon: <Shield className="w-12 h-12 text-openfund-green" />,
+      icon: <Shield className="w-12 h-12 text-primary" />,
       title: "Security",
       description: "Your funds are secured with advanced encryption and multi-layer protection."
     }
   ];
 
   return (
-    <section className="py-20 bg-openfund-gray-dark">
+    <section className="py-20 bg-card">
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            <span className="text-openfund-green">Multiple Markets</span>, One Platform
+            <span className="text-primary">Multiple Markets</span>, One Platform
           </h2>
-          <p className="text-xl text-gray-300">
+          <p className="text-xl text-muted-foreground">
             Take advantage of opportunities across all asset classes
           </p>
         </div>
@@ -47,11 +47,11 @@ const Features = () => {
           {features.map((feature, index) => (
             <div 
               key={index}
-              className="card-gradient p-6 rounded-xl border border-openfund-gray-light hover:border-openfund-green transition-colors duration-300"
+              className="card-gradient p-6 rounded-xl border border-border hover:border-primary transition-colors duration-300"
             >
               <div className="mb-4">{feature.icon}</div>
               <h3 className="text-xl font-bold mb-3">{feature.title}</h3>
-              <p className="text-gray-300">{feature.description}</p>
+              <p className="text-muted-foreground">{feature.description}</p>
             </div>
           ))}
         </div>
