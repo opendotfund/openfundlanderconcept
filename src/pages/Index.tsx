@@ -6,6 +6,7 @@ import Hero from '@/components/Hero';
 import Features from '@/components/Features';
 import ChartPreview from '@/components/ChartPreview';
 import Footer from '@/components/Footer';
+import HowItWorks from '@/components/HowItWorks';
 import { Button } from '@/components/ui/button';
 import { Hexagon, ArrowRight, Users, TrendingUp, Shield, DollarSign } from 'lucide-react';
 
@@ -15,6 +16,7 @@ const Index = () => {
       <Navbar />
       <Hero />
       <Features />
+      <HowItWorks />
       <ChartPreview />
       
       {/* Decentralized Funds Section */}
