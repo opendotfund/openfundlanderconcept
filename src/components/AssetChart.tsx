@@ -70,8 +70,9 @@ const fetchPriceData = async (asset: string, timeframe: string, isPortfolio: boo
         timeframe === '90d' ? 90 : 
         365;
       
-      // Generate realistic portfolio performance data
-      let lastValue = portfolioBaseValue;
+      // Generate realistic portfolio performance data with overall upward trend
+      let lastValue = portfolioBaseValue * 0.8; // Start at 80% of current value to show growth
+      const targetValue = portfolioBaseValue;
       
       // Different volatility for different timeframes
       const getVolatilityFactor = () => {
@@ -90,25 +91,29 @@ const fetchPriceData = async (asset: string, timeframe: string, isPortfolio: boo
       // Seed value for consistent random generation
       const seedValue = portfolioName.length;
       
-      // Add some market patterns based on timeframe
+      // Add some market patterns based on timeframe but ensure overall upward trend
       const getTrendFactor = () => {
-        // Different trends for different timeframes
+        // Different trends for different timeframes, but with more positive than negative factors
         if (timeframe === '1h') {
-          // More short term volatility
-          return [0.3, -0.2, 0.1, -0.3, 0.2]; 
+          // More short term volatility but overall positive
+          return [0.4, -0.1, 0.3, -0.1, 0.3]; 
         } else if (timeframe === '24h') {
-          // Daily pattern with morning rise and evening decline
-          return [0.3, 0.2, 0.1, -0.1, -0.2, 0.1];
+          // Daily pattern with more rises than declines
+          return [0.4, 0.3, -0.1, 0.2, -0.1, 0.2];
         } else if (timeframe === '7d') {
-          // Weekly pattern with midweek strength
-          return [0.1, 0.3, 0.2, 0.1, -0.1, -0.2, 0.1];
+          // Weekly pattern with midweek strength and overall positive
+          return [0.2, 0.4, 0.3, -0.1, 0.2, -0.1, 0.3];
         } else {
-          // Monthly trend is generally up for Alpha Seekers
-          return [0.15];
+          // Monthly trend is clearly up with occasional corrections
+          return [0.25, 0.2, -0.1, 0.15, -0.05, 0.2];
         }
       };
       
       const trendFactors = getTrendFactor();
+      
+      // Calculate required overall growth rate to reach target value
+      const growthNeeded = targetValue - lastValue;
+      const averageGrowthPerPoint = growthNeeded / dataPoints;
       
       const data: PriceData[] = [];
       for (let i = 0; i < dataPoints; i++) {
@@ -116,15 +121,23 @@ const fetchPriceData = async (asset: string, timeframe: string, isPortfolio: boo
         const trendIndex = i % trendFactors.length;
         const trendFactor = trendFactors[trendIndex];
         
-        // Create some market cycles
-        const cycle = Math.sin(i / (dataPoints * 0.2)) * 0.2;
+        // Create some market cycles with overall upward bias
+        const cycle = Math.sin(i / (dataPoints * 0.2)) * 0.1;
+        
+        // Base change includes the average growth needed plus volatility
+        const baseChange = averageGrowthPerPoint * (1 + (Math.random() * 0.5));
         
         // Combine different factors for more realistic movements
-        const change = (Math.random() - 0.4 + trendFactor + cycle) * variance;
-        lastValue = Math.max(portfolioBaseValue * 0.85, lastValue + change);
+        const change = baseChange + (Math.random() - 0.4 + trendFactor + cycle) * variance;
         
-        // Ensure we end at approximately the correct end value for 90d
-        if (i === dataPoints - 1 && timeframe === '90d') {
+        // Ensure occasional dips but overall upward trend
+        // 70% chance of going up, 30% chance of going down on any given point
+        const finalChange = Math.random() > 0.3 ? Math.abs(change) : -Math.abs(change) * 0.5;
+        
+        lastValue = Math.max(portfolioBaseValue * 0.7, lastValue + finalChange);
+        
+        // Ensure we end at approximately the correct end value
+        if (i === dataPoints - 1) {
           lastValue = endValue;
         }
         
