@@ -18,15 +18,21 @@ interface PriceData {
   volume: number;
 }
 
+interface ChartDataPoint {
+  date: string;
+  value: number;
+}
+
 interface AssetChartProps {
   asset?: string;
   timeframe: string;
   isPortfolio?: boolean;
   portfolioName?: string;
+  portfolioData?: ChartDataPoint[];
 }
 
 // Function to fetch price data for assets or portfolio
-const fetchPriceData = async (asset: string, timeframe: string, isPortfolio: boolean = false, portfolioName: string = ''): Promise<PriceData[]> => {
+const fetchPriceData = async (asset: string, timeframe: string, isPortfolio: boolean = false, portfolioName: string = '', portfolioData?: ChartDataPoint[]): Promise<PriceData[]> => {
   try {
     // In a production environment, this would be a real API call
     // For now we're simulating accurate price data as of April 2025
@@ -43,8 +49,17 @@ const fetchPriceData = async (asset: string, timeframe: string, isPortfolio: boo
     
     // For portfolio data
     if (isPortfolio) {
+      // If portfolio data is provided, use that instead of generating random data
+      if (portfolioData && portfolioData.length > 0) {
+        return portfolioData.map((dataPoint, index) => ({
+          name: dataPoint.date,
+          value: dataPoint.value,
+          volume: Math.floor(Math.random() * dataPoint.value * 0.05) // Generate random volume based on value
+        }));
+      }
+      
       // Portfolio starting value based on portfolio name for consistency
-      const portfolioBaseValue = portfolioName === "Alpha Seekers #1" ? 367000 : 250000;
+      const portfolioBaseValue = portfolioName === "Alpha Seekers #1" ? 1500000 : 250000;
       
       // Generate data points based on timeframe
       const dataPoints = 
@@ -144,7 +159,7 @@ const fetchPriceData = async (asset: string, timeframe: string, isPortfolio: boo
   }
 };
 
-export const AssetChart = ({ asset = 'bitcoin', timeframe, isPortfolio = false, portfolioName = '' }: AssetChartProps) => {
+export const AssetChart = ({ asset = 'bitcoin', timeframe, isPortfolio = false, portfolioName = '', portfolioData }: AssetChartProps) => {
   const [chartData, setChartData] = useState<PriceData[]>([]);
   const [isLightMode, setIsLightMode] = useState<boolean>(false);
   
@@ -171,7 +186,7 @@ export const AssetChart = ({ asset = 'bitcoin', timeframe, isPortfolio = false, 
   useEffect(() => {
     // Fetch initial data
     const getInitialData = async () => {
-      const data = await fetchPriceData(asset, timeframe, isPortfolio, portfolioName);
+      const data = await fetchPriceData(asset, timeframe, isPortfolio, portfolioName, portfolioData);
       setChartData(data);
     };
     
@@ -179,12 +194,12 @@ export const AssetChart = ({ asset = 'bitcoin', timeframe, isPortfolio = false, 
     
     // Update chart data every 30 seconds to simulate real-time updates
     const intervalId = setInterval(async () => {
-      const data = await fetchPriceData(asset, timeframe, isPortfolio, portfolioName);
+      const data = await fetchPriceData(asset, timeframe, isPortfolio, portfolioName, portfolioData);
       setChartData(data);
     }, 30000);
     
     return () => clearInterval(intervalId);
-  }, [asset, timeframe, isPortfolio, portfolioName]);
+  }, [asset, timeframe, isPortfolio, portfolioName, portfolioData]);
 
   // Calculate if the performance is positive by comparing first and last value
   const isPositive = chartData.length >= 2 && 
