@@ -79,10 +79,10 @@ const portfolioData = {
 
 const AssetRow = ({ asset, type }: { asset: any, type: string }) => {
   return (
-    <div className="flex items-center justify-between py-3 border-b border-openfund-gray-light">
+    <div className="flex items-center justify-between py-3 border-b border-border">
       <div>
         <div className="font-medium">{asset.name}</div>
-        <div className="text-sm text-gray-400">
+        <div className="text-sm text-muted-foreground">
           {type === 'funds' ? 
             `${asset.shares} shares` : 
             type === 'commodities' ? 
@@ -112,6 +112,23 @@ const Account = () => {
   const tabParam = searchParams.get('tab');
   const [activeTab, setActiveTab] = useState('profile');
   const { toast } = useToast();
+  const [isDark, setIsDark] = useState(true);
+
+  useEffect(() => {
+    const checkTheme = () => {
+      const savedTheme = localStorage.getItem('theme');
+      setIsDark(savedTheme === 'dark');
+    };
+    
+    checkTheme();
+    
+    // Set up event listener for theme changes
+    window.addEventListener('storage', checkTheme);
+    
+    return () => {
+      window.removeEventListener('storage', checkTheme);
+    };
+  }, []);
 
   const referralCode = 'OF' + Math.random().toString(36).substring(2, 8).toUpperCase();
   const [formData, setFormData] = useState({
@@ -180,55 +197,55 @@ const Account = () => {
   };
 
   return (
-    <div className="min-h-screen bg-openfund-gray-dark text-white">
+    <div className="min-h-screen bg-background text-foreground transition-colors duration-300">
       <Navbar />
       <main className="container mx-auto px-4 py-8">
         <h1 className="text-3xl font-bold mb-8">My Account</h1>
         
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
           <div className="md:col-span-1">
-            <Card className="bg-openfund-gray-medium border-openfund-gray-light">
+            <Card>
               <CardContent className="p-6">
                 <div className="flex flex-col items-center space-y-4 mb-6">
-                  <div className="w-24 h-24 rounded-full bg-openfund-gray-light flex items-center justify-center text-3xl font-bold">
+                  <div className="w-24 h-24 rounded-full bg-secondary flex items-center justify-center text-3xl font-bold">
                     JD
                   </div>
                   <div className="text-xl font-medium text-center">{portfolioData.user.name}</div>
-                  <div className="text-sm text-gray-400 text-center">{portfolioData.user.email}</div>
-                  <div className="text-xs text-gray-500">Member since {new Date(portfolioData.user.joined).toLocaleDateString()}</div>
+                  <div className="text-sm text-muted-foreground text-center">{portfolioData.user.email}</div>
+                  <div className="text-xs text-muted-foreground">Member since {new Date(portfolioData.user.joined).toLocaleDateString()}</div>
                 </div>
                 
-                <div className="space-y-2 border-t border-openfund-gray-light pt-4">
+                <div className="space-y-2 border-t border-border pt-4">
                   <button 
-                    className={`w-full text-left px-3 py-2 rounded flex items-center space-x-3 ${activeTab === 'profile' ? 'bg-openfund-gray-light/20 text-openfund-green' : 'hover:bg-openfund-gray-light/20'}`}
+                    className={`w-full text-left px-3 py-2 rounded flex items-center space-x-3 transition-colors duration-300 ${activeTab === 'profile' ? 'bg-primary/10 text-primary' : 'hover:bg-secondary'}`}
                     onClick={() => setActiveTab('profile')}
                   >
                     <User size={18} />
                     <span>Profile</span>
                   </button>
                   <button 
-                    className={`w-full text-left px-3 py-2 rounded flex items-center space-x-3 ${activeTab === 'portfolio' ? 'bg-openfund-gray-light/20 text-openfund-green' : 'hover:bg-openfund-gray-light/20'}`}
+                    className={`w-full text-left px-3 py-2 rounded flex items-center space-x-3 transition-colors duration-300 ${activeTab === 'portfolio' ? 'bg-primary/10 text-primary' : 'hover:bg-secondary'}`}
                     onClick={() => setActiveTab('portfolio')}
                   >
                     <Wallet size={18} />
                     <span>Portfolio</span>
                   </button>
                   <button 
-                    className={`w-full text-left px-3 py-2 rounded flex items-center space-x-3 ${activeTab === 'kyc' ? 'bg-openfund-gray-light/20 text-openfund-green' : 'hover:bg-openfund-gray-light/20'}`}
+                    className={`w-full text-left px-3 py-2 rounded flex items-center space-x-3 transition-colors duration-300 ${activeTab === 'kyc' ? 'bg-primary/10 text-primary' : 'hover:bg-secondary'}`}
                     onClick={() => setActiveTab('kyc')}
                   >
                     <CheckCircle size={18} />
                     <span>KYC</span>
                   </button>
                   <button 
-                    className={`w-full text-left px-3 py-2 rounded flex items-center space-x-3 ${activeTab === 'referral' ? 'bg-openfund-gray-light/20 text-openfund-green' : 'hover:bg-openfund-gray-light/20'}`}
+                    className={`w-full text-left px-3 py-2 rounded flex items-center space-x-3 transition-colors duration-300 ${activeTab === 'referral' ? 'bg-primary/10 text-primary' : 'hover:bg-secondary'}`}
                     onClick={() => setActiveTab('referral')}
                   >
                     <Star size={18} />
                     <span>Referrals</span>
                   </button>
                   <button 
-                    className={`w-full text-left px-3 py-2 rounded flex items-center space-x-3 ${activeTab === 'settings' ? 'bg-openfund-gray-light/20 text-openfund-green' : 'hover:bg-openfund-gray-light/20'}`}
+                    className={`w-full text-left px-3 py-2 rounded flex items-center space-x-3 transition-colors duration-300 ${activeTab === 'settings' ? 'bg-primary/10 text-primary' : 'hover:bg-secondary'}`}
                     onClick={() => setActiveTab('settings')}
                   >
                     <Settings size={18} />
@@ -241,7 +258,7 @@ const Account = () => {
           
           <div className="md:col-span-3">
             <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-              <TabsList className="grid w-full grid-cols-5 bg-openfund-gray-medium">
+              <TabsList className="grid w-full grid-cols-5 mb-4">
                 <TabsTrigger value="profile">Profile</TabsTrigger>
                 <TabsTrigger value="portfolio">Portfolio</TabsTrigger>
                 <TabsTrigger value="kyc">KYC</TabsTrigger>
@@ -250,10 +267,10 @@ const Account = () => {
               </TabsList>
               
               <TabsContent value="profile" className="space-y-6">
-                <Card className="bg-openfund-gray-medium border-openfund-gray-light">
+                <Card>
                   <CardHeader>
                     <CardTitle className="flex items-center">
-                      <User size={20} className="mr-2 text-openfund-green" />
+                      <User size={20} className="mr-2 text-primary" />
                       Edit Profile
                     </CardTitle>
                   </CardHeader>
@@ -261,17 +278,17 @@ const Account = () => {
                     <form onSubmit={handleProfileSubmit} className="space-y-6">
                       <div className="flex flex-col items-center mb-6">
                         <div className="w-32 h-32 relative mb-4">
-                          <div className="w-full h-full rounded-full bg-openfund-gray-light flex items-center justify-center text-4xl font-bold">
+                          <div className="w-full h-full rounded-full bg-secondary flex items-center justify-center text-4xl font-bold">
                             JD
                           </div>
                           <button 
                             type="button"
-                            className="absolute bottom-0 right-0 bg-openfund-green rounded-full p-2"
+                            className="absolute bottom-0 right-0 bg-primary rounded-full p-2 text-white dark:text-black"
                           >
-                            <Camera size={18} className="text-openfund-gray-dark" />
+                            <Camera size={18} />
                           </button>
                         </div>
-                        <p className="text-sm text-gray-400">Click the icon to upload a new profile picture</p>
+                        <p className="text-sm text-muted-foreground">Click the icon to upload a new profile picture</p>
                       </div>
                       
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -283,9 +300,9 @@ const Account = () => {
                               name="name"
                               value={formData.name}
                               onChange={handleProfileFormChange}
-                              className="bg-openfund-gray-dark border-openfund-gray-light pl-10"
+                              className="pl-10"
                             />
-                            <User className="absolute left-3 top-2.5 h-5 w-5 text-gray-400" />
+                            <User className="absolute left-3 top-2.5 h-5 w-5 text-muted-foreground" />
                           </div>
                         </div>
                         
@@ -298,9 +315,9 @@ const Account = () => {
                               type="email"
                               value={formData.email}
                               onChange={handleProfileFormChange}
-                              className="bg-openfund-gray-dark border-openfund-gray-light pl-10"
+                              className="pl-10"
                             />
-                            <Mail className="absolute left-3 top-2.5 h-5 w-5 text-gray-400" />
+                            <Mail className="absolute left-3 top-2.5 h-5 w-5 text-muted-foreground" />
                           </div>
                         </div>
                         
@@ -311,7 +328,6 @@ const Account = () => {
                             name="phone"
                             value={formData.phone}
                             onChange={handleProfileFormChange}
-                            className="bg-openfund-gray-dark border-openfund-gray-light"
                           />
                         </div>
                         
@@ -322,7 +338,6 @@ const Account = () => {
                             name="language"
                             value={formData.language}
                             onChange={handleProfileFormChange}
-                            className="bg-openfund-gray-dark border-openfund-gray-light"
                           />
                         </div>
                         
@@ -333,7 +348,6 @@ const Account = () => {
                             name="timezone"
                             value={formData.timezone}
                             onChange={handleProfileFormChange}
-                            className="bg-openfund-gray-dark border-openfund-gray-light"
                           />
                         </div>
                       </div>
@@ -341,7 +355,7 @@ const Account = () => {
                       <div className="pt-4 flex justify-end">
                         <Button 
                           type="submit"
-                          className="bg-openfund-green hover:bg-openfund-green-dark text-openfund-gray-dark"
+                          className="transition-colors duration-300"
                         >
                           Save Changes
                         </Button>
@@ -350,10 +364,10 @@ const Account = () => {
                   </CardContent>
                 </Card>
                 
-                <Card className="bg-openfund-gray-medium border-openfund-gray-light">
+                <Card>
                   <CardHeader>
                     <CardTitle className="flex items-center">
-                      <Shield size={20} className="mr-2 text-openfund-green" />
+                      <Shield size={20} className="mr-2 text-primary" />
                       Account Security
                     </CardTitle>
                   </CardHeader>
@@ -362,7 +376,7 @@ const Account = () => {
                       <div className="flex justify-between items-center">
                         <div>
                           <h3 className="font-medium">Password</h3>
-                          <p className="text-sm text-gray-400">Last changed 30 days ago</p>
+                          <p className="text-sm text-muted-foreground">Last changed 30 days ago</p>
                         </div>
                         <Button variant="outline">Change Password</Button>
                       </div>
@@ -370,7 +384,7 @@ const Account = () => {
                       <div className="flex justify-between items-center">
                         <div>
                           <h3 className="font-medium">Two-Factor Authentication</h3>
-                          <p className="text-sm text-gray-400">Enhance your account security</p>
+                          <p className="text-sm text-muted-foreground">Enhance your account security</p>
                         </div>
                         <Button variant="outline">Enable 2FA</Button>
                       </div>
@@ -378,7 +392,7 @@ const Account = () => {
                       <div className="flex justify-between items-center">
                         <div>
                           <h3 className="font-medium">Login Sessions</h3>
-                          <p className="text-sm text-gray-400">Manage active sessions</p>
+                          <p className="text-sm text-muted-foreground">Manage active sessions</p>
                         </div>
                         <Button variant="outline">View Sessions</Button>
                       </div>
@@ -388,7 +402,7 @@ const Account = () => {
               </TabsContent>
               
               <TabsContent value="portfolio" className="space-y-6">
-                <Card className="bg-openfund-gray-medium border-openfund-gray-light">
+                <Card>
                   <CardHeader className="pb-2">
                     <CardTitle>Portfolio Overview</CardTitle>
                   </CardHeader>
@@ -451,13 +465,13 @@ const Account = () => {
                 </Card>
                 
                 <div className="space-y-6">
-                  <Card className="bg-openfund-gray-medium border-openfund-gray-light">
+                  <Card>
                     <CardHeader className="flex flex-row justify-between items-center pb-2">
                       <div className="flex items-center gap-2">
                         <BarChart4 size={20} className="text-blue-500" />
                         <CardTitle>Stocks</CardTitle>
                       </div>
-                      <div className="text-sm text-gray-400">
+                      <div className="text-sm text-muted-foreground">
                         ${portfolioData.assets.stocks.reduce((sum, asset) => sum + asset.value, 0).toLocaleString()}
                       </div>
                     </CardHeader>
@@ -470,13 +484,13 @@ const Account = () => {
                     </CardContent>
                   </Card>
                   
-                  <Card className="bg-openfund-gray-medium border-openfund-gray-light">
+                  <Card>
                     <CardHeader className="flex flex-row justify-between items-center pb-2">
                       <div className="flex items-center gap-2">
                         <Bitcoin size={20} className="text-orange-500" />
                         <CardTitle>Crypto</CardTitle>
                       </div>
-                      <div className="text-sm text-gray-400">
+                      <div className="text-sm text-muted-foreground">
                         ${portfolioData.assets.crypto.reduce((sum, asset) => sum + asset.value, 0).toLocaleString()}
                       </div>
                     </CardHeader>
@@ -489,13 +503,13 @@ const Account = () => {
                     </CardContent>
                   </Card>
                   
-                  <Card className="bg-openfund-gray-medium border-openfund-gray-light">
+                  <Card>
                     <CardHeader className="flex flex-row justify-between items-center pb-2">
                       <div className="flex items-center gap-2">
                         <DollarSign size={20} className="text-yellow-500" />
                         <CardTitle>Commodities</CardTitle>
                       </div>
-                      <div className="text-sm text-gray-400">
+                      <div className="text-sm text-muted-foreground">
                         ${portfolioData.assets.commodities.reduce((sum, asset) => sum + asset.value, 0).toLocaleString()}
                       </div>
                     </CardHeader>
@@ -508,13 +522,13 @@ const Account = () => {
                     </CardContent>
                   </Card>
                   
-                  <Card className="bg-openfund-gray-medium border-openfund-gray-light">
+                  <Card>
                     <CardHeader className="flex flex-row justify-between items-center pb-2">
                       <div className="flex items-center gap-2">
                         <Briefcase size={20} className="text-green-500" />
                         <CardTitle>Funds</CardTitle>
                       </div>
-                      <div className="text-sm text-gray-400">
+                      <div className="text-sm text-muted-foreground">
                         ${portfolioData.assets.funds.reduce((sum, asset) => sum + asset.value, 0).toLocaleString()}
                       </div>
                     </CardHeader>
@@ -530,19 +544,19 @@ const Account = () => {
               </TabsContent>
               
               <TabsContent value="kyc">
-                <Card className="bg-openfund-gray-medium border-openfund-gray-light mb-6">
+                <Card className="mb-6">
                   <CardHeader>
                     <CardTitle className="flex items-center">
-                      <CheckCircle size={20} className="mr-2 text-openfund-green" />
+                      <CheckCircle size={20} className="mr-2 text-primary" />
                       Verification Status
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
                     <div className="space-y-4">
                       <div className="flex items-center justify-between">
-                        <div>
+                        <div className="text-left">
                           <h3 className="text-lg font-medium">Identity Verification</h3>
-                          <p className="text-sm text-gray-400">Government ID and proof of address</p>
+                          <p className="text-sm text-muted-foreground">Government ID and proof of address</p>
                         </div>
                         <div className="px-3 py-1 rounded-full bg-yellow-500/20 text-yellow-500 text-sm">
                           Pending
@@ -550,9 +564,9 @@ const Account = () => {
                       </div>
                       
                       <div className="flex items-center justify-between">
-                        <div>
+                        <div className="text-left">
                           <h3 className="text-lg font-medium">Tax Information</h3>
-                          <p className="text-sm text-gray-400">Tax residency and reporting</p>
+                          <p className="text-sm text-muted-foreground">Tax residency and reporting</p>
                         </div>
                         <div className="px-3 py-1 rounded-full bg-red-500/20 text-red-500 text-sm">
                           Not Submitted
@@ -560,11 +574,11 @@ const Account = () => {
                       </div>
                       
                       <div className="flex items-center justify-between">
-                        <div>
+                        <div className="text-left">
                           <h3 className="text-lg font-medium">Account Access Level</h3>
-                          <p className="text-sm text-gray-400">Current trading limits and capabilities</p>
+                          <p className="text-sm text-muted-foreground">Current trading limits and capabilities</p>
                         </div>
-                        <div className="px-3 py-1 rounded-full bg-openfund-gray-light/20 text-gray-400 text-sm">
+                        <div className="px-3 py-1 rounded-full bg-secondary text-muted-foreground text-sm">
                           Basic
                         </div>
                       </div>
@@ -572,10 +586,10 @@ const Account = () => {
                   </CardContent>
                 </Card>
                 
-                <Card className="bg-openfund-gray-medium border-openfund-gray-light">
+                <Card>
                   <CardHeader>
                     <CardTitle className="flex items-center">
-                      <FileCheck size={20} className="mr-2 text-openfund-green" />
+                      <FileCheck size={20} className="mr-2 text-primary" />
                       Submit KYC Documents
                     </CardTitle>
                   </CardHeader>
@@ -586,10 +600,10 @@ const Account = () => {
               </TabsContent>
               
               <TabsContent value="referral">
-                <Card className="bg-openfund-gray-medium border-openfund-gray-light mb-6">
+                <Card className="mb-6">
                   <CardHeader>
                     <CardTitle className="flex items-center">
-                      <Star size={20} className="mr-2 text-openfund-green" />
+                      <Star size={20} className="mr-2 text-primary" />
                       Referral Program
                     </CardTitle>
                   </CardHeader>
@@ -597,39 +611,39 @@ const Account = () => {
                     <div className="space-y-6">
                       <div>
                         <h3 className="text-xl font-medium mb-2">Earn with your network</h3>
-                        <p className="text-gray-300">
+                        <p className="text-foreground/80">
                           Share your referral code with friends and earn rewards when they join OpenFund:
                         </p>
-                        <ul className="list-disc ml-5 mt-3 space-y-1 text-gray-300">
-                          <li>Earn <span className="text-openfund-green font-medium">10%</span> of trading fees from referred users</li>
-                          <li>Boost your <span className="text-openfund-green font-medium">$OF Airdrop</span> allocation points</li>
-                          <li>Both you and your referral receive <span className="text-openfund-green font-medium">$25 USDC</span> trading credit</li>
+                        <ul className="list-disc ml-5 mt-3 space-y-1 text-foreground/80">
+                          <li>Earn <span className="text-primary font-medium">10%</span> of trading fees from referred users</li>
+                          <li>Boost your <span className="text-primary font-medium">$OF Airdrop</span> allocation points</li>
+                          <li>Both you and your referral receive <span className="text-primary font-medium">$25 USDC</span> trading credit</li>
                         </ul>
                       </div>
 
                       <div>
                         <div className="flex items-center justify-between mb-3">
-                          <h4 className="text-lg font-medium">Referral Level {referralStats.level}</h4>
-                          <span className="text-sm text-gray-400">{referralStats.airdropPoints}/{referralStats.nextLevelPoints} points to Level {referralStats.level + 1}</span>
+                          <h4 className="text-lg font-medium">Referral Level {portfolioData.referralStats.level}</h4>
+                          <span className="text-sm text-muted-foreground">{portfolioData.referralStats.airdropPoints}/{portfolioData.referralStats.nextLevelPoints} points to Level {portfolioData.referralStats.level + 1}</span>
                         </div>
                         <div className="space-y-2">
-                          <Progress value={referralStats.progress} className="h-2" />
-                          <p className="text-sm text-gray-400 text-right">
-                            {referralStats.pointsToNextLevel} more points needed
+                          <Progress value={portfolioData.referralStats.progress} className="h-2" />
+                          <p className="text-sm text-muted-foreground text-right">
+                            {portfolioData.referralStats.pointsToNextLevel} more points needed
                           </p>
                         </div>
                       </div>
 
-                      <div className="bg-openfund-gray-dark p-5 rounded-lg">
+                      <div className="bg-secondary/50 p-5 rounded-lg">
                         <h4 className="text-lg font-medium mb-3">Your Referral Code</h4>
                         <div className="flex items-center space-x-2">
-                          <div className="bg-openfund-gray-light/20 rounded px-4 py-2 flex-1 font-mono text-center text-xl">
+                          <div className="bg-background rounded px-4 py-2 flex-1 font-mono text-center text-xl">
                             {referralCode}
                           </div>
                           <Button 
                             variant="outline" 
                             size="icon" 
-                            className="hover:bg-openfund-gray-light/30"
+                            className="hover:bg-secondary"
                             onClick={handleCopyReferralCode}
                           >
                             <Copy size={18} />
@@ -638,7 +652,7 @@ const Account = () => {
                         
                         <div className="mt-4">
                           <Button 
-                            className="w-full bg-openfund-green hover:bg-openfund-green-dark text-openfund-gray-dark flex items-center justify-center space-x-2"
+                            className="w-full transition-colors duration-300 flex items-center justify-center space-x-2"
                             onClick={handleShareReferral}
                           >
                             <Share className="h-4 w-4" />
@@ -650,17 +664,17 @@ const Account = () => {
                       <div className="space-y-4">
                         <h4 className="text-lg font-medium">Your Referral Stats</h4>
                         <div className="grid grid-cols-3 gap-4">
-                          <div className="bg-openfund-gray-dark p-4 rounded-lg text-center">
-                            <p className="text-xl font-bold text-openfund-green mb-1">{referralStats.totalReferrals}</p>
-                            <p className="text-gray-400 text-sm">Total Referrals</p>
+                          <div className="bg-secondary/50 p-4 rounded-lg text-center">
+                            <p className="text-xl font-bold text-primary mb-1">{portfolioData.referralStats.totalReferrals}</p>
+                            <p className="text-muted-foreground text-sm">Total Referrals</p>
                           </div>
-                          <div className="bg-openfund-gray-dark p-4 rounded-lg text-center">
-                            <p className="text-xl font-bold text-openfund-green mb-1">{referralStats.earnedRewards.toFixed(2)} USDC</p>
-                            <p className="text-gray-400 text-sm">Earned Rewards</p>
+                          <div className="bg-secondary/50 p-4 rounded-lg text-center">
+                            <p className="text-xl font-bold text-primary mb-1">{portfolioData.referralStats.earnedRewards.toFixed(2)} USDC</p>
+                            <p className="text-muted-foreground text-sm">Earned Rewards</p>
                           </div>
-                          <div className="bg-openfund-gray-dark p-4 rounded-lg text-center">
-                            <p className="text-xl font-bold text-openfund-green mb-1">{referralStats.airdropPoints}</p>
-                            <p className="text-gray-400 text-sm">Airdrop Points</p>
+                          <div className="bg-secondary/50 p-4 rounded-lg text-center">
+                            <p className="text-xl font-bold text-primary mb-1">{portfolioData.referralStats.airdropPoints}</p>
+                            <p className="text-muted-foreground text-sm">Airdrop Points</p>
                           </div>
                         </div>
                       </div>
@@ -669,19 +683,19 @@ const Account = () => {
                         <h4 className="text-lg font-medium mb-3">Recent Referrals</h4>
                         <div className="space-y-3">
                           {[...Array(5)].map((_, i) => (
-                            <div key={i} className="bg-openfund-gray-dark p-3 rounded-lg flex justify-between items-center">
+                            <div key={i} className="bg-secondary/50 p-3 rounded-lg flex justify-between items-center">
                               <div className="flex items-center">
-                                <div className="w-8 h-8 rounded-full bg-openfund-gray-light flex items-center justify-center text-xs font-bold mr-3">
+                                <div className="w-8 h-8 rounded-full bg-secondary flex items-center justify-center text-xs font-bold mr-3">
                                   {["AB", "CD", "EF", "GH", "IJ"][i]}
                                 </div>
-                                <div>
+                                <div className="text-left">
                                   <p className="font-medium">{["Alex Brown", "Chris Davis", "Emma Fischer", "George Hansen", "Isabella Jones"][i]}</p>
-                                  <p className="text-xs text-gray-400">Joined {[3, 5, 7, 10, 14][i]} days ago</p>
+                                  <p className="text-xs text-muted-foreground">Joined {[3, 5, 7, 10, 14][i]} days ago</p>
                                 </div>
                               </div>
                               <div className="text-right">
-                                <p className="font-medium text-openfund-green">{[125, 87, 105, 134, 98][i]} points</p>
-                                <p className="text-xs text-gray-400">{[(125*0.75).toFixed(2), (87*0.75).toFixed(2), (105*0.75).toFixed(2), (134*0.75).toFixed(2), (98*0.75).toFixed(2)][i]} USDC</p>
+                                <p className="font-medium text-primary">{[125, 87, 105, 134, 98][i]} points</p>
+                                <p className="text-xs text-muted-foreground">{[(125*0.75).toFixed(2), (87*0.75).toFixed(2), (105*0.75).toFixed(2), (134*0.75).toFixed(2), (98*0.75).toFixed(2)][i]} USDC</p>
                               </div>
                             </div>
                           ))}
@@ -691,7 +705,7 @@ const Account = () => {
 
                       <div>
                         <h4 className="text-lg font-medium mb-3">How It Works</h4>
-                        <ol className="space-y-3 text-gray-300 ml-5 list-decimal">
+                        <ol className="space-y-3 text-foreground/80 ml-5 list-decimal">
                           <li>Share your unique referral code with friends and colleagues</li>
                           <li>They sign up using your code during registration</li>
                           <li>Both you and your referral receive $25 USDC trading credit</li>
@@ -705,12 +719,12 @@ const Account = () => {
               </TabsContent>
               
               <TabsContent value="settings">
-                <Card className="bg-openfund-gray-medium border-openfund-gray-light">
+                <Card>
                   <CardHeader>
                     <CardTitle>Account Settings</CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <p className="text-gray-400">Account settings and preferences will appear here.</p>
+                    <p className="text-muted-foreground">Account settings and preferences will appear here.</p>
                   </CardContent>
                 </Card>
               </TabsContent>

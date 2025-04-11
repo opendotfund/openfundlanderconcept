@@ -101,7 +101,7 @@ const MyAssets = () => {
         
         {/* Portfolio Overview */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-          <Card className="bg-card border-border col-span-2">
+          <Card className="col-span-2">
             <CardHeader>
               <CardTitle>Portfolio Value</CardTitle>
             </CardHeader>
@@ -164,22 +164,22 @@ const MyAssets = () => {
             </CardContent>
           </Card>
           
-          <Card className="bg-card border-border">
+          <Card>
             <CardHeader>
               <CardTitle>Actions</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
-                <button className="w-full bg-primary hover:bg-primary/90 text-primary-foreground py-2 rounded-md font-medium">
+                <button className="w-full bg-primary hover:bg-primary/90 text-primary-foreground py-2 rounded-md font-medium transition-colors duration-300">
                   Deposit Funds
                 </button>
-                <button className="w-full bg-transparent border border-border hover:bg-secondary py-2 rounded-md font-medium">
+                <button className="w-full bg-transparent border border-border hover:bg-secondary py-2 rounded-md font-medium transition-colors duration-300">
                   Withdraw Funds
                 </button>
-                <button className="w-full bg-transparent border border-border hover:bg-secondary py-2 rounded-md font-medium">
+                <button className="w-full bg-transparent border border-border hover:bg-secondary py-2 rounded-md font-medium transition-colors duration-300">
                   Trade Assets
                 </button>
-                <button className="w-full bg-transparent border border-border hover:bg-secondary py-2 rounded-md font-medium">
+                <button className="w-full bg-transparent border border-border hover:bg-secondary py-2 rounded-md font-medium transition-colors duration-300">
                   Rebalance Portfolio
                 </button>
               </div>
@@ -190,7 +190,7 @@ const MyAssets = () => {
         {/* Asset Sections */}
         <div className="space-y-8">
           {/* Stocks Section */}
-          <Card className="bg-card border-border">
+          <Card>
             <CardHeader className="flex flex-row justify-between items-center">
               <div className="flex items-center gap-2">
                 <BarChart4 size={20} className="text-blue-500" />
@@ -210,7 +210,7 @@ const MyAssets = () => {
           </Card>
           
           {/* Crypto Section */}
-          <Card className="bg-card border-border">
+          <Card>
             <CardHeader className="flex flex-row justify-between items-center">
               <div className="flex items-center gap-2">
                 <Bitcoin size={20} className="text-orange-500" />
@@ -230,7 +230,7 @@ const MyAssets = () => {
           </Card>
           
           {/* Commodities Section */}
-          <Card className="bg-card border-border">
+          <Card>
             <CardHeader className="flex flex-row justify-between items-center">
               <div className="flex items-center gap-2">
                 <DollarSign size={20} className="text-yellow-500" />
@@ -250,7 +250,7 @@ const MyAssets = () => {
           </Card>
           
           {/* Funds Section */}
-          <Card className="bg-card border-border">
+          <Card>
             <CardHeader className="flex flex-row justify-between items-center">
               <div className="flex items-center gap-2">
                 <Briefcase size={20} className="text-green-500" />

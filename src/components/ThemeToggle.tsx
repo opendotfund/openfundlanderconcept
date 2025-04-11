@@ -21,6 +21,9 @@ const ThemeToggle = () => {
       applyTheme(true);
       localStorage.setItem('theme', 'dark');
     }
+
+    // Dispatch storage event to notify other components
+    window.dispatchEvent(new Event('storage'));
   }, []);
 
   const applyTheme = (isDark: boolean) => {
@@ -51,6 +54,9 @@ const ThemeToggle = () => {
       document.documentElement.style.setProperty('--logo-dot-color', '#0EA5E9');
       document.documentElement.style.setProperty('--glow-color', 'rgba(14, 165, 233, 0.7)');
     }
+    
+    // Dispatch storage event to notify other components
+    window.dispatchEvent(new Event('storage'));
   };
 
   const toggleTheme = () => {

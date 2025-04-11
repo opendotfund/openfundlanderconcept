@@ -7,12 +7,12 @@ import { Twitter, Github, Linkedin, Youtube } from 'lucide-react';
 
 const Footer = () => {
   return (
-    <footer className="bg-openfund-gray-medium pt-16 pb-8 border-t border-openfund-gray-light">
+    <footer className="bg-openfund-gray-medium dark:bg-openfund-gray-medium bg-gray-100 pt-16 pb-8 border-t border-openfund-gray-light dark:border-openfund-gray-light border-gray-200 transition-colors duration-300">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
           <div className="space-y-4">
             <Logo size="lg" />
-            <p className="text-gray-400 mt-4">
+            <p className="text-gray-700 dark:text-gray-400 mt-4 transition-colors duration-300">
               The next generation platform for commodities, stocks, and crypto trading.
             </p>
             <div className="flex space-x-4">
@@ -20,69 +20,69 @@ const Footer = () => {
                 href="https://x.com/OpendotFund" 
                 target="_blank" 
                 rel="noopener noreferrer" 
-                className="text-gray-400 hover:text-openfund-green"
+                className="text-gray-700 dark:text-gray-400 hover:text-openfund-blue dark:hover:text-openfund-green transition-colors duration-300"
               >
                 <Twitter className="h-5 w-5" />
               </a>
-              <a href="#" className="text-gray-400 hover:text-openfund-green">
+              <a href="#" className="text-gray-700 dark:text-gray-400 hover:text-openfund-blue dark:hover:text-openfund-green transition-colors duration-300">
                 <Github className="h-5 w-5" />
               </a>
               <a 
                 href="https://www.linkedin.com/company/opendotfund" 
                 target="_blank" 
                 rel="noopener noreferrer" 
-                className="text-gray-400 hover:text-openfund-green"
+                className="text-gray-700 dark:text-gray-400 hover:text-openfund-blue dark:hover:text-openfund-green transition-colors duration-300"
               >
                 <Linkedin className="h-5 w-5" />
               </a>
-              <a href="#" className="text-gray-400 hover:text-openfund-green">
+              <a href="#" className="text-gray-700 dark:text-gray-400 hover:text-openfund-blue dark:hover:text-openfund-green transition-colors duration-300">
                 <Youtube className="h-5 w-5" />
               </a>
             </div>
           </div>
           
           <div>
-            <h3 className="text-lg font-bold mb-4">Products</h3>
+            <h3 className="text-lg font-bold mb-4 text-gray-900 dark:text-white transition-colors duration-300">Products</h3>
             <ul className="space-y-3">
-              <li><Link to="/trade?type=commodities" className="text-gray-400 hover:text-openfund-green">Commodities</Link></li>
-              <li><Link to="/trade?type=stocks" className="text-gray-400 hover:text-openfund-green">Stocks</Link></li>
-              <li><Link to="/trade?type=crypto" className="text-gray-400 hover:text-openfund-green">Cryptocurrencies</Link></li>
-              <li><Link to="/fund-manager" className="text-gray-400 hover:text-openfund-green">Fund Management</Link></li>
-              <li><Link to="/coming-soon" className="text-gray-400 hover:text-openfund-green">Tokenization</Link></li>
+              <li><Link to="/trade?type=commodities" className="text-gray-700 dark:text-gray-400 hover:text-openfund-blue dark:hover:text-openfund-green transition-colors duration-300">Commodities</Link></li>
+              <li><Link to="/trade?type=stocks" className="text-gray-700 dark:text-gray-400 hover:text-openfund-blue dark:hover:text-openfund-green transition-colors duration-300">Stocks</Link></li>
+              <li><Link to="/trade?type=crypto" className="text-gray-700 dark:text-gray-400 hover:text-openfund-blue dark:hover:text-openfund-green transition-colors duration-300">Cryptocurrencies</Link></li>
+              <li><Link to="/fund-manager" className="text-gray-700 dark:text-gray-400 hover:text-openfund-blue dark:hover:text-openfund-green transition-colors duration-300">Fund Management</Link></li>
+              <li><Link to="/coming-soon" className="text-gray-700 dark:text-gray-400 hover:text-openfund-blue dark:hover:text-openfund-green transition-colors duration-300">Tokenization</Link></li>
             </ul>
           </div>
           
           <div>
-            <h3 className="text-lg font-bold mb-4">Company</h3>
+            <h3 className="text-lg font-bold mb-4 text-gray-900 dark:text-white transition-colors duration-300">Company</h3>
             <ul className="space-y-3">
-              <li><a href="#" className="text-gray-400 hover:text-openfund-green">About Us</a></li>
-              <li><Link to="/careers" className="text-gray-400 hover:text-openfund-green">Careers</Link></li>
-              <li><a href="#" className="text-gray-400 hover:text-openfund-green">Blog</a></li>
-              <li><a href="#" className="text-gray-400 hover:text-openfund-green">Press</a></li>
-              <li><Link to="/contact" className="text-gray-400 hover:text-openfund-green">Contact</Link></li>
+              <li><a href="#" className="text-gray-700 dark:text-gray-400 hover:text-openfund-blue dark:hover:text-openfund-green transition-colors duration-300">About Us</a></li>
+              <li><Link to="/careers" className="text-gray-700 dark:text-gray-400 hover:text-openfund-blue dark:hover:text-openfund-green transition-colors duration-300">Careers</Link></li>
+              <li><a href="#" className="text-gray-700 dark:text-gray-400 hover:text-openfund-blue dark:hover:text-openfund-green transition-colors duration-300">Blog</a></li>
+              <li><a href="#" className="text-gray-700 dark:text-gray-400 hover:text-openfund-blue dark:hover:text-openfund-green transition-colors duration-300">Press</a></li>
+              <li><Link to="/contact" className="text-gray-700 dark:text-gray-400 hover:text-openfund-blue dark:hover:text-openfund-green transition-colors duration-300">Contact</Link></li>
             </ul>
           </div>
           
           <div>
-            <h3 className="text-lg font-bold mb-4">Resources</h3>
+            <h3 className="text-lg font-bold mb-4 text-gray-900 dark:text-white transition-colors duration-300">Resources</h3>
             <ul className="space-y-3">
-              <li><a href="https://openfund.gitbook.io/openfund-docs" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-openfund-green">Documentation</a></li>
-              <li><a href="#" className="text-gray-400 hover:text-openfund-green">Help Center</a></li>
-              <li><a href="#" className="text-gray-400 hover:text-openfund-green">API</a></li>
-              <li><a href="#" className="text-gray-400 hover:text-openfund-green">Community</a></li>
-              <li><a href="#" className="text-gray-400 hover:text-openfund-green">Status</a></li>
+              <li><a href="https://openfund.gitbook.io/openfund-docs" target="_blank" rel="noopener noreferrer" className="text-gray-700 dark:text-gray-400 hover:text-openfund-blue dark:hover:text-openfund-green transition-colors duration-300">Documentation</a></li>
+              <li><a href="#" className="text-gray-700 dark:text-gray-400 hover:text-openfund-blue dark:hover:text-openfund-green transition-colors duration-300">Help Center</a></li>
+              <li><a href="#" className="text-gray-700 dark:text-gray-400 hover:text-openfund-blue dark:hover:text-openfund-green transition-colors duration-300">API</a></li>
+              <li><a href="#" className="text-gray-700 dark:text-gray-400 hover:text-openfund-blue dark:hover:text-openfund-green transition-colors duration-300">Community</a></li>
+              <li><a href="#" className="text-gray-700 dark:text-gray-400 hover:text-openfund-blue dark:hover:text-openfund-green transition-colors duration-300">Status</a></li>
             </ul>
           </div>
         </div>
         
-        <div className="pt-8 mt-8 border-t border-openfund-gray-light flex flex-col md:flex-row justify-between items-center">
-          <div className="mb-4 md:mb-0 text-gray-400 text-sm">
+        <div className="pt-8 mt-8 border-t border-gray-200 dark:border-openfund-gray-light flex flex-col md:flex-row justify-between items-center transition-colors duration-300">
+          <div className="mb-4 md:mb-0 text-gray-700 dark:text-gray-400 text-sm transition-colors duration-300">
             &copy; {new Date().getFullYear()} OpenFund. All rights reserved.
           </div>
           <div className="flex space-x-6 text-sm">
-            <a href="#" className="text-gray-400 hover:text-openfund-green">Privacy Policy</a>
-            <a href="#" className="text-gray-400 hover:text-openfund-green">Terms of Service</a>
-            <a href="#" className="text-gray-400 hover:text-openfund-green">Legal</a>
+            <a href="#" className="text-gray-700 dark:text-gray-400 hover:text-openfund-blue dark:hover:text-openfund-green transition-colors duration-300">Privacy Policy</a>
+            <a href="#" className="text-gray-700 dark:text-gray-400 hover:text-openfund-blue dark:hover:text-openfund-green transition-colors duration-300">Terms of Service</a>
+            <a href="#" className="text-gray-700 dark:text-gray-400 hover:text-openfund-blue dark:hover:text-openfund-green transition-colors duration-300">Legal</a>
           </div>
         </div>
       </div>
