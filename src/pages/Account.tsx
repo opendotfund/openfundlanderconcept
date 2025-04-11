@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import Navbar from '@/components/Navbar';
@@ -5,7 +6,7 @@ import Footer from '@/components/Footer';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { ArrowUpRight, ArrowDownRight, Briefcase, LineChart, Bitcoin, DollarSign, BarChart4, User, Wallet, Settings, Bell, FileCheck, FileText, BadgeCheck, ShieldCheck, CircleDollarSign, Copy, Share, Link, Users } from 'lucide-react';
+import { ArrowUpRight, ArrowDownRight, Briefcase, LineChart, Bitcoin, DollarSign, BarChart4, User, Wallet, Settings, FileCheck, CircleDollarSign, Copy, Share, Link, Users, Mail, Edit, Camera } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -86,13 +87,20 @@ const AssetRow = ({ asset, type }: { asset: any, type: string }) => {
 const Account = () => {
   const [searchParams] = useSearchParams();
   const tabParam = searchParams.get('tab');
-  const [activeTab, setActiveTab] = useState('portfolio');
+  const [activeTab, setActiveTab] = useState('profile');
   const { toast } = useToast();
 
   const referralCode = 'OF' + Math.random().toString(36).substring(2, 8).toUpperCase();
+  const [formData, setFormData] = useState({
+    name: portfolioData.user.name,
+    email: portfolioData.user.email,
+    phone: '+1 555-123-4567',
+    language: 'English',
+    timezone: 'GMT-4 (Eastern Time)'
+  });
 
   useEffect(() => {
-    if (tabParam === 'portfolio' || tabParam === 'activity' || 
+    if (tabParam === 'portfolio' || tabParam === 'profile' || 
         tabParam === 'kyc' || tabParam === 'settings' || tabParam === 'referral') {
       setActiveTab(tabParam);
     }
@@ -121,6 +129,22 @@ const Account = () => {
     }
   };
 
+  const handleProfileFormChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  const handleProfileSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    toast({
+      title: "Profile updated!",
+      description: "Your profile information has been saved successfully.",
+    });
+  };
+
   return (
     <div className="min-h-screen bg-openfund-gray-dark text-white">
       <Navbar />
@@ -142,8 +166,8 @@ const Account = () => {
                 
                 <div className="space-y-2 border-t border-openfund-gray-light pt-4">
                   <button 
-                    className={`w-full text-left px-3 py-2 rounded flex items-center space-x-3 ${activeTab === 'portfolio' ? 'bg-openfund-gray-light/20 text-openfund-green' : 'hover:bg-openfund-gray-light/20'}`}
-                    onClick={() => setActiveTab('portfolio')}
+                    className={`w-full text-left px-3 py-2 rounded flex items-center space-x-3 ${activeTab === 'profile' ? 'bg-openfund-gray-light/20 text-openfund-green' : 'hover:bg-openfund-gray-light/20'}`}
+                    onClick={() => setActiveTab('profile')}
                   >
                     <User size={18} />
                     <span>Profile</span>
@@ -176,12 +200,6 @@ const Account = () => {
                     <Settings size={18} />
                     <span>Settings</span>
                   </button>
-                  <button 
-                    className="w-full text-left px-3 py-2 rounded flex items-center space-x-3 hover:bg-openfund-gray-light/20"
-                  >
-                    <Bell size={18} />
-                    <span>Notifications</span>
-                  </button>
                 </div>
               </CardContent>
             </Card>
@@ -190,12 +208,150 @@ const Account = () => {
           <div className="md:col-span-3">
             <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
               <TabsList className="grid w-full grid-cols-5 bg-openfund-gray-medium">
+                <TabsTrigger value="profile">Profile</TabsTrigger>
                 <TabsTrigger value="portfolio">Portfolio</TabsTrigger>
-                <TabsTrigger value="activity">Activity</TabsTrigger>
                 <TabsTrigger value="kyc">KYC</TabsTrigger>
                 <TabsTrigger value="referral">Referrals</TabsTrigger>
                 <TabsTrigger value="settings">Settings</TabsTrigger>
               </TabsList>
+              
+              <TabsContent value="profile" className="space-y-6">
+                <Card className="bg-openfund-gray-medium border-openfund-gray-light">
+                  <CardHeader>
+                    <CardTitle className="flex items-center">
+                      <User size={20} className="mr-2 text-openfund-green" />
+                      Edit Profile
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <form onSubmit={handleProfileSubmit} className="space-y-6">
+                      <div className="flex flex-col items-center mb-6">
+                        <div className="w-32 h-32 relative mb-4">
+                          <div className="w-full h-full rounded-full bg-openfund-gray-light flex items-center justify-center text-4xl font-bold">
+                            JD
+                          </div>
+                          <button 
+                            type="button"
+                            className="absolute bottom-0 right-0 bg-openfund-green rounded-full p-2"
+                          >
+                            <Camera size={18} className="text-openfund-gray-dark" />
+                          </button>
+                        </div>
+                        <p className="text-sm text-gray-400">Click the icon to upload a new profile picture</p>
+                      </div>
+                      
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div className="space-y-2">
+                          <Label htmlFor="name">Full Name</Label>
+                          <div className="relative">
+                            <Input 
+                              id="name"
+                              name="name"
+                              value={formData.name}
+                              onChange={handleProfileFormChange}
+                              className="bg-openfund-gray-dark border-openfund-gray-light pl-10"
+                            />
+                            <User className="absolute left-3 top-2.5 h-5 w-5 text-gray-400" />
+                          </div>
+                        </div>
+                        
+                        <div className="space-y-2">
+                          <Label htmlFor="email">Email Address</Label>
+                          <div className="relative">
+                            <Input 
+                              id="email"
+                              name="email"
+                              type="email"
+                              value={formData.email}
+                              onChange={handleProfileFormChange}
+                              className="bg-openfund-gray-dark border-openfund-gray-light pl-10"
+                            />
+                            <Mail className="absolute left-3 top-2.5 h-5 w-5 text-gray-400" />
+                          </div>
+                        </div>
+                        
+                        <div className="space-y-2">
+                          <Label htmlFor="phone">Phone Number</Label>
+                          <Input 
+                            id="phone"
+                            name="phone"
+                            value={formData.phone}
+                            onChange={handleProfileFormChange}
+                            className="bg-openfund-gray-dark border-openfund-gray-light"
+                          />
+                        </div>
+                        
+                        <div className="space-y-2">
+                          <Label htmlFor="language">Preferred Language</Label>
+                          <Input 
+                            id="language"
+                            name="language"
+                            value={formData.language}
+                            onChange={handleProfileFormChange}
+                            className="bg-openfund-gray-dark border-openfund-gray-light"
+                          />
+                        </div>
+                        
+                        <div className="space-y-2">
+                          <Label htmlFor="timezone">Timezone</Label>
+                          <Input 
+                            id="timezone"
+                            name="timezone"
+                            value={formData.timezone}
+                            onChange={handleProfileFormChange}
+                            className="bg-openfund-gray-dark border-openfund-gray-light"
+                          />
+                        </div>
+                      </div>
+                      
+                      <div className="pt-4 flex justify-end">
+                        <Button 
+                          type="submit"
+                          className="bg-openfund-green hover:bg-openfund-green-dark text-openfund-gray-dark"
+                        >
+                          Save Changes
+                        </Button>
+                      </div>
+                    </form>
+                  </CardContent>
+                </Card>
+                
+                <Card className="bg-openfund-gray-medium border-openfund-gray-light">
+                  <CardHeader>
+                    <CardTitle className="flex items-center">
+                      <ShieldCheck size={20} className="mr-2 text-openfund-green" />
+                      Account Security
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="space-y-6">
+                      <div className="flex justify-between items-center">
+                        <div>
+                          <h3 className="font-medium">Password</h3>
+                          <p className="text-sm text-gray-400">Last changed 30 days ago</p>
+                        </div>
+                        <Button variant="outline">Change Password</Button>
+                      </div>
+                      
+                      <div className="flex justify-between items-center">
+                        <div>
+                          <h3 className="font-medium">Two-Factor Authentication</h3>
+                          <p className="text-sm text-gray-400">Enhance your account security</p>
+                        </div>
+                        <Button variant="outline">Enable 2FA</Button>
+                      </div>
+                      
+                      <div className="flex justify-between items-center">
+                        <div>
+                          <h3 className="font-medium">Login Sessions</h3>
+                          <p className="text-sm text-gray-400">Manage active sessions</p>
+                        </div>
+                        <Button variant="outline">View Sessions</Button>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              </TabsContent>
               
               <TabsContent value="portfolio" className="space-y-6">
                 <Card className="bg-openfund-gray-medium border-openfund-gray-light">
@@ -337,17 +493,6 @@ const Account = () => {
                     </CardContent>
                   </Card>
                 </div>
-              </TabsContent>
-              
-              <TabsContent value="activity">
-                <Card className="bg-openfund-gray-medium border-openfund-gray-light">
-                  <CardHeader>
-                    <CardTitle>Recent Activity</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-gray-400">Your recent transactions and activities will appear here.</p>
-                  </CardContent>
-                </Card>
               </TabsContent>
               
               <TabsContent value="kyc">
