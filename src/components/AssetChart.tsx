@@ -146,6 +146,27 @@ const fetchPriceData = async (asset: string, timeframe: string, isPortfolio: boo
 
 export const AssetChart = ({ asset = 'bitcoin', timeframe, isPortfolio = false, portfolioName = '' }: AssetChartProps) => {
   const [chartData, setChartData] = useState<PriceData[]>([]);
+  const [isLightMode, setIsLightMode] = useState<boolean>(false);
+  
+  useEffect(() => {
+    // Check if we're in light or dark mode
+    const checkTheme = () => {
+      const isDark = document.documentElement.classList.contains('dark');
+      setIsLightMode(!isDark);
+    };
+    
+    // Initial check
+    checkTheme();
+    
+    // Listen for theme changes
+    const observer = new MutationObserver(checkTheme);
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['class']
+    });
+    
+    return () => observer.disconnect();
+  }, []);
   
   useEffect(() => {
     // Fetch initial data
@@ -179,6 +200,11 @@ export const AssetChart = ({ asset = 'bitcoin', timeframe, isPortfolio = false, 
 
   const displayName = isPortfolio ? 'Portfolio Value' : `${asset.charAt(0).toUpperCase() + asset.slice(1)} Price`;
   
+  // Colors based on theme and trend
+  const chartColor = isLightMode 
+    ? (isPositive ? "#0EA5E9" : "#FF4545") // blue for up, red for down in light mode
+    : (isPositive ? "#00FF00" : "#FF4545"); // green for up, red for down in dark mode
+    
   return (
     <div className="w-full h-full">
       {chartData.length > 0 && (
@@ -190,7 +216,7 @@ export const AssetChart = ({ asset = 'bitcoin', timeframe, isPortfolio = false, 
             <span className="text-2xl font-bold">
               ${chartData[chartData.length - 1].value.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}
             </span>
-            <span className={`text-sm font-medium ${isPositive ? 'text-openfund-green' : 'text-red-500'}`}>
+            <span className={`text-sm font-medium ${isPositive ? 'text-primary' : 'text-red-500'}`}>
               {formattedPercent}
             </span>
           </div>
@@ -202,38 +228,38 @@ export const AssetChart = ({ asset = 'bitcoin', timeframe, isPortfolio = false, 
           config={{
             value: {
               label: isPortfolio ? "Portfolio Value" : "Price",
-              color: isPositive ? "#00FF00" : "#FF4545"
+              color: chartColor
             },
             volume: {
               label: "Volume",
-              color: "#404040"
+              color: isLightMode ? "#D1D5DB" : "#404040" // lighter color in light mode
             }
           }}
         >
           <ResponsiveContainer width="100%" height="100%">
             <AreaChart
               data={chartData}
-              margin={{ top: 5, right: 10, left: 50, bottom: 40 }}
+              margin={{ top: 5, right: 10, left: 50, bottom: 60 }} // Increased bottom margin to fix X-axis labels
             >
               <defs>
                 <linearGradient id="colorPrice" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor={isPositive ? "#00FF00" : "#FF4545"} stopOpacity={0.3} />
-                  <stop offset="95%" stopColor={isPositive ? "#00FF00" : "#FF4545"} stopOpacity={0} />
+                  <stop offset="5%" stopColor={chartColor} stopOpacity={0.3} />
+                  <stop offset="95%" stopColor={chartColor} stopOpacity={0} />
                 </linearGradient>
               </defs>
               <XAxis 
                 dataKey="name"
                 tickLine={false}
                 axisLine={false}
-                dy={10}
-                tick={{ fill: '#888', fontSize: 12 }}
+                dy={30} // Move labels further down from the axis
+                tick={{ fill: isLightMode ? '#666' : '#888', fontSize: 12 }}
                 height={50}
                 padding={{ left: 0, right: 0 }}
               />
               <YAxis 
                 tickLine={false}
                 axisLine={false}
-                tick={{ fill: '#888', fontSize: 12 }}
+                tick={{ fill: isLightMode ? '#666' : '#888', fontSize: 12 }}
                 domain={['auto', 'auto']}
                 dx={-10}
                 width={60}
@@ -241,20 +267,20 @@ export const AssetChart = ({ asset = 'bitcoin', timeframe, isPortfolio = false, 
               />
               <Tooltip 
                 content={<ChartTooltipContent />} 
-                cursor={{ stroke: '#666', strokeWidth: 1, strokeDasharray: '5 5' }}
+                cursor={{ stroke: isLightMode ? '#999' : '#666', strokeWidth: 1, strokeDasharray: '5 5' }}
               />
               <Area 
                 type="monotone"
                 dataKey="value"
-                stroke={isPositive ? "#00FF00" : "#FF4545"}
+                stroke={chartColor}
                 strokeWidth={2}
                 fillOpacity={1}
                 fill="url(#colorPrice)"
-                activeDot={{ r: 6, fill: isPositive ? "#00FF00" : "#FF4545", strokeWidth: 0 }}
+                activeDot={{ r: 6, fill: chartColor, strokeWidth: 0 }}
               />
               <Bar 
                 dataKey="volume" 
-                fill="#404040"
+                fill={isLightMode ? "#D1D5DB" : "#404040"} // lighter color in light mode
                 opacity={0.3}
                 barSize={5}
               />

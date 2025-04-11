@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { ArrowDown, Settings, ArrowRight } from 'lucide-react';
 import { Input } from '@/components/ui/input';
@@ -185,7 +184,7 @@ export const SwapWidget = ({ selectedAsset = 'bitcoin' }: SwapWidgetProps) => {
   };
 
   return (
-    <Card className="bg-openfund-gray-dark border-openfund-gray-light p-4">
+    <Card className="bg-background border-border p-4">
       <div className="flex justify-between items-center mb-4">
         <div className="flex space-x-2">
           <Button 
@@ -209,12 +208,12 @@ export const SwapWidget = ({ selectedAsset = 'bitcoin' }: SwapWidgetProps) => {
               <Settings className="h-4 w-4" />
             </Button>
           </PopoverTrigger>
-          <PopoverContent className="bg-openfund-gray-medium border-openfund-gray-light w-80">
+          <PopoverContent className="bg-popover border-border w-80">
             <div className="space-y-4">
               <h4 className="font-medium">Transaction Settings</h4>
               <div>
                 <div className="flex justify-between mb-2">
-                  <label className="text-sm text-gray-400">Slippage Tolerance</label>
+                  <label className="text-sm text-muted-foreground">Slippage Tolerance</label>
                   <span className="text-sm font-medium">{slippage}%</span>
                 </div>
                 <Slider
@@ -225,13 +224,13 @@ export const SwapWidget = ({ selectedAsset = 'bitcoin' }: SwapWidgetProps) => {
                   onValueChange={handleSlippageChange}
                   className="mt-2"
                 />
-                <div className="flex justify-between text-xs text-gray-500 mt-1">
+                <div className="flex justify-between text-xs text-muted-foreground mt-1">
                   <span>0.1%</span>
                   <span>5%</span>
                 </div>
               </div>
               <div>
-                <label className="text-sm text-gray-400 block mb-2">Gas Price</label>
+                <label className="text-sm text-muted-foreground block mb-2">Gas Price</label>
                 <div className="grid grid-cols-3 gap-2 mt-1">
                   <Button 
                     variant={gasOption === 'standard' ? 'secondary' : 'outline'} 
@@ -255,7 +254,7 @@ export const SwapWidget = ({ selectedAsset = 'bitcoin' }: SwapWidgetProps) => {
                     Rapid
                   </Button>
                 </div>
-                <div className="text-xs text-gray-400 mt-2">
+                <div className="text-xs text-muted-foreground mt-2">
                   Estimated Fee: {getGasFee()}
                 </div>
               </div>
@@ -266,10 +265,10 @@ export const SwapWidget = ({ selectedAsset = 'bitcoin' }: SwapWidgetProps) => {
 
       <div className="space-y-4">
         {/* From */}
-        <div className="bg-openfund-gray-medium p-4 rounded-lg">
+        <div className="bg-secondary p-4 rounded-lg">
           <div className="flex justify-between mb-2">
-            <label className="text-gray-400 text-sm">From</label>
-            <span className="text-gray-400 text-sm">Balance: 1,000 USDT</span>
+            <label className="text-muted-foreground text-sm">From</label>
+            <span className="text-muted-foreground text-sm">Balance: 1,000 USDT</span>
           </div>
           <div className="flex space-x-2">
             <Input 
@@ -277,7 +276,7 @@ export const SwapWidget = ({ selectedAsset = 'bitcoin' }: SwapWidgetProps) => {
               placeholder="0.00"
               value={fromAmount}
               onChange={handleFromAmountChange}
-              className="bg-openfund-gray-dark border-openfund-gray-light"
+              className="bg-background border-border"
             />
             <Select value={fromAsset} onValueChange={handleFromAssetChange}>
               <SelectTrigger className="w-[120px]">
@@ -299,7 +298,7 @@ export const SwapWidget = ({ selectedAsset = 'bitcoin' }: SwapWidgetProps) => {
           <Button 
             variant="ghost" 
             size="icon" 
-            className="rounded-full bg-openfund-gray-light" 
+            className="rounded-full bg-secondary" 
             onClick={handleSwapClick}
           >
             <ArrowDown className="h-4 w-4" />
@@ -307,10 +306,10 @@ export const SwapWidget = ({ selectedAsset = 'bitcoin' }: SwapWidgetProps) => {
         </div>
 
         {/* To */}
-        <div className="bg-openfund-gray-medium p-4 rounded-lg">
+        <div className="bg-secondary p-4 rounded-lg">
           <div className="flex justify-between mb-2">
-            <label className="text-gray-400 text-sm">To</label>
-            <span className="text-gray-400 text-sm">Balance: 0.00 {toAsset.toUpperCase()}</span>
+            <label className="text-muted-foreground text-sm">To</label>
+            <span className="text-muted-foreground text-sm">Balance: 0.00 {toAsset.toUpperCase()}</span>
           </div>
           <div className="flex space-x-2">
             <Input 
@@ -318,7 +317,7 @@ export const SwapWidget = ({ selectedAsset = 'bitcoin' }: SwapWidgetProps) => {
               placeholder="0.00"
               value={toAmount}
               onChange={handleToAmountChange}
-              className="bg-openfund-gray-dark border-openfund-gray-light"
+              className="bg-background border-border"
             />
             <Select value={toAsset} onValueChange={handleToAssetChange}>
               <SelectTrigger className="w-[120px]">
@@ -337,57 +336,57 @@ export const SwapWidget = ({ selectedAsset = 'bitcoin' }: SwapWidgetProps) => {
 
         {/* Limit Price */}
         {swapMode === 'limit' && (
-          <div className="bg-openfund-gray-medium p-4 rounded-lg">
+          <div className="bg-secondary p-4 rounded-lg">
             <div className="mb-2">
-              <label className="text-gray-400 text-sm">Limit Price</label>
+              <label className="text-muted-foreground text-sm">Limit Price</label>
             </div>
             <Input
               type="number"
               placeholder="Set price"
               value={limitPrice}
               onChange={handleLimitPriceChange}
-              className="bg-openfund-gray-dark border-openfund-gray-light"
+              className="bg-background border-border"
             />
           </div>
         )}
 
         {/* Take Profit and Stop Loss */}
         <div className="grid grid-cols-2 gap-3">
-          <div className="bg-openfund-gray-medium p-3 rounded-lg">
+          <div className="bg-secondary p-3 rounded-lg">
             <div className="mb-2">
-              <label className="text-gray-400 text-sm">Take Profit (TP)</label>
+              <label className="text-muted-foreground text-sm">Take Profit (TP)</label>
             </div>
             <Input
               type="number"
               placeholder="Price"
               value={takeProfitPrice}
               onChange={handleTakeProfitChange}
-              className="bg-openfund-gray-dark border-openfund-gray-light"
+              className="bg-background border-border"
             />
           </div>
-          <div className="bg-openfund-gray-medium p-3 rounded-lg">
+          <div className="bg-secondary p-3 rounded-lg">
             <div className="mb-2">
-              <label className="text-gray-400 text-sm">Stop Loss (SL)</label>
+              <label className="text-muted-foreground text-sm">Stop Loss (SL)</label>
             </div>
             <Input
               type="number"
               placeholder="Price"
               onChange={handleStopLossChange}
               value={stopLossPrice}
-              className="bg-openfund-gray-dark border-openfund-gray-light"
+              className="bg-background border-border"
             />
           </div>
         </div>
 
         {/* Exchange rate */}
-        <div className="text-sm text-gray-400 flex justify-between items-center">
+        <div className="text-sm text-muted-foreground flex justify-between items-center">
           <span>Exchange Rate</span>
           <span>1 {fromAsset.toUpperCase()} ≈ {calculateExchangeRate(fromAsset, toAsset, '1')} {toAsset.toUpperCase()}</span>
         </div>
 
         {/* Swap button */}
         <Button 
-          className="w-full bg-openfund-green hover:bg-openfund-green-dark text-openfund-gray-dark"
+          className="w-full"
           onClick={handleSwap}
         >
           {swapMode === 'market' ? 'Swap' : 'Place Limit Order'}

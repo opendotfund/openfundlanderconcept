@@ -140,7 +140,7 @@ export const AssetList = ({ type, onSelect, selectedAsset, limit, searchQuery = 
             <TableHead className="w-[60px]">Rank</TableHead>
             <TableHead>Name</TableHead>
             <TableHead className="text-right">Price</TableHead>
-            <TableHead className="text-right">24h%</TableHead>
+            <TableHead className="text-right w-[100px]">24h%</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -149,29 +149,29 @@ export const AssetList = ({ type, onSelect, selectedAsset, limit, searchQuery = 
               <TableRow 
                 key={asset.id}
                 onClick={() => onSelect(asset.name)}
-                className={`cursor-pointer ${selectedAsset === asset.name ? 'bg-openfund-green/10 border-l-2 border-openfund-green' : ''}`}
+                className={`cursor-pointer ${selectedAsset === asset.name ? 'bg-primary/10 border-l-2 border-primary' : ''}`}
               >
                 <TableCell className="font-medium">{asset.id}</TableCell>
                 <TableCell>
                   <div className="flex items-center">
-                    <div className="w-6 h-6 rounded-full bg-openfund-gray-light flex items-center justify-center mr-2">
+                    <div className="w-6 h-6 rounded-full bg-secondary flex items-center justify-center mr-2">
                       {asset.symbol.charAt(0)}
                     </div>
                     <div>
                       <div className="font-medium capitalize">{asset.name}</div>
-                      <div className="text-xs text-gray-400">{asset.symbol}</div>
+                      <div className="text-xs text-muted-foreground">{asset.symbol}</div>
                     </div>
                   </div>
                 </TableCell>
                 <TableCell className="text-right">${asset.price}</TableCell>
                 <TableCell className="text-right">
-                  <span className={`flex items-center justify-end ${parseFloat(asset.change) < 0 ? 'text-red-500' : 'text-openfund-green'}`}>
+                  <span className={`flex items-center justify-end ${parseFloat(asset.change) < 0 ? 'text-red-500' : 'text-primary'}`}>
                     {parseFloat(asset.change) < 0 ? (
                       <ChevronDown size={16} />
                     ) : (
                       <ChevronUp size={16} />
                     )}
-                    {Math.abs(parseFloat(asset.change))}%
+                    <span className="ml-0.5">{Math.abs(parseFloat(asset.change))}%</span>
                   </span>
                 </TableCell>
               </TableRow>
