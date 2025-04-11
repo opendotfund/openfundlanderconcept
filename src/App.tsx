@@ -25,6 +25,7 @@ function App() {
           <Route path="/assets" element={<Assets />} />
           <Route path="/my-assets" element={<MyAssets />} />
           <Route path="/trade" element={<Trade />} />
+          <Route path="/explore" element={<ExploreFunds />} />
           <Route path="/explore-funds" element={<ExploreFunds />} />
           <Route path="/fund" element={<Fund />} />
           <Route path="/fund-detail/:type/:fundId" element={<FundDetail />} />
