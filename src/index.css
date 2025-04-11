@@ -44,6 +44,19 @@
     --sidebar-accent-foreground: 222 47% 11%;
     --sidebar-border: 214 32% 91%;
     --sidebar-ring: 210 100% 50%;
+    
+    /* Custom color variables for chart and dynamic elements */
+    --color-green: #00FF00;
+    --color-green-light: #80FF80;
+    --color-green-dark: #00CC00;
+    --color-blue: #0EA5E9;
+    --color-blue-light: #7DD3FC;
+    --color-blue-dark: #0284C7;
+    --color-primary: var(--color-blue);
+    --color-primary-light: var(--color-blue-light);
+    --color-primary-dark: var(--color-blue-dark);
+    --color-text-subdued: #555555;
+    --color-border: #e5e5e5;
   }
   
   .dark {
@@ -85,6 +98,19 @@
     --sidebar-accent-foreground: 0 0% 100%;
     --sidebar-border: 0 0% 16%;
     --sidebar-ring: 120 100% 50%;
+    
+    /* Custom color variables for chart and dynamic elements */
+    --color-green: #00FF00;
+    --color-green-light: #80FF80;
+    --color-green-dark: #00CC00;
+    --color-blue: #0EA5E9;
+    --color-blue-light: #7DD3FC;
+    --color-blue-dark: #0284C7;
+    --color-primary: var(--color-green);
+    --color-primary-light: var(--color-green-light);
+    --color-primary-dark: var(--color-green-dark);
+    --color-text-subdued: #888888;
+    --color-border: #333333;
   }
 }
 
@@ -128,4 +154,3 @@
     @apply text-foreground transition-colors duration-300;
   }
 }
-

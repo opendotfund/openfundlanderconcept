@@ -7,7 +7,7 @@ import ChartPreview from '@/components/ChartPreview';
 import Footer from '@/components/Footer';
 import HowItWorks from '@/components/HowItWorks';
 import { Button } from '@/components/ui/button';
-import { Hexagon, ArrowRight, Users, TrendingUp, Shield, DollarSign, ExternalLink } from 'lucide-react';
+import { Hexagon, ArrowRight, Users, TrendingUp, Shield, DollarSign } from 'lucide-react';
 
 const Index = () => {
   return (
@@ -250,22 +250,6 @@ const Index = () => {
           </div>
         </div>
         <div className="absolute bottom-0 right-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl -z-0"></div>
-      </section>
-      
-      {/* Documentation Link Section */}
-      <section className="py-12 bg-background text-center">
-        <div className="container mx-auto px-4">
-          <div className="flex flex-col items-center justify-center">
-            <Link 
-              to="https://openfund.gitbook.io/openfund-docs" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="flex items-center text-primary hover:underline transition-colors duration-300 text-lg"
-            >
-              See detailed documentation <ExternalLink className="ml-2 h-4 w-4" />
-            </Link>
-          </div>
-        </div>
       </section>
       
       <Footer />
