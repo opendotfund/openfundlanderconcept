@@ -46,7 +46,7 @@ const portfolioData = {
 const AssetRow = ({ asset, type }: { asset: any, type: string }) => {
   return (
     <div className="flex items-center justify-between py-3 border-b border-border">
-      <div className="text-left">
+      <div className="text-left flex-1">
         <div className="font-medium">{asset.name}</div>
         <div className="text-sm text-muted-foreground">
           {type === 'funds' ? 

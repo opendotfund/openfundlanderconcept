@@ -8,7 +8,7 @@ const Hero = () => {
     <section className="pt-24 pb-12 relative overflow-hidden transition-colors duration-300">
       <div className="container mx-auto px-4 relative z-10">
         <div className="grid md:grid-cols-2 gap-12 items-center">
-          <div>
+          <div className="flex flex-col items-center text-center">
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 transition-colors duration-300">
               The Modern Platform for <span className="text-primary transition-colors duration-300">Global Investments</span>
             </h1>
