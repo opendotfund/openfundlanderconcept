@@ -32,7 +32,8 @@ const generateTradeHistoryData = (asset: string): Trade[] => {
                     asset === 'ethereum' ? 3042 : 
                     asset === 'apple' ? 182 : 100;
   
-  for (let i = 0; i < 10; i++) {
+  // Increased to 20 trades for a longer history
+  for (let i = 0; i < 20; i++) {
     const date = new Date(today);
     date.setHours(date.getHours() - i - Math.floor(Math.random() * 5));
     
@@ -58,8 +59,9 @@ const generateTradeHistoryData = (asset: string): Trade[] => {
 export const TradeHistory = ({ asset }: TradeHistoryProps) => {
   const trades = generateTradeHistoryData(asset);
   
+  // Increased the height of the scroll area from 300px to 450px
   return (
-    <ScrollArea className="h-[300px]">
+    <ScrollArea className="h-[450px]">
       <Table>
         <TableHeader>
           <TableRow className="hover:bg-transparent">

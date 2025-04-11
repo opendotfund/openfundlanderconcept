@@ -51,8 +51,13 @@ const Hero = () => {
                 <span className="text-gray-400">Share Price</span>
                 <span className="font-bold">$567,870</span>
               </div>
-              <Button className="w-full bg-openfund-green hover:bg-openfund-green-dark text-openfund-gray-dark">
-                View Details
+              <Button 
+                className="w-full bg-openfund-green hover:bg-openfund-green-dark text-openfund-gray-dark"
+                asChild
+              >
+                <Link to="/fund-detail/stocks/berkshire-hathaway">
+                  View Details
+                </Link>
               </Button>
             </div>
           </div>
