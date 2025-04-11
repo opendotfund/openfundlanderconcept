@@ -1,4 +1,3 @@
-
 import React from 'react';
 import Logo from './Logo';
 import { Button } from '@/components/ui/button';
@@ -15,13 +14,23 @@ const Footer = () => {
               The next generation platform for commodities, stocks, and crypto trading.
             </p>
             <div className="flex space-x-4">
-              <a href="#" className="text-gray-400 hover:text-openfund-green">
+              <a 
+                href="https://x.com/OpendotFund" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="text-gray-400 hover:text-openfund-green"
+              >
                 <Twitter className="h-5 w-5" />
               </a>
               <a href="#" className="text-gray-400 hover:text-openfund-green">
                 <Github className="h-5 w-5" />
               </a>
-              <a href="#" className="text-gray-400 hover:text-openfund-green">
+              <a 
+                href="https://www.linkedin.com/company/opendotfund" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="text-gray-400 hover:text-openfund-green"
+              >
                 <Linkedin className="h-5 w-5" />
               </a>
               <a href="#" className="text-gray-400 hover:text-openfund-green">
