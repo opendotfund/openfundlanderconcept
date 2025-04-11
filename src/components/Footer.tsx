@@ -66,7 +66,7 @@ const Footer = () => {
           <div>
             <h3 className="text-lg font-bold mb-4">Resources</h3>
             <ul className="space-y-3">
-              <li><a href="#" className="text-gray-400 hover:text-openfund-green">Documentation</a></li>
+              <li><a href="https://openfund.gitbook.io/openfund-docs" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-openfund-green">Documentation</a></li>
               <li><a href="#" className="text-gray-400 hover:text-openfund-green">Help Center</a></li>
               <li><a href="#" className="text-gray-400 hover:text-openfund-green">API</a></li>
               <li><a href="#" className="text-gray-400 hover:text-openfund-green">Community</a></li>

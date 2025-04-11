@@ -62,7 +62,9 @@ const HowItWorks = () => {
         
         <div className="mt-16 text-center">
           <a 
-            href="#" 
+            href="https://openfund.gitbook.io/openfund-docs" 
+            target="_blank"
+            rel="noopener noreferrer"
             className="text-openfund-green font-medium hover:underline inline-flex items-center"
           >
             View detailed documentation
