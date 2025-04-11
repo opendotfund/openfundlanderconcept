@@ -26,6 +26,7 @@ import { AssetChart } from '@/components/AssetChart';
 import { TimeframeSelector } from '@/components/TimeframeSelector';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { useToast } from '@/hooks/use-toast';
+import { FundShareSwap } from '@/components/FundShareSwap';
 
 // Sample fund data (in a real app this would come from an API)
 const traditionalFunds = [
@@ -178,6 +179,7 @@ const FundDetail = () => {
   const [fund, setFund] = useState<any>(null);
   const [timeframe, setTimeframe] = useState('12m');
   const [activeTab, setActiveTab] = useState('overview');
+  const [showSwapWidget, setShowSwapWidget] = useState(false);
   const navigate = useNavigate();
   const isMobile = useIsMobile();
   const { toast } = useToast();
@@ -623,9 +625,28 @@ const FundDetail = () => {
                 </div>
                 
                 <div className="pt-4">
-                  <Button className="w-full bg-openfund-green hover:bg-openfund-green-dark text-openfund-gray-dark font-medium">
-                    {fund.type === 'Decentralized Fund' ? 'Invest Now' : 'Request Investment'}
-                  </Button>
+                  {fund.type === 'Decentralized Fund' ? (
+                    <>
+                      <Button 
+                        className="w-full bg-openfund-green hover:bg-openfund-green-dark text-openfund-gray-dark font-medium"
+                        onClick={() => setShowSwapWidget(!showSwapWidget)}
+                      >
+                        {showSwapWidget ? 'Cancel' : 'Invest Now'}
+                      </Button>
+                      
+                      {showSwapWidget && (
+                        <FundShareSwap 
+                          fundName={fund.name}
+                          fundId={fundId || ''}
+                          onClose={() => setShowSwapWidget(false)}
+                        />
+                      )}
+                    </>
+                  ) : (
+                    <Button className="w-full bg-openfund-green hover:bg-openfund-green-dark text-openfund-gray-dark font-medium">
+                      Request Investment
+                    </Button>
+                  )}
                 </div>
                 
                 {fund.type !== 'Decentralized Fund' && (
