@@ -35,45 +35,45 @@ const Contact = () => {
   };
   
   return (
-    <div className="min-h-screen bg-openfund-gray-dark text-white flex flex-col">
+    <div className="min-h-screen bg-background text-foreground flex flex-col">
       <Navbar />
       
       <main className="flex-grow container mx-auto px-4 py-12">
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-12">
             <h1 className="text-3xl md:text-4xl font-bold mb-4">
-              Get in <span className="text-openfund-green">Touch</span>
+              Get in <span className="text-primary">Touch</span>
             </h1>
-            <p className="text-xl text-gray-300">
+            <p className="text-xl text-muted-foreground">
               We're here to help with any questions you may have
             </p>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
-            <Card className="bg-openfund-gray-medium border-openfund-gray-light">
+            <Card>
               <CardContent className="p-6 flex flex-col items-center text-center">
-                <div className="w-12 h-12 bg-openfund-green/20 rounded-full flex items-center justify-center mb-4">
-                  <MailIcon className="text-openfund-green" size={24} />
+                <div className="w-12 h-12 bg-primary/20 rounded-full flex items-center justify-center mb-4">
+                  <MailIcon className="text-primary" size={24} />
                 </div>
                 <h3 className="text-lg font-bold mb-2">Email Us</h3>
-                <p className="text-gray-400 mb-4">Our support team is ready to help</p>
+                <p className="text-muted-foreground mb-4">Our support team is ready to help</p>
                 <a 
                   href="mailto:help@openfund.online" 
-                  className="text-openfund-green hover:underline"
+                  className="text-primary hover:underline"
                 >
                   help@openfund.online
                 </a>
               </CardContent>
             </Card>
             
-            <Card className="bg-openfund-gray-medium border-openfund-gray-light">
+            <Card>
               <CardContent className="p-6 flex flex-col items-center text-center">
-                <div className="w-12 h-12 bg-openfund-green/20 rounded-full flex items-center justify-center mb-4">
-                  <MapPin className="text-openfund-green" size={24} />
+                <div className="w-12 h-12 bg-primary/20 rounded-full flex items-center justify-center mb-4">
+                  <MapPin className="text-primary" size={24} />
                 </div>
                 <h3 className="text-lg font-bold mb-2">Office</h3>
-                <p className="text-gray-400 mb-4">Visit our headquarters</p>
-                <address className="text-openfund-green not-italic">
+                <p className="text-muted-foreground mb-4">Visit our headquarters</p>
+                <address className="text-primary not-italic">
                   7125 Missisauga Rd.<br />
                   Ontario Canada
                 </address>
@@ -83,10 +83,10 @@ const Contact = () => {
           
           <div className="grid grid-cols-1 md:grid-cols-5 gap-8">
             <div className="md:col-span-3">
-              <Card className="bg-openfund-gray-medium border-openfund-gray-light h-full">
+              <Card className="h-full">
                 <CardHeader>
                   <CardTitle>Send us a Message</CardTitle>
-                  <CardDescription className="text-gray-400">
+                  <CardDescription>
                     Fill out the form and we'll get back to you as soon as possible
                   </CardDescription>
                 </CardHeader>
@@ -99,7 +99,6 @@ const Contact = () => {
                           id="name"
                           value={name}
                           onChange={(e) => setName(e.target.value)}
-                          className="bg-openfund-gray-dark" 
                           placeholder="John Doe"
                           required
                         />
@@ -111,7 +110,6 @@ const Contact = () => {
                           type="email"
                           value={email}
                           onChange={(e) => setEmail(e.target.value)}
-                          className="bg-openfund-gray-dark" 
                           placeholder="john@example.com"
                           required
                         />
@@ -123,7 +121,6 @@ const Contact = () => {
                         id="subject"
                         value={subject}
                         onChange={(e) => setSubject(e.target.value)}
-                        className="bg-openfund-gray-dark" 
                         placeholder="What can we help you with?"
                       />
                     </div>
@@ -133,14 +130,14 @@ const Contact = () => {
                         id="message"
                         value={message}
                         onChange={(e) => setMessage(e.target.value)}
-                        className="bg-openfund-gray-dark min-h-[150px]" 
+                        className="min-h-[150px]" 
                         placeholder="Tell us how we can help..."
                         required
                       />
                     </div>
                     <Button 
                       type="submit" 
-                      className="w-full bg-openfund-green hover:bg-openfund-green-dark text-openfund-gray-dark"
+                      className="w-full"
                     >
                       <Send className="mr-2 h-4 w-4" /> Send Message
                     </Button>
@@ -150,44 +147,43 @@ const Contact = () => {
             </div>
             
             <div className="md:col-span-2">
-              <Card className="bg-openfund-gray-medium border-openfund-gray-light h-full">
+              <Card className="h-full">
                 <CardHeader>
                   <CardTitle>FAQ</CardTitle>
-                  <CardDescription className="text-gray-400">
+                  <CardDescription>
                     Quick answers to common questions
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-6">
                   <div>
                     <h3 className="font-bold mb-2">How do I create an account?</h3>
-                    <p className="text-gray-400 text-sm">
+                    <p className="text-muted-foreground text-sm">
                       Click on the "Connect" button in the top right corner to connect your wallet and create an account.
                     </p>
                   </div>
                   <div>
                     <h3 className="font-bold mb-2">What assets can I trade?</h3>
-                    <p className="text-gray-400 text-sm">
+                    <p className="text-muted-foreground text-sm">
                       OpenFund supports trading of cryptocurrencies, stocks, and commodities all in one platform.
                     </p>
                   </div>
                   <div>
                     <h3 className="font-bold mb-2">How do I start a fund?</h3>
-                    <p className="text-gray-400 text-sm">
+                    <p className="text-muted-foreground text-sm">
                       Navigate to the "Start a Fund" page and follow the instructions to set up your decentralized hedge fund.
                     </p>
                   </div>
                   <div>
                     <h3 className="font-bold mb-2">What are the fees?</h3>
-                    <p className="text-gray-400 text-sm">
+                    <p className="text-muted-foreground text-sm">
                       OpenFund charges a one-time fee of $750 to create a fund, which gives users access to trade Crypto, Stocks, and Commodities all from one platform. This comprehensive solution enables fund managers to diversify their portfolios across multiple asset classes.
                     </p>
                   </div>
                   <div className="text-center mt-8">
-                    <p className="text-gray-400 mb-2">Still have questions?</p>
+                    <p className="text-muted-foreground mb-2">Still have questions?</p>
                     <Button 
                       asChild
                       variant="outline" 
-                      className="border-openfund-green text-openfund-green"
                     >
                       <a href="mailto:help@openfund.online">
                         Contact Support

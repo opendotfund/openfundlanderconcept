@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
@@ -144,7 +143,7 @@ const Legal = () => {
                         <p>Gibraltar GX11 1AA</p>
                       </div>
                       <a 
-                        href="https://www.hassans.gi" 
+                        href="https://www.gibraltarlaw.com" 
                         target="_blank" 
                         rel="noopener noreferrer"
                         className="flex items-center text-primary hover:underline"
@@ -307,7 +306,7 @@ const Legal = () => {
                         <p>Gibraltar GX11 1AA</p>
                       </div>
                       <a 
-                        href="https://www.hassans.gi" 
+                        href="https://www.gibraltarlaw.com" 
                         target="_blank" 
                         rel="noopener noreferrer"
                         className="flex items-center text-primary hover:underline"

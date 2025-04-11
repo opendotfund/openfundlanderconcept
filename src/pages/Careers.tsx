@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
@@ -68,7 +68,7 @@ const Careers = () => {
   };
 
   return (
-    <div className="min-h-screen bg-openfund-gray-dark text-white flex flex-col">
+    <div className="min-h-screen bg-background text-foreground flex flex-col">
       <Navbar />
 
       <main className="flex-grow container mx-auto px-4 py-8">
@@ -85,28 +85,28 @@ const Careers = () => {
                 </Button>
                 <h1 className="text-3xl font-bold mb-2">{selectedJob.title}</h1>
                 <div className="flex flex-wrap gap-4 mb-6">
-                  <div className="flex items-center text-openfund-green">
+                  <div className="flex items-center text-primary">
                     <DollarSign size={16} className="mr-1" />
                     {selectedJob.salary}
                   </div>
-                  <div className="flex items-center text-gray-400">
+                  <div className="flex items-center text-muted-foreground">
                     <Briefcase size={16} className="mr-1" />
                     {selectedJob.department}
                   </div>
-                  <div className="flex items-center text-gray-400">
+                  <div className="flex items-center text-muted-foreground">
                     <Users size={16} className="mr-1" />
                     {selectedJob.location}
                   </div>
                 </div>
-                <div className="bg-openfund-gray-medium p-6 rounded-lg mb-8">
+                <div className="bg-muted p-6 rounded-lg mb-8">
                   <h2 className="text-xl font-bold mb-4">Job Description</h2>
-                  <p className="text-gray-300">{selectedJob.description}</p>
+                  <p className="text-muted-foreground">{selectedJob.description}</p>
                 </div>
 
-                <Card className="bg-openfund-gray-medium border-openfund-gray-light">
+                <Card>
                   <CardHeader>
                     <CardTitle>Apply for {selectedJob.title}</CardTitle>
-                    <CardDescription className="text-gray-400">Fill out the form below to apply</CardDescription>
+                    <CardDescription>Fill out the form below to apply</CardDescription>
                   </CardHeader>
                   <CardContent>
                     <form onSubmit={handleSubmit} className="space-y-6">
@@ -117,7 +117,6 @@ const Careers = () => {
                             id="name"
                             value={name}
                             onChange={(e) => setName(e.target.value)}
-                            className="bg-openfund-gray-dark" 
                             placeholder="John Doe"
                             required
                           />
@@ -129,7 +128,6 @@ const Careers = () => {
                             type="email"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
-                            className="bg-openfund-gray-dark" 
                             placeholder="john@example.com"
                             required
                           />
@@ -140,11 +138,10 @@ const Careers = () => {
                             id="resume"
                             type="file"
                             onChange={handleFileChange}
-                            className="bg-openfund-gray-dark" 
                             accept=".pdf,.doc,.docx"
                             required
                           />
-                          <p className="text-xs text-gray-400">Accepted formats: PDF, DOC, DOCX</p>
+                          <p className="text-xs text-muted-foreground">Accepted formats: PDF, DOC, DOCX</p>
                         </div>
                         <div className="grid gap-2">
                           <Label htmlFor="cover">Why are you the right fit for this role?</Label>
@@ -152,7 +149,7 @@ const Careers = () => {
                             id="cover"
                             value={coverLetter}
                             onChange={(e) => setCoverLetter(e.target.value)}
-                            className="bg-openfund-gray-dark min-h-[150px]" 
+                            className="min-h-[150px]" 
                             placeholder="Tell us why you're excited about this position and what makes you the perfect candidate..."
                             required
                           />
@@ -160,7 +157,7 @@ const Careers = () => {
                       </div>
                       <Button 
                         type="submit" 
-                        className="w-full bg-openfund-green hover:bg-openfund-green-dark text-openfund-gray-dark"
+                        className="w-full"
                       >
                         Submit Application
                       </Button>
@@ -173,22 +170,22 @@ const Careers = () => {
             <>
               <div className="text-center mb-12">
                 <h1 className="text-3xl md:text-4xl font-bold mb-4">
-                  Join the <span className="text-openfund-green">OpenFund</span> Team
+                  Join the <span className="text-primary">OpenFund</span> Team
                 </h1>
-                <p className="text-xl text-gray-300">
+                <p className="text-xl text-muted-foreground">
                   Build the future of decentralized finance with us
                 </p>
               </div>
 
               <div className="mb-12">
-                <h2 className="text-2xl font-bold mb-6 border-b border-openfund-gray-light pb-2">
+                <h2 className="text-2xl font-bold mb-6 border-b border-border pb-2">
                   Open Positions
                 </h2>
                 <div className="space-y-4">
                   {jobs.map(job => (
                     <Card 
                       key={job.id}
-                      className="bg-openfund-gray-medium border-openfund-gray-light hover:border-openfund-green/50 transition-colors cursor-pointer"
+                      className="hover:border-primary/50 transition-colors cursor-pointer"
                       onClick={() => setSelectedJob(job)}
                     >
                       <CardContent className="p-6">
@@ -196,15 +193,15 @@ const Careers = () => {
                           <div>
                             <h3 className="text-xl font-bold mb-1">{job.title}</h3>
                             <div className="flex flex-wrap gap-4">
-                              <div className="flex items-center text-openfund-green">
+                              <div className="flex items-center text-primary">
                                 <DollarSign size={16} className="mr-1" />
                                 {job.salary}
                               </div>
-                              <div className="flex items-center text-gray-400">
+                              <div className="flex items-center text-muted-foreground">
                                 <Briefcase size={16} className="mr-1" />
                                 {job.department}
                               </div>
-                              <div className="flex items-center text-gray-400">
+                              <div className="flex items-center text-muted-foreground">
                                 <Users size={16} className="mr-1" />
                                 {job.location}
                               </div>
@@ -220,29 +217,29 @@ const Careers = () => {
                 </div>
               </div>
 
-              <div className="bg-openfund-gray-medium rounded-lg p-8 text-center">
+              <div className="bg-muted rounded-lg p-8 text-center">
                 <h2 className="text-2xl font-bold mb-4">Don't see a position that fits your skills?</h2>
-                <p className="text-gray-300 mb-6">
+                <p className="text-muted-foreground mb-6">
                   We're always looking for talented individuals to join our team. Send your resume to 
-                  <a href="mailto:careers@openfund.online" className="text-openfund-green hover:underline ml-1">
+                  <a href="mailto:careers@openfund.online" className="text-primary hover:underline ml-1">
                     careers@openfund.online
                   </a>
                 </p>
                 <div className="flex flex-col sm:flex-row justify-center gap-4">
-                  <div className="flex flex-col items-center p-4 bg-openfund-gray-dark rounded-lg">
-                    <Zap className="text-openfund-green mb-2" size={32} />
+                  <div className="flex flex-col items-center p-4 bg-background rounded-lg">
+                    <Zap className="text-primary mb-2" size={32} />
                     <h3 className="font-bold mb-1">Fast-Paced Environment</h3>
-                    <p className="text-gray-400 text-sm">Work on cutting-edge DeFi technology</p>
+                    <p className="text-muted-foreground text-sm">Work on cutting-edge DeFi technology</p>
                   </div>
-                  <div className="flex flex-col items-center p-4 bg-openfund-gray-dark rounded-lg">
-                    <Users className="text-openfund-green mb-2" size={32} />
+                  <div className="flex flex-col items-center p-4 bg-background rounded-lg">
+                    <Users className="text-primary mb-2" size={32} />
                     <h3 className="font-bold mb-1">Remote First</h3>
-                    <p className="text-gray-400 text-sm">Work from anywhere in the world</p>
+                    <p className="text-muted-foreground text-sm">Work from anywhere in the world</p>
                   </div>
-                  <div className="flex flex-col items-center p-4 bg-openfund-gray-dark rounded-lg">
-                    <Briefcase className="text-openfund-green mb-2" size={32} />
+                  <div className="flex flex-col items-center p-4 bg-background rounded-lg">
+                    <Briefcase className="text-primary mb-2" size={32} />
                     <h3 className="font-bold mb-1">Competitive Benefits</h3>
-                    <p className="text-gray-400 text-sm">Salary, tokens, and healthcare</p>
+                    <p className="text-muted-foreground text-sm">Salary, tokens, and healthcare</p>
                   </div>
                 </div>
               </div>

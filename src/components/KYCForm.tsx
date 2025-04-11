@@ -6,10 +6,9 @@ import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Checkbox } from '@/components/ui/checkbox';
 import { FileText, Upload, ShieldCheck, CircleDollarSign } from 'lucide-react';
-import { useToast } from '@/components/ui/use-toast';
+import { toast } from 'sonner';
 
 export const KYCForm = () => {
-  const { toast } = useToast();
   const [step, setStep] = useState<number>(1);
   const [isUploading, setIsUploading] = useState<boolean>(false);
   
@@ -52,10 +51,10 @@ export const KYCForm = () => {
             key={stepNumber} 
             className={`flex items-center justify-center w-12 h-12 rounded-full border-2 ${
               stepNumber === step 
-                ? 'bg-openfund-green border-openfund-green text-openfund-gray-dark' 
+                ? 'bg-primary border-primary text-primary-foreground' 
                 : stepNumber < step 
-                  ? 'bg-openfund-gray-dark border-openfund-green text-openfund-green'
-                  : 'bg-openfund-gray-dark border-openfund-gray-light text-gray-400'
+                  ? 'bg-background border-primary text-primary'
+                  : 'bg-background border-muted-foreground/30 text-muted-foreground'
             }`}
           >
             {stepNumber}
@@ -71,33 +70,33 @@ export const KYCForm = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-2">
               <Label htmlFor="firstName">First Name</Label>
-              <Input id="firstName" placeholder="John" className="bg-openfund-gray-dark" />
+              <Input id="firstName" placeholder="John" />
             </div>
             <div className="space-y-2">
               <Label htmlFor="lastName">Last Name</Label>
-              <Input id="lastName" placeholder="Doe" className="bg-openfund-gray-dark" />
+              <Input id="lastName" placeholder="Doe" />
             </div>
           </div>
           
           <div className="space-y-2">
             <Label htmlFor="dob">Date of Birth</Label>
-            <Input id="dob" type="date" className="bg-openfund-gray-dark" />
+            <Input id="dob" type="date" />
           </div>
           
           <div className="space-y-2">
             <Label htmlFor="address">Residential Address</Label>
-            <Input id="address" placeholder="123 Main St" className="bg-openfund-gray-dark" />
+            <Input id="address" placeholder="123 Main St" />
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="space-y-2">
               <Label htmlFor="city">City</Label>
-              <Input id="city" placeholder="New York" className="bg-openfund-gray-dark" />
+              <Input id="city" placeholder="New York" />
             </div>
             <div className="space-y-2">
               <Label htmlFor="country">Country</Label>
               <Select>
-                <SelectTrigger className="bg-openfund-gray-dark">
+                <SelectTrigger>
                   <SelectValue placeholder="Select country" />
                 </SelectTrigger>
                 <SelectContent>
@@ -111,12 +110,12 @@ export const KYCForm = () => {
             </div>
             <div className="space-y-2">
               <Label htmlFor="zipCode">Zip Code</Label>
-              <Input id="zipCode" placeholder="10001" className="bg-openfund-gray-dark" />
+              <Input id="zipCode" placeholder="10001" />
             </div>
           </div>
           
           <Button 
-            className="w-full bg-openfund-green hover:bg-openfund-green-dark text-openfund-gray-dark mt-4" 
+            className="w-full" 
             onClick={nextStep}
           >
             Continue to Document Upload
@@ -128,14 +127,14 @@ export const KYCForm = () => {
       {step === 2 && (
         <div className="space-y-6">
           <h3 className="text-xl font-medium">Document Upload</h3>
-          <p className="text-gray-400 mb-4">Please provide clear photos or scans of the following documents:</p>
+          <p className="text-muted-foreground mb-4">Please provide clear photos or scans of the following documents:</p>
           
           <div className="space-y-6">
-            <div className="border border-dashed border-openfund-gray-light rounded-lg p-6 text-center">
+            <div className="border border-dashed border-muted-foreground/30 rounded-lg p-6 text-center">
               <div className="flex flex-col items-center">
-                <FileText size={40} className="mb-3 text-gray-400" />
+                <FileText size={40} className="mb-3 text-muted-foreground" />
                 <h4 className="text-lg font-medium mb-2">Government ID</h4>
-                <p className="text-sm text-gray-400 mb-4">Passport, Driver's License, or National ID Card</p>
+                <p className="text-sm text-muted-foreground mb-4">Passport, Driver's License, or National ID Card</p>
                 <Input 
                   id="idUpload" 
                   type="file" 
@@ -144,7 +143,7 @@ export const KYCForm = () => {
                 />
                 <Label 
                   htmlFor="idUpload" 
-                  className="cursor-pointer flex items-center justify-center gap-2 bg-openfund-gray-dark hover:bg-openfund-gray-light px-4 py-2 rounded-md"
+                  className="cursor-pointer flex items-center justify-center gap-2 bg-muted hover:bg-muted/80 px-4 py-2 rounded-md"
                 >
                   <Upload size={16} />
                   Upload ID
@@ -152,11 +151,11 @@ export const KYCForm = () => {
               </div>
             </div>
             
-            <div className="border border-dashed border-openfund-gray-light rounded-lg p-6 text-center">
+            <div className="border border-dashed border-muted-foreground/30 rounded-lg p-6 text-center">
               <div className="flex flex-col items-center">
-                <FileText size={40} className="mb-3 text-gray-400" />
+                <FileText size={40} className="mb-3 text-muted-foreground" />
                 <h4 className="text-lg font-medium mb-2">Proof of Address</h4>
-                <p className="text-sm text-gray-400 mb-4">Utility Bill, Bank Statement (not older than 3 months)</p>
+                <p className="text-sm text-muted-foreground mb-4">Utility Bill, Bank Statement (not older than 3 months)</p>
                 <Input 
                   id="addressUpload" 
                   type="file" 
@@ -165,7 +164,7 @@ export const KYCForm = () => {
                 />
                 <Label 
                   htmlFor="addressUpload"
-                  className="cursor-pointer flex items-center justify-center gap-2 bg-openfund-gray-dark hover:bg-openfund-gray-light px-4 py-2 rounded-md"
+                  className="cursor-pointer flex items-center justify-center gap-2 bg-muted hover:bg-muted/80 px-4 py-2 rounded-md"
                 >
                   <Upload size={16} />
                   Upload Proof
@@ -173,11 +172,11 @@ export const KYCForm = () => {
               </div>
             </div>
             
-            <div className="border border-dashed border-openfund-gray-light rounded-lg p-6 text-center">
+            <div className="border border-dashed border-muted-foreground/30 rounded-lg p-6 text-center">
               <div className="flex flex-col items-center">
-                <FileText size={40} className="mb-3 text-gray-400" />
+                <FileText size={40} className="mb-3 text-muted-foreground" />
                 <h4 className="text-lg font-medium mb-2">Selfie with ID</h4>
-                <p className="text-sm text-gray-400 mb-4">A photo of yourself holding your ID document</p>
+                <p className="text-sm text-muted-foreground mb-4">A photo of yourself holding your ID document</p>
                 <Input 
                   id="selfieUpload" 
                   type="file" 
@@ -186,7 +185,7 @@ export const KYCForm = () => {
                 />
                 <Label 
                   htmlFor="selfieUpload"
-                  className="cursor-pointer flex items-center justify-center gap-2 bg-openfund-gray-dark hover:bg-openfund-gray-light px-4 py-2 rounded-md"
+                  className="cursor-pointer flex items-center justify-center gap-2 bg-muted hover:bg-muted/80 px-4 py-2 rounded-md"
                 >
                   <Upload size={16} />
                   Upload Selfie
@@ -200,7 +199,6 @@ export const KYCForm = () => {
               Back
             </Button>
             <Button 
-              className="bg-openfund-green hover:bg-openfund-green-dark text-openfund-gray-dark" 
               onClick={nextStep}
               disabled={isUploading}
             >
@@ -214,7 +212,7 @@ export const KYCForm = () => {
       {step === 3 && (
         <div className="space-y-6">
           <h3 className="text-xl font-medium">Tax Information</h3>
-          <p className="text-gray-400 mb-4">
+          <p className="text-muted-foreground mb-4">
             This information is required for tax reporting purposes as per local regulations.
           </p>
           
@@ -222,7 +220,7 @@ export const KYCForm = () => {
             <div className="space-y-2">
               <Label htmlFor="taxCountry">Tax Residency Country</Label>
               <Select>
-                <SelectTrigger className="bg-openfund-gray-dark">
+                <SelectTrigger>
                   <SelectValue placeholder="Select country" />
                 </SelectTrigger>
                 <SelectContent>
@@ -237,7 +235,7 @@ export const KYCForm = () => {
             
             <div className="space-y-2">
               <Label htmlFor="taxId">Tax Identification Number</Label>
-              <Input id="taxId" placeholder="SSN, TIN, etc." className="bg-openfund-gray-dark" />
+              <Input id="taxId" placeholder="SSN, TIN, etc." />
             </div>
             
             <div className="space-y-2">
@@ -248,22 +246,22 @@ export const KYCForm = () => {
               </div>
             </div>
             
-            <div className="border border-openfund-gray-light rounded-lg p-6 mt-4">
+            <div className="border border-border rounded-lg p-6 mt-4">
               <div className="flex items-start mb-4">
-                <ShieldCheck className="text-openfund-green mr-3 mt-1" size={24} />
+                <ShieldCheck className="text-primary mr-3 mt-1" size={24} />
                 <div>
                   <h4 className="font-medium">Data Protection</h4>
-                  <p className="text-sm text-gray-400">
+                  <p className="text-sm text-muted-foreground">
                     Your information is securely stored and only shared with relevant tax authorities as required by law.
                   </p>
                 </div>
               </div>
               
               <div className="flex items-start">
-                <CircleDollarSign className="text-openfund-green mr-3 mt-1" size={24} />
+                <CircleDollarSign className="text-primary mr-3 mt-1" size={24} />
                 <div>
                   <h4 className="font-medium">Tax Reporting</h4>
-                  <p className="text-sm text-gray-400">
+                  <p className="text-sm text-muted-foreground">
                     OpenFund is required to report certain investment activities to tax authorities in compliance with international tax agreements.
                   </p>
                 </div>
@@ -283,7 +281,6 @@ export const KYCForm = () => {
               Back
             </Button>
             <Button 
-              className="bg-openfund-green hover:bg-openfund-green-dark text-openfund-gray-dark"
               onClick={submitForm}
             >
               Submit KYC Application
