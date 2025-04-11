@@ -115,6 +115,12 @@ const FundDetail = () => {
   }
   
   const isDefiFund = fund.type === 'Decentralized Fund';
+  // Generate historical price data specific to the fund
+  const chartData = Array.isArray(fund.holdingsBreakdown) ? 
+    fund.holdingsBreakdown.map(item => ({
+      date: new Date().toISOString().split('T')[0],
+      value: item.value
+    })) : [];
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -173,7 +179,10 @@ const FundDetail = () => {
                 <div className="h-[350px]">
                   <AssetChart 
                     asset={fund.name.toLowerCase().replace(' ', '-')} 
-                    timeframe={timeframe} 
+                    timeframe={timeframe}
+                    isPortfolio={true}
+                    portfolioName={fund.name}
+                    portfolioData={chartData}
                   />
                 </div>
               </CardContent>

@@ -40,7 +40,17 @@ const fetchPriceData = async (asset: string, timeframe: string, isPortfolio: boo
       'solana': 135.80,
       'apple': 182.40,
       'tesla': 178.32,
-      'gold': 2312.75
+      'gold': 2312.75,
+      'berkshire-hathaway': 700000.00,  // Using actual AUM value from fund data
+      'ark-innovation-etf': 16100.00,
+      'bridgewater-associates': 140000.00,
+      'renaissance-technologies': 110000.00,
+      'two-sigma-investments': 58000.00,
+      'elliott-management': 48000.00,
+      'grayscale-bitcoin-trust': 30300.00,
+      'pantera-capital': 4700.00,
+      'polychain-capital': 1000.00,
+      '3-arrows-capital': 2800.00
     };
     
     if (isPortfolio) {
@@ -52,7 +62,22 @@ const fetchPriceData = async (asset: string, timeframe: string, isPortfolio: boo
         }));
       }
       
-      const portfolioBaseValue = portfolioName === "Alpha Seekers #1" ? 1577892 : 250000;
+      // For funds, determine base value from the fund name
+      let portfolioBaseValue = 0;
+      
+      if (portfolioName) {
+        const normalizedName = portfolioName.toLowerCase().replace(/\s+/g, '-');
+        if (baseValues[normalizedName]) {
+          portfolioBaseValue = baseValues[normalizedName];
+        } else if (portfolioName.includes('Alpha Seekers')) {
+          portfolioBaseValue = 342000 + parseInt(portfolioName.split('#')[1] || '1') * 25000;
+        } else {
+          portfolioBaseValue = 250000; // Default fallback
+        }
+      } else {
+        portfolioBaseValue = 250000; // Default fallback
+      }
+      
       const endValue = portfolioBaseValue;
       
       const dataPoints = 
@@ -78,7 +103,7 @@ const fetchPriceData = async (asset: string, timeframe: string, isPortfolio: boo
       const volatilityFactor = getVolatilityFactor();
       const variance = portfolioBaseValue * volatilityFactor;
       
-      const seedValue = portfolioName.length;
+      const seedValue = portfolioName ? portfolioName.length : 10;
       
       const getTrendFactor = () => {
         if (timeframe === '1h') {
@@ -160,7 +185,8 @@ const fetchPriceData = async (asset: string, timeframe: string, isPortfolio: boo
       
       return data.reverse();
     } else {
-      const baseValue = baseValues[asset.toLowerCase()] || 100;
+      const normalizedAsset = asset.toLowerCase().replace(/\s+/g, '-');
+      const baseValue = baseValues[normalizedAsset] || 100;
       
       const dataPoints = 
         timeframe === '1h' ? 60 : 
@@ -185,10 +211,10 @@ const fetchPriceData = async (asset: string, timeframe: string, isPortfolio: boo
       const variance = baseValue * volatilityFactor;
       
       const assetTrend = () => {
-        if (asset.toLowerCase() === 'bitcoin') return 0.08;
-        if (asset.toLowerCase() === 'ethereum') return 0.05;
-        if (asset.toLowerCase() === 'solana') return 0.1;
-        if (asset.toLowerCase() === 'tesla') return -0.02;
+        if (normalizedAsset === 'bitcoin') return 0.08;
+        if (normalizedAsset === 'ethereum') return 0.05;
+        if (normalizedAsset === 'solana') return 0.1;
+        if (normalizedAsset === 'tesla') return -0.02;
         return 0;
       };
       
