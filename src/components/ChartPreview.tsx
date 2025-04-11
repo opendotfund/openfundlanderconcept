@@ -11,22 +11,22 @@ import {
   ResponsiveContainer 
 } from 'recharts';
 
-// S&P 500 sample data for the chart
+// S&P 500 sample data for the chart - consistently rising trend
 const data = [
   { date: '1 Jan', price: 4769 },
-  { date: '15 Jan', price: 4783 },
+  { date: '15 Jan', price: 4825 },
   { date: '1 Feb', price: 4958 },
   { date: '15 Feb', price: 5029 },
   { date: '1 Mar', price: 5123 },
   { date: '15 Mar', price: 5234 },
-  { date: '1 Apr', price: 5202 },
-  { date: '15 Apr', price: 5010 },
-  { date: '1 May', price: 5035 },
-  { date: '15 May', price: 5145 },
-  { date: '1 Jun', price: 5218 },
-  { date: '15 Jun', price: 5431 },
-  { date: '1 Jul', price: 5472 },
-  { date: '15 Jul', price: 5555 },
+  { date: '1 Apr', price: 5310 },
+  { date: '15 Apr', price: 5385 },
+  { date: '1 May', price: 5435 },
+  { date: '15 May', price: 5495 },
+  { date: '1 Jun', price: 5518 },
+  { date: '15 Jun', price: 5531 },
+  { date: '1 Jul', price: 5572 },
+  { date: '15 Jul', price: 5605 },
   { date: '1 Aug', price: 5628 },
 ];
 

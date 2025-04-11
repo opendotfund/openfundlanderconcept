@@ -153,4 +153,21 @@
   .open-fund-text span:last-child {
     @apply text-foreground transition-colors duration-300;
   }
+
+  /* Light mode fixes for invest buttons and widgets */
+  .light .fund-invest-button {
+    @apply bg-primary text-primary-foreground hover:bg-primary/90;
+  }
+
+  .light .fund-share-widget {
+    @apply bg-card border-border text-foreground;
+  }
+
+  .light .fund-share-widget input {
+    @apply bg-background border-input text-foreground;
+  }
+
+  .light .fund-share-widget button {
+    @apply bg-primary hover:bg-primary/90 text-primary-foreground;
+  }
 }

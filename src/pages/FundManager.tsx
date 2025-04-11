@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { 
@@ -39,33 +40,33 @@ const FundManager = () => {
   const fundData = {
     name: "Alpha Seekers #1",
     manager: "0x7a...3fe1",
-    aum: "$367,000",
-    performance: "+14.2%",
+    aum: "$1,500,000",
+    performance: "+24.7%",
     performanceIsPositive: true,
-    withdrawalsPending: "$23,500",
+    withdrawalsPending: "$53,500",
     withdrawalsCount: 3,
     nextWithdrawalWindow: "04/21/2025",
     timeUntilWithdrawal: "10 days",
     holdings: [
-      { name: "Bitcoin", symbol: "BTC", amount: "2.15", value: "$141,250", change: "+3.2%", allocation: 38.5, isUp: true },
-      { name: "Ethereum", symbol: "ETH", amount: "18.5", value: "$64,010", change: "+1.5%", allocation: 17.4, isUp: true },
-      { name: "Solana", symbol: "SOL", amount: "250", value: "$39,000", change: "-2.1%", allocation: 10.6, isUp: false },
-      { name: "USDC", symbol: "USDC", amount: "45,000", value: "$45,000", change: "0.0%", allocation: 12.3, isUp: true },
-      { name: "Apple", symbol: "AAPL", amount: "124", value: "$26,040", change: "+1.2%", allocation: 7.1, isUp: true },
-      { name: "Tesla", symbol: "TSLA", amount: "60", value: "$14,520", change: "-3.5%", allocation: 4.0, isUp: false },
-      { name: "Gold", symbol: "GOLD", amount: "8.2", value: "$19,516", change: "+0.8%", allocation: 5.3, isUp: true },
-      { name: "Other", symbol: "", amount: "", value: "$17,664", change: "", allocation: 4.8, isUp: true }
+      { name: "Bitcoin", symbol: "BTC", amount: "7.94", value: "$521,400", change: "+7.8%", allocation: 34.8, isUp: true },
+      { name: "Ethereum", symbol: "ETH", amount: "62.5", value: "$216,250", change: "+5.2%", allocation: 14.4, isUp: true },
+      { name: "Solana", symbol: "SOL", amount: "870", value: "$135,720", change: "+8.5%", allocation: 9.1, isUp: true },
+      { name: "USDC", symbol: "USDC", amount: "180,000", value: "$180,000", change: "0.0%", allocation: 12.0, isUp: true },
+      { name: "Apple", symbol: "AAPL", amount: "420", value: "$88,200", change: "+3.2%", allocation: 5.9, isUp: true },
+      { name: "Tesla", symbol: "TSLA", amount: "185", value: "$44,770", change: "+2.1%", allocation: 3.0, isUp: true },
+      { name: "Gold", symbol: "GOLD", amount: "28.5", value: "$67,830", change: "+0.8%", allocation: 4.5, isUp: true },
+      { name: "Other", symbol: "", amount: "", value: "$246,030", change: "", allocation: 16.3, isUp: true }
     ],
     recentTransactions: [
-      { type: "Buy", asset: "Bitcoin", amount: "0.35 BTC", value: "$23,044", time: "1h ago" },
+      { type: "Buy", asset: "Bitcoin", amount: "1.45 BTC", value: "$95,120", time: "1h ago" },
       { type: "Sell", asset: "Tesla", amount: "25 TSLA", value: "$6,050", time: "6h ago" },
-      { type: "Withdrawal", asset: "USDC", amount: "5,000 USDC", value: "$5,000", time: "1d ago" },
-      { type: "Deposit", asset: "USDC", amount: "10,000 USDC", value: "$10,000", time: "3d ago" },
-      { type: "Buy", asset: "Ethereum", amount: "2.8 ETH", value: "$9,660", time: "5d ago" }
+      { type: "Withdrawal", asset: "USDC", amount: "12,000 USDC", value: "$12,000", time: "1d ago" },
+      { type: "Deposit", asset: "USDC", amount: "50,000 USDC", value: "$50,000", time: "3d ago" },
+      { type: "Buy", asset: "Ethereum", amount: "8.2 ETH", value: "$28,290", time: "5d ago" }
     ],
     pendingWithdrawals: [
-      { investor: "0x45...9a3d", amount: "$12,000", requested: "2d ago", status: "Pending", processingDate: "04/21/2025" },
-      { investor: "0x92...7b5c", amount: "$8,500", requested: "4d ago", status: "Pending", processingDate: "04/21/2025" },
+      { investor: "0x45...9a3d", amount: "$32,000", requested: "2d ago", status: "Pending", processingDate: "04/21/2025" },
+      { investor: "0x92...7b5c", amount: "$18,500", requested: "4d ago", status: "Pending", processingDate: "04/21/2025" },
       { investor: "0x3f...0e4f", amount: "$3,000", requested: "5d ago", status: "Pending", processingDate: "04/21/2025" }
     ]
   };

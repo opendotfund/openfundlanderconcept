@@ -664,7 +664,7 @@ const ExploreFunds = () => {
                     </CardContent>
                     <CardFooter>
                       <Button 
-                        className="w-full"
+                        className="w-full fund-invest-button"
                         variant="default"
                         onClick={() => handleViewDetails(fund)}
                       >
@@ -731,7 +731,7 @@ const ExploreFunds = () => {
                     </CardContent>
                     <CardFooter>
                       <Button 
-                        className="w-full"
+                        className="w-full fund-invest-button"
                         variant="default"
                         onClick={() => handleViewDetails(fund)}
                       >
@@ -819,7 +819,7 @@ const ExploreFunds = () => {
                     </CardContent>
                     <CardFooter>
                       <Button 
-                        className="w-full"
+                        className="w-full fund-invest-button"
                         variant="default"
                         onClick={() => handleViewDetails(fund)}
                       >
