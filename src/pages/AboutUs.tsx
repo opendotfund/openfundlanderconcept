@@ -7,33 +7,37 @@ import TeamMemberCard from '@/components/TeamMemberCard';
 import { Hexagon, Users } from 'lucide-react';
 
 const AboutUs = () => {
-  const teamMembers = [
-    {
-      name: "Misha Stastna",
-      role: "Co-Founder & CEO",
-      background: "Crypto Native",
-    },
-    {
-      name: "Dr. Ahmed Al-Gebali",
-      role: "Advisor",
-      background: "2011 CFO of the year at Dubai Islamic Bank",
-    },
-    {
-      name: "@Dagger100x",
-      role: "Advisor",
-      background: "Crypto Native",
-    },
-    {
-      name: "Abdul Fayed",
-      role: "Co-Founder",
-      background: "TradFi Native",
-    },
-    {
-      name: "@0xSoda",
-      role: "Co-Founder & CTO",
-      background: "Crypto Native",
-    },
-  ];
+  const teamMembers = {
+    founders: [
+      {
+        name: "Misha Stastna",
+        role: "Co-Founder & CEO",
+        background: "Crypto Native",
+      },
+      {
+        name: "Abdul Fayed",
+        role: "Co-Founder",
+        background: "TradFi Native",
+      },
+      {
+        name: "@0xSoda",
+        role: "Co-Founder & CTO",
+        background: "Crypto Native",
+      },
+    ],
+    advisors: [
+      {
+        name: "Dr. Ahmed Al-Gebali",
+        role: "Advisor",
+        background: "2011 CFO of the year at Dubai Islamic Bank",
+      },
+      {
+        name: "@Dagger100x",
+        role: "Advisor",
+        background: "Crypto Native",
+      },
+    ]
+  };
 
   return (
     <div className="min-h-screen bg-background text-foreground flex flex-col">
@@ -52,11 +56,24 @@ const AboutUs = () => {
           </p>
         </div>
         
-        {/* Team member cards without images */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
-          {teamMembers.map((member, index) => (
-            <TeamMemberCard key={index} {...member} />
-          ))}
+        {/* Co-Founders Section */}
+        <div className="mb-16">
+          <h2 className="text-2xl font-bold mb-6 text-center">Co-Founders</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {teamMembers.founders.map((member, index) => (
+              <TeamMemberCard key={`founder-${index}`} {...member} />
+            ))}
+          </div>
+        </div>
+        
+        {/* Advisors Section */}
+        <div className="mb-16">
+          <h2 className="text-2xl font-bold mb-6 text-center">Advisors</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            {teamMembers.advisors.map((member, index) => (
+              <TeamMemberCard key={`advisor-${index}`} {...member} />
+            ))}
+          </div>
         </div>
         
         <div className="mt-16 bg-card p-8 rounded-lg border border-border">
