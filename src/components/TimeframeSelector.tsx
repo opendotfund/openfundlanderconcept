@@ -21,7 +21,7 @@ export const TimeframeSelector = ({ timeframe, onChange }: TimeframeSelectorProp
   const isMobile = useIsMobile();
   
   return (
-    <div className="flex flex-wrap gap-1 justify-center sm:justify-end w-full">
+    <div className="flex flex-wrap gap-1 justify-center sm:justify-end w-full" aria-label="OpenFund chart timeframe selector">
       {timeframes.map((tf) => (
         <Button
           key={tf.value}
@@ -32,6 +32,7 @@ export const TimeframeSelector = ({ timeframe, onChange }: TimeframeSelectorProp
             'dark:bg-openfund-green dark:text-openfund-gray-dark bg-openfund-blue text-white hover:bg-openfund-blue-dark dark:hover:bg-openfund-green-dark' : 
             'text-gray-500 dark:text-gray-300 hover:text-foreground dark:hover:text-white'
           } ${isMobile ? 'px-2 py-0.5 h-6 text-xs' : ''}`}
+          aria-label={`View OpenFund chart for ${tf.label} timeframe`}
         >
           {tf.label}
         </Button>

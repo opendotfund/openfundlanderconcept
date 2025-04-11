@@ -32,11 +32,11 @@ const Navbar = () => {
   const navigate = useNavigate();
   
   const navigation = [
-    { name: 'Home', href: '/' },
-    { name: 'Trade', href: '/trade' },
-    { name: 'Start a Fund', href: '/fund' },
-    { name: 'Explore Funds', href: '/explore' },
-    { name: 'My Assets', href: '/my-assets' },
+    { name: 'OpenFund Home', href: '/' },
+    { name: 'Trade on OpenFund', href: '/trade' },
+    { name: 'Start an OpenFund', href: '/fund' },
+    { name: 'Explore OpenFunds', href: '/explore' },
+    { name: 'My OpenFund Assets', href: '/my-assets' },
   ];
   
   const isActive = (path: string) => {
@@ -55,7 +55,7 @@ const Navbar = () => {
       <div className="container px-4 mx-auto">
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center">
-            <Link to="/" className="flex-shrink-0">
+            <Link to="/" className="flex-shrink-0" aria-label="OpenFund Home">
               <Logo />
             </Link>
           </div>
@@ -90,44 +90,44 @@ const Navbar = () => {
                         JD
                       </AvatarFallback>
                     </Avatar>
-                    <span>My Account</span>
+                    <span>My OpenFund Account</span>
                     <ChevronDown className="h-4 w-4" />
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end" className="w-56">
-                  <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                  <DropdownMenuLabel>My OpenFund Account</DropdownMenuLabel>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem className="cursor-pointer" onClick={() => navigateToAccount('profile')}>
                     <User className="mr-2 h-4 w-4" />
-                    <span>Profile</span>
+                    <span>OpenFund Profile</span>
                   </DropdownMenuItem>
                   <DropdownMenuItem className="cursor-pointer" onClick={() => navigateToAccount('portfolio')}>
                     <Wallet className="mr-2 h-4 w-4" />
-                    <span>My Portfolio</span>
+                    <span>My OpenFund Portfolio</span>
                   </DropdownMenuItem>
                   <DropdownMenuItem className="cursor-pointer" onClick={() => navigateToAccount('kyc')}>
                     <CheckCircle className="mr-2 h-4 w-4" />
-                    <span>Complete KYC</span>
+                    <span>Complete OpenFund KYC</span>
                   </DropdownMenuItem>
                   <DropdownMenuItem className="cursor-pointer" onClick={() => navigateToAccount('settings')}>
                     <Settings className="mr-2 h-4 w-4" />
-                    <span>Settings</span>
+                    <span>OpenFund Settings</span>
                   </DropdownMenuItem>
                   <DropdownMenuItem className="cursor-pointer" onClick={() => navigateToAccount('referral')}>
                     <Star className="mr-2 h-4 w-4" />
-                    <span>Referrals</span>
+                    <span>OpenFund Referrals</span>
                   </DropdownMenuItem>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem className="cursor-pointer">
                     <div className="flex items-center w-full">
                       <LogOut className="mr-2 h-4 w-4" />
-                      <span>Log out</span>
+                      <span>Log out from OpenFund</span>
                     </div>
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
               <Button variant="outline" className="border-primary text-primary">
-                Connect
+                Connect to OpenFund
               </Button>
             </div>
           </div>
@@ -138,6 +138,7 @@ const Navbar = () => {
               type="button"
               className="text-gray-400 hover:text-foreground p-2"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
+              aria-label={isMenuOpen ? "Close menu" : "Open menu"}
             >
               {isMenuOpen ? (
                 <X className="h-6 w-6" aria-hidden="true" />
@@ -177,7 +178,7 @@ const Navbar = () => {
                     JD
                   </AvatarFallback>
                 </Avatar>
-                My Account
+                My OpenFund Account
               </div>
             </div>
             <div 
@@ -186,7 +187,7 @@ const Navbar = () => {
             >
               <div className="flex items-center">
                 <CheckCircle className="h-5 w-5 mr-2" />
-                Complete KYC
+                Complete OpenFund KYC
               </div>
             </div>
             <div className="mt-4">
@@ -195,7 +196,7 @@ const Navbar = () => {
                 className="w-full border-primary text-primary"
                 onClick={() => setIsMenuOpen(false)}
               >
-                Connect
+                Connect to OpenFund
               </Button>
             </div>
           </div>
