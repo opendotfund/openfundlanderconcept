@@ -12,6 +12,9 @@ import ExploreFunds from './pages/ExploreFunds';
 import Fund from './pages/Fund';
 import FundDetail from './pages/FundDetail';
 import FundManager from './pages/FundManager';
+import ComingSoon from './pages/ComingSoon';
+import Careers from './pages/Careers';
+import Contact from './pages/Contact';
 
 import './App.css';
 
@@ -30,6 +33,9 @@ function App() {
           <Route path="/fund" element={<Fund />} />
           <Route path="/fund-detail/:type/:fundId" element={<FundDetail />} />
           <Route path="/fund-manager" element={<FundManager />} />
+          <Route path="/coming-soon" element={<ComingSoon />} />
+          <Route path="/careers" element={<Careers />} />
+          <Route path="/contact" element={<Contact />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </div>

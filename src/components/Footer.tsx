@@ -1,4 +1,6 @@
+
 import React from 'react';
+import { Link } from 'react-router-dom';
 import Logo from './Logo';
 import { Button } from '@/components/ui/button';
 import { Twitter, Github, Linkedin, Youtube } from 'lucide-react';
@@ -42,11 +44,11 @@ const Footer = () => {
           <div>
             <h3 className="text-lg font-bold mb-4">Products</h3>
             <ul className="space-y-3">
-              <li><a href="#" className="text-gray-400 hover:text-openfund-green">Commodities</a></li>
-              <li><a href="#" className="text-gray-400 hover:text-openfund-green">Stocks</a></li>
-              <li><a href="#" className="text-gray-400 hover:text-openfund-green">Cryptocurrencies</a></li>
-              <li><a href="#" className="text-gray-400 hover:text-openfund-green">Fund Management</a></li>
-              <li><a href="#" className="text-gray-400 hover:text-openfund-green">Tokenization</a></li>
+              <li><Link to="/trade?type=commodities" className="text-gray-400 hover:text-openfund-green">Commodities</Link></li>
+              <li><Link to="/trade?type=stocks" className="text-gray-400 hover:text-openfund-green">Stocks</Link></li>
+              <li><Link to="/trade?type=crypto" className="text-gray-400 hover:text-openfund-green">Cryptocurrencies</Link></li>
+              <li><Link to="/fund-manager" className="text-gray-400 hover:text-openfund-green">Fund Management</Link></li>
+              <li><Link to="/coming-soon" className="text-gray-400 hover:text-openfund-green">Tokenization</Link></li>
             </ul>
           </div>
           
@@ -54,10 +56,10 @@ const Footer = () => {
             <h3 className="text-lg font-bold mb-4">Company</h3>
             <ul className="space-y-3">
               <li><a href="#" className="text-gray-400 hover:text-openfund-green">About Us</a></li>
-              <li><a href="#" className="text-gray-400 hover:text-openfund-green">Careers</a></li>
+              <li><Link to="/careers" className="text-gray-400 hover:text-openfund-green">Careers</Link></li>
               <li><a href="#" className="text-gray-400 hover:text-openfund-green">Blog</a></li>
               <li><a href="#" className="text-gray-400 hover:text-openfund-green">Press</a></li>
-              <li><a href="#" className="text-gray-400 hover:text-openfund-green">Contact</a></li>
+              <li><Link to="/contact" className="text-gray-400 hover:text-openfund-green">Contact</Link></li>
             </ul>
           </div>
           
