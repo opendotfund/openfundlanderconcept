@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { 
@@ -37,7 +36,6 @@ const FundManager = () => {
   const navigate = useNavigate();
   const isMobile = useIsMobile();
   
-  // Fund data (would come from an API in a real application)
   const fundData = {
     name: "Alpha Seekers #1",
     manager: "0x7a...3fe1",
@@ -115,11 +113,8 @@ const FundManager = () => {
           </div>
         </div>
         
-        {/* Main dashboard grid */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {/* Left column (2/3 width on desktop) */}
           <div className="lg:col-span-2 space-y-6">
-            {/* Fund overview cards */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               <Card className="bg-openfund-gray-medium border-openfund-gray-light">
                 <CardContent className="p-4">
@@ -159,7 +154,6 @@ const FundManager = () => {
               </Card>
             </div>
             
-            {/* Performance chart */}
             <Card className="bg-openfund-gray-medium border-openfund-gray-light">
               <CardHeader className="flex flex-row justify-between items-center pb-2">
                 <CardTitle>Fund Performance</CardTitle>
@@ -178,182 +172,181 @@ const FundManager = () => {
               </CardContent>
             </Card>
             
-            {/* Holdings and transactions tabs */}
-            <Tabs defaultValue="holdings">
-              <TabsList className="bg-openfund-gray-medium mb-2">
-                <TabsTrigger value="holdings">Portfolio Holdings</TabsTrigger>
-                <TabsTrigger value="transactions">Recent Transactions</TabsTrigger>
-                <TabsTrigger value="withdrawals">Pending Withdrawals</TabsTrigger>
-              </TabsList>
-              
-              <TabsContent value="holdings">
-                <Card className="bg-openfund-gray-medium border-openfund-gray-light">
-                  <CardHeader className="pb-2">
-                    <div className="flex justify-between items-center">
-                      <CardTitle>Current Holdings</CardTitle>
-                      <div className="relative w-64">
-                        <Input
-                          placeholder="Search assets..."
-                          value={searchQuery}
-                          onChange={handleSearchChange}
-                          className="pl-8 bg-openfund-gray-dark w-full"
-                        />
-                        <Search className="absolute left-2.5 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+            <div className="mt-10">
+              <Tabs defaultValue="holdings">
+                <TabsList className="bg-openfund-gray-medium mb-2">
+                  <TabsTrigger value="holdings">Portfolio Holdings</TabsTrigger>
+                  <TabsTrigger value="transactions">Recent Transactions</TabsTrigger>
+                  <TabsTrigger value="withdrawals">Pending Withdrawals</TabsTrigger>
+                </TabsList>
+                
+                <TabsContent value="holdings">
+                  <Card className="bg-openfund-gray-medium border-openfund-gray-light">
+                    <CardHeader className="pb-2">
+                      <div className="flex justify-between items-center">
+                        <CardTitle>Current Holdings</CardTitle>
+                        <div className="relative w-64">
+                          <Input
+                            placeholder="Search assets..."
+                            value={searchQuery}
+                            onChange={handleSearchChange}
+                            className="pl-8 bg-openfund-gray-dark w-full"
+                          />
+                          <Search className="absolute left-2.5 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+                        </div>
                       </div>
-                    </div>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="overflow-x-auto">
-                      <table className="w-full">
-                        <thead>
-                          <tr className="text-gray-400 text-sm border-b border-openfund-gray-light">
-                            <th className="text-left font-medium py-2">Asset</th>
-                            <th className="text-right font-medium py-2">Amount</th>
-                            <th className="text-right font-medium py-2">Value</th>
-                            <th className="text-right font-medium py-2">Change</th>
-                            <th className="text-left font-medium py-2 pl-4">Allocation</th>
-                            <th className="text-right font-medium py-2">Actions</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {fundData.holdings
-                            .filter(holding => 
-                              holding.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
-                              holding.symbol.toLowerCase().includes(searchQuery.toLowerCase())
-                            )
-                            .map((holding, index) => (
-                            <tr key={index} className="border-b border-openfund-gray-light hover:bg-openfund-gray-dark/30 transition-colors">
-                              <td className="py-3">
-                                <div className="flex items-center">
-                                  <div className="w-8 h-8 rounded-full bg-openfund-gray-dark flex items-center justify-center mr-2">
-                                    {holding.symbol ? holding.symbol[0] : "?"}
-                                  </div>
-                                  <div>
-                                    <div className="font-medium">{holding.name}</div>
-                                    <div className="text-gray-400 text-sm">{holding.symbol}</div>
-                                  </div>
-                                </div>
-                              </td>
-                              <td className="text-right py-3">
-                                {holding.amount}
-                              </td>
-                              <td className="text-right py-3">
-                                {holding.value}
-                              </td>
-                              <td className="text-right py-3">
-                                {holding.change && (
-                                  <span className={holding.isUp ? "text-openfund-green" : "text-red-500"}>
-                                    {holding.change}
-                                  </span>
-                                )}
-                              </td>
-                              <td className="py-3 pl-4">
-                                <div className="flex items-center">
-                                  <Progress className="h-2 mr-2" value={holding.allocation} />
-                                  <span className="text-sm">{formatNumber(holding.allocation)}%</span>
-                                </div>
-                              </td>
-                              <td className="text-right py-3">
-                                <Button variant="ghost" size="sm" onClick={() => setSelectedAsset(holding.name.toLowerCase())}>
-                                  Trade
-                                </Button>
-                              </td>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="overflow-x-auto">
+                        <table className="w-full">
+                          <thead>
+                            <tr className="text-gray-400 text-sm border-b border-openfund-gray-light">
+                              <th className="text-left font-medium py-2">Asset</th>
+                              <th className="text-right font-medium py-2">Amount</th>
+                              <th className="text-right font-medium py-2">Value</th>
+                              <th className="text-right font-medium py-2">Change</th>
+                              <th className="text-left font-medium py-2 pl-4">Allocation</th>
+                              <th className="text-right font-medium py-2">Actions</th>
                             </tr>
-                          ))}
-                        </tbody>
-                      </table>
-                    </div>
-                  </CardContent>
-                </Card>
-              </TabsContent>
-              
-              <TabsContent value="transactions">
-                <Card className="bg-openfund-gray-medium border-openfund-gray-light">
-                  <CardHeader>
-                    <CardTitle>Recent Transactions</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="space-y-3">
-                      {fundData.recentTransactions.map((tx, index) => (
-                        <div key={index} className="flex justify-between items-center bg-openfund-gray-dark p-3 rounded-lg">
-                          <div className="flex items-center">
-                            <div className={`w-8 h-8 rounded-full flex items-center justify-center mr-3 ${
-                              tx.type === 'Buy' ? 'bg-openfund-green/20 text-openfund-green' :
-                              tx.type === 'Sell' ? 'bg-red-500/20 text-red-500' :
-                              tx.type === 'Withdrawal' ? 'bg-amber-500/20 text-amber-500' :
-                              'bg-blue-500/20 text-blue-500'
-                            }`}>
-                              {tx.type === 'Buy' ? <ArrowUpRight size={16} /> :
-                               tx.type === 'Sell' ? <ArrowDownRight size={16} /> :
-                               tx.type === 'Withdrawal' ? <FileMinus size={16} /> :
-                               <FilePlus size={16} />}
-                            </div>
-                            <div>
-                              <div className="font-medium">{tx.type} {tx.asset}</div>
-                              <div className="text-gray-400 text-sm">{tx.amount}</div>
-                            </div>
-                          </div>
-                          <div className="text-right">
-                            <div className="font-medium">{tx.value}</div>
-                            <div className="text-gray-400 text-sm">{tx.time}</div>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </CardContent>
-                </Card>
-              </TabsContent>
-              
-              <TabsContent value="withdrawals">
-                <Card className="bg-openfund-gray-medium border-openfund-gray-light">
-                  <CardHeader>
-                    <div className="flex justify-between items-center">
-                      <CardTitle>Pending Withdrawals</CardTitle>
-                      <div className="flex items-center bg-amber-500/20 text-amber-400 px-3 py-1 rounded-full text-sm">
-                        <Clock size={14} className="mr-1.5" />
-                        <span>Total: {fundData.withdrawalsPending}</span>
+                          </thead>
+                          <tbody>
+                            {fundData.holdings
+                              .filter(holding => 
+                                holding.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
+                                holding.symbol.toLowerCase().includes(searchQuery.toLowerCase())
+                              )
+                              .map((holding, index) => (
+                              <tr key={index} className="border-b border-openfund-gray-light hover:bg-openfund-gray-dark/30 transition-colors">
+                                <td className="py-3">
+                                  <div className="flex items-center">
+                                    <div className="w-8 h-8 rounded-full bg-openfund-gray-dark flex items-center justify-center mr-2">
+                                      {holding.symbol ? holding.symbol[0] : "?"}
+                                    </div>
+                                    <div>
+                                      <div className="font-medium">{holding.name}</div>
+                                      <div className="text-gray-400 text-sm">{holding.symbol}</div>
+                                    </div>
+                                  </div>
+                                </td>
+                                <td className="text-right py-3">
+                                  {holding.amount}
+                                </td>
+                                <td className="text-right py-3">
+                                  {holding.value}
+                                </td>
+                                <td className="text-right py-3">
+                                  {holding.change && (
+                                    <span className={holding.isUp ? "text-openfund-green" : "text-red-500"}>
+                                      {holding.change}
+                                    </span>
+                                  )}
+                                </td>
+                                <td className="py-3 pl-4">
+                                  <div className="flex items-center">
+                                    <Progress className="h-2 mr-2" value={holding.allocation} />
+                                    <span className="text-sm">{formatNumber(holding.allocation)}%</span>
+                                  </div>
+                                </td>
+                                <td className="text-right py-3">
+                                  <Button variant="ghost" size="sm" onClick={() => setSelectedAsset(holding.name.toLowerCase())}>
+                                    Trade
+                                  </Button>
+                                </td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
                       </div>
-                    </div>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="space-y-4">
-                      {fundData.pendingWithdrawals.map((withdrawal, index) => (
-                        <div key={index} className="bg-openfund-gray-dark p-4 rounded-lg">
-                          <div className="flex justify-between items-start mb-3">
-                            <div>
-                              <div className="font-medium text-sm text-gray-400">Investor</div>
-                              <div>{withdrawal.investor}</div>
+                    </CardContent>
+                  </Card>
+                </TabsContent>
+                
+                <TabsContent value="transactions">
+                  <Card className="bg-openfund-gray-medium border-openfund-gray-light">
+                    <CardHeader>
+                      <CardTitle>Recent Transactions</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="space-y-3">
+                        {fundData.recentTransactions.map((tx, index) => (
+                          <div key={index} className="flex justify-between items-center bg-openfund-gray-dark p-3 rounded-lg">
+                            <div className="flex items-center">
+                              <div className={`w-8 h-8 rounded-full flex items-center justify-center mr-3 ${
+                                tx.type === 'Buy' ? 'bg-openfund-green/20 text-openfund-green' :
+                                tx.type === 'Sell' ? 'bg-red-500/20 text-red-500' :
+                                tx.type === 'Withdrawal' ? 'bg-amber-500/20 text-amber-500' :
+                                'bg-blue-500/20 text-blue-500'
+                              }`}>
+                                {tx.type === 'Buy' ? <ArrowUpRight size={16} /> :
+                                 tx.type === 'Sell' ? <ArrowDownRight size={16} /> :
+                                 tx.type === 'Withdrawal' ? <FileMinus size={16} /> :
+                                 <FilePlus size={16} />}
+                              </div>
+                              <div>
+                                <div className="font-medium">{tx.type} {tx.asset}</div>
+                                <div className="text-gray-400 text-sm">{tx.amount}</div>
+                              </div>
                             </div>
-                            <Badge variant="outline" className="bg-amber-500/10 text-amber-400 border-amber-400/20">
-                              {withdrawal.status}
-                            </Badge>
+                            <div className="text-right">
+                              <div className="font-medium">{tx.value}</div>
+                              <div className="text-gray-400 text-sm">{tx.time}</div>
+                            </div>
                           </div>
-                          <div className="grid grid-cols-3 gap-4">
-                            <div>
-                              <div className="font-medium text-sm text-gray-400">Amount</div>
-                              <div className="font-bold">{withdrawal.amount}</div>
-                            </div>
-                            <div>
-                              <div className="font-medium text-sm text-gray-400">Requested</div>
-                              <div>{withdrawal.requested}</div>
-                            </div>
-                            <div>
-                              <div className="font-medium text-sm text-gray-400">Processing</div>
-                              <div>{withdrawal.processingDate}</div>
-                            </div>
-                          </div>
+                        ))}
+                      </div>
+                    </CardContent>
+                  </Card>
+                </TabsContent>
+                
+                <TabsContent value="withdrawals">
+                  <Card className="bg-openfund-gray-medium border-openfund-gray-light">
+                    <CardHeader>
+                      <div className="flex justify-between items-center">
+                        <CardTitle>Pending Withdrawals</CardTitle>
+                        <div className="flex items-center bg-amber-500/20 text-amber-400 px-3 py-1 rounded-full text-sm">
+                          <Clock size={14} className="mr-1.5" />
+                          <span>Total: {fundData.withdrawalsPending}</span>
                         </div>
-                      ))}
-                    </div>
-                  </CardContent>
-                </Card>
-              </TabsContent>
-            </Tabs>
+                      </div>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="space-y-4">
+                        {fundData.pendingWithdrawals.map((withdrawal, index) => (
+                          <div key={index} className="bg-openfund-gray-dark p-4 rounded-lg">
+                            <div className="flex justify-between items-start mb-3">
+                              <div>
+                                <div className="font-medium text-sm text-gray-400">Investor</div>
+                                <div>{withdrawal.investor}</div>
+                              </div>
+                              <Badge variant="outline" className="bg-amber-500/10 text-amber-400 border-amber-400/20">
+                                {withdrawal.status}
+                              </Badge>
+                            </div>
+                            <div className="grid grid-cols-3 gap-4">
+                              <div>
+                                <div className="font-medium text-sm text-gray-400">Amount</div>
+                                <div className="font-bold">{withdrawal.amount}</div>
+                              </div>
+                              <div>
+                                <div className="font-medium text-sm text-gray-400">Requested</div>
+                                <div>{withdrawal.requested}</div>
+                              </div>
+                              <div>
+                                <div className="font-medium text-sm text-gray-400">Processing</div>
+                                <div>{withdrawal.processingDate}</div>
+                              </div>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </CardContent>
+                  </Card>
+                </TabsContent>
+              </Tabs>
+            </div>
           </div>
           
-          {/* Right column (1/3 width on desktop) */}
           <div className="space-y-6">
-            {/* Trading widget */}
             <Card className="bg-openfund-gray-medium border-openfund-gray-light">
               <CardHeader>
                 <CardTitle>Fund Trading</CardTitle>
@@ -363,7 +356,6 @@ const FundManager = () => {
               </CardContent>
             </Card>
             
-            {/* Fund info */}
             <Card className="bg-openfund-gray-medium border-openfund-gray-light">
               <CardHeader>
                 <CardTitle>Fund Information</CardTitle>
@@ -409,7 +401,6 @@ const FundManager = () => {
               </CardContent>
             </Card>
             
-            {/* Alerts */}
             {fundData.withdrawalsCount > 0 && (
               <div className="bg-amber-950/30 border border-amber-500/20 rounded-lg p-4">
                 <div className="flex items-start">
