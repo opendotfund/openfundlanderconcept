@@ -39,9 +39,10 @@ export const FundShareSwap = ({ fundName, fundId, onClose }: FundShareSwapProps)
       return;
     }
 
+    // Show fund investment confirmation toast notification
     toast({
-      title: "Investment Successful",
-      description: `You have invested ${amount} USDC for ${shares} shares in ${fundName}`,
+      title: "Investment Confirmed",
+      description: `Successfully invested ${amount} USDC for ${shares} shares in ${fundName}`,
       variant: "default"
     });
     
