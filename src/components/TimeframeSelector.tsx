@@ -21,8 +21,13 @@ export const TimeframeSelector = ({ timeframe, onChange }: TimeframeSelectorProp
   const isMobile = useIsMobile();
   
   return (
-    <div className="flex flex-wrap gap-1 justify-center sm:justify-end w-full">
-      {timeframes.map((tf) => (
+    <div 
+      className="flex flex-wrap gap-1 justify-center sm:justify-end w-full"
+      data-testid="openfund-timeframe-selector"
+      itemScope 
+      itemType="https://schema.org/ItemList"
+    >
+      {timeframes.map((tf, index) => (
         <Button
           key={tf.value}
           variant={timeframe === tf.value ? 'default' : 'outline'}
@@ -32,8 +37,13 @@ export const TimeframeSelector = ({ timeframe, onChange }: TimeframeSelectorProp
             'dark:bg-openfund-green dark:text-openfund-gray-dark bg-openfund-blue text-white hover:bg-openfund-blue-dark dark:hover:bg-openfund-green-dark' : 
             'text-gray-500 dark:text-gray-300 hover:text-foreground dark:hover:text-white'
           } ${isMobile ? 'px-2 py-0.5 h-6 text-xs' : ''}`}
+          itemProp="itemListElement"
+          itemScope
+          itemType="https://schema.org/ListItem"
+          aria-label={`OpenFund ${tf.label} timeframe`}
         >
-          {tf.label}
+          <span itemProp="name">{tf.label}</span>
+          <meta itemProp="position" content={String(index + 1)} />
         </Button>
       ))}
     </div>

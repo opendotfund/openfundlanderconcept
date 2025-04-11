@@ -32,11 +32,11 @@ const Navbar = () => {
   const navigate = useNavigate();
   
   const navigation = [
-    { name: 'Home', href: '/' },
-    { name: 'Trade', href: '/trade' },
-    { name: 'Start a Fund', href: '/fund' },
-    { name: 'Explore Funds', href: '/explore' },
-    { name: 'My Assets', href: '/my-assets' },
+    { name: 'Home', href: '/', ariaLabel: 'OpenFund Home' },
+    { name: 'Trade', href: '/trade', ariaLabel: 'Trade on OpenFund' },
+    { name: 'Start a Fund', href: '/fund', ariaLabel: 'Start an OpenFund' },
+    { name: 'Explore Funds', href: '/explore', ariaLabel: 'Explore OpenFund Investments' },
+    { name: 'My Assets', href: '/my-assets', ariaLabel: 'My OpenFund Assets' },
   ];
   
   const isActive = (path: string) => {
@@ -51,11 +51,16 @@ const Navbar = () => {
   };
   
   return (
-    <nav className="bg-card border-b border-border">
+    <nav 
+      className="bg-card border-b border-border"
+      itemScope 
+      itemType="https://schema.org/SiteNavigationElement"
+      aria-label="OpenFund Main Navigation"
+    >
       <div className="container px-4 mx-auto">
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center">
-            <Link to="/" className="flex-shrink-0">
+            <Link to="/" className="flex-shrink-0" aria-label="OpenFund Home">
               <Logo />
             </Link>
           </div>
@@ -66,13 +71,15 @@ const Navbar = () => {
                 <Link
                   key={item.name}
                   to={item.href}
+                  itemProp="url"
+                  aria-label={item.ariaLabel}
                   className={`px-3 py-2 rounded-md text-sm font-medium ${
                     isActive(item.href)
                       ? 'text-primary'
                       : 'text-muted-foreground hover:text-foreground'
                   }`}
                 >
-                  {item.name}
+                  <span itemProp="name">{item.name}</span>
                 </Link>
               ))}
             </div>
@@ -138,6 +145,8 @@ const Navbar = () => {
               type="button"
               className="text-gray-400 hover:text-foreground p-2"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
+              aria-expanded={isMenuOpen}
+              aria-label={isMenuOpen ? "Close OpenFund menu" : "Open OpenFund menu"}
             >
               {isMenuOpen ? (
                 <X className="h-6 w-6" aria-hidden="true" />
