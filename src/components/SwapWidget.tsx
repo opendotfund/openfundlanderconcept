@@ -177,6 +177,7 @@ export const SwapWidget = ({ selectedAsset = 'bitcoin' }: SwapWidgetProps) => {
       title: "Trade Confirmed",
       description: `Successfully exchanged ${fromAmount} ${getAssetLabel(fromAsset)} for ${toAmount} ${getAssetLabel(toAsset)}`,
       variant: "default",
+      duration: 5000,
     });
   };
 
@@ -394,7 +395,7 @@ export const SwapWidget = ({ selectedAsset = 'bitcoin' }: SwapWidgetProps) => {
                               <CommandItem
                                 key={asset.value}
                                 value={asset.value}
-                                onSelect={handleFromAssetChange}
+                                onSelect={handleAssetSelect}
                               >
                                 {asset.label}
                               </CommandItem>
@@ -409,7 +410,7 @@ export const SwapWidget = ({ selectedAsset = 'bitcoin' }: SwapWidgetProps) => {
                               <CommandItem
                                 key={asset.value}
                                 value={asset.value}
-                                onSelect={handleFromAssetChange}
+                                onSelect={handleAssetSelect}
                               >
                                 {asset.label}
                               </CommandItem>
@@ -424,7 +425,7 @@ export const SwapWidget = ({ selectedAsset = 'bitcoin' }: SwapWidgetProps) => {
                               <CommandItem
                                 key={asset.value}
                                 value={asset.value}
-                                onSelect={handleFromAssetChange}
+                                onSelect={handleAssetSelect}
                               >
                                 {asset.label}
                               </CommandItem>
@@ -439,7 +440,7 @@ export const SwapWidget = ({ selectedAsset = 'bitcoin' }: SwapWidgetProps) => {
                               <CommandItem
                                 key={asset.value}
                                 value={asset.value}
-                                onSelect={handleFromAssetChange}
+                                onSelect={handleAssetSelect}
                               >
                                 {asset.label}
                               </CommandItem>
@@ -515,7 +516,7 @@ export const SwapWidget = ({ selectedAsset = 'bitcoin' }: SwapWidgetProps) => {
                               <CommandItem
                                 key={asset.value}
                                 value={asset.value}
-                                onSelect={handleToAssetChange}
+                                onSelect={handleAssetSelect}
                               >
                                 {asset.label}
                               </CommandItem>
@@ -530,7 +531,7 @@ export const SwapWidget = ({ selectedAsset = 'bitcoin' }: SwapWidgetProps) => {
                               <CommandItem
                                 key={asset.value}
                                 value={asset.value}
-                                onSelect={handleToAssetChange}
+                                onSelect={handleAssetSelect}
                               >
                                 {asset.label}
                               </CommandItem>
@@ -545,7 +546,7 @@ export const SwapWidget = ({ selectedAsset = 'bitcoin' }: SwapWidgetProps) => {
                               <CommandItem
                                 key={asset.value}
                                 value={asset.value}
-                                onSelect={handleToAssetChange}
+                                onSelect={handleAssetSelect}
                               >
                                 {asset.label}
                               </CommandItem>
@@ -560,7 +561,7 @@ export const SwapWidget = ({ selectedAsset = 'bitcoin' }: SwapWidgetProps) => {
                               <CommandItem
                                 key={asset.value}
                                 value={asset.value}
-                                onSelect={handleToAssetChange}
+                                onSelect={handleAssetSelect}
                               >
                                 {asset.label}
                               </CommandItem>
