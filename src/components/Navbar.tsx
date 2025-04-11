@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Logo from './Logo';
 import ThemeToggle from './ThemeToggle';
 import { Button } from './ui/button';
@@ -28,6 +28,7 @@ import { Avatar, AvatarFallback } from './ui/avatar';
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
   
   const navigation = [
     { name: 'Home', href: '/' },
@@ -41,6 +42,11 @@ const Navbar = () => {
     if (path === '/' && location.pathname === '/') return true;
     if (path !== '/' && location.pathname.startsWith(path)) return true;
     return false;
+  };
+  
+  const navigateToAccount = (tab: string) => {
+    navigate(`/account?tab=${tab}`);
+    setIsMenuOpen(false);
   };
   
   return (
@@ -90,29 +96,21 @@ const Navbar = () => {
                 <DropdownMenuContent align="end" className="w-56">
                   <DropdownMenuLabel>My Account</DropdownMenuLabel>
                   <DropdownMenuSeparator />
-                  <DropdownMenuItem className="cursor-pointer">
-                    <Link to="/account" className="flex items-center w-full">
-                      <User className="mr-2 h-4 w-4" />
-                      <span>Profile</span>
-                    </Link>
+                  <DropdownMenuItem className="cursor-pointer" onClick={() => navigateToAccount('profile')}>
+                    <User className="mr-2 h-4 w-4" />
+                    <span>Profile</span>
                   </DropdownMenuItem>
-                  <DropdownMenuItem className="cursor-pointer">
-                    <Link to="/account?tab=portfolio" className="flex items-center w-full">
-                      <Wallet className="mr-2 h-4 w-4" />
-                      <span>My Portfolio</span>
-                    </Link>
+                  <DropdownMenuItem className="cursor-pointer" onClick={() => navigateToAccount('portfolio')}>
+                    <Wallet className="mr-2 h-4 w-4" />
+                    <span>My Portfolio</span>
                   </DropdownMenuItem>
-                  <DropdownMenuItem className="cursor-pointer">
-                    <Link to="/account?tab=settings" className="flex items-center w-full">
-                      <Settings className="mr-2 h-4 w-4" />
-                      <span>Settings</span>
-                    </Link>
+                  <DropdownMenuItem className="cursor-pointer" onClick={() => navigateToAccount('settings')}>
+                    <Settings className="mr-2 h-4 w-4" />
+                    <span>Settings</span>
                   </DropdownMenuItem>
-                  <DropdownMenuItem className="cursor-pointer">
-                    <Link to="/account?tab=referral" className="flex items-center w-full">
-                      <Star className="mr-2 h-4 w-4" />
-                      <span>Referrals</span>
-                    </Link>
+                  <DropdownMenuItem className="cursor-pointer" onClick={() => navigateToAccount('referral')}>
+                    <Star className="mr-2 h-4 w-4" />
+                    <span>Referrals</span>
                   </DropdownMenuItem>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem className="cursor-pointer">
@@ -164,10 +162,9 @@ const Navbar = () => {
                 {item.name}
               </Link>
             ))}
-            <Link
-              to="/account"
-              className="block px-3 py-2 rounded-md text-base font-medium text-muted-foreground hover:text-foreground"
-              onClick={() => setIsMenuOpen(false)}
+            <div 
+              className="block px-3 py-2 rounded-md text-base font-medium text-muted-foreground hover:text-foreground cursor-pointer"
+              onClick={() => navigateToAccount('profile')}
             >
               <div className="flex items-center">
                 <Avatar className="h-6 w-6 mr-2 bg-muted">
@@ -177,7 +174,7 @@ const Navbar = () => {
                 </Avatar>
                 My Account
               </div>
-            </Link>
+            </div>
             <div className="mt-4">
               <Button 
                 variant="outline" 
