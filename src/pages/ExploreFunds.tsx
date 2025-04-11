@@ -422,7 +422,15 @@ const ExploreFunds = () => {
         fundType = 'openfund';
         break;
       default:
-        fundType = 'traditional';
+        if (fund.type === 'TradFi Fund') {
+          fundType = 'traditional';
+        } else if (fund.type === 'Crypto Fund') {
+          fundType = 'crypto';
+        } else if (fund.type === 'Decentralized Fund') {
+          fundType = 'openfund';
+        } else {
+          fundType = 'traditional';
+        }
     }
     
     navigate(`/fund-detail/${fundType}/${fund.id}`);
@@ -583,7 +591,7 @@ const ExploreFunds = () => {
                   {sortOption === 'year-old' && "Oldest First"}
                   {sortOption === 'year-new' && "Newest First"}
                   {sortOption === 'volatility-high' && "Most Volatile"}
-                  {sortOption === 'volatility-low' && "Least Volatile"}
+                  {sortOption === 'volatility-low' && "Least Volatility"}
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent className="bg-card border-border">

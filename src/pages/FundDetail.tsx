@@ -30,137 +30,7 @@ import { useIsMobile } from '@/hooks/use-mobile';
 import { useToast } from '@/hooks/use-toast';
 import { FundShareSwap } from '@/components/FundShareSwap';
 import { FundHoldingsPieChart } from '@/components/FundHoldingsPieChart';
-
-const traditionalFunds = [
-  {
-    id: 1,
-    name: 'Berkshire Hathaway',
-    manager: 'Warren Buffett',
-    aum: '$700B',
-    aumValue: 700000000000,
-    returns: '20.1%',
-    returnsValue: 20.1,
-    focus: 'Value Investing',
-    minInvestment: '$400,000',
-    minInvestmentValue: 400000,
-    year: '1965',
-    yearValue: 1965,
-    description: 'American multinational conglomerate holding company led by Warren Buffett, known for its long-term value investing approach.',
-    performance: '+18.2%',
-    performanceValue: 18.2,
-    type: 'TradFi Fund',
-    volatility: 'Low',
-    volatilityValue: 15,
-    managementFee: '1%',
-    performanceFee: '20%',
-    lockupPeriod: '1 year',
-    redemptionFrequency: 'Quarterly',
-    redemptionNotice: '90 days',
-    minimumHoldingPeriod: '12 months',
-    fundStrategy: 'Long-term value investing across diverse industries with focus on quality businesses with strong competitive advantages.',
-    riskLevel: 'Medium',
-    inceptionDate: 'May 1, 1965',
-    benchmarkIndex: 'S&P 500',
-    benchmarkPerformance: '+10.5%',
-    topHoldings: ['Apple', 'Bank of America', 'American Express', 'Coca-Cola', 'Chevron'],
-    holdingsBreakdown: [
-      { name: 'Tech Stocks', value: 35, color: '#2563eb' },
-      { name: 'Financial Services', value: 30, color: '#9333ea' },
-      { name: 'Consumer Goods', value: 20, color: '#16a34a' },
-      { name: 'Energy', value: 10, color: '#d97706' },
-      { name: 'Healthcare', value: 5, color: '#dc2626' }
-    ]
-  },
-  // ... other traditional funds would be defined here
-];
-
-const cryptoFunds = [
-  {
-    id: 1,
-    name: 'Grayscale Bitcoin Trust',
-    manager: 'Grayscale Investments',
-    aum: '$30.3B',
-    aumValue: 30300000000,
-    returns: '154%',
-    returnsValue: 154,
-    focus: 'Bitcoin',
-    minInvestment: '$50,000',
-    minInvestmentValue: 50000,
-    year: '2013',
-    yearValue: 2013,
-    description: 'The first publicly quoted Bitcoin investment vehicle offering exposure to Bitcoin.',
-    performance: '+65.2%',
-    performanceValue: 65.2,
-    type: 'Crypto Fund',
-    volatility: 'Very High',
-    volatilityValue: 85,
-    managementFee: '2%',
-    performanceFee: '0%',
-    lockupPeriod: '6 months',
-    redemptionFrequency: 'Daily',
-    redemptionNotice: '1 day',
-    minimumHoldingPeriod: '6 months',
-    fundStrategy: '100% allocation to Bitcoin, with secure cold storage custody solution.',
-    riskLevel: 'High',
-    inceptionDate: 'September 25, 2013',
-    benchmarkIndex: 'Bitcoin Price',
-    benchmarkPerformance: '+60.8%',
-    topHoldings: ['Bitcoin'],
-    holdingsBreakdown: [
-      { name: 'Bitcoin', value: 100, color: '#f7931a' }
-    ]
-  },
-  // ... other crypto funds would be defined here
-];
-
-const openfundFunds = [1, 2, 3, 4, 5].map((fund) => ({
-  id: fund,
-  name: `Alpha Seekers #${fund}`,
-  manager: `0x7a...3fe${fund}`,
-  aum: `$${(342000 + fund * 25000).toLocaleString()}`,
-  aumValue: 342000 + fund * 25000,
-  returns: `${22 + fund * 3}%`,
-  returnsValue: 22 + fund * 3,
-  focus: fund % 2 === 0 ? 'Layer 1' : 'DeFi',
-  minInvestment: '$1,000',
-  minInvestmentValue: 1000,
-  year: `202${fund}`,
-  yearValue: 2020 + fund,
-  description: `Decentralized fund specializing in ${fund % 2 === 0 ? 'Layer 1 protocols' : 'DeFi investments'} with a focus on growth and yield opportunities.`,
-  performance: `+${12 + fund * 2}%`,
-  performanceValue: 12 + fund * 2,
-  type: 'Decentralized Fund',
-  investors: 75 + fund * 12,
-  volatility: fund % 2 === 0 ? 'High' : 'Medium-High',
-  volatilityValue: 55 + fund * 5,
-  assetTypes: fund % 3 === 0 ? ['Crypto'] : fund % 3 === 1 ? ['Crypto', 'Stock'] : ['Crypto', 'Commodity'],
-  managementFee: '2%',
-  performanceFee: '20%', 
-  depositFee: '0.5%',
-  withdrawalFee: '1%',
-  lockupPeriod: '30 days',
-  nextWithdrawalWindow: `${new Date().getDate() + 10}/${new Date().getMonth() + 1}/${new Date().getFullYear()}`,
-  timeUntilWithdrawal: `${10 - (fund % 10)} days`,
-  fundStrategy: `Smart contract-based strategy focusing on ${fund % 2 === 0 ? 'Layer 1 protocols with staking yield' : 'DeFi liquidity mining and yield farming'}`,
-  riskLevel: fund % 2 === 0 ? 'High' : 'Medium-High',
-  inceptionDate: `February ${10 + fund}, 202${fund}`,
-  governanceToken: 'AST',
-  votingRights: 'Pro-rata based on investment',
-  topHoldings: fund % 2 === 0 ? ['Ethereum', 'Solana', 'Avalanche', 'Cardano', 'Polkadot'] : ['Uniswap', 'Aave', 'Compound', 'MakerDAO', 'Curve'],
-  holdingsBreakdown: fund % 2 === 0 
-    ? [
-        { name: 'Major Coins', value: 45, color: '#3b82f6' },  // blue
-        { name: 'Alt Coins', value: 40, color: '#8b5cf6' },    // purple
-        { name: 'Meme Coins', value: 15, color: '#f97316' }    // orange
-      ]
-    : [
-        { name: 'Major Coins', value: 30, color: '#3b82f6' },  // blue 
-        { name: 'Alt Coins', value: 60, color: '#8b5cf6' },    // purple
-        { name: 'Meme Coins', value: 10, color: '#f97316' }    // orange
-      ]
-}));
-
-const allFunds = [...traditionalFunds, ...cryptoFunds, ...openfundFunds];
+import { traditionalFunds, cryptoFunds, openfundFunds, getAllFunds, Fund as FundType } from '@/data/funds';
 
 const generateHistoricalData = (baseValue: number, volatility: number, uptrend: boolean) => {
   const data = [];
@@ -181,7 +51,7 @@ const generateHistoricalData = (baseValue: number, volatility: number, uptrend: 
   return data;
 };
 
-const generateComparisonData = (fundData: any) => {
+const generateComparisonData = (fundData: FundType) => {
   const baseValue = 100;
   const fundVolatility = fundData.volatilityValue / 100;
   const marketVolatility = 0.2;
@@ -198,7 +68,7 @@ const generateComparisonData = (fundData: any) => {
 
 const FundDetail = () => {
   const { fundId, type } = useParams<{ fundId: string, type: string }>();
-  const [fund, setFund] = useState<any>(null);
+  const [fund, setFund] = useState<FundType | null>(null);
   const [timeframe, setTimeframe] = useState('12m');
   const [activeTab, setActiveTab] = useState('overview');
   const [showSwapWidget, setShowSwapWidget] = useState(false);
@@ -209,16 +79,20 @@ const FundDetail = () => {
   useEffect(() => {
     if (fundId) {
       const numericId = parseInt(fundId);
+      let foundFund = null;
       
       if (type === 'traditional') {
-        setFund(traditionalFunds.find(f => f.id === numericId));
+        foundFund = traditionalFunds.find(f => f.id === numericId);
       } else if (type === 'crypto') {
-        setFund(cryptoFunds.find(f => f.id === numericId));
+        foundFund = cryptoFunds.find(f => f.id === numericId);
       } else if (type === 'openfund') {
-        setFund(openfundFunds.find(f => f.id === numericId));
+        foundFund = openfundFunds.find(f => f.id === numericId);
       } else {
-        setFund(allFunds.find(f => f.id === numericId));
+        // If no specific type is provided, search through all funds
+        foundFund = getAllFunds().find(f => f.id === numericId);
       }
+      
+      setFund(foundFund || null);
     }
   }, [fundId, type]);
   
@@ -228,6 +102,9 @@ const FundDetail = () => {
         <Navbar />
         <div className="container mx-auto px-4 py-16 text-center">
           <h1 className="text-2xl font-bold mb-4">Fund not found</h1>
+          <p className="mb-6 text-muted-foreground">
+            The fund you're looking for doesn't exist or may have been removed.
+          </p>
           <Button onClick={() => navigate('/explore-funds')}>
             Back to Funds
           </Button>
@@ -444,11 +321,11 @@ const FundDetail = () => {
                             <span className="text-gray-400">Alpha</span>
                             <span className={`font-medium ${
                               parseFloat(fund.performance.replace('+', '').replace('%', '')) > 
-                              parseFloat(fund.benchmarkPerformance.replace('+', '').replace('%', '')) ?
+                              parseFloat(fund.benchmarkPerformance?.replace('+', '').replace('%', '') || '0') ?
                               'text-openfund-green' : 'text-red-500'
                             }`}>
                               {`${(parseFloat(fund.performance.replace('+', '').replace('%', '')) - 
-                                parseFloat(fund.benchmarkPerformance.replace('+', '').replace('%', ''))).toFixed(1)}%`}
+                                parseFloat(fund.benchmarkPerformance?.replace('+', '').replace('%', '') || '0')).toFixed(1)}%`}
                             </span>
                           </div>
                         </div>
