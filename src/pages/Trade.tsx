@@ -8,16 +8,25 @@ import { SwapWidget } from '@/components/SwapWidget';
 import { AssetList } from '@/components/AssetList';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { TradeHistory } from '@/components/TradeHistory';
+import { Input } from "@/components/ui/input";
+import { Search } from "lucide-react";
+import { useIsMobile } from '@/hooks/use-mobile';
 
 const Trade = () => {
   const [selectedAsset, setSelectedAsset] = useState('bitcoin');
   const [timeframe, setTimeframe] = useState('24h');
   const [assetType, setAssetType] = useState<'crypto' | 'stocks' | 'commodities'>('crypto');
+  const [searchQuery, setSearchQuery] = useState('');
+  const isMobile = useIsMobile();
 
   const handleAssetTypeChange = (value: string) => {
     if (value === 'crypto' || value === 'stocks' || value === 'commodities') {
       setAssetType(value);
     }
+  };
+
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchQuery(e.target.value);
   };
 
   return (
@@ -38,7 +47,9 @@ const Trade = () => {
                   onChange={setTimeframe}
                 />
               </div>
-              <AssetChart asset={selectedAsset} timeframe={timeframe} />
+              <div className="h-[400px]">
+                <AssetChart asset={selectedAsset} timeframe={timeframe} />
+              </div>
             </div>
             
             <div className="bg-openfund-gray-medium p-6 rounded-lg">
@@ -54,7 +65,18 @@ const Trade = () => {
             </div>
             
             <div className="bg-openfund-gray-medium p-6 rounded-lg">
-              <h2 className="text-xl font-bold mb-4">Popular Assets</h2>
+              <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 gap-3">
+                <h2 className="text-xl font-bold">Popular Assets</h2>
+                <div className="relative w-full sm:w-auto">
+                  <Input
+                    placeholder="Search assets..."
+                    value={searchQuery}
+                    onChange={handleSearchChange}
+                    className="pl-8 bg-openfund-gray-dark w-full"
+                  />
+                  <Search className="absolute left-2.5 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+                </div>
+              </div>
               
               <Tabs defaultValue="crypto" value={assetType} onValueChange={handleAssetTypeChange} className="mb-4">
                 <TabsList className="grid grid-cols-3 mb-4">
@@ -67,7 +89,8 @@ const Trade = () => {
                   <AssetList 
                     type="crypto" 
                     onSelect={setSelectedAsset} 
-                    selectedAsset={selectedAsset} 
+                    selectedAsset={selectedAsset}
+                    searchQuery={searchQuery}
                   />
                 </TabsContent>
                 
@@ -75,7 +98,8 @@ const Trade = () => {
                   <AssetList 
                     type="stocks" 
                     onSelect={setSelectedAsset} 
-                    selectedAsset={selectedAsset} 
+                    selectedAsset={selectedAsset}
+                    searchQuery={searchQuery}
                   />
                 </TabsContent>
                 
@@ -83,7 +107,8 @@ const Trade = () => {
                   <AssetList 
                     type="commodities" 
                     onSelect={setSelectedAsset} 
-                    selectedAsset={selectedAsset} 
+                    selectedAsset={selectedAsset}
+                    searchQuery={searchQuery}
                   />
                 </TabsContent>
               </Tabs>

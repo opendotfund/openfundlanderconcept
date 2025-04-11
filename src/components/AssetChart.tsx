@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import {
   Area,
@@ -112,7 +111,7 @@ export const AssetChart = ({ asset, timeframe }: AssetChartProps) => {
   }, [asset, timeframe]);
 
   return (
-    <div className="w-full h-[600px]">
+    <div className="w-full h-full">
       <ChartContainer
         config={{
           value: {
@@ -125,11 +124,10 @@ export const AssetChart = ({ asset, timeframe }: AssetChartProps) => {
           }
         }}
       >
-        {/* Fix: Wrap AreaChart with ResponsiveContainer */}
-        <ResponsiveContainer width="100%" height={600}>
+        <ResponsiveContainer width="100%" height="100%">
           <AreaChart
             data={chartData}
-            margin={{ top: 30, right: 40, left: 70, bottom: 70 }}
+            margin={{ top: 10, right: 30, left: 60, bottom: 30 }}
           >
             <defs>
               <linearGradient id="colorPrice" x1="0" y1="0" x2="0" y2="1">
@@ -141,7 +139,7 @@ export const AssetChart = ({ asset, timeframe }: AssetChartProps) => {
               dataKey="name"
               tickLine={false}
               axisLine={false}
-              dy={40}
+              dy={20}
               tick={{ fill: '#888', fontSize: 12 }}
             />
             <YAxis 
@@ -149,8 +147,8 @@ export const AssetChart = ({ asset, timeframe }: AssetChartProps) => {
               axisLine={false}
               tick={{ fill: '#888', fontSize: 12 }}
               domain={['auto', 'auto']}
-              dx={-25}
-              width={90}
+              dx={-15}
+              width={70}
               tickFormatter={(value) => `$${value.toLocaleString()}`}
             />
             <Tooltip content={<ChartTooltipContent />} />

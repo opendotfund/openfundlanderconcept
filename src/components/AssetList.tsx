@@ -99,10 +99,12 @@ interface AssetListProps {
   onSelect: (asset: string) => void;
   selectedAsset: string;
   limit?: number;
+  searchQuery?: string;
 }
 
-export const AssetList = ({ type, onSelect, selectedAsset, limit }: AssetListProps) => {
+export const AssetList = ({ type, onSelect, selectedAsset, limit, searchQuery = '' }: AssetListProps) => {
   const [assets, setAssets] = useState<Asset[]>([]);
+  const [filteredAssets, setFilteredAssets] = useState<Asset[]>([]);
   
   useEffect(() => {
     const assetData = generateAssets(type);
@@ -117,6 +119,19 @@ export const AssetList = ({ type, onSelect, selectedAsset, limit }: AssetListPro
     return () => clearInterval(intervalId);
   }, [type, limit]);
   
+  useEffect(() => {
+    // Filter assets based on search query
+    if (searchQuery.trim() === '') {
+      setFilteredAssets(assets);
+    } else {
+      const filtered = assets.filter(
+        asset => asset.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
+                asset.symbol.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+      setFilteredAssets(filtered);
+    }
+  }, [assets, searchQuery]);
+  
   return (
     <ScrollArea className={limit ? 'h-[300px]' : 'h-[500px]'}>
       <Table>
@@ -129,37 +144,45 @@ export const AssetList = ({ type, onSelect, selectedAsset, limit }: AssetListPro
           </TableRow>
         </TableHeader>
         <TableBody>
-          {assets.map((asset) => (
-            <TableRow 
-              key={asset.id}
-              onClick={() => onSelect(asset.name)}
-              className={`cursor-pointer ${selectedAsset === asset.name ? 'bg-openfund-green/10 border-l-2 border-openfund-green' : ''}`}
-            >
-              <TableCell className="font-medium">{asset.id}</TableCell>
-              <TableCell>
-                <div className="flex items-center">
-                  <div className="w-6 h-6 rounded-full bg-openfund-gray-light flex items-center justify-center mr-2">
-                    {asset.symbol.charAt(0)}
+          {filteredAssets.length > 0 ? (
+            filteredAssets.map((asset) => (
+              <TableRow 
+                key={asset.id}
+                onClick={() => onSelect(asset.name)}
+                className={`cursor-pointer ${selectedAsset === asset.name ? 'bg-openfund-green/10 border-l-2 border-openfund-green' : ''}`}
+              >
+                <TableCell className="font-medium">{asset.id}</TableCell>
+                <TableCell>
+                  <div className="flex items-center">
+                    <div className="w-6 h-6 rounded-full bg-openfund-gray-light flex items-center justify-center mr-2">
+                      {asset.symbol.charAt(0)}
+                    </div>
+                    <div>
+                      <div className="font-medium capitalize">{asset.name}</div>
+                      <div className="text-xs text-gray-400">{asset.symbol}</div>
+                    </div>
                   </div>
-                  <div>
-                    <div className="font-medium capitalize">{asset.name}</div>
-                    <div className="text-xs text-gray-400">{asset.symbol}</div>
-                  </div>
-                </div>
-              </TableCell>
-              <TableCell className="text-right">${asset.price}</TableCell>
-              <TableCell className="text-right">
-                <span className={`flex items-center justify-end ${parseFloat(asset.change) < 0 ? 'text-red-500' : 'text-openfund-green'}`}>
-                  {parseFloat(asset.change) < 0 ? (
-                    <ChevronDown size={16} />
-                  ) : (
-                    <ChevronUp size={16} />
-                  )}
-                  {Math.abs(parseFloat(asset.change))}%
-                </span>
+                </TableCell>
+                <TableCell className="text-right">${asset.price}</TableCell>
+                <TableCell className="text-right">
+                  <span className={`flex items-center justify-end ${parseFloat(asset.change) < 0 ? 'text-red-500' : 'text-openfund-green'}`}>
+                    {parseFloat(asset.change) < 0 ? (
+                      <ChevronDown size={16} />
+                    ) : (
+                      <ChevronUp size={16} />
+                    )}
+                    {Math.abs(parseFloat(asset.change))}%
+                  </span>
+                </TableCell>
+              </TableRow>
+            ))
+          ) : (
+            <TableRow>
+              <TableCell colSpan={4} className="text-center py-6">
+                No assets found matching "{searchQuery}"
               </TableCell>
             </TableRow>
-          ))}
+          )}
         </TableBody>
       </Table>
     </ScrollArea>
