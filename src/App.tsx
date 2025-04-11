@@ -10,6 +10,7 @@ import Trade from "./pages/Trade";
 import Fund from "./pages/Fund";
 import ExploreFunds from "./pages/ExploreFunds";
 import MyAssets from "./pages/MyAssets";
+import Account from "./pages/Account";
 
 const queryClient = new QueryClient();
 
@@ -25,6 +26,7 @@ const App = () => (
           <Route path="/fund" element={<Fund />} />
           <Route path="/explore" element={<ExploreFunds />} />
           <Route path="/my-assets" element={<MyAssets />} />
+          <Route path="/account" element={<Account />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
