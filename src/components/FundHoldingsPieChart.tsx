@@ -99,7 +99,7 @@ export const FundHoldingsPieChart: React.FC<FundHoldingsPieChartProps> = ({
         <div className="w-full" style={{ height: chartHeight }}>
           <ChartContainer config={config} className="h-full w-full">
             <ResponsiveContainer width="100%" height="100%">
-              <PieChart margin={isMobile ? { top: 0, right: 0, bottom: 0, left: 0 } : { top: 5, right: 10, left: 10, bottom: 5 }}>
+              <PieChart margin={isMobile ? { top: 0, right: 0, bottom: 10, left: 0 } : { top: 5, right: 10, left: 10, bottom: 15 }}>
                 <Pie
                   data={enhancedHoldings}
                   cx="50%"
@@ -136,9 +136,16 @@ export const FundHoldingsPieChart: React.FC<FundHoldingsPieChartProps> = ({
                   layout="horizontal" 
                   verticalAlign="bottom" 
                   align="center"
-                  wrapperStyle={isMobile ? { fontSize: "10px", marginTop: "5px" } : { marginTop: "10px" }}
+                  wrapperStyle={isMobile ? 
+                    { fontSize: "10px", marginTop: "5px", width: "100%", paddingBottom: "10px" } : 
+                    { marginTop: "10px" }
+                  }
+                  iconSize={isMobile ? 8 : 10}
                   formatter={(value) => {
-                    return <span className={cn("font-medium", isMobile ? "text-xs" : "text-sm")}>{value}</span>;
+                    // Truncate long names on mobile
+                    const displayValue = isMobile && value.length > 10 ? 
+                      `${value.substring(0, 8)}...` : value;
+                    return <span className={cn("font-medium", isMobile ? "text-xs" : "text-sm")}>{displayValue}</span>;
                   }}
                 />
               </PieChart>
