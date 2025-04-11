@@ -3,9 +3,9 @@ import React, { useState } from 'react';
 import { AssetChart } from '@/components/AssetChart';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
-import TimeframeSelector from '@/components/TimeframeSelector';
-import SwapWidget from '@/components/SwapWidget';
-import AssetList from '@/components/AssetList';
+import { TimeframeSelector } from '@/components/TimeframeSelector';
+import { SwapWidget } from '@/components/SwapWidget';
+import { AssetList } from '@/components/AssetList';
 
 const Trade = () => {
   const [selectedAsset, setSelectedAsset] = useState('bitcoin');
@@ -25,8 +25,8 @@ const Trade = () => {
                   {selectedAsset.charAt(0).toUpperCase() + selectedAsset.slice(1)} Price Chart
                 </h2>
                 <TimeframeSelector 
-                  activeTimeframe={timeframe} 
-                  onTimeframeChange={setTimeframe}
+                  timeframe={timeframe} 
+                  onChange={setTimeframe}
                 />
               </div>
               <AssetChart asset={selectedAsset} timeframe={timeframe} />
@@ -36,12 +36,16 @@ const Trade = () => {
           <div className="space-y-6">
             <div className="bg-openfund-gray-medium p-6 rounded-lg">
               <h2 className="text-xl font-bold mb-4">Trade</h2>
-              <SwapWidget />
+              <SwapWidget selectedAsset={selectedAsset} />
             </div>
             
             <div className="bg-openfund-gray-medium p-6 rounded-lg">
               <h2 className="text-xl font-bold mb-4">Popular Assets</h2>
-              <AssetList onAssetSelect={setSelectedAsset} selectedAsset={selectedAsset} />
+              <AssetList 
+                type="crypto" 
+                onSelect={setSelectedAsset} 
+                selectedAsset={selectedAsset} 
+              />
             </div>
           </div>
         </div>
