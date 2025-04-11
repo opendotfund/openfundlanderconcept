@@ -6,10 +6,18 @@ import Footer from '@/components/Footer';
 import { TimeframeSelector } from '@/components/TimeframeSelector';
 import { SwapWidget } from '@/components/SwapWidget';
 import { AssetList } from '@/components/AssetList';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 const Trade = () => {
   const [selectedAsset, setSelectedAsset] = useState('bitcoin');
   const [timeframe, setTimeframe] = useState('24h');
+  const [assetType, setAssetType] = useState<'crypto' | 'stocks' | 'commodities'>('crypto');
+
+  const handleAssetTypeChange = (value: string) => {
+    if (value === 'crypto' || value === 'stocks' || value === 'commodities') {
+      setAssetType(value);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-openfund-gray-dark text-white">
@@ -41,11 +49,38 @@ const Trade = () => {
             
             <div className="bg-openfund-gray-medium p-6 rounded-lg">
               <h2 className="text-xl font-bold mb-4">Popular Assets</h2>
-              <AssetList 
-                type="crypto" 
-                onSelect={setSelectedAsset} 
-                selectedAsset={selectedAsset} 
-              />
+              
+              <Tabs defaultValue="crypto" value={assetType} onValueChange={handleAssetTypeChange} className="mb-4">
+                <TabsList className="grid grid-cols-3 mb-4">
+                  <TabsTrigger value="crypto">Crypto</TabsTrigger>
+                  <TabsTrigger value="stocks">Stocks</TabsTrigger>
+                  <TabsTrigger value="commodities">Commodities</TabsTrigger>
+                </TabsList>
+                
+                <TabsContent value="crypto">
+                  <AssetList 
+                    type="crypto" 
+                    onSelect={setSelectedAsset} 
+                    selectedAsset={selectedAsset} 
+                  />
+                </TabsContent>
+                
+                <TabsContent value="stocks">
+                  <AssetList 
+                    type="stocks" 
+                    onSelect={setSelectedAsset} 
+                    selectedAsset={selectedAsset} 
+                  />
+                </TabsContent>
+                
+                <TabsContent value="commodities">
+                  <AssetList 
+                    type="commodities" 
+                    onSelect={setSelectedAsset} 
+                    selectedAsset={selectedAsset} 
+                  />
+                </TabsContent>
+              </Tabs>
             </div>
           </div>
         </div>
