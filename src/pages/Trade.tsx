@@ -40,15 +40,15 @@ const Trade = () => {
           <div className="lg:col-span-2">
             <div className="bg-card border border-border p-3 md:p-6 rounded-lg mb-4 md:mb-6">
               <div className="flex flex-col mb-3 md:mb-4 gap-2">
-                <h2 className="text-lg md:text-xl font-bold">
-                  {selectedAsset.charAt(0).toUpperCase() + selectedAsset.slice(1)} Price Chart
-                </h2>
-                <div className="w-full">
-                  <TimeframeSelector 
-                    timeframe={timeframe} 
-                    onChange={setTimeframe}
-                  />
+                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center w-full">
+                  <h2 className="text-lg md:text-xl font-bold">
+                    {selectedAsset.charAt(0).toUpperCase() + selectedAsset.slice(1)} Price Chart
+                  </h2>
                 </div>
+                <TimeframeSelector 
+                  timeframe={timeframe} 
+                  onChange={setTimeframe}
+                />
               </div>
               <div className="w-full">
                 <AssetChart asset={selectedAsset} timeframe={timeframe} />

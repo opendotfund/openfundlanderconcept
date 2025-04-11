@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Card } from "@/components/ui/card";
 import { 
@@ -87,7 +88,8 @@ const ChartPreview = () => {
                       dy={isMobile ? 5 : 10}
                       height={isMobile ? 20 : 30}
                       tickMargin={isMobile ? 2 : 5}
-                      interval={isMobile ? 2 : 1} // Show fewer labels on mobile
+                      minTickGap={15}
+                      interval="preserveStart" 
                     />
                     <YAxis 
                       tick={{ fill: 'var(--color-text-subdued)', fontSize: isMobile ? 10 : 12 }}

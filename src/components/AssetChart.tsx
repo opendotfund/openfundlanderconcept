@@ -132,7 +132,7 @@ const fetchPriceData = async (asset: string, timeframe: string, isPortfolio: boo
           }
         } else if (timeframe === '90d') {
           // For 90 days, show monthly labels (M1, M2, M3)
-          const monthNum = Math.floor(i / 30) + 1;
+          const monthNum = Math.floor((90-i)/30) + 1;
           if (i % 30 === 0) {
             label = `M${monthNum}`;
           } else {
@@ -216,7 +216,7 @@ const fetchPriceData = async (asset: string, timeframe: string, isPortfolio: boo
           if (i % 7 === 0) label = `W${weekNum}`;
         } else if (timeframe === '90d') {
           // For 90 days, show monthly labels: M1, M2, M3
-          const monthNum = Math.floor(i / 30) + 1;
+          const monthNum = Math.floor((90-i)/30) + 1;
           if (i % 30 === 0) {
             label = `M${monthNum}`;
           }
@@ -303,21 +303,23 @@ export const AssetChart = ({ asset = 'bitcoin', timeframe, isPortfolio = false, 
     ? { top: 5, right: 5, left: 20, bottom: 25 }
     : { top: 10, right: 10, left: 50, bottom: 30 };
   
+  // Improved X-axis tick formatter to ensure consistent formatting
   const formatXAxisTick = (value: string) => {
     return value;
   };
 
+  // Improved tick interval calculation based on timeframe
   const getTickInterval = () => {
     if (isMobile) {
-      if (timeframe === '1h') return 10; // Show every 10th tick on mobile for 1h
+      if (timeframe === '1h') return 12; // Show fewer ticks on mobile for 1h
       if (timeframe === '24h') return 4;  // Show every 4th tick on mobile for 24h
       if (timeframe === '7d') return 1;   // Show every day on mobile for 7d
-      if (timeframe === '30d') return 3;  // Show every 3rd tick on mobile for 30d
-      if (timeframe === '90d') return 1;  // Show all month labels on mobile for 90d
+      if (timeframe === '30d') return 1;  // Show all weekly labels on mobile
+      if (timeframe === '90d') return 1;  // Show all month labels on mobile
       return 2;                          // Show every other month for 1y
     } else {
       if (timeframe === '1h') return 6;  // Show every 6th tick on desktop for 1h
-      if (timeframe === '24h') return 3; // Show every 3rd tick on desktop for 24h
+      if (timeframe === '24h') return 3; // Show every 3rd hour on desktop for 24h
       if (timeframe === '7d') return 1;  // Show every day on desktop for 7d
       if (timeframe === '30d') return 1; // Show every week on desktop for 30d
       if (timeframe === '90d') return 1; // Show all month labels on desktop for 90d

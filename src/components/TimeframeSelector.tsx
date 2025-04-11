@@ -21,7 +21,7 @@ export const TimeframeSelector = ({ timeframe, onChange }: TimeframeSelectorProp
   const isMobile = useIsMobile();
   
   return (
-    <div className="flex flex-wrap gap-1 justify-center sm:justify-end">
+    <div className="flex flex-wrap gap-1 justify-center sm:justify-end w-full">
       {timeframes.map((tf) => (
         <Button
           key={tf.value}
