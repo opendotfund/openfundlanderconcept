@@ -174,9 +174,9 @@ export const SwapWidget = ({ selectedAsset = 'bitcoin' }: SwapWidgetProps) => {
     }
 
     toast({
-      title: "Order Placed",
+      title: "Order Placed Successfully",
       description: orderDetails.join('\n'),
-      variant: "default"
+      variant: "default",
     });
   };
 
