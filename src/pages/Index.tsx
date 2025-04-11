@@ -117,8 +117,8 @@ const Index = () => {
                 className="border-primary text-primary hover:bg-primary/10"
                 asChild
               >
-                <Link to="/fund">
-                  Create Your Own Fund <DollarSign size={16} className="ml-2" />
+                <Link to="/fund-manager">
+                  Manage Your Own Fund <DollarSign size={16} className="ml-2" />
                 </Link>
               </Button>
             </div>

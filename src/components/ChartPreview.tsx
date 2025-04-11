@@ -11,23 +11,23 @@ import {
   ResponsiveContainer 
 } from 'recharts';
 
-// Sample data for the chart
+// S&P 500 sample data for the chart
 const data = [
-  { date: '1 Mar', price: 4000 },
-  { date: '2 Mar', price: 3000 },
-  { date: '3 Mar', price: 5000 },
-  { date: '4 Mar', price: 4780 },
-  { date: '5 Mar', price: 5890 },
-  { date: '6 Mar', price: 4390 },
-  { date: '7 Mar', price: 4490 },
-  { date: '8 Mar', price: 5300 },
-  { date: '9 Mar', price: 6200 },
-  { date: '10 Mar', price: 5300 },
-  { date: '11 Mar', price: 5800 },
-  { date: '12 Mar', price: 6100 },
-  { date: '13 Mar', price: 6600 },
-  { date: '14 Mar', price: 6300 },
-  { date: '15 Mar', price: 6800 },
+  { date: '1 Jan', price: 4769 },
+  { date: '15 Jan', price: 4783 },
+  { date: '1 Feb', price: 4958 },
+  { date: '15 Feb', price: 5029 },
+  { date: '1 Mar', price: 5123 },
+  { date: '15 Mar', price: 5234 },
+  { date: '1 Apr', price: 5202 },
+  { date: '15 Apr', price: 5010 },
+  { date: '1 May', price: 5035 },
+  { date: '15 May', price: 5145 },
+  { date: '1 Jun', price: 5218 },
+  { date: '15 Jun', price: 5431 },
+  { date: '1 Jul', price: 5472 },
+  { date: '15 Jul', price: 5555 },
+  { date: '1 Aug', price: 5628 },
 ];
 
 const CustomTooltip = ({ active, payload, label }: any) => {
@@ -61,9 +61,9 @@ const ChartPreview = () => {
                 <div className="flex justify-between items-center mb-2">
                   <div className="flex items-center">
                     <div className="h-3 w-3 rounded-full bg-primary mr-2"></div>
-                    <span className="font-bold">ETH/USD</span>
+                    <span className="font-bold">S&P 500</span>
                   </div>
-                  <span className="text-primary">+12.4%</span>
+                  <span className="text-primary">+18.2%</span>
                 </div>
                 <ResponsiveContainer width="100%" height={250}>
                   <AreaChart
@@ -118,7 +118,7 @@ const ChartPreview = () => {
                 </li>
                 <li className="flex justify-between">
                   <span>S&P 500</span>
-                  <span className="text-destructive">$5,079 <span className="text-xs">-0.3%</span></span>
+                  <span className="text-primary">$5,628 <span className="text-xs">+18.2%</span></span>
                 </li>
               </ul>
             </div>
