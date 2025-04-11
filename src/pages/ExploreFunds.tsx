@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
@@ -272,7 +271,11 @@ const openfundFunds = [1, 2, 3, 4, 5].map((fund) => ({
   assetTypes: fund % 3 === 0 ? ['Crypto'] : fund % 3 === 1 ? ['Crypto', 'Stock'] : ['Crypto', 'Commodity']
 }));
 
-type Fund = (typeof traditionalFunds)[0] | (typeof cryptoFunds)[0] | (typeof openfundFunds)[0];
+type Fund = (typeof traditionalFunds)[0] | (typeof cryptoFunds)[0] | (typeof openfundFunds)[0] & {
+  investors?: number;
+  assetTypes?: string[];
+  aumValue?: number;
+};
 type SortOption = 'performance-high' | 'performance-low' | 'year-old' | 'year-new' | 'volatility-high' | 'volatility-low';
 
 const ExploreFunds = () => {
