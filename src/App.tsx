@@ -11,6 +11,7 @@ import Trade from './pages/Trade';
 import ExploreFunds from './pages/ExploreFunds';
 import Fund from './pages/Fund';
 import FundDetail from './pages/FundDetail';
+import FundManager from './pages/FundManager';
 
 import './App.css';
 
@@ -27,6 +28,7 @@ function App() {
           <Route path="/explore-funds" element={<ExploreFunds />} />
           <Route path="/fund" element={<Fund />} />
           <Route path="/fund-detail/:type/:fundId" element={<FundDetail />} />
+          <Route path="/fund-manager" element={<FundManager />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </div>

@@ -1,5 +1,6 @@
+
 import React, { useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { 
   Briefcase, 
   Users, 
@@ -25,6 +26,7 @@ import { FundForm } from '@/components/FundForm';
 const Fund = () => {
   const [searchParams] = useSearchParams();
   const [activeTab, setActiveTab] = useState<string>(searchParams.get('tab') || 'explore');
+  const navigate = useNavigate();
   
   return (
     <div className="min-h-screen bg-openfund-gray-dark text-white flex flex-col">
@@ -207,6 +209,7 @@ const Fund = () => {
                           </Button>
                           <Button 
                             className="w-full flex justify-between items-center bg-openfund-green hover:bg-openfund-green-dark text-openfund-gray-dark"
+                            onClick={() => navigate('/fund-manager')}
                           >
                             <div className="flex items-center">
                               <Hexagon size={16} className="mr-2" />
