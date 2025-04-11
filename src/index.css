@@ -185,4 +185,19 @@
   .dark [class*="select-trigger"] {
     @apply bg-background border-input text-foreground;
   }
+
+  /* Fixed styles for invest buttons in light mode */
+  .light button[class*="fund-invest-button"],
+  .light button:has(+ .fund-share-widget),
+  .light .fund-detail-invest-button {
+    @apply bg-blue-500 text-white hover:bg-blue-600;
+  }
+
+  .light .fund-detail-request-button {
+    @apply bg-blue-500 text-white hover:bg-blue-600;
+  }
+
+  .light .fund-share-widget button {
+    @apply bg-blue-500 hover:bg-blue-600 text-white;
+  }
 }

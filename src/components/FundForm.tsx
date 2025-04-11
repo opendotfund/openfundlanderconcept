@@ -63,7 +63,7 @@ export const FundForm = () => {
             <FormItem>
               <FormLabel>Fund Name</FormLabel>
               <FormControl>
-                <Input placeholder="Alpha Seekers" {...field} className="bg-background border-input" />
+                <Input placeholder="Alpha Seekers" {...field} />
               </FormControl>
               <FormDescription>
                 Choose a unique name for your fund
@@ -82,7 +82,7 @@ export const FundForm = () => {
               <FormControl>
                 <Textarea 
                   placeholder="Describe your fund strategy, goals, and value proposition..."
-                  className="min-h-[120px] bg-background border-input"
+                  className="min-h-[120px]"
                   {...field} 
                 />
               </FormControl>
@@ -103,7 +103,7 @@ export const FundForm = () => {
                   defaultValue={field.value}
                 >
                   <FormControl>
-                    <SelectTrigger className="bg-background border-input">
+                    <SelectTrigger>
                       <SelectValue placeholder="Select a strategy" />
                     </SelectTrigger>
                   </FormControl>
@@ -131,7 +131,6 @@ export const FundForm = () => {
                   <Input 
                     type="number" 
                     placeholder="100000"
-                    className="bg-background border-input"
                     {...field} 
                   />
                 </FormControl>
@@ -152,7 +151,6 @@ export const FundForm = () => {
                   <Input 
                     type="number" 
                     placeholder="1000"
-                    className="bg-background border-input"
                     {...field} 
                   />
                 </FormControl>
@@ -171,7 +169,6 @@ export const FundForm = () => {
                   <Input 
                     type="number" 
                     placeholder="2"
-                    className="bg-background border-input"
                     {...field} 
                   />
                 </FormControl>
@@ -190,7 +187,6 @@ export const FundForm = () => {
                   <Input 
                     type="number" 
                     placeholder="20"
-                    className="bg-background border-input"
                     {...field} 
                   />
                 </FormControl>

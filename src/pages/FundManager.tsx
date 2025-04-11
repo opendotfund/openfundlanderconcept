@@ -68,6 +68,19 @@ const FundManager = () => {
       { investor: "0x45...9a3d", amount: "$32,000", requested: "2d ago", status: "Pending", processingDate: "04/21/2025" },
       { investor: "0x92...7b5c", amount: "$18,500", requested: "4d ago", status: "Pending", processingDate: "04/21/2025" },
       { investor: "0x3f...0e4f", amount: "$3,000", requested: "5d ago", status: "Pending", processingDate: "04/21/2025" }
+    ],
+    // Adding chart data to show consistent upward trend
+    chartData: [
+      { date: '2024-01', value: 950000 },
+      { date: '2024-02', value: 1000000 },
+      { date: '2024-03', value: 1080000 },
+      { date: '2024-04', value: 1150000 },
+      { date: '2024-05', value: 1240000 },
+      { date: '2024-06', value: 1300000 },
+      { date: '2024-07', value: 1380000 },
+      { date: '2024-08', value: 1425000 },
+      { date: '2024-09', value: 1460000 },
+      { date: '2024-10', value: 1500000 }
     ]
   };
 
