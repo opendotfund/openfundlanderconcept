@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Button } from './ui/button';
 import { Link } from 'react-router-dom';
@@ -18,7 +17,7 @@ const Hero = () => {
             </p>
             <div className="flex flex-wrap gap-4">
               <Button 
-                className="bg-primary hover:bg-primary/90 text-primary-foreground text-lg px-8 py-6 transition-colors duration-300"
+                className="bg-primary hover:bg-primary/90 text-primary-foreground text-lg px-8 py-3 transition-colors duration-300"
                 asChild
               >
                 <Link to="/trade">
@@ -27,7 +26,7 @@ const Hero = () => {
               </Button>
               <Button 
                 variant="outline" 
-                className="border-2 border-foreground text-foreground hover:bg-foreground/10 text-lg px-8 py-6 transition-colors duration-300"
+                className="border-2 border-foreground text-foreground hover:bg-foreground/10 text-lg px-8 py-3 transition-colors duration-300"
                 asChild
               >
                 <Link to="/explore">
@@ -64,7 +63,6 @@ const Hero = () => {
         </div>
       </div>
       
-      {/* Decorative elements */}
       <div className="absolute top-0 left-1/4 w-96 h-96 bg-primary/10 rounded-full blur-[100px] -z-0 transition-colors duration-300"></div>
       <div className="absolute bottom-0 right-1/4 w-64 h-64 bg-primary/5 rounded-full blur-[80px] -z-0 transition-colors duration-300"></div>
     </section>

@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Navbar from '@/components/Navbar';
@@ -139,7 +138,7 @@ const Index = () => {
             </p>
             <div className="flex flex-col sm:flex-row justify-center gap-4">
               <Button 
-                className="text-lg px-8 py-6 h-auto"
+                className="text-lg px-8 py-3 h-auto"
                 asChild
               >
                 <Link to="/trade">
@@ -148,7 +147,7 @@ const Index = () => {
               </Button>
               <Button 
                 variant="outline"
-                className="border-2 border-primary text-primary hover:bg-primary/10 text-lg px-8 py-6 h-auto"
+                className="border-2 border-primary text-primary hover:bg-primary/10 text-lg px-8 py-3 h-auto"
                 asChild
               >
                 <Link to="/fund">
