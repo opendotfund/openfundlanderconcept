@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
-import { ArrowDown, Settings, ArrowRight, Plus } from 'lucide-react';
+import { ArrowDown, Settings, Check } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { 
@@ -36,6 +36,24 @@ export const SwapWidget = ({ selectedAsset = 'bitcoin' }: SwapWidgetProps) => {
   const [showTakeProfit, setShowTakeProfit] = useState<boolean>(false);
   const [showStopLoss, setShowStopLoss] = useState<boolean>(false);
 
+  // Complete list of all available assets
+  const assets = [
+    { value: 'usdt', label: 'USDT' },
+    { value: 'bitcoin', label: 'BTC' },
+    { value: 'ethereum', label: 'ETH' },
+    { value: 'solana', label: 'SOL' },
+    { value: 'apple', label: 'AAPL' },
+    { value: 'tesla', label: 'TSLA' },
+    { value: 'gold', label: 'GOLD' },
+    { value: 'silver', label: 'SILVER' },
+    { value: 'oil', label: 'OIL' },
+    { value: 'amazon', label: 'AMZN' },
+    { value: 'microsoft', label: 'MSFT' },
+    { value: 'google', label: 'GOOGL' },
+    { value: 'cardano', label: 'ADA' },
+    { value: 'polkadot', label: 'DOT' }
+  ];
+
   // Sample exchange rate calculation with more accurate prices
   const calculateExchangeRate = (from: string, to: string, amount: string): string => {
     const rates: Record<string, number> = {
@@ -44,7 +62,15 @@ export const SwapWidget = ({ selectedAsset = 'bitcoin' }: SwapWidgetProps) => {
       'solana': 156,
       'apple': 210,
       'tesla': 242,
-      'gold': 2380
+      'gold': 2380,
+      'silver': 30,
+      'oil': 75,
+      'amazon': 3500,
+      'microsoft': 420,
+      'google': 2100,
+      'cardano': 0.45,
+      'polkadot': 7.50,
+      'usdt': 1
     };
 
     if (!amount || isNaN(parseFloat(amount))) {
@@ -163,22 +189,16 @@ export const SwapWidget = ({ selectedAsset = 'bitcoin' }: SwapWidgetProps) => {
       orderDetails.push(`Stop Loss at: ${stopLossPrice}`);
     }
 
+    // Show trade confirmation toast with animation
     toast({
-      title: "Order Placed",
+      title: "Trade Confirmed",
       description: orderDetails.join('\n'),
-      variant: "default"
+      variant: "default",
+      duration: 5000, // 5 seconds
+      className: "animate-fade-in",
+      icon: <Check className="h-5 w-5 text-green-500" />
     });
   };
-
-  const assets = [
-    { value: 'usdt', label: 'USDT' },
-    { value: 'bitcoin', label: 'BTC' },
-    { value: 'ethereum', label: 'ETH' },
-    { value: 'solana', label: 'SOL' },
-    { value: 'apple', label: 'AAPL' },
-    { value: 'tesla', label: 'TSLA' },
-    { value: 'gold', label: 'GOLD' }
-  ];
 
   const getGasFee = () => {
     switch (gasOption) {
@@ -195,6 +215,13 @@ export const SwapWidget = ({ selectedAsset = 'bitcoin' }: SwapWidgetProps) => {
   const toggleStopLoss = () => {
     setShowStopLoss(!showStopLoss);
   };
+
+  // Make sure selectedAsset is always in sync with toAsset
+  useEffect(() => {
+    if (selectedAsset && selectedAsset !== toAsset) {
+      setToAsset(selectedAsset);
+    }
+  }, [selectedAsset]);
 
   return (
     <Card className="bg-background border-border p-4">

@@ -11,6 +11,7 @@ import { TradeHistory } from '@/components/TradeHistory';
 import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
 import { useIsMobile } from '@/hooks/use-mobile';
+import { Toaster } from "@/components/ui/toaster";
 
 const Trade = () => {
   const [selectedAsset, setSelectedAsset] = useState('bitcoin');
@@ -117,6 +118,7 @@ const Trade = () => {
         </div>
       </div>
       <Footer />
+      <Toaster />
     </div>
   );
 };
