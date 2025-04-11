@@ -49,7 +49,7 @@ const fetchPriceData = async (asset: string, timeframe: string, isPortfolio: boo
     // For portfolio data
     if (isPortfolio) {
       // If portfolio data is provided, use that instead of generating random data
-      if (portfolioData && portfolioData.length > 0) {
+      if (portfolioData && portfolioData.length > 0 && timeframe === '90d') {
         return portfolioData.map((dataPoint, index) => ({
           name: dataPoint.date,
           value: dataPoint.value,
@@ -59,6 +59,7 @@ const fetchPriceData = async (asset: string, timeframe: string, isPortfolio: boo
       
       // Portfolio starting value based on portfolio name for consistency
       const portfolioBaseValue = portfolioName === "Alpha Seekers #1" ? 1577892 : 250000;
+      const endValue = portfolioBaseValue;
       
       // Generate data points based on timeframe
       const dataPoints = 
@@ -71,17 +72,61 @@ const fetchPriceData = async (asset: string, timeframe: string, isPortfolio: boo
       
       // Generate realistic portfolio performance data
       let lastValue = portfolioBaseValue;
-      // For fund performance, we use a smaller variance
-      const variance = portfolioBaseValue * 0.005; // 0.5% variance
+      
+      // Different volatility for different timeframes
+      const getVolatilityFactor = () => {
+        if (timeframe === '1h') return 0.0005; // Lower volatility for shorter timeframes
+        if (timeframe === '24h') return 0.001;
+        if (timeframe === '7d') return 0.003;
+        if (timeframe === '30d') return 0.004;
+        if (timeframe === '90d') return 0.005;
+        return 0.006; // Higher volatility for longer timeframes
+      };
+
+      // Volatility adjusted for timeframe
+      const volatilityFactor = getVolatilityFactor();
+      const variance = portfolioBaseValue * volatilityFactor;
+      
       // Seed value for consistent random generation
       const seedValue = portfolioName.length;
-      // Slightly trending up for the Alpha Seekers portfolio
-      const trend = 0.15; 
+      
+      // Add some market patterns based on timeframe
+      const getTrendFactor = () => {
+        // Different trends for different timeframes
+        if (timeframe === '1h') {
+          // More short term volatility
+          return [0.3, -0.2, 0.1, -0.3, 0.2]; 
+        } else if (timeframe === '24h') {
+          // Daily pattern with morning rise and evening decline
+          return [0.3, 0.2, 0.1, -0.1, -0.2, 0.1];
+        } else if (timeframe === '7d') {
+          // Weekly pattern with midweek strength
+          return [0.1, 0.3, 0.2, 0.1, -0.1, -0.2, 0.1];
+        } else {
+          // Monthly trend is generally up for Alpha Seekers
+          return [0.15];
+        }
+      };
+      
+      const trendFactors = getTrendFactor();
       
       const data: PriceData[] = [];
       for (let i = 0; i < dataPoints; i++) {
-        const change = (Math.random() - 0.4 + trend) * variance;
+        // Apply different trend factors based on position in the data
+        const trendIndex = i % trendFactors.length;
+        const trendFactor = trendFactors[trendIndex];
+        
+        // Create some market cycles
+        const cycle = Math.sin(i / (dataPoints * 0.2)) * 0.2;
+        
+        // Combine different factors for more realistic movements
+        const change = (Math.random() - 0.4 + trendFactor + cycle) * variance;
         lastValue = Math.max(portfolioBaseValue * 0.85, lastValue + change);
+        
+        // Ensure we end at approximately the correct end value for 90d
+        if (i === dataPoints - 1 && timeframe === '90d') {
+          lastValue = endValue;
+        }
         
         let label = '';
         if (timeframe === '1h') {
@@ -92,8 +137,10 @@ const fetchPriceData = async (asset: string, timeframe: string, isPortfolio: boo
           label = `Day ${7-i}`;
         } else if (timeframe === '30d') {
           label = `Week ${Math.ceil((30-i)/7)}`;
-        } else {
+        } else if (timeframe === '90d') {
           label = `Week ${Math.ceil((90-i)/7)}`;
+        } else {
+          label = `Month ${Math.ceil((365-i)/30)}`;
         }
         
         data.push({
@@ -120,13 +167,41 @@ const fetchPriceData = async (asset: string, timeframe: string, isPortfolio: boo
       
       // Generate realistic price data
       let lastValue = baseValue;
-      const variance = baseValue * 0.01; // 1% variance
-      const seedValue = asset.charCodeAt(0) + asset.charCodeAt(asset.length - 1);
-      const trend = (seedValue % 3) - 1; // -1, 0, or 1 (down, sideways, or up)
       
+      // Different volatility for different timeframes
+      const getVolatilityFactor = () => {
+        if (timeframe === '1h') return 0.0008; // Higher volatility for crypto in short term
+        if (timeframe === '24h') return 0.002;
+        if (timeframe === '7d') return 0.004;
+        if (timeframe === '30d') return 0.006;
+        if (timeframe === '90d') return 0.008;
+        return 0.01;
+      };
+      
+      const volatilityFactor = getVolatilityFactor();
+      const variance = baseValue * volatilityFactor;
+      
+      // Asset-specific trend based on its characteristics
+      const assetTrend = () => {
+        if (asset.toLowerCase() === 'bitcoin') return 0.08; // Bitcoin slightly bullish
+        if (asset.toLowerCase() === 'ethereum') return 0.05; // ETH moderately bullish
+        if (asset.toLowerCase() === 'solana') return 0.1; // SOL more volatile and bullish
+        if (asset.toLowerCase() === 'tesla') return -0.02; // TSLA slightly bearish
+        return 0; // Neutral for others
+      };
+      
+      const trend = assetTrend() / dataPoints; // Distribute trend across datapoints
+      
+      // Create more realistic market patterns
       const data: PriceData[] = [];
       for (let i = 0; i < dataPoints; i++) {
-        const change = (Math.random() - 0.5 + trend * 0.1) * variance;
+        // Add cyclical patterns
+        const dailyCycle = Math.sin(i / 12) * 0.3; // Daily cycle (high/low periods)
+        const weeklyCycle = Math.sin(i / 30) * 0.2; // Weekly cycle
+        
+        // Combine random walk with cycles and trend
+        const cycleEffect = (timeframe === '1h' || timeframe === '24h') ? dailyCycle : weeklyCycle;
+        const change = (Math.random() - 0.5 + trend + cycleEffect * volatilityFactor) * variance;
         lastValue = Math.max(1, lastValue + change);
         
         let label = '';
@@ -138,14 +213,16 @@ const fetchPriceData = async (asset: string, timeframe: string, isPortfolio: boo
           label = `Day ${7-i}`;
         } else if (timeframe === '30d') {
           label = `Week ${Math.ceil((30-i)/7)}`;
-        } else {
+        } else if (timeframe === '90d') {
           label = `Week ${Math.ceil((90-i)/7)}`;
+        } else {
+          label = `Month ${Math.ceil((365-i)/30)}`;
         }
         
         data.push({
           name: label,
           value: parseFloat(lastValue.toFixed(2)),
-          volume: Math.floor(Math.random() * baseValue * 100)
+          volume: Math.floor(Math.random() * baseValue * 100 * (1 + Math.sin(i/10) * 0.3)) // Add volume cycles
         });
       }
       
