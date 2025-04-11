@@ -28,6 +28,14 @@ import { Separator } from "@/components/ui/separator";
 import { Progress } from "@/components/ui/progress";
 import { Search } from "lucide-react";
 import { useIsMobile } from '@/hooks/use-mobile';
+import { 
+  Table,
+  TableHeader,
+  TableBody,
+  TableHead,
+  TableRow,
+  TableCell 
+} from "@/components/ui/table";
 
 const FundManager = () => {
   const [timeframe, setTimeframe] = useState('24h');
@@ -81,7 +89,7 @@ const FundManager = () => {
       { date: '2024-10', value: 1577892 }
     ]
   };
-
+  
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(e.target.value);
   };
@@ -212,64 +220,60 @@ const FundManager = () => {
                     </CardHeader>
                     <CardContent>
                       <div className="overflow-x-auto">
-                        <table className="w-full">
-                          <thead>
-                            <tr className="text-muted-foreground text-sm border-b">
-                              <th className="text-left font-medium py-2">Asset</th>
-                              <th className="text-right font-medium py-2">Amount</th>
-                              <th className="text-right font-medium py-2">Value</th>
-                              <th className="text-right font-medium py-2">Change</th>
-                              <th className="text-left font-medium py-2 pl-4">Allocation</th>
-                              <th className="text-right font-medium py-2">Actions</th>
-                            </tr>
-                          </thead>
-                          <tbody>
+                        <Table>
+                          <TableHeader>
+                            <TableRow>
+                              <TableHead>Asset</TableHead>
+                              <TableHead className="text-right">Amount</TableHead>
+                              <TableHead className="text-right">Value</TableHead>
+                              <TableHead className="text-right">Change</TableHead>
+                              <TableHead>Allocation</TableHead>
+                              <TableHead className="text-right">Actions</TableHead>
+                            </TableRow>
+                          </TableHeader>
+                          <TableBody>
                             {fundData.holdings
                               .filter(holding => 
                                 holding.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
                                 holding.symbol.toLowerCase().includes(searchQuery.toLowerCase())
                               )
                               .map((holding, index) => (
-                              <tr key={index} className="border-b hover:bg-muted/50 transition-colors">
-                                <td className="py-3">
-                                  <div className="flex items-center">
-                                    <div className="w-8 h-8 rounded-full bg-muted flex items-center justify-center mr-2">
-                                      {holding.symbol ? holding.symbol[0] : "?"}
+                                <TableRow key={index}>
+                                  <TableCell>
+                                    <div className="flex items-start">
+                                      <div className="w-8 h-8 rounded-full bg-muted flex items-center justify-center mr-2 flex-shrink-0">
+                                        {holding.symbol ? holding.symbol[0] : "?"}
+                                      </div>
+                                      <div className="flex flex-col items-start">
+                                        <div className="font-medium">{holding.name}</div>
+                                        <div className="text-muted-foreground text-sm text-left">{holding.symbol}</div>
+                                      </div>
                                     </div>
-                                    <div className="flex flex-col">
-                                      <div className="font-medium">{holding.name}</div>
-                                      <div className="text-muted-foreground text-sm">{holding.symbol}</div>
+                                  </TableCell>
+                                  <TableCell className="text-right">{holding.amount}</TableCell>
+                                  <TableCell className="text-right">{holding.value}</TableCell>
+                                  <TableCell className="text-right">
+                                    {holding.change && (
+                                      <span className={holding.isUp ? "text-green-600 dark:text-openfund-green" : "text-red-500"}>
+                                        {holding.change}
+                                      </span>
+                                    )}
+                                  </TableCell>
+                                  <TableCell>
+                                    <div className="flex items-center">
+                                      <Progress className="h-2 mr-2" value={holding.allocation} />
+                                      <span className="text-sm">{formatNumber(holding.allocation)}%</span>
                                     </div>
-                                  </div>
-                                </td>
-                                <td className="text-right py-3">
-                                  {holding.amount}
-                                </td>
-                                <td className="text-right py-3">
-                                  {holding.value}
-                                </td>
-                                <td className="text-right py-3">
-                                  {holding.change && (
-                                    <span className={holding.isUp ? "text-green-600 dark:text-openfund-green" : "text-red-500"}>
-                                      {holding.change}
-                                    </span>
-                                  )}
-                                </td>
-                                <td className="py-3 pl-4">
-                                  <div className="flex items-center">
-                                    <Progress className="h-2 mr-2" value={holding.allocation} />
-                                    <span className="text-sm">{formatNumber(holding.allocation)}%</span>
-                                  </div>
-                                </td>
-                                <td className="text-right py-3">
-                                  <Button variant="ghost" size="sm" onClick={() => setSelectedAsset(holding.name.toLowerCase())}>
-                                    Trade
-                                  </Button>
-                                </td>
-                              </tr>
-                            ))}
-                          </tbody>
-                        </table>
+                                  </TableCell>
+                                  <TableCell className="text-right">
+                                    <Button variant="ghost" size="sm" onClick={() => setSelectedAsset(holding.name.toLowerCase())}>
+                                      Trade
+                                    </Button>
+                                  </TableCell>
+                                </TableRow>
+                              ))}
+                          </TableBody>
+                        </Table>
                       </div>
                     </CardContent>
                   </Card>
