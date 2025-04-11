@@ -12,31 +12,31 @@ const AboutUs = () => {
       name: "Misha Stastna",
       role: "Co-Founder & CEO",
       background: "Crypto Native",
-      imageSrc: "/lovable-uploads/b960b399-7a50-4d7e-9f6c-2c2f983e3823.png#x=117&y=381&width=204&height=204",
+      imageSrc: "https://images.unsplash.com/photo-1649972904349-6e44c42644a7?w=800&auto=format&fit=crop",
     },
     {
       name: "Dr. Ahmed Al-Gebali",
       role: "Advisor",
       background: "2011 CFO of the year at Dubai Islamic Bank",
-      imageSrc: "/lovable-uploads/b960b399-7a50-4d7e-9f6c-2c2f983e3823.png#x=698&y=381&width=204&height=204",
+      imageSrc: "https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&auto=format&fit=crop",
     },
     {
       name: "@Dagger100x",
       role: "Advisor",
       background: "Crypto Native",
-      imageSrc: "/lovable-uploads/b960b399-7a50-4d7e-9f6c-2c2f983e3823.png#x=1191&y=381&width=204&height=204",
+      imageSrc: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=800&auto=format&fit=crop",
     },
     {
       name: "Abdul Fayed",
       role: "Co-Founder",
       background: "TradFi Native",
-      imageSrc: "/lovable-uploads/b960b399-7a50-4d7e-9f6c-2c2f983e3823.png#x=450&y=614&width=204&height=204",
+      imageSrc: "https://images.unsplash.com/photo-1649972904349-6e44c42644a7?w=800&auto=format&fit=crop",
     },
     {
       name: "@0xSoda",
       role: "Co-Founder & CTO",
       background: "Crypto Native",
-      imageSrc: "/lovable-uploads/b960b399-7a50-4d7e-9f6c-2c2f983e3823.png#x=936&y=614&width=204&height=204",
+      imageSrc: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=800&auto=format&fit=crop",
     },
   ];
 
