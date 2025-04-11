@@ -12,31 +12,26 @@ const AboutUs = () => {
       name: "Misha Stastna",
       role: "Co-Founder & CEO",
       background: "Crypto Native",
-      imageSrc: "https://images.unsplash.com/photo-1649972904349-6e44c42644a7?w=800&auto=format&fit=crop",
     },
     {
       name: "Dr. Ahmed Al-Gebali",
       role: "Advisor",
       background: "2011 CFO of the year at Dubai Islamic Bank",
-      imageSrc: "https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&auto=format&fit=crop",
     },
     {
       name: "@Dagger100x",
       role: "Advisor",
       background: "Crypto Native",
-      imageSrc: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=800&auto=format&fit=crop",
     },
     {
       name: "Abdul Fayed",
       role: "Co-Founder",
       background: "TradFi Native",
-      imageSrc: "https://images.unsplash.com/photo-1649972904349-6e44c42644a7?w=800&auto=format&fit=crop",
     },
     {
       name: "@0xSoda",
       role: "Co-Founder & CTO",
       background: "Crypto Native",
-      imageSrc: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=800&auto=format&fit=crop",
     },
   ];
 
@@ -57,7 +52,7 @@ const AboutUs = () => {
           </p>
         </div>
         
-        {/* Team member cards with green border style from image */}
+        {/* Team member cards without images */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
           {teamMembers.map((member, index) => (
             <TeamMemberCard key={index} {...member} />
