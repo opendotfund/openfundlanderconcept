@@ -180,6 +180,14 @@ export const SwapWidget = ({ selectedAsset = 'bitcoin' }: SwapWidgetProps) => {
     });
   };
 
+  const handleAssetSelect = (value: string) => {
+    if (fromAssetPopoverOpen) {
+      handleFromAssetChange(value);
+    } else if (toAssetPopoverOpen) {
+      handleToAssetChange(value);
+    }
+  };
+
   const assets: Asset[] = [
     { value: 'usdt', label: 'USDT', category: 'crypto' },
     { value: 'bitcoin', label: 'BTC', category: 'crypto' },
@@ -359,9 +367,17 @@ export const SwapWidget = ({ selectedAsset = 'bitcoin' }: SwapWidgetProps) => {
               </PopoverTrigger>
               <PopoverContent className="w-[300px] p-0" align="end">
                 <Command>
-                  <CommandInput placeholder="Search assets..." value={fromSearchQuery} onValueChange={setFromSearchQuery} />
+                  <CommandInput 
+                    placeholder="Search assets..." 
+                    value={fromSearchQuery} 
+                    onValueChange={setFromSearchQuery} 
+                  />
                   <div className="border-t">
-                    <Tabs defaultValue="all" value={fromAssetCategory} onValueChange={(value) => setFromAssetCategory(value as any)}>
+                    <Tabs 
+                      defaultValue="all" 
+                      value={fromAssetCategory} 
+                      onValueChange={(value) => setFromAssetCategory(value as any)}
+                    >
                       <div className="p-1">
                         <TabsList className="grid grid-cols-4">
                           <TabsTrigger value="all">All</TabsTrigger>
@@ -379,7 +395,6 @@ export const SwapWidget = ({ selectedAsset = 'bitcoin' }: SwapWidgetProps) => {
                                 key={asset.value}
                                 value={asset.value}
                                 onSelect={handleFromAssetChange}
-                                className="cursor-pointer"
                               >
                                 {asset.label}
                               </CommandItem>
@@ -395,7 +410,6 @@ export const SwapWidget = ({ selectedAsset = 'bitcoin' }: SwapWidgetProps) => {
                                 key={asset.value}
                                 value={asset.value}
                                 onSelect={handleFromAssetChange}
-                                className="cursor-pointer"
                               >
                                 {asset.label}
                               </CommandItem>
@@ -411,7 +425,6 @@ export const SwapWidget = ({ selectedAsset = 'bitcoin' }: SwapWidgetProps) => {
                                 key={asset.value}
                                 value={asset.value}
                                 onSelect={handleFromAssetChange}
-                                className="cursor-pointer"
                               >
                                 {asset.label}
                               </CommandItem>
@@ -427,7 +440,6 @@ export const SwapWidget = ({ selectedAsset = 'bitcoin' }: SwapWidgetProps) => {
                                 key={asset.value}
                                 value={asset.value}
                                 onSelect={handleFromAssetChange}
-                                className="cursor-pointer"
                               >
                                 {asset.label}
                               </CommandItem>
@@ -476,9 +488,17 @@ export const SwapWidget = ({ selectedAsset = 'bitcoin' }: SwapWidgetProps) => {
               </PopoverTrigger>
               <PopoverContent className="w-[300px] p-0" align="end">
                 <Command>
-                  <CommandInput placeholder="Search assets..." value={toSearchQuery} onValueChange={setToSearchQuery} />
+                  <CommandInput 
+                    placeholder="Search assets..." 
+                    value={toSearchQuery} 
+                    onValueChange={setToSearchQuery} 
+                  />
                   <div className="border-t">
-                    <Tabs defaultValue="all" value={toAssetCategory} onValueChange={(value) => setToAssetCategory(value as any)}>
+                    <Tabs 
+                      defaultValue="all" 
+                      value={toAssetCategory} 
+                      onValueChange={(value) => setToAssetCategory(value as any)}
+                    >
                       <div className="p-1">
                         <TabsList className="grid grid-cols-4">
                           <TabsTrigger value="all">All</TabsTrigger>
@@ -496,7 +516,6 @@ export const SwapWidget = ({ selectedAsset = 'bitcoin' }: SwapWidgetProps) => {
                                 key={asset.value}
                                 value={asset.value}
                                 onSelect={handleToAssetChange}
-                                className="cursor-pointer"
                               >
                                 {asset.label}
                               </CommandItem>
@@ -512,7 +531,6 @@ export const SwapWidget = ({ selectedAsset = 'bitcoin' }: SwapWidgetProps) => {
                                 key={asset.value}
                                 value={asset.value}
                                 onSelect={handleToAssetChange}
-                                className="cursor-pointer"
                               >
                                 {asset.label}
                               </CommandItem>
@@ -528,7 +546,6 @@ export const SwapWidget = ({ selectedAsset = 'bitcoin' }: SwapWidgetProps) => {
                                 key={asset.value}
                                 value={asset.value}
                                 onSelect={handleToAssetChange}
-                                className="cursor-pointer"
                               >
                                 {asset.label}
                               </CommandItem>
@@ -544,7 +561,6 @@ export const SwapWidget = ({ selectedAsset = 'bitcoin' }: SwapWidgetProps) => {
                                 key={asset.value}
                                 value={asset.value}
                                 onSelect={handleToAssetChange}
-                                className="cursor-pointer"
                               >
                                 {asset.label}
                               </CommandItem>

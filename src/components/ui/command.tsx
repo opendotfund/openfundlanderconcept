@@ -113,20 +113,22 @@ const CommandItem = React.forwardRef<
   React.ElementRef<typeof CommandPrimitive.Item>,
   React.ComponentPropsWithoutRef<typeof CommandPrimitive.Item> & { disabled?: boolean }
 >(({ className, disabled, ...props }, ref) => {
-  // Fix: Pass a default object for dataset to ensure it exists
-  const itemProps = {
-    'data-disabled': disabled ? 'true' : undefined,
-    ...props
-  };
+  // Fix: Create a new object for props instead of directly mutating them
+  const itemProps = { ...props };
+  
+  // Fix: Add disabled attribute to the dataset in a proper way
+  if (disabled) {
+    itemProps["data-disabled"] = true;
+  }
   
   return (
     <CommandPrimitive.Item
       ref={ref}
-      disabled={disabled}
       className={cn(
-        "relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none aria-selected:bg-accent aria-selected:text-accent-foreground data-[disabled=true]:pointer-events-none data-[disabled=true]:opacity-50",
+        "relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none aria-selected:bg-accent aria-selected:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
         className
       )}
+      disabled={disabled}
       {...itemProps}
     />
   );
