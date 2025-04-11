@@ -25,6 +25,10 @@ const Trade = () => {
     }
   };
 
+  const handleAssetSelect = (asset: string) => {
+    setSelectedAsset(asset);
+  };
+
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(e.target.value);
   };
@@ -88,7 +92,7 @@ const Trade = () => {
                 <TabsContent value="crypto">
                   <AssetList 
                     type="crypto" 
-                    onSelect={setSelectedAsset} 
+                    onSelect={handleAssetSelect} 
                     selectedAsset={selectedAsset}
                     searchQuery={searchQuery}
                   />
@@ -97,7 +101,7 @@ const Trade = () => {
                 <TabsContent value="stocks">
                   <AssetList 
                     type="stocks" 
-                    onSelect={setSelectedAsset} 
+                    onSelect={handleAssetSelect} 
                     selectedAsset={selectedAsset}
                     searchQuery={searchQuery}
                   />
@@ -106,7 +110,7 @@ const Trade = () => {
                 <TabsContent value="commodities">
                   <AssetList 
                     type="commodities" 
-                    onSelect={setSelectedAsset} 
+                    onSelect={handleAssetSelect} 
                     selectedAsset={selectedAsset}
                     searchQuery={searchQuery}
                   />
