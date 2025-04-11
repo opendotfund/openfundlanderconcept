@@ -19,10 +19,7 @@ export const KYCForm = () => {
     setIsUploading(true);
     setTimeout(() => {
       setIsUploading(false);
-      toast({
-        title: "Document uploaded",
-        description: `${documentType} has been successfully uploaded.`,
-      });
+      toast.success(`${documentType} has been successfully uploaded.`);
     }, 1500);
   };
   
@@ -35,10 +32,7 @@ export const KYCForm = () => {
   };
   
   const submitForm = () => {
-    toast({
-      title: "KYC Submission Successful",
-      description: "Your documents have been submitted for verification. This process typically takes 1-2 business days.",
-    });
+    toast.success("Your documents have been submitted for verification. This process typically takes 1-2 business days.");
     // In a real application, you would submit the form data to your backend
   };
 

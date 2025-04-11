@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { 
@@ -83,7 +82,7 @@ const FundManager = () => {
   };
 
   return (
-    <div className="min-h-screen bg-openfund-gray-dark text-white">
+    <div className="min-h-screen bg-background text-foreground">
       <Navbar />
       
       <main className="container mx-auto px-4 py-6">
@@ -98,18 +97,18 @@ const FundManager = () => {
               Back to Fund Dashboard
             </Button>
             <h1 className="text-3xl font-bold">Fund Manager Trading Terminal</h1>
-            <p className="text-gray-400 mt-1">
+            <p className="text-muted-foreground mt-1">
               {fundData.name} • Managed by {fundData.manager}
             </p>
           </div>
           
           <div className="flex flex-col items-end">
-            <div className="bg-openfund-gray-medium px-4 py-2 rounded-lg">
-              <div className={`flex items-center ${fundData.performanceIsPositive ? 'text-openfund-green' : 'text-red-500'} mb-1`}>
+            <div className="bg-muted px-4 py-2 rounded-lg">
+              <div className={`flex items-center ${fundData.performanceIsPositive ? 'text-green-600 dark:text-openfund-green' : 'text-red-500'} mb-1`}>
                 <TrendingUp size={16} className="mr-1" />
                 <span className="font-semibold text-xl">{fundData.performance}</span>
               </div>
-              <div className="text-sm text-gray-400">Fund Performance</div>
+              <div className="text-sm text-muted-foreground">Fund Performance</div>
             </div>
           </div>
         </div>
@@ -117,45 +116,45 @@ const FundManager = () => {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <div className="lg:col-span-2 space-y-6">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              <Card className="bg-openfund-gray-medium border-openfund-gray-light">
+              <Card>
                 <CardContent className="p-4">
                   <div className="flex items-center mb-2">
-                    <Wallet size={16} className="mr-2 text-openfund-green" />
-                    <span className="text-gray-400 text-sm">Total Balance</span>
+                    <Wallet size={16} className="mr-2 text-primary" />
+                    <span className="text-muted-foreground text-sm">Total Balance</span>
                   </div>
                   <div className="text-xl font-bold">{fundData.aum}</div>
                 </CardContent>
               </Card>
-              <Card className="bg-openfund-gray-medium border-openfund-gray-light">
+              <Card>
                 <CardContent className="p-4">
                   <div className="flex items-center mb-2">
                     <FileText size={16} className="mr-2 text-blue-400" />
-                    <span className="text-gray-400 text-sm">Holdings</span>
+                    <span className="text-muted-foreground text-sm">Holdings</span>
                   </div>
                   <div className="text-xl font-bold">{fundData.holdings.length}</div>
                 </CardContent>
               </Card>
-              <Card className="bg-openfund-gray-medium border-openfund-gray-light">
+              <Card>
                 <CardContent className="p-4">
                   <div className="flex items-center mb-2">
                     <FileMinus size={16} className="mr-2 text-amber-400" />
-                    <span className="text-gray-400 text-sm">Withdrawals</span>
+                    <span className="text-muted-foreground text-sm">Withdrawals</span>
                   </div>
                   <div className="text-xl font-bold">{fundData.withdrawalsCount}</div>
                 </CardContent>
               </Card>
-              <Card className="bg-openfund-gray-medium border-openfund-gray-light">
+              <Card>
                 <CardContent className="p-4">
                   <div className="flex items-center mb-2">
                     <Clock size={16} className="mr-2 text-purple-400" />
-                    <span className="text-gray-400 text-sm">Next Window</span>
+                    <span className="text-muted-foreground text-sm">Next Window</span>
                   </div>
                   <div className="text-xl font-bold">{fundData.timeUntilWithdrawal}</div>
                 </CardContent>
               </Card>
             </div>
             
-            <Card className="bg-openfund-gray-medium border-openfund-gray-light">
+            <Card>
               <CardHeader className="flex flex-row justify-between items-center pb-2">
                 <CardTitle>Fund Performance</CardTitle>
                 <TimeframeSelector 
@@ -176,14 +175,14 @@ const FundManager = () => {
             
             <div className="mt-6">
               <Tabs defaultValue="holdings">
-                <TabsList className="bg-openfund-gray-medium mb-2">
+                <TabsList className="mb-2">
                   <TabsTrigger value="holdings">Portfolio Holdings</TabsTrigger>
                   <TabsTrigger value="transactions">Recent Transactions</TabsTrigger>
                   <TabsTrigger value="withdrawals">Pending Withdrawals</TabsTrigger>
                 </TabsList>
                 
                 <TabsContent value="holdings">
-                  <Card className="bg-openfund-gray-medium border-openfund-gray-light">
+                  <Card>
                     <CardHeader className="pb-2">
                       <div className="flex justify-between items-center">
                         <CardTitle>Current Holdings</CardTitle>
@@ -192,9 +191,9 @@ const FundManager = () => {
                             placeholder="Search assets..."
                             value={searchQuery}
                             onChange={handleSearchChange}
-                            className="pl-8 bg-openfund-gray-dark w-full"
+                            className="pl-8 w-full"
                           />
-                          <Search className="absolute left-2.5 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+                          <Search className="absolute left-2.5 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                         </div>
                       </div>
                     </CardHeader>
@@ -202,7 +201,7 @@ const FundManager = () => {
                       <div className="overflow-x-auto">
                         <table className="w-full">
                           <thead>
-                            <tr className="text-gray-400 text-sm border-b border-openfund-gray-light">
+                            <tr className="text-muted-foreground text-sm border-b">
                               <th className="text-left font-medium py-2">Asset</th>
                               <th className="text-right font-medium py-2">Amount</th>
                               <th className="text-right font-medium py-2">Value</th>
@@ -218,15 +217,15 @@ const FundManager = () => {
                                 holding.symbol.toLowerCase().includes(searchQuery.toLowerCase())
                               )
                               .map((holding, index) => (
-                              <tr key={index} className="border-b border-openfund-gray-light hover:bg-openfund-gray-dark/30 transition-colors">
+                              <tr key={index} className="border-b hover:bg-muted/50 transition-colors">
                                 <td className="py-3">
                                   <div className="flex items-center">
-                                    <div className="w-8 h-8 rounded-full bg-openfund-gray-dark flex items-center justify-center mr-2">
+                                    <div className="w-8 h-8 rounded-full bg-muted flex items-center justify-center mr-2">
                                       {holding.symbol ? holding.symbol[0] : "?"}
                                     </div>
                                     <div>
                                       <div className="font-medium">{holding.name}</div>
-                                      <div className="text-gray-400 text-sm">{holding.symbol}</div>
+                                      <div className="text-muted-foreground text-sm">{holding.symbol}</div>
                                     </div>
                                   </div>
                                 </td>
@@ -238,7 +237,7 @@ const FundManager = () => {
                                 </td>
                                 <td className="text-right py-3">
                                   {holding.change && (
-                                    <span className={holding.isUp ? "text-openfund-green" : "text-red-500"}>
+                                    <span className={holding.isUp ? "text-green-600 dark:text-openfund-green" : "text-red-500"}>
                                       {holding.change}
                                     </span>
                                   )}
@@ -264,17 +263,17 @@ const FundManager = () => {
                 </TabsContent>
                 
                 <TabsContent value="transactions">
-                  <Card className="bg-openfund-gray-medium border-openfund-gray-light">
+                  <Card>
                     <CardHeader>
                       <CardTitle>Recent Transactions</CardTitle>
                     </CardHeader>
                     <CardContent>
                       <div className="space-y-3">
                         {fundData.recentTransactions.map((tx, index) => (
-                          <div key={index} className="flex justify-between items-center bg-openfund-gray-dark p-3 rounded-lg">
+                          <div key={index} className="flex justify-between items-center bg-muted p-3 rounded-lg">
                             <div className="flex items-center">
                               <div className={`w-8 h-8 rounded-full flex items-center justify-center mr-3 ${
-                                tx.type === 'Buy' ? 'bg-openfund-green/20 text-openfund-green' :
+                                tx.type === 'Buy' ? 'bg-green-500/20 text-green-500' :
                                 tx.type === 'Sell' ? 'bg-red-500/20 text-red-500' :
                                 tx.type === 'Withdrawal' ? 'bg-amber-500/20 text-amber-500' :
                                 'bg-blue-500/20 text-blue-500'
@@ -286,12 +285,12 @@ const FundManager = () => {
                               </div>
                               <div>
                                 <div className="font-medium">{tx.type} {tx.asset}</div>
-                                <div className="text-gray-400 text-sm">{tx.amount}</div>
+                                <div className="text-muted-foreground text-sm">{tx.amount}</div>
                               </div>
                             </div>
                             <div className="text-right">
                               <div className="font-medium">{tx.value}</div>
-                              <div className="text-gray-400 text-sm">{tx.time}</div>
+                              <div className="text-muted-foreground text-sm">{tx.time}</div>
                             </div>
                           </div>
                         ))}
@@ -301,7 +300,7 @@ const FundManager = () => {
                 </TabsContent>
                 
                 <TabsContent value="withdrawals">
-                  <Card className="bg-openfund-gray-medium border-openfund-gray-light">
+                  <Card>
                     <CardHeader>
                       <div className="flex justify-between items-center">
                         <CardTitle>Pending Withdrawals</CardTitle>
@@ -314,10 +313,10 @@ const FundManager = () => {
                     <CardContent>
                       <div className="space-y-4">
                         {fundData.pendingWithdrawals.map((withdrawal, index) => (
-                          <div key={index} className="bg-openfund-gray-dark p-4 rounded-lg">
+                          <div key={index} className="bg-muted p-4 rounded-lg">
                             <div className="flex justify-between items-start mb-3">
                               <div>
-                                <div className="font-medium text-sm text-gray-400">Investor</div>
+                                <div className="font-medium text-sm text-muted-foreground">Investor</div>
                                 <div>{withdrawal.investor}</div>
                               </div>
                               <Badge variant="outline" className="bg-amber-500/10 text-amber-400 border-amber-400/20">
@@ -326,15 +325,15 @@ const FundManager = () => {
                             </div>
                             <div className="grid grid-cols-3 gap-4">
                               <div>
-                                <div className="font-medium text-sm text-gray-400">Amount</div>
+                                <div className="font-medium text-sm text-muted-foreground">Amount</div>
                                 <div className="font-bold">{withdrawal.amount}</div>
                               </div>
                               <div>
-                                <div className="font-medium text-sm text-gray-400">Requested</div>
+                                <div className="font-medium text-sm text-muted-foreground">Requested</div>
                                 <div>{withdrawal.requested}</div>
                               </div>
                               <div>
-                                <div className="font-medium text-sm text-gray-400">Processing</div>
+                                <div className="font-medium text-sm text-muted-foreground">Processing</div>
                                 <div>{withdrawal.processingDate}</div>
                               </div>
                             </div>
@@ -349,7 +348,7 @@ const FundManager = () => {
           </div>
           
           <div className="space-y-6">
-            <Card className="bg-openfund-gray-medium border-openfund-gray-light">
+            <Card>
               <CardHeader>
                 <CardTitle>Fund Trading</CardTitle>
               </CardHeader>
@@ -358,39 +357,39 @@ const FundManager = () => {
               </CardContent>
             </Card>
             
-            <Card className="bg-openfund-gray-medium border-openfund-gray-light">
+            <Card>
               <CardHeader>
                 <CardTitle>Fund Information</CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
-                <div className="bg-openfund-gray-dark p-3 rounded-lg">
+                <div className="bg-muted p-3 rounded-lg">
                   <div className="flex justify-between mb-1">
-                    <span className="text-gray-400">Management Fee</span>
+                    <span className="text-muted-foreground">Management Fee</span>
                     <span>2%</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-gray-400">Performance Fee</span>
+                    <span className="text-muted-foreground">Performance Fee</span>
                     <span>20%</span>
                   </div>
                 </div>
                 
-                <div className="bg-openfund-gray-dark p-3 rounded-lg">
+                <div className="bg-muted p-3 rounded-lg">
                   <div className="flex justify-between mb-1">
-                    <span className="text-gray-400">Withdrawal Window</span>
+                    <span className="text-muted-foreground">Withdrawal Window</span>
                     <span>{fundData.nextWithdrawalWindow}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-gray-400">Time Left</span>
+                    <span className="text-muted-foreground">Time Left</span>
                     <span>{fundData.timeUntilWithdrawal}</span>
                   </div>
                 </div>
                 
-                <div className="bg-openfund-gray-dark p-3 rounded-lg">
+                <div className="bg-muted p-3 rounded-lg">
                   <div className="flex items-center justify-between mb-2">
-                    <span className="text-gray-400">Smart Contract</span>
+                    <span className="text-muted-foreground">Smart Contract</span>
                     <Badge variant="outline">Audited</Badge>
                   </div>
-                  <div className="text-sm font-mono bg-openfund-gray-medium p-2 rounded overflow-x-auto">
+                  <div className="text-sm font-mono bg-card p-2 rounded overflow-x-auto">
                     0x7a3f691e57cf22cb21c01b80421e9f
                   </div>
                 </div>
@@ -404,12 +403,12 @@ const FundManager = () => {
             </Card>
             
             {fundData.withdrawalsCount > 0 && (
-              <div className="bg-amber-950/30 border border-amber-500/20 rounded-lg p-4">
+              <div className="bg-amber-500/10 border border-amber-500/20 rounded-lg p-4 dark:bg-amber-950/30">
                 <div className="flex items-start">
                   <AlertCircle className="h-5 w-5 text-amber-400 mt-0.5 mr-2 flex-shrink-0" />
                   <div>
                     <h4 className="font-medium text-amber-400">Pending Withdrawals</h4>
-                    <p className="text-sm text-gray-300 mt-1">
+                    <p className="text-sm text-muted-foreground mt-1">
                       There are {fundData.withdrawalsCount} pending withdrawal requests totaling {fundData.withdrawalsPending}. 
                       These will be processed on {fundData.nextWithdrawalWindow}.
                     </p>
