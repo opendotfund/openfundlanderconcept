@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import Navbar from '@/components/Navbar';
@@ -74,6 +73,15 @@ const portfolioData = {
     name: 'John Doe',
     email: 'john.doe@example.com',
     joined: '2023-05-15'
+  },
+  referralStats: {
+    totalReferrals: 127,
+    earnedRewards: 3875.42,
+    airdropPoints: 4250,
+    level: 4,
+    pointsToNextLevel: 750,
+    nextLevelPoints: 5000,
+    progress: 85 // percentage to next level
   }
 };
 
@@ -138,17 +146,6 @@ const Account = () => {
     language: 'English',
     timezone: 'GMT-4 (Eastern Time)'
   });
-
-  // Simulated referral stats
-  const referralStats = {
-    totalReferrals: 127,
-    earnedRewards: 3875.42,
-    airdropPoints: 4250,
-    level: 4,
-    pointsToNextLevel: 750,
-    nextLevelPoints: 5000,
-    progress: 85 // percentage to next level
-  };
 
   useEffect(() => {
     if (tabParam === 'portfolio' || tabParam === 'profile' || 
