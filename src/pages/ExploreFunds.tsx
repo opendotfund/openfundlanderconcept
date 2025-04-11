@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { 
@@ -11,13 +11,45 @@ import {
   DollarSign, 
   Users,
   BarChart3,
-  Percent
+  Percent,
+  Calendar,
+  ChevronDown,
+  Clock
 } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Slider } from "@/components/ui/slider";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Toggle, toggleVariants } from "@/components/ui/toggle";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 
 // Sample fund data
 const traditionalFunds = [
@@ -27,11 +59,18 @@ const traditionalFunds = [
     manager: 'Warren Buffett',
     aum: '$700B',
     returns: '20.1%',
+    returnsValue: 20.1,
     focus: 'Value Investing',
     minInvestment: '$400,000',
+    minInvestmentValue: 400000,
     year: '1965',
+    yearValue: 1965,
     description: 'American multinational conglomerate holding company led by Warren Buffett, known for its long-term value investing approach.',
-    performance: '+18.2%'
+    performance: '+18.2%',
+    performanceValue: 18.2,
+    type: 'TradFi Fund',
+    volatility: 'Low',
+    volatilityValue: 15,
   },
   {
     id: 2,
@@ -39,11 +78,18 @@ const traditionalFunds = [
     manager: 'Cathie Wood',
     aum: '$16.1B',
     returns: '39.1%',
+    returnsValue: 39.1,
     focus: 'Disruptive Innovation',
     minInvestment: '$100',
+    minInvestmentValue: 100,
     year: '2014',
+    yearValue: 2014,
     description: 'Actively managed ETF that invests in companies relevant to the theme of disruptive innovation.',
-    performance: '+15.7%'
+    performance: '+15.7%',
+    performanceValue: 15.7,
+    type: 'TradFi Fund',
+    volatility: 'High',
+    volatilityValue: 65,
   },
   {
     id: 3,
@@ -51,11 +97,18 @@ const traditionalFunds = [
     manager: 'Ray Dalio (Founder)',
     aum: '$140B',
     returns: '12%',
+    returnsValue: 12,
     focus: 'Global Macro',
     minInvestment: '$10M',
+    minInvestmentValue: 10000000,
     year: '1975',
+    yearValue: 1975,
     description: 'World\'s largest hedge fund specializing in global macro investing strategies.',
-    performance: '+7.8%'
+    performance: '+7.8%',
+    performanceValue: 7.8,
+    type: 'TradFi Fund',
+    volatility: 'Medium',
+    volatilityValue: 35,
   },
   {
     id: 4,
@@ -63,11 +116,18 @@ const traditionalFunds = [
     manager: 'Jim Simons (Founder)',
     aum: '$110B',
     returns: '66%',
+    returnsValue: 66,
     focus: 'Quantitative Trading',
     minInvestment: '$25M',
+    minInvestmentValue: 25000000,
     year: '1982',
+    yearValue: 1982,
     description: 'Highly quantitative hedge fund that relies on mathematical models to identify trading opportunities.',
-    performance: '+21.6%'
+    performance: '+21.6%',
+    performanceValue: 21.6,
+    type: 'TradFi Fund',
+    volatility: 'Medium-High',
+    volatilityValue: 52,
   },
   {
     id: 5,
@@ -75,11 +135,18 @@ const traditionalFunds = [
     manager: 'John Overdeck & David Siegel',
     aum: '$58B',
     returns: '29%',
+    returnsValue: 29,
     focus: 'Algorithmic Trading',
     minInvestment: '$5M',
+    minInvestmentValue: 5000000,
     year: '2001',
+    yearValue: 2001,
     description: 'Hedge fund that uses machine learning, distributed computing, and other technologies for trading.',
-    performance: '+14.3%'
+    performance: '+14.3%',
+    performanceValue: 14.3,
+    type: 'TradFi Fund',
+    volatility: 'Medium',
+    volatilityValue: 45,
   },
   {
     id: 6,
@@ -87,11 +154,18 @@ const traditionalFunds = [
     manager: 'Paul Singer',
     aum: '$48B',
     returns: '14%',
+    returnsValue: 14,
     focus: 'Activist Investing',
     minInvestment: '$5M',
+    minInvestmentValue: 5000000,
     year: '1977',
+    yearValue: 1977,
     description: 'Hedge fund known for its activist investment style and focus on distressed securities.',
-    performance: '+9.2%'
+    performance: '+9.2%',
+    performanceValue: 9.2,
+    type: 'TradFi Fund',
+    volatility: 'Medium-Low',
+    volatilityValue: 28,
   }
 ];
 
@@ -102,11 +176,18 @@ const cryptoFunds = [
     manager: 'Grayscale Investments',
     aum: '$30.3B',
     returns: '154%',
+    returnsValue: 154,
     focus: 'Bitcoin',
     minInvestment: '$50,000',
+    minInvestmentValue: 50000,
     year: '2013',
+    yearValue: 2013,
     description: 'The first publicly quoted Bitcoin investment vehicle offering exposure to Bitcoin.',
-    performance: '+65.2%'
+    performance: '+65.2%',
+    performanceValue: 65.2,
+    type: 'Crypto Fund',
+    volatility: 'Very High',
+    volatilityValue: 85,
   },
   {
     id: 2,
@@ -114,11 +195,18 @@ const cryptoFunds = [
     manager: 'Dan Morehead',
     aum: '$4.7B',
     returns: '86.5%',
+    returnsValue: 86.5,
     focus: 'Blockchain & Crypto',
     minInvestment: '$100,000',
+    minInvestmentValue: 100000,
     year: '2013',
+    yearValue: 2013,
     description: 'One of the first U.S. Bitcoin investment firms and blockchain investment funds.',
-    performance: '+42.8%'
+    performance: '+42.8%',
+    performanceValue: 42.8,
+    type: 'Crypto Fund',
+    volatility: 'High',
+    volatilityValue: 70,
   },
   {
     id: 3,
@@ -126,11 +214,18 @@ const cryptoFunds = [
     manager: 'Olaf Carlson-Wee',
     aum: '$1B',
     returns: '94.7%',
+    returnsValue: 94.7,
     focus: 'Protocol Tokens',
     minInvestment: '$250,000',
+    minInvestmentValue: 250000,
     year: '2016',
+    yearValue: 2016,
     description: 'Crypto fund investing in blockchain protocols and early-stage projects.',
-    performance: '+38.6%'
+    performance: '+38.6%',
+    performanceValue: 38.6,
+    type: 'Crypto Fund',
+    volatility: 'High',
+    volatilityValue: 75,
   },
   {
     id: 4,
@@ -138,17 +233,155 @@ const cryptoFunds = [
     manager: 'Su Zhu & Kyle Davies',
     aum: '$2.8B',
     returns: '112%',
+    returnsValue: 112,
     focus: 'Crypto Trading',
     minInvestment: '$500,000',
+    minInvestmentValue: 500000,
     year: '2012',
+    yearValue: 2012,
     description: 'Trading firm focused on emerging cryptocurrencies and blockchain companies.',
-    performance: '+49.7%'
+    performance: '+49.7%',
+    performanceValue: 49.7,
+    type: 'Crypto Fund',
+    volatility: 'Very High',
+    volatilityValue: 90,
   }
 ];
+
+// OpenFund data - decentralized funds
+const openfundFunds = [1, 2, 3, 4, 5].map((fund) => ({
+  id: fund,
+  name: `Alpha Seekers #${fund}`,
+  manager: `0x7a...3fe${fund}`,
+  aum: `$${(342000 + fund * 25000).toLocaleString()}`,
+  aumValue: 342000 + fund * 25000,
+  returns: `${22 + fund * 3}%`,
+  returnsValue: 22 + fund * 3,
+  focus: fund % 2 === 0 ? 'Layer 1' : 'DeFi',
+  minInvestment: '$1,000',
+  minInvestmentValue: 1000,
+  year: `202${fund}`,
+  yearValue: 2020 + fund,
+  description: `Decentralized fund specializing in ${fund % 2 === 0 ? 'Layer 1 protocols' : 'DeFi investments'} with a focus on growth and yield opportunities.`,
+  performance: `+${12 + fund * 2}%`,
+  performanceValue: 12 + fund * 2,
+  type: 'Decentralized Fund',
+  investors: 75 + fund * 12,
+  volatility: fund % 2 === 0 ? 'High' : 'Medium-High',
+  volatilityValue: 55 + fund * 5,
+  assetTypes: fund % 3 === 0 ? ['Crypto'] : fund % 3 === 1 ? ['Crypto', 'Stock'] : ['Crypto', 'Commodity']
+}));
+
+type Fund = (typeof traditionalFunds)[0] | (typeof cryptoFunds)[0] | (typeof openfundFunds)[0];
+type SortOption = 'performance-high' | 'performance-low' | 'year-old' | 'year-new' | 'volatility-high' | 'volatility-low';
 
 const ExploreFunds = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [activeTab, setActiveTab] = useState('traditional');
+  
+  // Filter state
+  const [fundTypeFilter, setFundTypeFilter] = useState<string[]>([]);
+  const [minDepositFilter, setMinDepositFilter] = useState<number>(0);
+  const [minPerformanceFilter, setMinPerformanceFilter] = useState<number>(0);
+  const [minYearsFilter, setMinYearsFilter] = useState<number>(0);
+  const [maxVolatilityFilter, setMaxVolatilityFilter] = useState<number>(100);
+  const [filterMenuOpen, setFilterMenuOpen] = useState(false);
+  
+  // Sort state
+  const [sortOption, setSortOption] = useState<SortOption>('performance-high');
+  
+  // Combined funds data
+  const [displayFunds, setDisplayFunds] = useState<Fund[]>([]);
+  
+  // Update display funds based on active tab, filters and sorting
+  useEffect(() => {
+    let funds: Fund[] = [];
+    
+    // Get funds based on active tab
+    if (activeTab === 'traditional') funds = [...traditionalFunds];
+    else if (activeTab === 'crypto') funds = [...cryptoFunds]; 
+    else if (activeTab === 'openfund') funds = [...openfundFunds];
+    else if (activeTab === 'my-investments') funds = []; // No filtering for my investments tab
+    
+    // Apply search filter
+    if (searchQuery) {
+      const query = searchQuery.toLowerCase();
+      funds = funds.filter(fund => 
+        fund.name.toLowerCase().includes(query) || 
+        fund.focus.toLowerCase().includes(query) ||
+        fund.manager.toLowerCase().includes(query)
+      );
+    }
+    
+    // Apply fund type filter
+    if (fundTypeFilter.length > 0) {
+      funds = funds.filter(fund => fundTypeFilter.includes(fund.type));
+    }
+    
+    // Apply min deposit filter
+    if (minDepositFilter > 0) {
+      funds = funds.filter(fund => fund.minInvestmentValue >= minDepositFilter);
+    }
+    
+    // Apply min performance filter
+    if (minPerformanceFilter > 0) {
+      funds = funds.filter(fund => fund.performanceValue >= minPerformanceFilter);
+    }
+    
+    // Apply min years filter
+    const currentYear = new Date().getFullYear();
+    if (minYearsFilter > 0) {
+      funds = funds.filter(fund => (currentYear - fund.yearValue) >= minYearsFilter);
+    }
+    
+    // Apply max volatility filter
+    if (maxVolatilityFilter < 100) {
+      funds = funds.filter(fund => fund.volatilityValue <= maxVolatilityFilter);
+    }
+    
+    // Apply sorting
+    switch (sortOption) {
+      case 'performance-high':
+        funds.sort((a, b) => b.performanceValue - a.performanceValue);
+        break;
+      case 'performance-low':
+        funds.sort((a, b) => a.performanceValue - b.performanceValue);
+        break;
+      case 'year-old':
+        funds.sort((a, b) => a.yearValue - b.yearValue);
+        break;
+      case 'year-new':
+        funds.sort((a, b) => b.yearValue - a.yearValue);
+        break;
+      case 'volatility-high':
+        funds.sort((a, b) => b.volatilityValue - a.volatilityValue);
+        break;
+      case 'volatility-low':
+        funds.sort((a, b) => a.volatilityValue - b.volatilityValue);
+        break;
+      default:
+        funds.sort((a, b) => b.performanceValue - a.performanceValue);
+    }
+    
+    setDisplayFunds(funds);
+  }, [activeTab, searchQuery, fundTypeFilter, minDepositFilter, minPerformanceFilter, minYearsFilter, maxVolatilityFilter, sortOption]);
+  
+  const resetFilters = () => {
+    setFundTypeFilter([]);
+    setMinDepositFilter(0);
+    setMinPerformanceFilter(0);
+    setMinYearsFilter(0);
+    setMaxVolatilityFilter(100);
+    setFilterMenuOpen(false);
+  };
+  
+  const toggleFundTypeFilter = (type: string) => {
+    if (fundTypeFilter.includes(type)) {
+      setFundTypeFilter(fundTypeFilter.filter(t => t !== type));
+    } else {
+      setFundTypeFilter([...fundTypeFilter, type]);
+    }
+  };
   
   return (
     <div className="min-h-screen bg-openfund-gray-dark text-white flex flex-col">
@@ -177,14 +410,158 @@ const ExploreFunds = () => {
           </div>
           
           <div className="flex space-x-2 w-full sm:w-auto">
-            <Button variant="outline" size="sm">
-              <Filter className="h-4 w-4 mr-1" />
-              Filter
-            </Button>
-            <Button variant="outline" size="sm">
-              <ArrowUpDown className="h-4 w-4 mr-1" />
-              Sort By
-            </Button>
+            <Popover open={filterMenuOpen} onOpenChange={setFilterMenuOpen}>
+              <PopoverTrigger asChild>
+                <Button variant="outline" size="sm">
+                  <Filter className="h-4 w-4 mr-1" />
+                  Filter
+                  {(fundTypeFilter.length > 0 || minDepositFilter > 0 || minPerformanceFilter > 0 || 
+                    minYearsFilter > 0 || maxVolatilityFilter < 100) && 
+                    <Badge className="ml-1 bg-openfund-green text-black">Active</Badge>}
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-80 bg-openfund-gray-medium border-openfund-gray-light p-4">
+                <div className="space-y-4">
+                  <h3 className="font-medium mb-2">Filter Funds</h3>
+                  
+                  <div className="space-y-2">
+                    <h4 className="text-sm font-medium mb-1">Fund Type</h4>
+                    <div className="flex flex-wrap gap-2">
+                      <Toggle 
+                        variant="outline" 
+                        size="sm" 
+                        pressed={fundTypeFilter.includes('TradFi Fund')}
+                        onPressedChange={() => toggleFundTypeFilter('TradFi Fund')}
+                      >
+                        TradFi Fund
+                      </Toggle>
+                      <Toggle 
+                        variant="outline" 
+                        size="sm"
+                        pressed={fundTypeFilter.includes('Crypto Fund')}
+                        onPressedChange={() => toggleFundTypeFilter('Crypto Fund')}
+                      >
+                        Crypto Fund
+                      </Toggle>
+                      <Toggle 
+                        variant="outline" 
+                        size="sm"
+                        pressed={fundTypeFilter.includes('Decentralized Fund')}
+                        onPressedChange={() => toggleFundTypeFilter('Decentralized Fund')}
+                      >
+                        Decentralized Fund
+                      </Toggle>
+                    </div>
+                  </div>
+                  
+                  <div>
+                    <div className="flex justify-between mb-1">
+                      <h4 className="text-sm font-medium">Min Deposit</h4>
+                      <span className="text-sm">
+                        {minDepositFilter === 0 ? 'No minimum' : 
+                          `$${minDepositFilter.toLocaleString()}`}
+                      </span>
+                    </div>
+                    <Slider
+                      defaultValue={[0]}
+                      max={1000000}
+                      step={10000}
+                      value={[minDepositFilter]}
+                      onValueChange={(vals) => setMinDepositFilter(vals[0])}
+                      className="py-4"
+                    />
+                  </div>
+                  
+                  <div>
+                    <div className="flex justify-between mb-1">
+                      <h4 className="text-sm font-medium">Min Performance</h4>
+                      <span className="text-sm">{minPerformanceFilter}%</span>
+                    </div>
+                    <Slider
+                      defaultValue={[0]}
+                      max={50}
+                      step={1}
+                      value={[minPerformanceFilter]}
+                      onValueChange={(vals) => setMinPerformanceFilter(vals[0])}
+                      className="py-4"
+                    />
+                  </div>
+                  
+                  <div>
+                    <div className="flex justify-between mb-1">
+                      <h4 className="text-sm font-medium">Min Years Established</h4>
+                      <span className="text-sm">{minYearsFilter} years</span>
+                    </div>
+                    <Slider
+                      defaultValue={[0]}
+                      max={30}
+                      step={1}
+                      value={[minYearsFilter]}
+                      onValueChange={(vals) => setMinYearsFilter(vals[0])}
+                      className="py-4"
+                    />
+                  </div>
+                  
+                  <div>
+                    <div className="flex justify-between mb-1">
+                      <h4 className="text-sm font-medium">Max Volatility</h4>
+                      <span className="text-sm">{maxVolatilityFilter === 100 ? 'Any' : `${maxVolatilityFilter}%`}</span>
+                    </div>
+                    <Slider
+                      defaultValue={[100]}
+                      max={100}
+                      step={5}
+                      value={[maxVolatilityFilter]}
+                      onValueChange={(vals) => setMaxVolatilityFilter(vals[0])}
+                      className="py-4"
+                    />
+                  </div>
+                  
+                  <div className="flex justify-between pt-2">
+                    <Button variant="outline" size="sm" onClick={resetFilters}>
+                      Reset All
+                    </Button>
+                    <Button className="bg-openfund-green hover:bg-openfund-green-dark text-black" size="sm" onClick={() => setFilterMenuOpen(false)}>
+                      Apply Filters
+                    </Button>
+                  </div>
+                </div>
+              </PopoverContent>
+            </Popover>
+            
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline" size="sm">
+                  <ArrowUpDown className="h-4 w-4 mr-1" />
+                  {sortOption === 'performance-high' && "Highest Performance"}
+                  {sortOption === 'performance-low' && "Lowest Performance"}
+                  {sortOption === 'year-old' && "Oldest First"}
+                  {sortOption === 'year-new' && "Newest First"}
+                  {sortOption === 'volatility-high' && "Most Volatile"}
+                  {sortOption === 'volatility-low' && "Least Volatile"}
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="bg-openfund-gray-medium border-openfund-gray-light">
+                <DropdownMenuItem onClick={() => setSortOption('performance-high')}>
+                  Highest Performance
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setSortOption('performance-low')}>
+                  Lowest Performance
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setSortOption('year-old')}>
+                  Oldest First
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setSortOption('year-new')}>
+                  Newest First
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setSortOption('volatility-high')}>
+                  Most Volatile
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setSortOption('volatility-low')}>
+                  Least Volatile
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
         </div>
         
@@ -197,101 +574,129 @@ const ExploreFunds = () => {
           </TabsList>
           
           <TabsContent value="traditional">
-            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-              {traditionalFunds.map((fund) => (
-                <Card key={fund.id} className="bg-openfund-gray-medium border-openfund-gray-light hover:border-openfund-green/50 transition-colors">
-                  <CardHeader>
-                    <div className="flex justify-between items-start">
-                      <div>
-                        <CardTitle>{fund.name}</CardTitle>
-                        <CardDescription className="text-gray-400">Founded: {fund.year} • Manager: {fund.manager}</CardDescription>
-                      </div>
-                      <div className="bg-openfund-green/10 text-openfund-green px-2 py-1 rounded">
-                        <div className="flex items-center">
-                          <TrendingUp size={14} className="mr-1" />
-                          <span>{fund.performance}</span>
+            {displayFunds.length > 0 ? (
+              <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+                {displayFunds.map((fund) => (
+                  <Card key={fund.id} className="bg-openfund-gray-medium border-openfund-gray-light hover:border-openfund-green/50 transition-colors">
+                    <CardHeader>
+                      <div className="flex justify-between items-start">
+                        <div>
+                          <CardTitle>{fund.name}</CardTitle>
+                          <CardDescription className="text-gray-400">Founded: {fund.year} • Manager: {fund.manager}</CardDescription>
+                        </div>
+                        <div className="bg-openfund-green/10 text-openfund-green px-2 py-1 rounded">
+                          <div className="flex items-center">
+                            <TrendingUp size={14} className="mr-1" />
+                            <span>{fund.performance}</span>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-gray-300 text-sm mb-4">{fund.description}</p>
-                    <div className="space-y-3">
-                      <div className="flex justify-between">
-                        <span className="text-gray-400">Assets Under Management</span>
-                        <span className="font-medium">{fund.aum}</span>
+                    </CardHeader>
+                    <CardContent>
+                      <p className="text-gray-300 text-sm mb-4">{fund.description}</p>
+                      <div className="space-y-3">
+                        <div className="flex justify-between">
+                          <span className="text-gray-400">Assets Under Management</span>
+                          <span className="font-medium">{fund.aum}</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-gray-400">Average Annual Return</span>
+                          <span className="font-medium">{fund.returns}</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-gray-400">Investment Focus</span>
+                          <span className="font-medium">{fund.focus}</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-gray-400">Min Investment</span>
+                          <span className="font-medium">{fund.minInvestment}</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-gray-400">Volatility</span>
+                          <span className="font-medium">{fund.volatility}</span>
+                        </div>
                       </div>
-                      <div className="flex justify-between">
-                        <span className="text-gray-400">Average Annual Return</span>
-                        <span className="font-medium">{fund.returns}</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-gray-400">Investment Focus</span>
-                        <span className="font-medium">{fund.focus}</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-gray-400">Min Investment</span>
-                        <span className="font-medium">{fund.minInvestment}</span>
-                      </div>
-                    </div>
-                  </CardContent>
-                  <CardFooter>
-                    <Button className="w-full bg-openfund-green hover:bg-openfund-green-dark text-openfund-gray-dark">
-                      View Details
-                    </Button>
-                  </CardFooter>
-                </Card>
-              ))}
-            </div>
+                    </CardContent>
+                    <CardFooter>
+                      <Button className="w-full bg-openfund-green hover:bg-openfund-green-dark text-openfund-gray-dark">
+                        View Details
+                      </Button>
+                    </CardFooter>
+                  </Card>
+                ))}
+              </div>
+            ) : (
+              <div className="text-center py-12">
+                <h3 className="text-xl font-medium mb-2">No funds match your search criteria</h3>
+                <p className="text-gray-400">Try adjusting your filters or search term</p>
+                <Button variant="outline" className="mt-4" onClick={resetFilters}>
+                  Reset Filters
+                </Button>
+              </div>
+            )}
           </TabsContent>
           
           <TabsContent value="crypto">
-            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-              {cryptoFunds.map((fund) => (
-                <Card key={fund.id} className="bg-openfund-gray-medium border-openfund-gray-light hover:border-openfund-green/50 transition-colors">
-                  <CardHeader>
-                    <div className="flex justify-between items-start">
-                      <div>
-                        <CardTitle>{fund.name}</CardTitle>
-                        <CardDescription className="text-gray-400">Founded: {fund.year} • Manager: {fund.manager}</CardDescription>
-                      </div>
-                      <div className="bg-openfund-green/10 text-openfund-green px-2 py-1 rounded">
-                        <div className="flex items-center">
-                          <TrendingUp size={14} className="mr-1" />
-                          <span>{fund.performance}</span>
+            {displayFunds.length > 0 ? (
+              <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+                {displayFunds.map((fund) => (
+                  <Card key={fund.id} className="bg-openfund-gray-medium border-openfund-gray-light hover:border-openfund-green/50 transition-colors">
+                    <CardHeader>
+                      <div className="flex justify-between items-start">
+                        <div>
+                          <CardTitle>{fund.name}</CardTitle>
+                          <CardDescription className="text-gray-400">Founded: {fund.year} • Manager: {fund.manager}</CardDescription>
+                        </div>
+                        <div className="bg-openfund-green/10 text-openfund-green px-2 py-1 rounded">
+                          <div className="flex items-center">
+                            <TrendingUp size={14} className="mr-1" />
+                            <span>{fund.performance}</span>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-gray-300 text-sm mb-4">{fund.description}</p>
-                    <div className="space-y-3">
-                      <div className="flex justify-between">
-                        <span className="text-gray-400">Assets Under Management</span>
-                        <span className="font-medium">{fund.aum}</span>
+                    </CardHeader>
+                    <CardContent>
+                      <p className="text-gray-300 text-sm mb-4">{fund.description}</p>
+                      <div className="space-y-3">
+                        <div className="flex justify-between">
+                          <span className="text-gray-400">Assets Under Management</span>
+                          <span className="font-medium">{fund.aum}</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-gray-400">Average Annual Return</span>
+                          <span className="font-medium">{fund.returns}</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-gray-400">Investment Focus</span>
+                          <span className="font-medium">{fund.focus}</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-gray-400">Min Investment</span>
+                          <span className="font-medium">{fund.minInvestment}</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-gray-400">Volatility</span>
+                          <span className="font-medium">{fund.volatility}</span>
+                        </div>
                       </div>
-                      <div className="flex justify-between">
-                        <span className="text-gray-400">Average Annual Return</span>
-                        <span className="font-medium">{fund.returns}</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-gray-400">Investment Focus</span>
-                        <span className="font-medium">{fund.focus}</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-gray-400">Min Investment</span>
-                        <span className="font-medium">{fund.minInvestment}</span>
-                      </div>
-                    </div>
-                  </CardContent>
-                  <CardFooter>
-                    <Button className="w-full bg-openfund-green hover:bg-openfund-green-dark text-openfund-gray-dark">
-                      View Details
-                    </Button>
-                  </CardFooter>
-                </Card>
-              ))}
-            </div>
+                    </CardContent>
+                    <CardFooter>
+                      <Button className="w-full bg-openfund-green hover:bg-openfund-green-dark text-openfund-gray-dark">
+                        View Details
+                      </Button>
+                    </CardFooter>
+                  </Card>
+                ))}
+              </div>
+            ) : (
+              <div className="text-center py-12">
+                <h3 className="text-xl font-medium mb-2">No funds match your search criteria</h3>
+                <p className="text-gray-400">Try adjusting your filters or search term</p>
+                <Button variant="outline" className="mt-4" onClick={resetFilters}>
+                  Reset Filters
+                </Button>
+              </div>
+            )}
           </TabsContent>
           
           <TabsContent value="openfund">
@@ -309,55 +714,73 @@ const ExploreFunds = () => {
               </Button>
             </div>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-              {[1, 2, 3, 4, 5].map((fund) => (
-                <Card key={fund} className="bg-openfund-gray-medium border-openfund-gray-light hover:border-openfund-green/50 transition-colors">
-                  <CardHeader>
-                    <div className="flex justify-between items-start">
-                      <div>
-                        <CardTitle>Alpha Seekers #{fund}</CardTitle>
-                        <CardDescription className="text-gray-400">Created by 0x7a...3fe9</CardDescription>
-                      </div>
-                      <div className="bg-openfund-green/10 text-openfund-green px-2 py-1 rounded">
-                        <div className="flex items-center">
-                          <TrendingUp size={14} className="mr-1" />
-                          <span>+{12 + fund * 2}%</span>
+            {displayFunds.length > 0 ? (
+              <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+                {displayFunds.map((fund) => (
+                  <Card key={fund.id} className="bg-openfund-gray-medium border-openfund-gray-light hover:border-openfund-green/50 transition-colors">
+                    <CardHeader>
+                      <div className="flex justify-between items-start">
+                        <div>
+                          <CardTitle>{fund.name}</CardTitle>
+                          <CardDescription className="text-gray-400">Created by {fund.manager}</CardDescription>
+                        </div>
+                        <div className="bg-openfund-green/10 text-openfund-green px-2 py-1 rounded">
+                          <div className="flex items-center">
+                            <TrendingUp size={14} className="mr-1" />
+                            <span>{fund.performance}</span>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="flex mb-3">
-                      <Badge className="mr-2 bg-openfund-gray-light text-openfund-green border-openfund-green">DeFi</Badge>
-                      <Badge className="bg-openfund-gray-light text-blue-400 border-blue-400">Layer 1</Badge>
-                    </div>
-                    <div className="space-y-3">
-                      <div className="flex justify-between">
-                        <span className="text-gray-400">AUM</span>
-                        <span className="font-medium">${(342000 + fund * 25000).toLocaleString()}</span>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="flex mb-3">
+                        {"assetTypes" in fund && fund.assetTypes.map((type) => (
+                          <Badge key={type} className="mr-2 bg-openfund-gray-light text-openfund-green border-openfund-green">
+                            {type}
+                          </Badge>
+                        ))}
+                        <Badge className="bg-openfund-gray-light text-blue-400 border-blue-400">{fund.focus}</Badge>
                       </div>
-                      <div className="flex justify-between">
-                        <span className="text-gray-400">Investors</span>
-                        <span className="font-medium">{75 + fund * 12}</span>
+                      <div className="space-y-3">
+                        <div className="flex justify-between">
+                          <span className="text-gray-400">AUM</span>
+                          <span className="font-medium">{fund.aum}</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-gray-400">Investors</span>
+                          <span className="font-medium">{fund.investors || "N/A"}</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-gray-400">Min Investment</span>
+                          <span className="font-medium">{fund.minInvestment}</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-gray-400">Performance Fee</span>
+                          <span className="font-medium">2/20</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-gray-400">Volatility</span>
+                          <span className="font-medium">{fund.volatility}</span>
+                        </div>
                       </div>
-                      <div className="flex justify-between">
-                        <span className="text-gray-400">Min Investment</span>
-                        <span className="font-medium">$1,000</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-gray-400">Performance Fee</span>
-                        <span className="font-medium">2/20</span>
-                      </div>
-                    </div>
-                  </CardContent>
-                  <CardFooter>
-                    <Button className="w-full bg-openfund-green hover:bg-openfund-green-dark text-openfund-gray-dark">
-                      Invest Now
-                    </Button>
-                  </CardFooter>
-                </Card>
-              ))}
-            </div>
+                    </CardContent>
+                    <CardFooter>
+                      <Button className="w-full bg-openfund-green hover:bg-openfund-green-dark text-openfund-gray-dark">
+                        Invest Now
+                      </Button>
+                    </CardFooter>
+                  </Card>
+                ))}
+              </div>
+            ) : (
+              <div className="text-center py-12">
+                <h3 className="text-xl font-medium mb-2">No funds match your search criteria</h3>
+                <p className="text-gray-400">Try adjusting your filters or search term</p>
+                <Button variant="outline" className="mt-4" onClick={resetFilters}>
+                  Reset Filters
+                </Button>
+              </div>
+            )}
           </TabsContent>
           
           <TabsContent value="my-investments">
