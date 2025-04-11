@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { 
@@ -45,6 +44,12 @@ const Fund = () => {
       window.removeEventListener('storage', checkTheme);
     };
   }, []);
+  
+  // Function to handle the "Invest Now" button clicks
+  const handleInvestClick = (fundId: number) => {
+    // Navigate to the fund detail page with type "openfund" and the fund's ID
+    navigate(`/fund-detail/openfund/${fundId}`);
+  };
   
   return (
     <div className={`min-h-screen bg-background text-foreground flex flex-col transition-colors duration-300`}>
@@ -110,7 +115,10 @@ const Fund = () => {
                       </div>
                     </CardContent>
                     <CardFooter>
-                      <Button className="w-full bg-primary hover:bg-primary/90">
+                      <Button 
+                        className="w-full bg-primary hover:bg-primary/90"
+                        onClick={() => handleInvestClick(fund)}
+                      >
                         Invest Now
                       </Button>
                     </CardFooter>
