@@ -7,7 +7,7 @@ import { Twitter, Github, Linkedin, Youtube } from 'lucide-react';
 
 const Footer = () => {
   return (
-    <footer className="bg-openfund-gray-medium dark:bg-openfund-gray-medium bg-gray-100 pt-16 pb-8 border-t border-openfund-gray-light dark:border-openfund-gray-light border-gray-200 transition-colors duration-300">
+    <footer className="bg-gray-100 dark:bg-openfund-gray-medium pt-16 pb-8 border-t border-gray-200 dark:border-openfund-gray-light transition-colors duration-300">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
           <div className="space-y-4">

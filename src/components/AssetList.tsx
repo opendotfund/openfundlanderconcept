@@ -1,6 +1,6 @@
 
 import React, { useEffect, useState } from 'react';
-import { ChevronUp, ChevronDown, Star } from 'lucide-react';
+import { Star } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { 
@@ -158,7 +158,6 @@ export const AssetList = ({ type, onSelect, selectedAsset, limit, searchQuery = 
             <TableHead className="w-[60px]">Rank</TableHead>
             <TableHead>Name</TableHead>
             <TableHead className="text-right">Price</TableHead>
-            <TableHead className="text-right w-[100px]">24h%</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -182,21 +181,11 @@ export const AssetList = ({ type, onSelect, selectedAsset, limit, searchQuery = 
                   </div>
                 </TableCell>
                 <TableCell className="text-right">${asset.price}</TableCell>
-                <TableCell className="text-right">
-                  <span className={`flex items-center justify-end ${parseFloat(asset.change) < 0 ? 'text-red-500' : 'text-green-500'}`}>
-                    {parseFloat(asset.change) < 0 ? (
-                      <ChevronDown size={16} />
-                    ) : (
-                      <ChevronUp size={16} />
-                    )}
-                    <span className="ml-0.5 whitespace-nowrap">{Math.abs(parseFloat(asset.change))}%</span>
-                  </span>
-                </TableCell>
               </TableRow>
             ))
           ) : (
             <TableRow>
-              <TableCell colSpan={4} className="text-center py-6">
+              <TableCell colSpan={3} className="text-center py-6">
                 No assets found matching "{searchQuery}"
               </TableCell>
             </TableRow>

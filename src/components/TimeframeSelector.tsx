@@ -26,8 +26,8 @@ export const TimeframeSelector = ({ timeframe, onChange }: TimeframeSelectorProp
           size="sm"
           onClick={() => onChange(tf.value)}
           className={timeframe === tf.value ? 
-            'bg-openfund-green text-openfund-gray-dark hover:bg-openfund-green-dark' : 
-            'text-gray-300 hover:text-white'
+            'dark:bg-openfund-green dark:text-openfund-gray-dark bg-openfund-blue text-white hover:bg-openfund-blue-dark dark:hover:bg-openfund-green-dark' : 
+            'text-gray-500 dark:text-gray-300 hover:text-foreground dark:hover:text-white'
           }
         >
           {tf.label}
