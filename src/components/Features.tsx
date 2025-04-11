@@ -11,23 +11,23 @@ const Features = () => {
   const features = [
     {
       icon: <BarChart3 className="w-12 h-12 text-primary" />,
-      title: "OpenFund Commodities",
-      description: "Trade gold, silver, oil, and more with competitive spreads and high liquidity on OpenFund."
+      title: "Commodities",
+      description: "Trade gold, silver, oil, and more with competitive spreads and high liquidity."
     },
     {
       icon: <TrendingUp className="w-12 h-12 text-primary" />,
-      title: "OpenFund Stocks",
-      description: "Access global markets with fractional shares and zero commission trading on OpenFund."
+      title: "Stocks",
+      description: "Access global markets with fractional shares and zero commission trading."
     },
     {
       icon: <GanttChartSquare className="w-12 h-12 text-primary" />,
-      title: "OpenFund Crypto",
-      description: "Buy, sell, and store cryptocurrencies with security and ease on the OpenFund platform."
+      title: "Crypto",
+      description: "Buy, sell, and store cryptocurrencies with security and ease."
     },
     {
       icon: <Shield className="w-12 h-12 text-primary" />,
-      title: "OpenFund Security",
-      description: "Your funds are secured with advanced encryption and multi-layer protection on OpenFund."
+      title: "Security",
+      description: "Your funds are secured with advanced encryption and multi-layer protection."
     }
   ];
 
@@ -36,10 +36,10 @@ const Features = () => {
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            <span className="text-primary transition-colors duration-300">OpenFund Markets</span>, One Platform
+            <span className="text-primary transition-colors duration-300">Multiple Markets</span>, One Platform
           </h2>
           <p className="text-xl text-muted-foreground transition-colors duration-300">
-            Take advantage of opportunities across all asset classes with OpenFund
+            Take advantage of opportunities across all asset classes
           </p>
         </div>
 

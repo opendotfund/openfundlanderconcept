@@ -10,11 +10,11 @@ const Hero = () => {
         <div className="grid md:grid-cols-2 gap-12 items-center">
           <div className="flex flex-col items-center text-center">
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 transition-colors duration-300">
-              <span className="text-primary transition-colors duration-300">OpenFund</span> - The Modern Platform for Global Investments
+              The Modern Platform for <span className="text-primary transition-colors duration-300">Global Investments</span>
             </h1>
             <p className="text-xl text-muted-foreground mb-8 transition-colors duration-300">
-              OpenFund lets you trade stocks, crypto, and commodities all on one decentralized platform. 
-              Create or join community-managed funds with fully transparent performance.
+              Trade stocks, crypto, commodities and more on a single platform. 
+              Create or join community-managed funds with transparent performance.
             </p>
             <div className="flex flex-wrap gap-4 justify-center">
               <Button 
@@ -22,7 +22,7 @@ const Hero = () => {
                 asChild
               >
                 <Link to="/trade">
-                  Start Trading with OpenFund
+                  Start Trading
                 </Link>
               </Button>
               <Button 
@@ -31,7 +31,7 @@ const Hero = () => {
                 asChild
               >
                 <Link to="/explore">
-                  Explore OpenFund Investments
+                  Explore Funds
                 </Link>
               </Button>
             </div>
@@ -39,7 +39,7 @@ const Hero = () => {
           <div className="relative">
             <div className="bg-card p-8 rounded-xl shadow-lg relative transition-colors duration-300">
               <div className="absolute -top-4 -right-4 bg-primary text-primary-foreground px-4 py-2 rounded-lg font-bold transition-colors duration-300">
-                Featured OpenFund Investment
+                Featured Investment
               </div>
               <h3 className="text-2xl font-bold mb-2 transition-colors duration-300">Berkshire Hathaway</h3>
               <p className="text-muted-foreground mb-6 transition-colors duration-300">World-class conglomerate with a long history of exceptional returns led by Warren Buffett.</p>
@@ -56,7 +56,7 @@ const Hero = () => {
                 asChild
               >
                 <Link to="/fund-detail/traditional/1">
-                  View OpenFund Details
+                  View Details
                 </Link>
               </Button>
             </div>

@@ -1,6 +1,4 @@
-
 import React, { useState } from 'react';
-import { Helmet } from 'react-helmet-async';
 import { AssetChart } from '@/components/AssetChart';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
@@ -31,14 +29,8 @@ const Trade = () => {
     setSearchQuery(e.target.value);
   };
 
-  const capitalizedAsset = selectedAsset.charAt(0).toUpperCase() + selectedAsset.slice(1);
-
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <Helmet>
-        <title>OpenFund Trade - Buy {capitalizedAsset} With Crypto | OpenFund</title>
-        <meta name="description" content={`Trade ${capitalizedAsset} and other assets on OpenFund's decentralized platform. Buy stocks with crypto, trade commodities with transparent pricing.`} />
-      </Helmet>
       <Navbar />
       <div className="container mx-auto px-3 md:px-4 py-4 md:py-8">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-6">
@@ -46,9 +38,9 @@ const Trade = () => {
             <div className="bg-card border border-border p-3 md:p-6 rounded-lg mb-4 md:mb-6">
               <div className="flex flex-col mb-3 md:mb-4 gap-2">
                 <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center w-full">
-                  <h1 className="text-lg md:text-xl font-bold">
-                    OpenFund {capitalizedAsset} Price Chart
-                  </h1>
+                  <h2 className="text-lg md:text-xl font-bold">
+                    {selectedAsset.charAt(0).toUpperCase() + selectedAsset.slice(1)} Price Chart
+                  </h2>
                 </div>
                 <TimeframeSelector 
                   timeframe={timeframe} 
@@ -61,23 +53,23 @@ const Trade = () => {
             </div>
             
             <div className="bg-card border border-border p-3 md:p-6 rounded-lg">
-              <h2 className="text-lg md:text-xl font-bold mb-3 md:mb-4">OpenFund Trade History</h2>
+              <h2 className="text-lg md:text-xl font-bold mb-3 md:mb-4">Trade History</h2>
               <TradeHistory asset={selectedAsset} />
             </div>
           </div>
           
           <div className="space-y-4 md:space-y-6">
             <div className="bg-card border border-border p-3 md:p-6 rounded-lg">
-              <h2 className="text-lg md:text-xl font-bold mb-3 md:mb-4">Trade on OpenFund</h2>
+              <h2 className="text-lg md:text-xl font-bold mb-3 md:mb-4">Trade</h2>
               <SwapWidget selectedAsset={selectedAsset} />
             </div>
             
             <div className="bg-card border border-border p-3 md:p-6 rounded-lg">
               <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-3 md:mb-4 gap-2">
-                <h2 className="text-lg md:text-xl font-bold">Popular OpenFund Assets</h2>
+                <h2 className="text-lg md:text-xl font-bold">Popular Assets</h2>
                 <div className="relative w-full sm:w-auto">
                   <Input
-                    placeholder="Search OpenFund assets..."
+                    placeholder="Search assets..."
                     value={searchQuery}
                     onChange={handleSearchChange}
                     className="pl-8 w-full"
