@@ -1,40 +1,38 @@
 
-import { Toaster } from "@/components/ui/toaster";
-import { Toaster as Sonner } from "@/components/ui/sonner";
-import { TooltipProvider } from "@/components/ui/tooltip";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Index from "./pages/Index";
-import NotFound from "./pages/NotFound";
-import Trade from "./pages/Trade";
-import Fund from "./pages/Fund";
-import ExploreFunds from "./pages/ExploreFunds";
-import MyAssets from "./pages/MyAssets";
-import Account from "./pages/Account";
-import Assets from "./pages/Assets";
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { Toaster } from "@/components/ui/sonner";
 
-const queryClient = new QueryClient();
+import Index from './pages/Index';
+import Account from './pages/Account';
+import Assets from './pages/Assets';
+import MyAssets from './pages/MyAssets';
+import NotFound from './pages/NotFound';
+import Trade from './pages/Trade';
+import ExploreFunds from './pages/ExploreFunds';
+import Fund from './pages/Fund';
+import FundDetail from './pages/FundDetail';
 
-const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
+import './App.css';
+
+function App() {
+  return (
+    <Router>
+      <div className="app">
         <Routes>
           <Route path="/" element={<Index />} />
-          <Route path="/trade" element={<Trade />} />
-          <Route path="/fund" element={<Fund />} />
-          <Route path="/explore" element={<ExploreFunds />} />
-          <Route path="/my-assets" element={<MyAssets />} />
           <Route path="/account" element={<Account />} />
           <Route path="/assets" element={<Assets />} />
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+          <Route path="/my-assets" element={<MyAssets />} />
+          <Route path="/trade" element={<Trade />} />
+          <Route path="/explore-funds" element={<ExploreFunds />} />
+          <Route path="/fund" element={<Fund />} />
+          <Route path="/fund-detail/:type/:fundId" element={<FundDetail />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
-      </BrowserRouter>
-    </TooltipProvider>
-  </QueryClientProvider>
-);
+      </div>
+      <Toaster />
+    </Router>
+  );
+}
 
 export default App;

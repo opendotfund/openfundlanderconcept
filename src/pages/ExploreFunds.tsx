@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { 
@@ -50,7 +51,6 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-// Sample fund data
 const traditionalFunds = [
   {
     id: 1,
@@ -247,7 +247,6 @@ const cryptoFunds = [
   }
 ];
 
-// OpenFund data - decentralized funds
 const openfundFunds = [1, 2, 3, 4, 5].map((fund) => ({
   id: fund,
   name: `Alpha Seekers #${fund}`,
@@ -271,7 +270,6 @@ const openfundFunds = [1, 2, 3, 4, 5].map((fund) => ({
   assetTypes: fund % 3 === 0 ? ['Crypto'] : fund % 3 === 1 ? ['Crypto', 'Stock'] : ['Crypto', 'Commodity']
 }));
 
-// Update the Fund type definition to include all necessary properties
 type Fund = {
   id: number;
   name: string;
@@ -290,7 +288,6 @@ type Fund = {
   type: string;
   volatility: string;
   volatilityValue: number;
-  // Add the missing properties with optional markers
   investors?: number;
   assetTypes?: string[];
   aumValue?: number;
@@ -299,10 +296,10 @@ type Fund = {
 type SortOption = 'performance-high' | 'performance-low' | 'year-old' | 'year-new' | 'volatility-high' | 'volatility-low';
 
 const ExploreFunds = () => {
+  const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState('');
   const [activeTab, setActiveTab] = useState('traditional');
   
-  // Filter state
   const [fundTypeFilter, setFundTypeFilter] = useState<string[]>([]);
   const [minDepositFilter, setMinDepositFilter] = useState<number>(0);
   const [minPerformanceFilter, setMinPerformanceFilter] = useState<number>(0);
@@ -310,23 +307,18 @@ const ExploreFunds = () => {
   const [maxVolatilityFilter, setMaxVolatilityFilter] = useState<number>(100);
   const [filterMenuOpen, setFilterMenuOpen] = useState(false);
   
-  // Sort state
   const [sortOption, setSortOption] = useState<SortOption>('performance-high');
   
-  // Combined funds data
   const [displayFunds, setDisplayFunds] = useState<Fund[]>([]);
   
-  // Update display funds based on active tab, filters and sorting
   useEffect(() => {
     let funds: Fund[] = [];
     
-    // Get funds based on active tab
     if (activeTab === 'traditional') funds = [...traditionalFunds];
     else if (activeTab === 'crypto') funds = [...cryptoFunds]; 
     else if (activeTab === 'openfund') funds = [...openfundFunds];
-    else if (activeTab === 'my-investments') funds = []; // No filtering for my investments tab
+    else if (activeTab === 'my-investments') funds = [];
     
-    // Apply search filter
     if (searchQuery) {
       const query = searchQuery.toLowerCase();
       funds = funds.filter(fund => 
@@ -336,33 +328,27 @@ const ExploreFunds = () => {
       );
     }
     
-    // Apply fund type filter
     if (fundTypeFilter.length > 0) {
       funds = funds.filter(fund => fundTypeFilter.includes(fund.type));
     }
     
-    // Apply min deposit filter
     if (minDepositFilter > 0) {
       funds = funds.filter(fund => fund.minInvestmentValue >= minDepositFilter);
     }
     
-    // Apply min performance filter
     if (minPerformanceFilter > 0) {
       funds = funds.filter(fund => fund.performanceValue >= minPerformanceFilter);
     }
     
-    // Apply min years filter
     const currentYear = new Date().getFullYear();
     if (minYearsFilter > 0) {
       funds = funds.filter(fund => (currentYear - fund.yearValue) >= minYearsFilter);
     }
     
-    // Apply max volatility filter
     if (maxVolatilityFilter < 100) {
       funds = funds.filter(fund => fund.volatilityValue <= maxVolatilityFilter);
     }
     
-    // Apply sorting
     switch (sortOption) {
       case 'performance-high':
         funds.sort((a, b) => b.performanceValue - a.performanceValue);
@@ -404,6 +390,26 @@ const ExploreFunds = () => {
     } else {
       setFundTypeFilter([...fundTypeFilter, type]);
     }
+  };
+  
+  const handleViewDetails = (fund: Fund) => {
+    let fundType = '';
+    
+    switch (activeTab) {
+      case 'traditional':
+        fundType = 'traditional';
+        break;
+      case 'crypto':
+        fundType = 'crypto';
+        break;
+      case 'openfund':
+        fundType = 'openfund';
+        break;
+      default:
+        fundType = 'traditional';
+    }
+    
+    navigate(`/fund-detail/${fundType}/${fund.id}`);
   };
   
   return (
@@ -641,7 +647,10 @@ const ExploreFunds = () => {
                       </div>
                     </CardContent>
                     <CardFooter>
-                      <Button className="w-full bg-openfund-green hover:bg-openfund-green-dark text-openfund-gray-dark">
+                      <Button 
+                        className="w-full bg-openfund-green hover:bg-openfund-green-dark text-openfund-gray-dark"
+                        onClick={() => handleViewDetails(fund)}
+                      >
                         View Details
                       </Button>
                     </CardFooter>
@@ -704,7 +713,10 @@ const ExploreFunds = () => {
                       </div>
                     </CardContent>
                     <CardFooter>
-                      <Button className="w-full bg-openfund-green hover:bg-openfund-green-dark text-openfund-gray-dark">
+                      <Button 
+                        className="w-full bg-openfund-green hover:bg-openfund-green-dark text-openfund-gray-dark"
+                        onClick={() => handleViewDetails(fund)}
+                      >
                         View Details
                       </Button>
                     </CardFooter>
@@ -788,7 +800,10 @@ const ExploreFunds = () => {
                       </div>
                     </CardContent>
                     <CardFooter>
-                      <Button className="w-full bg-openfund-green hover:bg-openfund-green-dark text-openfund-gray-dark">
+                      <Button 
+                        className="w-full bg-openfund-green hover:bg-openfund-green-dark text-openfund-gray-dark"
+                        onClick={() => handleViewDetails(fund)}
+                      >
                         Invest Now
                       </Button>
                     </CardFooter>
