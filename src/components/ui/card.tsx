@@ -1,20 +1,29 @@
+
 import * as React from "react"
 
 import { cn } from "@/lib/utils"
 
 const Card = React.forwardRef<
   HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement>
->(({ className, ...props }, ref) => (
-  <div
-    ref={ref}
-    className={cn(
-      "rounded-lg border bg-card text-card-foreground shadow-sm",
-      className
-    )}
-    {...props}
-  />
-))
+  React.HTMLAttributes<HTMLDivElement> & { glow?: boolean; glowColor?: string }
+>(({ className, glow, glowColor, ...props }, ref) => {
+  const glowStyles = glow ? {
+    '--glow-color': glowColor || 'rgba(0, 255, 0, 0.5)'
+  } as React.CSSProperties : {};
+  
+  return (
+    <div
+      ref={ref}
+      className={cn(
+        "rounded-lg border bg-card text-card-foreground shadow-sm",
+        glow && "green-glow",
+        className
+      )}
+      style={glowStyles}
+      {...props}
+    />
+  );
+})
 Card.displayName = "Card"
 
 const CardHeader = React.forwardRef<
