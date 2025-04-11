@@ -211,6 +211,8 @@ const FundDetail = () => {
     );
   }
   
+  const isDefiFund = fund.type === 'Decentralized Fund';
+
   return (
     <div className="min-h-screen bg-background text-foreground">
       <Navbar />
@@ -228,14 +230,14 @@ const FundDetail = () => {
             </Button>
             <h1 className="text-3xl font-bold">
               {fund.name}
-              {fund.type === 'Decentralized Fund' && (
+              {isDefiFund && (
                 <Badge className="ml-3 bg-primary/20 text-primary">
                   DeFi Fund
                 </Badge>
               )}
             </h1>
             <p className="text-muted-foreground mt-1">
-              {fund.type === 'Decentralized Fund' ? 
+              {isDefiFund ? 
                 `Created by ${fund.manager}` : 
                 `${fund.type} • Manager: ${fund.manager}`}
             </p>
@@ -276,10 +278,7 @@ const FundDetail = () => {
               <TabsList className="bg-card mb-4">
                 <TabsTrigger value="overview">Overview</TabsTrigger>
                 <TabsTrigger value="strategy">Strategy</TabsTrigger>
-                <TabsTrigger value="holdings">Holdings</TabsTrigger>
-                {fund.type === 'Decentralized Fund' && (
-                  <TabsTrigger value="governance">Governance</TabsTrigger>
-                )}
+                {!isDefiFund && <TabsTrigger value="holdings">Holdings</TabsTrigger>}
               </TabsList>
               
               <TabsContent value="overview">
@@ -338,6 +337,49 @@ const FundDetail = () => {
                           'identifying undervalued companies with strong fundamentals'
                         }.`}
                     </p>
+                    
+                    {isDefiFund && (
+                      <div className="bg-card p-4 rounded-lg mb-6 border border-card">
+                        <h3 className="font-medium mb-3 text-lg">Action Plan Summary</h3>
+                        <ul className="space-y-3">
+                          <li className="flex items-start">
+                            <div className="bg-primary/20 text-primary rounded-full p-1 mr-3 mt-0.5">
+                              <TrendingUp size={16} />
+                            </div>
+                            <div>
+                              <span className="font-medium block mb-1">Growth Strategy</span>
+                              <span className="text-sm text-gray-400">
+                                {fund.focus === 'Layer 1' ? 
+                                  'Strategic allocation across major Layer 1 protocols with staking for passive yield generation' : 
+                                  'Position in established DeFi protocols with focus on liquidity mining and yield farming'}
+                              </span>
+                            </div>
+                          </li>
+                          <li className="flex items-start">
+                            <div className="bg-primary/20 text-primary rounded-full p-1 mr-3 mt-0.5">
+                              <Briefcase size={16} />
+                            </div>
+                            <div>
+                              <span className="font-medium block mb-1">Risk Management</span>
+                              <span className="text-sm text-gray-400">
+                                Portfolio diversification across multiple protocols with automatic rebalancing based on market conditions
+                              </span>
+                            </div>
+                          </li>
+                          <li className="flex items-start">
+                            <div className="bg-primary/20 text-primary rounded-full p-1 mr-3 mt-0.5">
+                              <BarChart3 size={16} />
+                            </div>
+                            <div>
+                              <span className="font-medium block mb-1">Performance Targets</span>
+                              <span className="text-sm text-gray-400">
+                                Targeted annual return of {fund.returns} with quarterly portfolio rebalancing and active monitoring
+                              </span>
+                            </div>
+                          </li>
+                        </ul>
+                      </div>
+                    )}
                     
                     {fund.benchmarkIndex && (
                       <div className="mb-6">
@@ -407,81 +449,33 @@ const FundDetail = () => {
                 </Card>
               </TabsContent>
               
-              <TabsContent value="holdings">
-                <Card className="bg-card border-card">
-                  <CardHeader>
-                    <CardTitle>Top Holdings</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    {fund.topHoldings ? (
-                      <div className="space-y-4">
-                        {fund.topHoldings.map((holding: string, index: number) => (
-                          <div key={index} className="flex items-center justify-between bg-card p-4 rounded-lg">
-                            <div className="flex items-center">
-                              <div className="w-10 h-10 bg-card rounded-full flex items-center justify-center mr-3">
-                                {holding.charAt(0)}
-                              </div>
-                              <span className="font-medium">{holding}</span>
-                            </div>
-                            <div className="text-right">
-                              <div className="font-semibold">{(20 - index * 3).toFixed(1)}%</div>
-                              <div className="text-xs text-gray-400">${((fund.aumValue || 1000000) * (20 - index * 3) / 100).toLocaleString()}</div>
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                    ) : (
-                      <p className="text-gray-400">Detailed holdings information is not available for this fund.</p>
-                    )}
-                  </CardContent>
-                </Card>
-              </TabsContent>
-              
-              {fund.type === 'Decentralized Fund' && (
-                <TabsContent value="governance">
+              {!isDefiFund && (
+                <TabsContent value="holdings">
                   <Card className="bg-card border-card">
                     <CardHeader>
-                      <CardTitle>Governance Structure</CardTitle>
+                      <CardTitle>Top Holdings</CardTitle>
                     </CardHeader>
                     <CardContent>
-                      <p className="text-gray-200 mb-6">
-                        This fund operates with democratic governance where investors can participate in key decisions.
-                      </p>
-                      
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-4 mb-6">
-                        <div className="flex justify-between">
-                          <span className="text-gray-400">Governance Token</span>
-                          <span className="font-medium">{fund.governanceToken || "AST"}</span>
+                      {fund.topHoldings ? (
+                        <div className="space-y-4">
+                          {fund.topHoldings.map((holding: string, index: number) => (
+                            <div key={index} className="flex items-center justify-between bg-card p-4 rounded-lg">
+                              <div className="flex items-center">
+                                <div className="w-10 h-10 bg-card rounded-full flex items-center justify-center mr-3">
+                                  {holding.charAt(0)}
+                                </div>
+                                <span className="font-medium">{holding}</span>
+                              </div>
+                              <div className="text-right">
+                                <div className="font-semibold">{(20 - index * 3).toFixed(1)}%</div>
+                                <div className="text-xs text-gray-400">${((fund.aumValue || 1000000) * (20 - index * 3) / 100).toLocaleString()}</div>
+                              </div>
+                            </div>
+                          ))}
                         </div>
-                        <div className="flex justify-between">
-                          <span className="text-gray-400">Voting Rights</span>
-                          <span className="font-medium">{fund.votingRights || "Pro-rata based on investment"}</span>
-                        </div>
-                        <div className="flex justify-between">
-                          <span className="text-gray-400">Voting Quorum</span>
-                          <span className="font-medium">50% of tokens</span>
-                        </div>
-                        <div className="flex justify-between">
-                          <span className="text-gray-400">Proposal Threshold</span>
-                          <span className="font-medium">5% of tokens</span>
-                        </div>
-                      </div>
-                      
-                      <div className="bg-card p-4 rounded-lg mb-6">
-                        <h3 className="font-medium mb-2">Active Proposals</h3>
-                        <div className="space-y-2">
-                          <div className="flex justify-between items-center bg-card p-3 rounded">
-                            <span>Add exposure to Arbitrum ecosystem</span>
-                            <Badge className="bg-blue-500">Voting</Badge>
-                          </div>
-                          <div className="flex justify-between items-center bg-card p-3 rounded">
-                            <span>Increase USDC allocation to 10%</span>
-                            <Badge className="bg-yellow-500/80">Pending</Badge>
-                          </div>
-                        </div>
-                      </div>
-                      
-                      <Button className="w-full">View Governance Portal</Button>
+                      ) : (
+                        <p className="text-gray-400">Detailed holdings information is not available for this fund.</p>
+                      )}
                     </CardContent>
                   </Card>
                 </TabsContent>
@@ -584,7 +578,7 @@ const FundDetail = () => {
                       Additional Information
                     </h3>
                     <div className="bg-card p-3 rounded-md space-y-2">
-                      {fund.type === 'Decentralized Fund' ? (
+                      {isDefiFund ? (
                         <>
                           <div>
                             <div className="text-sm text-gray-400">Smart Contract</div>
@@ -616,7 +610,7 @@ const FundDetail = () => {
                 </div>
                 
                 <div className="pt-4">
-                  {fund.type === 'Decentralized Fund' ? (
+                  {isDefiFund ? (
                     <>
                       <Button 
                         className="w-full fund-detail-invest-button"
@@ -640,7 +634,7 @@ const FundDetail = () => {
                   )}
                 </div>
                 
-                {fund.type !== 'Decentralized Fund' && (
+                {!isDefiFund && (
                   <div className="text-center text-xs text-gray-400">
                     Contact the fund manager for detailed investment information
                   </div>
@@ -654,7 +648,7 @@ const FundDetail = () => {
                 <p className="text-sm text-gray-400">
                   <span className="font-medium text-gray-300 block mb-1">Risk Disclaimer</span>
                   Past performance is not indicative of future results. Investments involve risk and may result in loss of principal. 
-                  {fund.type === 'Crypto Fund' || fund.type === 'Decentralized Fund' ? 
+                  {fund.type === 'Crypto Fund' || isDefiFund ? 
                     ' Cryptocurrency investments are highly volatile and unregulated in some jurisdictions.' : 
                     ' Please read all fund documents before investing.'}
                 </p>
