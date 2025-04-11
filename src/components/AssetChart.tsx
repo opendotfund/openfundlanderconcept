@@ -112,7 +112,7 @@ export const AssetChart = ({ asset, timeframe }: AssetChartProps) => {
   }, [asset, timeframe]);
 
   return (
-    <div className="w-full h-[500px]"> {/* Increased height from 400px to 500px for more space */}
+    <div className="w-full h-[600px]">
       <ChartContainer
         config={{
           value: {
@@ -125,10 +125,11 @@ export const AssetChart = ({ asset, timeframe }: AssetChartProps) => {
           }
         }}
       >
-        <ResponsiveContainer width="100%" height={500}> {/* Increased height to match parent */}
+        {/* Fix: Wrap AreaChart with ResponsiveContainer */}
+        <ResponsiveContainer width="100%" height={600}>
           <AreaChart
             data={chartData}
-            margin={{ top: 20, right: 30, left: 60, bottom: 60 }} /* Increased margins for better spacing */
+            margin={{ top: 30, right: 40, left: 70, bottom: 70 }}
           >
             <defs>
               <linearGradient id="colorPrice" x1="0" y1="0" x2="0" y2="1">
@@ -140,7 +141,7 @@ export const AssetChart = ({ asset, timeframe }: AssetChartProps) => {
               dataKey="name"
               tickLine={false}
               axisLine={false}
-              dy={30} /* Increased from 20 to 30 for better spacing */
+              dy={40}
               tick={{ fill: '#888', fontSize: 12 }}
             />
             <YAxis 
@@ -148,9 +149,9 @@ export const AssetChart = ({ asset, timeframe }: AssetChartProps) => {
               axisLine={false}
               tick={{ fill: '#888', fontSize: 12 }}
               domain={['auto', 'auto']}
-              dx={-20} /* Adjusted for better spacing */
-              width={80} /* Increased width for price labels */
-              tickFormatter={(value) => `$${value.toLocaleString()}`} /* Format with dollar sign and commas */
+              dx={-25}
+              width={90}
+              tickFormatter={(value) => `$${value.toLocaleString()}`}
             />
             <Tooltip content={<ChartTooltipContent />} />
             <Area 

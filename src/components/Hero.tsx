@@ -5,17 +5,25 @@ import { Link } from "react-router-dom";
 
 const fetchAssetPrices = async () => {
   try {
+    const baseValues = {
+      bitcoin: 62450.75,
+      ethereum: 3042.30,
+      solana: 135.80,
+      apple: 182.40,
+      tesla: 178.32,
+    };
+    
     const fluctuate = (base: number) => {
-      const variance = base * 0.001;
+      const variance = base * 0.0005;
       return base + (Math.random() - 0.5) * variance;
     };
 
     return {
-      bitcoin: `$${fluctuate(62450.75).toLocaleString(undefined, { maximumFractionDigits: 2 })}`,
-      ethereum: `$${fluctuate(3042.30).toLocaleString(undefined, { maximumFractionDigits: 2 })}`,
-      solana: `$${fluctuate(135.80).toLocaleString(undefined, { maximumFractionDigits: 2 })}`,
-      apple: `$${fluctuate(182.40).toLocaleString(undefined, { maximumFractionDigits: 2 })}`,
-      tesla: `$${fluctuate(178.32).toLocaleString(undefined, { maximumFractionDigits: 2 })}`,
+      bitcoin: `$${fluctuate(baseValues.bitcoin).toLocaleString(undefined, { maximumFractionDigits: 2 })}`,
+      ethereum: `$${fluctuate(baseValues.ethereum).toLocaleString(undefined, { maximumFractionDigits: 2 })}`,
+      solana: `$${fluctuate(baseValues.solana).toLocaleString(undefined, { maximumFractionDigits: 2 })}`,
+      apple: `$${fluctuate(baseValues.apple).toLocaleString(undefined, { maximumFractionDigits: 2 })}`,
+      tesla: `$${fluctuate(baseValues.tesla).toLocaleString(undefined, { maximumFractionDigits: 2 })}`,
     };
   } catch (error) {
     console.error("Error fetching asset prices:", error);
