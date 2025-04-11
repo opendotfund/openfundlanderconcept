@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { ArrowDown, Settings, Check } from 'lucide-react';
 import { Input } from '@/components/ui/input';
@@ -213,13 +214,14 @@ export const SwapWidget = ({ selectedAsset = 'bitcoin' }: SwapWidgetProps) => {
   }, [selectedAsset]);
 
   return (
-    <Card className="bg-background border-border p-4">
-      <div className="flex justify-between items-center mb-4">
+    <Card className="bg-background border-border p-6 rounded-2xl shadow-lg">
+      <div className="flex justify-between items-center mb-6">
         <div className="flex space-x-2">
           <Button 
             variant={swapMode === 'market' ? 'secondary' : 'outline'} 
             size="sm"
             onClick={() => setSwapMode('market')}
+            className="rounded-full px-4"
           >
             Market
           </Button>
@@ -227,18 +229,19 @@ export const SwapWidget = ({ selectedAsset = 'bitcoin' }: SwapWidgetProps) => {
             variant={swapMode === 'limit' ? 'secondary' : 'outline'} 
             size="sm"
             onClick={() => setSwapMode('limit')}
+            className="rounded-full px-4"
           >
             Limit
           </Button>
         </div>
         <Popover>
           <PopoverTrigger asChild>
-            <Button variant="ghost" size="sm">
+            <Button variant="ghost" size="sm" className="rounded-full">
               <Settings className="h-4 w-4" />
             </Button>
           </PopoverTrigger>
-          <PopoverContent className="bg-popover border-border w-80">
-            <div className="space-y-4">
+          <PopoverContent className="bg-popover border-border w-80 rounded-xl p-4">
+            <div className="space-y-5">
               <h4 className="font-medium">Transaction Settings</h4>
               <div>
                 <div className="flex justify-between mb-2">
@@ -265,6 +268,7 @@ export const SwapWidget = ({ selectedAsset = 'bitcoin' }: SwapWidgetProps) => {
                     variant={gasOption === 'standard' ? 'secondary' : 'outline'} 
                     size="sm" 
                     onClick={() => handleGasOptionChange('standard')}
+                    className="rounded-full"
                   >
                     Standard
                   </Button>
@@ -272,6 +276,7 @@ export const SwapWidget = ({ selectedAsset = 'bitcoin' }: SwapWidgetProps) => {
                     variant={gasOption === 'fast' ? 'secondary' : 'outline'} 
                     size="sm" 
                     onClick={() => handleGasOptionChange('fast')}
+                    className="rounded-full"
                   >
                     Fast
                   </Button>
@@ -279,6 +284,7 @@ export const SwapWidget = ({ selectedAsset = 'bitcoin' }: SwapWidgetProps) => {
                     variant={gasOption === 'rapid' ? 'secondary' : 'outline'} 
                     size="sm" 
                     onClick={() => handleGasOptionChange('rapid')}
+                    className="rounded-full"
                   >
                     Rapid
                   </Button>
@@ -292,8 +298,8 @@ export const SwapWidget = ({ selectedAsset = 'bitcoin' }: SwapWidgetProps) => {
         </Popover>
       </div>
 
-      <div className="space-y-4">
-        <div className="bg-secondary p-4 rounded-lg">
+      <div className="space-y-5">
+        <div className="bg-secondary p-5 rounded-xl">
           <div className="flex justify-between mb-2">
             <label className="text-muted-foreground text-sm">From</label>
             <span className="text-muted-foreground text-sm">Balance: 1,000 USDT</span>
@@ -304,13 +310,13 @@ export const SwapWidget = ({ selectedAsset = 'bitcoin' }: SwapWidgetProps) => {
               placeholder="0.00"
               value={fromAmount}
               onChange={handleFromAmountChange}
-              className="bg-background border-border"
+              className="bg-background border-border rounded-xl"
             />
             <Select value={fromAsset} onValueChange={handleFromAssetChange}>
-              <SelectTrigger className="w-[120px]">
+              <SelectTrigger className="w-[120px] rounded-xl">
                 <SelectValue />
               </SelectTrigger>
-              <SelectContent>
+              <SelectContent className="rounded-xl">
                 {assets.map((asset) => (
                   <SelectItem key={asset.value} value={asset.value}>
                     {asset.label}
@@ -325,14 +331,14 @@ export const SwapWidget = ({ selectedAsset = 'bitcoin' }: SwapWidgetProps) => {
           <Button 
             variant="ghost" 
             size="icon" 
-            className="rounded-full bg-secondary" 
+            className="rounded-full bg-secondary shadow-sm" 
             onClick={handleSwapClick}
           >
             <ArrowDown className="h-4 w-4" />
           </Button>
         </div>
 
-        <div className="bg-secondary p-4 rounded-lg">
+        <div className="bg-secondary p-5 rounded-xl">
           <div className="flex justify-between mb-2">
             <label className="text-muted-foreground text-sm">To</label>
             <span className="text-muted-foreground text-sm">Balance: 0.00 {toAsset.toUpperCase()}</span>
@@ -343,13 +349,13 @@ export const SwapWidget = ({ selectedAsset = 'bitcoin' }: SwapWidgetProps) => {
               placeholder="0.00"
               value={toAmount}
               onChange={handleToAmountChange}
-              className="bg-background border-border"
+              className="bg-background border-border rounded-xl"
             />
             <Select value={toAsset} onValueChange={handleToAssetChange}>
-              <SelectTrigger className="w-[120px]">
+              <SelectTrigger className="w-[120px] rounded-xl">
                 <SelectValue />
               </SelectTrigger>
-              <SelectContent>
+              <SelectContent className="rounded-xl">
                 {assets.map((asset) => (
                   <SelectItem key={asset.value} value={asset.value}>
                     {asset.label}
@@ -361,7 +367,7 @@ export const SwapWidget = ({ selectedAsset = 'bitcoin' }: SwapWidgetProps) => {
         </div>
 
         {swapMode === 'limit' && (
-          <div className="bg-secondary p-4 rounded-lg">
+          <div className="bg-secondary p-5 rounded-xl">
             <div className="mb-2">
               <label className="text-muted-foreground text-sm">Limit Price</label>
             </div>
@@ -370,13 +376,13 @@ export const SwapWidget = ({ selectedAsset = 'bitcoin' }: SwapWidgetProps) => {
               placeholder="Set price"
               value={limitPrice}
               onChange={handleLimitPriceChange}
-              className="bg-background border-border"
+              className="bg-background border-border rounded-xl"
             />
           </div>
         )}
 
         <div className="space-y-3">
-          <div className="flex items-center justify-between bg-secondary p-3 rounded-lg">
+          <div className="flex items-center justify-between bg-secondary p-4 rounded-xl">
             <div className="flex items-center space-x-2">
               <Label htmlFor="take-profit" className="text-muted-foreground text-sm">Take Profit</Label>
               <Switch
@@ -388,7 +394,7 @@ export const SwapWidget = ({ selectedAsset = 'bitcoin' }: SwapWidgetProps) => {
           </div>
 
           {showTakeProfit && (
-            <div className="bg-secondary p-3 rounded-lg">
+            <div className="bg-secondary p-4 rounded-xl">
               <div className="mb-2">
                 <label className="text-muted-foreground text-sm">Take Profit Price</label>
               </div>
@@ -397,12 +403,12 @@ export const SwapWidget = ({ selectedAsset = 'bitcoin' }: SwapWidgetProps) => {
                 placeholder="Price"
                 value={takeProfitPrice}
                 onChange={handleTakeProfitChange}
-                className="bg-background border-border"
+                className="bg-background border-border rounded-xl"
               />
             </div>
           )}
 
-          <div className="flex items-center justify-between bg-secondary p-3 rounded-lg">
+          <div className="flex items-center justify-between bg-secondary p-4 rounded-xl">
             <div className="flex items-center space-x-2">
               <Label htmlFor="stop-loss" className="text-muted-foreground text-sm">Stop Loss</Label>
               <Switch
@@ -414,7 +420,7 @@ export const SwapWidget = ({ selectedAsset = 'bitcoin' }: SwapWidgetProps) => {
           </div>
 
           {showStopLoss && (
-            <div className="bg-secondary p-3 rounded-lg">
+            <div className="bg-secondary p-4 rounded-xl">
               <div className="mb-2">
                 <label className="text-muted-foreground text-sm">Stop Loss Price</label>
               </div>
@@ -423,7 +429,7 @@ export const SwapWidget = ({ selectedAsset = 'bitcoin' }: SwapWidgetProps) => {
                 placeholder="Price"
                 onChange={handleStopLossChange}
                 value={stopLossPrice}
-                className="bg-background border-border"
+                className="bg-background border-border rounded-xl"
               />
             </div>
           )}
@@ -435,7 +441,7 @@ export const SwapWidget = ({ selectedAsset = 'bitcoin' }: SwapWidgetProps) => {
         </div>
 
         <Button 
-          className="w-full"
+          className="w-full rounded-xl"
           onClick={handleSwap}
         >
           {swapMode === 'market' ? 'Swap' : 'Place Limit Order'}
