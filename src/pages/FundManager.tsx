@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { 
@@ -165,8 +166,9 @@ const FundManager = () => {
               <CardContent>
                 <div className="h-[380px]">
                   <AssetChart 
-                    asset={selectedAsset} 
-                    timeframe={timeframe} 
+                    timeframe={timeframe}
+                    isPortfolio={true}
+                    portfolioName={fundData.name} 
                   />
                 </div>
               </CardContent>

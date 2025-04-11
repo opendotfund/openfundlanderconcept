@@ -18,8 +18,15 @@ interface PriceData {
   volume: number;
 }
 
-// Function to fetch real-time price data from external API
-const fetchPriceData = async (asset: string, timeframe: string): Promise<PriceData[]> => {
+interface AssetChartProps {
+  asset?: string;
+  timeframe: string;
+  isPortfolio?: boolean;
+  portfolioName?: string;
+}
+
+// Function to fetch price data for assets or portfolio
+const fetchPriceData = async (asset: string, timeframe: string, isPortfolio: boolean = false, portfolioName: string = ''): Promise<PriceData[]> => {
   try {
     // In a production environment, this would be a real API call
     // For now we're simulating accurate price data as of April 2025
@@ -34,69 +41,116 @@ const fetchPriceData = async (asset: string, timeframe: string): Promise<PriceDa
       'gold': 2312.75
     };
     
-    // Default to a reasonable value if asset is not found
-    const baseValue = baseValues[asset.toLowerCase()] || 100;
-    
-    // Generate data points based on timeframe
-    const dataPoints = 
-      timeframe === '1h' ? 60 : 
-      timeframe === '24h' ? 24 : 
-      timeframe === '7d' ? 7 : 
-      timeframe === '30d' ? 30 : 
-      timeframe === '90d' ? 90 : 
-      365;
-    
-    // Generate realistic price data
-    let lastValue = baseValue;
-    const variance = baseValue * 0.01; // 1% variance
-    const seedValue = asset.charCodeAt(0) + asset.charCodeAt(asset.length - 1);
-    const trend = (seedValue % 3) - 1; // -1, 0, or 1 (down, sideways, or up)
-    
-    const data: PriceData[] = [];
-    for (let i = 0; i < dataPoints; i++) {
-      const change = (Math.random() - 0.5 + trend * 0.1) * variance;
-      lastValue = Math.max(1, lastValue + change);
+    // For portfolio data
+    if (isPortfolio) {
+      // Portfolio starting value based on portfolio name for consistency
+      const portfolioBaseValue = portfolioName === "Alpha Seekers #1" ? 367000 : 250000;
       
-      let label = '';
-      if (timeframe === '1h') {
-        label = `${59-i}m`;
-      } else if (timeframe === '24h') {
-        label = `${23-i}h`;
-      } else if (timeframe === '7d') {
-        label = `Day ${7-i}`;
-      } else if (timeframe === '30d') {
-        label = `Week ${Math.ceil((30-i)/7)}`;
-      } else {
-        label = `Week ${Math.ceil((90-i)/7)}`;
+      // Generate data points based on timeframe
+      const dataPoints = 
+        timeframe === '1h' ? 60 : 
+        timeframe === '24h' ? 24 : 
+        timeframe === '7d' ? 7 : 
+        timeframe === '30d' ? 30 : 
+        timeframe === '90d' ? 90 : 
+        365;
+      
+      // Generate realistic portfolio performance data
+      let lastValue = portfolioBaseValue;
+      // For fund performance, we use a smaller variance
+      const variance = portfolioBaseValue * 0.005; // 0.5% variance
+      // Seed value for consistent random generation
+      const seedValue = portfolioName.length;
+      // Slightly trending up for the Alpha Seekers portfolio
+      const trend = 0.15; 
+      
+      const data: PriceData[] = [];
+      for (let i = 0; i < dataPoints; i++) {
+        const change = (Math.random() - 0.4 + trend) * variance;
+        lastValue = Math.max(portfolioBaseValue * 0.85, lastValue + change);
+        
+        let label = '';
+        if (timeframe === '1h') {
+          label = `${59-i}m`;
+        } else if (timeframe === '24h') {
+          label = `${23-i}h`;
+        } else if (timeframe === '7d') {
+          label = `Day ${7-i}`;
+        } else if (timeframe === '30d') {
+          label = `Week ${Math.ceil((30-i)/7)}`;
+        } else {
+          label = `Week ${Math.ceil((90-i)/7)}`;
+        }
+        
+        data.push({
+          name: label,
+          value: parseFloat(lastValue.toFixed(2)),
+          volume: Math.floor(Math.random() * portfolioBaseValue * 0.05)
+        });
       }
       
-      data.push({
-        name: label,
-        value: parseFloat(lastValue.toFixed(2)),
-        volume: Math.floor(Math.random() * baseValue * 100)
-      });
+      // Reverse the data so it displays in chronological order
+      return data.reverse();
+    } else {
+      // Default to a reasonable value if asset is not found
+      const baseValue = baseValues[asset.toLowerCase()] || 100;
+      
+      // Generate data points based on timeframe
+      const dataPoints = 
+        timeframe === '1h' ? 60 : 
+        timeframe === '24h' ? 24 : 
+        timeframe === '7d' ? 7 : 
+        timeframe === '30d' ? 30 : 
+        timeframe === '90d' ? 90 : 
+        365;
+      
+      // Generate realistic price data
+      let lastValue = baseValue;
+      const variance = baseValue * 0.01; // 1% variance
+      const seedValue = asset.charCodeAt(0) + asset.charCodeAt(asset.length - 1);
+      const trend = (seedValue % 3) - 1; // -1, 0, or 1 (down, sideways, or up)
+      
+      const data: PriceData[] = [];
+      for (let i = 0; i < dataPoints; i++) {
+        const change = (Math.random() - 0.5 + trend * 0.1) * variance;
+        lastValue = Math.max(1, lastValue + change);
+        
+        let label = '';
+        if (timeframe === '1h') {
+          label = `${59-i}m`;
+        } else if (timeframe === '24h') {
+          label = `${23-i}h`;
+        } else if (timeframe === '7d') {
+          label = `Day ${7-i}`;
+        } else if (timeframe === '30d') {
+          label = `Week ${Math.ceil((30-i)/7)}`;
+        } else {
+          label = `Week ${Math.ceil((90-i)/7)}`;
+        }
+        
+        data.push({
+          name: label,
+          value: parseFloat(lastValue.toFixed(2)),
+          volume: Math.floor(Math.random() * baseValue * 100)
+        });
+      }
+      
+      // Reverse the data so it displays in chronological order
+      return data.reverse();
     }
-    
-    // Reverse the data so it displays in chronological order
-    return data.reverse();
   } catch (error) {
     console.error("Error fetching price data:", error);
     return [];
   }
 };
 
-interface AssetChartProps {
-  asset: string;
-  timeframe: string;
-}
-
-export const AssetChart = ({ asset, timeframe }: AssetChartProps) => {
+export const AssetChart = ({ asset = 'bitcoin', timeframe, isPortfolio = false, portfolioName = '' }: AssetChartProps) => {
   const [chartData, setChartData] = useState<PriceData[]>([]);
   
   useEffect(() => {
     // Fetch initial data
     const getInitialData = async () => {
-      const data = await fetchPriceData(asset, timeframe);
+      const data = await fetchPriceData(asset, timeframe, isPortfolio, portfolioName);
       setChartData(data);
     };
     
@@ -104,12 +158,12 @@ export const AssetChart = ({ asset, timeframe }: AssetChartProps) => {
     
     // Update chart data every 30 seconds to simulate real-time updates
     const intervalId = setInterval(async () => {
-      const data = await fetchPriceData(asset, timeframe);
+      const data = await fetchPriceData(asset, timeframe, isPortfolio, portfolioName);
       setChartData(data);
     }, 30000);
     
     return () => clearInterval(intervalId);
-  }, [asset, timeframe]);
+  }, [asset, timeframe, isPortfolio, portfolioName]);
 
   // Calculate if the performance is positive by comparing first and last value
   const isPositive = chartData.length >= 2 && 
@@ -123,12 +177,14 @@ export const AssetChart = ({ asset, timeframe }: AssetChartProps) => {
   const formattedPercent = percentChange >= 0 ? 
     `+${percentChange.toFixed(2)}%` : `${percentChange.toFixed(2)}%`;
 
+  const displayName = isPortfolio ? 'Portfolio Value' : `${asset.charAt(0).toUpperCase() + asset.slice(1)} Price`;
+  
   return (
     <div className="w-full h-full">
       {chartData.length > 0 && (
         <div className="flex items-center justify-between mb-2">
           <div className="text-xl font-medium">
-            {asset.charAt(0).toUpperCase() + asset.slice(1)} Price
+            {displayName}
           </div>
           <div className="flex items-center gap-2">
             <span className="text-2xl font-bold">
@@ -145,7 +201,7 @@ export const AssetChart = ({ asset, timeframe }: AssetChartProps) => {
         <ChartContainer
           config={{
             value: {
-              label: "Price",
+              label: isPortfolio ? "Portfolio Value" : "Price",
               color: isPositive ? "#00FF00" : "#FF4545"
             },
             volume: {
