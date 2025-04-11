@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Logo from './Logo';
@@ -54,7 +55,7 @@ const Footer = () => {
           <div>
             <h3 className="text-lg font-bold mb-4 text-gray-900 dark:text-white transition-colors duration-300">Company</h3>
             <ul className="space-y-3">
-              <li><a href="#" className="text-gray-700 dark:text-gray-400 hover:text-openfund-blue dark:hover:text-openfund-green transition-colors duration-300">About Us</a></li>
+              <li><Link to="/about-us" className="text-gray-700 dark:text-gray-400 hover:text-openfund-blue dark:hover:text-openfund-green transition-colors duration-300">About Us</Link></li>
               <li><Link to="/careers" className="text-gray-700 dark:text-gray-400 hover:text-openfund-blue dark:hover:text-openfund-green transition-colors duration-300">Careers</Link></li>
               <li><a href="#" className="text-gray-700 dark:text-gray-400 hover:text-openfund-blue dark:hover:text-openfund-green transition-colors duration-300">Blog</a></li>
               <li><a href="#" className="text-gray-700 dark:text-gray-400 hover:text-openfund-blue dark:hover:text-openfund-green transition-colors duration-300">Press</a></li>
