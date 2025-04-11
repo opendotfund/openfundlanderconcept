@@ -71,7 +71,7 @@ const ChartPreview = () => {
                 <ResponsiveContainer width="100%" height={isMobile ? 200 : 250}>
                   <AreaChart
                     data={data}
-                    margin={isMobile ? { top: 5, right: 5, left: 0, bottom: 15 } : { top: 5, right: 20, left: 0, bottom: 30 }}
+                    margin={isMobile ? { top: 5, right: 5, left: 0, bottom: 25 } : { top: 5, right: 20, left: 0, bottom: 35 }}
                   >
                     <defs>
                       <linearGradient id="colorPrice" x1="0" y1="0" x2="0" y2="1">
@@ -85,9 +85,9 @@ const ChartPreview = () => {
                         fill: 'var(--color-text-subdued)', 
                         fontSize: isMobile ? 9 : 11
                       }} 
-                      dy={isMobile ? 5 : 10}
-                      height={isMobile ? 20 : 30}
-                      tickMargin={isMobile ? 2 : 5}
+                      dy={isMobile ? 10 : 15}
+                      height={isMobile ? 30 : 40}
+                      tickMargin={isMobile ? 5 : 10}
                       minTickGap={15}
                       interval="preserveStart" 
                     />

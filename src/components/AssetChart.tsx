@@ -118,33 +118,36 @@ const fetchPriceData = async (asset: string, timeframe: string, isPortfolio: boo
         
         let label = '';
         if (timeframe === '1h') {
-          label = `${59-i}m`;
+          // For 1 hour, show minutes: 55m, 50m, 45m, etc.
+          if (i % 5 === 0) {
+            label = `${59-i}m`;
+          }
         } else if (timeframe === '24h') {
-          label = `${23-i}h`;
+          // For 24 hours, show hours: 23h, 20h, 17h, etc.
+          if (i % 3 === 0) {
+            label = `${23-i}h`;
+          }
         } else if (timeframe === '7d') {
-          label = `D${7-i}`;
+          // For 7 days, show day labels: D7, D6, D5, etc.
+          label = `Day ${7-i}`;
         } else if (timeframe === '30d') {
+          // For 30 days, show weekly labels: W4, W3, W2, W1
           const weekNum = Math.floor((30-i)/7) + 1;
           if (i % 7 === 0) {
-            label = `W${weekNum}`;
-          } else {
-            label = '';
+            label = `Week ${weekNum}`;
           }
         } else if (timeframe === '90d') {
-          // For 90 days, show monthly labels (M1, M2, M3)
+          // For 90 days, show monthly labels: Month 1, Month 2, Month 3
           const monthNum = Math.floor((90-i)/30) + 1;
           if (i % 30 === 0) {
-            label = `M${monthNum}`;
-          } else {
-            label = '';
+            label = `Month ${monthNum}`;
           }
         } else {
+          // For 1 year, show monthly labels: Jan, Feb, Mar, etc.
           const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
           const monthNum = Math.floor((365-i)/30) % 12;
           if (i % 30 === 0) {
             label = monthNames[monthNum];
-          } else {
-            label = '';
           }
         }
         
@@ -203,22 +206,28 @@ const fetchPriceData = async (asset: string, timeframe: string, isPortfolio: boo
         let label = '';
         if (timeframe === '1h') {
           // For 1 hour, show minutes: 55m, 50m, 45m, etc.
-          if (i % 5 === 0) label = `${59-i}m`;
+          if (i % 5 === 0) {
+            label = `${59-i}m`;
+          }
         } else if (timeframe === '24h') {
           // For 24 hours, show hours: 23h, 20h, 17h, etc.
-          if (i % 3 === 0) label = `${23-i}h`;
+          if (i % 3 === 0) {
+            label = `${23-i}h`;
+          }
         } else if (timeframe === '7d') {
-          // For 7 days, show day labels: D7, D6, D5, etc.
-          label = `D${7-i}`;
+          // For 7 days, show day labels: Day 7, Day 6, Day 5, etc.
+          label = `Day ${7-i}`;
         } else if (timeframe === '30d') {
-          // For 30 days, show weekly labels: W4, W3, W2, W1
+          // For 30 days, show weekly labels: Week 4, Week 3, Week 2, Week 1
           const weekNum = Math.ceil((30-i)/7);
-          if (i % 7 === 0) label = `W${weekNum}`;
+          if (i % 7 === 0) {
+            label = `Week ${weekNum}`;
+          }
         } else if (timeframe === '90d') {
-          // For 90 days, show monthly labels: M1, M2, M3
+          // For 90 days, show monthly labels: Month 1, Month 2, Month 3
           const monthNum = Math.floor((90-i)/30) + 1;
           if (i % 30 === 0) {
-            label = `M${monthNum}`;
+            label = `Month ${monthNum}`;
           }
         } else {
           // For 1 year, show monthly labels: Jan, Feb, Mar, etc.
@@ -300,29 +309,30 @@ export const AssetChart = ({ asset = 'bitcoin', timeframe, isPortfolio = false, 
   const chartHeight = isMobile ? '220px' : '360px';
   
   const margins = isMobile 
-    ? { top: 5, right: 5, left: 20, bottom: 25 }
-    : { top: 10, right: 10, left: 50, bottom: 30 };
+    ? { top: 5, right: 5, left: 20, bottom: 35 }
+    : { top: 10, right: 10, left: 50, bottom: 40 };
   
-  // Improved X-axis tick formatter to ensure consistent formatting
+  // Format X-axis ticks with improved labeling to ensure timeframes are always visible
   const formatXAxisTick = (value: string) => {
+    if (!value) return '';
     return value;
   };
 
-  // Improved tick interval calculation based on timeframe
+  // Ensure appropriate tick intervals for each timeframe to avoid overcrowding
   const getTickInterval = () => {
     if (isMobile) {
-      if (timeframe === '1h') return 12; // Show fewer ticks on mobile for 1h
-      if (timeframe === '24h') return 4;  // Show every 4th tick on mobile for 24h
-      if (timeframe === '7d') return 1;   // Show every day on mobile for 7d
-      if (timeframe === '30d') return 1;  // Show all weekly labels on mobile
-      if (timeframe === '90d') return 1;  // Show all month labels on mobile
-      return 2;                          // Show every other month for 1y
+      if (timeframe === '1h') return 6; // More frequent ticks on mobile for better visibility
+      if (timeframe === '24h') return 3; // Show more hours on mobile for better visibility
+      if (timeframe === '7d') return 1; // Show all days on mobile
+      if (timeframe === '30d') return 1; // Show all weekly labels on mobile
+      if (timeframe === '90d') return 1; // Show all month labels on mobile
+      return 1;                         // Show all monthly labels for 1y
     } else {
-      if (timeframe === '1h') return 6;  // Show every 6th tick on desktop for 1h
-      if (timeframe === '24h') return 3; // Show every 3rd hour on desktop for 24h
-      if (timeframe === '7d') return 1;  // Show every day on desktop for 7d
-      if (timeframe === '30d') return 1; // Show every week on desktop for 30d
-      if (timeframe === '90d') return 1; // Show all month labels on desktop for 90d
+      if (timeframe === '1h') return 5;  // Show every 5th minute on desktop for 1h
+      if (timeframe === '24h') return 2; // Show more hours on desktop for better visibility
+      if (timeframe === '7d') return 1;  // Show every day on desktop
+      if (timeframe === '30d') return 1; // Show every week on desktop
+      if (timeframe === '90d') return 1; // Show every month on desktop
       return 1;                         // Show every month for 1y
     }
   };
@@ -373,17 +383,18 @@ export const AssetChart = ({ asset = 'bitcoin', timeframe, isPortfolio = false, 
                 dataKey="name"
                 tickLine={false}
                 axisLine={true}
-                dy={isMobile ? 10 : 12}
+                dy={isMobile ? 12 : 15}
                 tick={{ 
                   fill: isLightMode ? '#666' : '#888', 
                   fontSize: isMobile ? 9 : 11
                 }}
-                height={isMobile ? 35 : 40}
+                height={isMobile ? 40 : 45}
                 padding={{ left: 5, right: 5 }}
                 interval={getTickInterval()}
                 tickFormatter={formatXAxisTick}
-                tickMargin={5}
+                tickMargin={10}
                 minTickGap={2}
+                allowDataOverflow={false}
               />
               <YAxis 
                 tickLine={false}

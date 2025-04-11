@@ -370,24 +370,24 @@ const Account = () => {
                   </CardHeader>
                   <CardContent>
                     <div className="space-y-6">
-                      <div className="flex justify-between items-center">
-                        <div>
+                      <div className="flex justify-between items-start">
+                        <div className="text-left">
                           <h3 className="font-medium">Password</h3>
                           <p className="text-sm text-muted-foreground">Last changed 30 days ago</p>
                         </div>
                         <Button variant="outline">Change Password</Button>
                       </div>
                       
-                      <div className="flex justify-between items-center">
-                        <div>
+                      <div className="flex justify-between items-start">
+                        <div className="text-left">
                           <h3 className="font-medium">Two-Factor Authentication</h3>
                           <p className="text-sm text-muted-foreground">Enhance your account security</p>
                         </div>
                         <Button variant="outline">Enable 2FA</Button>
                       </div>
                       
-                      <div className="flex justify-between items-center">
-                        <div>
+                      <div className="flex justify-between items-start">
+                        <div className="text-left">
                           <h3 className="font-medium">Login Sessions</h3>
                           <p className="text-sm text-muted-foreground">Manage active sessions</p>
                         </div>
