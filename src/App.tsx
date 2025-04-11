@@ -1,6 +1,7 @@
 
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Toaster } from "@/components/ui/sonner";
+import { useEffect } from 'react';
 
 import Index from './pages/Index';
 import Account from './pages/Account';
@@ -19,6 +20,11 @@ import Contact from './pages/Contact';
 import './App.css';
 
 function App() {
+  useEffect(() => {
+    // Set dark mode as default
+    document.documentElement.classList.add('dark');
+  }, []);
+  
   return (
     <Router>
       <div className="app">

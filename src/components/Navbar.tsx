@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import Logo from './Logo';
+import ThemeToggle from './ThemeToggle';
 import { Button } from './ui/button';
 import { 
   Menu, 
@@ -42,7 +43,7 @@ const Navbar = () => {
   };
   
   return (
-    <nav className="bg-openfund-gray-dark border-b border-openfund-gray-light">
+    <nav className="bg-card border-b border-border">
       <div className="container px-4 mx-auto">
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center">
@@ -59,8 +60,8 @@ const Navbar = () => {
                   to={item.href}
                   className={`px-3 py-2 rounded-md text-sm font-medium ${
                     isActive(item.href)
-                      ? 'text-openfund-green'
-                      : 'text-gray-300 hover:text-white'
+                      ? 'text-primary'
+                      : 'text-muted-foreground hover:text-foreground'
                   }`}
                 >
                   {item.name}
@@ -71,11 +72,13 @@ const Navbar = () => {
           
           <div className="hidden md:block">
             <div className="ml-4 flex items-center md:ml-6 space-x-4">
+              <ThemeToggle />
+              
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" className="flex items-center space-x-2 text-gray-300 hover:text-white">
-                    <Avatar className="h-8 w-8 bg-openfund-gray-light">
-                      <AvatarFallback className="bg-openfund-green text-openfund-gray-dark">
+                  <Button variant="ghost" className="flex items-center space-x-2 text-foreground hover:text-foreground">
+                    <Avatar className="h-8 w-8 bg-muted">
+                      <AvatarFallback className="bg-primary text-primary-foreground">
                         JD
                       </AvatarFallback>
                     </Avatar>
@@ -83,35 +86,35 @@ const Navbar = () => {
                     <ChevronDown className="h-4 w-4" />
                   </Button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="w-56 bg-openfund-gray-medium border-openfund-gray-light text-white">
+                <DropdownMenuContent align="end" className="w-56">
                   <DropdownMenuLabel>My Account</DropdownMenuLabel>
-                  <DropdownMenuSeparator className="bg-openfund-gray-light" />
-                  <DropdownMenuItem className="text-gray-300 hover:text-white focus:text-white focus:bg-openfund-gray-light cursor-pointer">
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem className="cursor-pointer">
                     <Link to="/account" className="flex items-center w-full">
                       <User className="mr-2 h-4 w-4" />
                       <span>Profile</span>
                     </Link>
                   </DropdownMenuItem>
-                  <DropdownMenuItem className="text-gray-300 hover:text-white focus:text-white focus:bg-openfund-gray-light cursor-pointer">
+                  <DropdownMenuItem className="cursor-pointer">
                     <Link to="/account?tab=portfolio" className="flex items-center w-full">
                       <Wallet className="mr-2 h-4 w-4" />
                       <span>My Portfolio</span>
                     </Link>
                   </DropdownMenuItem>
-                  <DropdownMenuItem className="text-gray-300 hover:text-white focus:text-white focus:bg-openfund-gray-light cursor-pointer">
+                  <DropdownMenuItem className="cursor-pointer">
                     <Link to="/account?tab=settings" className="flex items-center w-full">
                       <Settings className="mr-2 h-4 w-4" />
                       <span>Settings</span>
                     </Link>
                   </DropdownMenuItem>
-                  <DropdownMenuItem className="text-gray-300 hover:text-white focus:text-white focus:bg-openfund-gray-light cursor-pointer">
+                  <DropdownMenuItem className="cursor-pointer">
                     <Link to="/account?tab=referral" className="flex items-center w-full">
                       <Share className="mr-2 h-4 w-4" />
                       <span>Referrals</span>
                     </Link>
                   </DropdownMenuItem>
-                  <DropdownMenuSeparator className="bg-openfund-gray-light" />
-                  <DropdownMenuItem className="text-gray-300 hover:text-white focus:text-white focus:bg-openfund-gray-light cursor-pointer">
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem className="cursor-pointer">
                     <div className="flex items-center w-full">
                       <LogOut className="mr-2 h-4 w-4" />
                       <span>Log out</span>
@@ -119,16 +122,17 @@ const Navbar = () => {
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
-              <Button variant="outline" className="border-openfund-green text-openfund-green">
+              <Button variant="outline" className="border-primary text-primary">
                 Connect
               </Button>
             </div>
           </div>
           
-          <div className="md:hidden flex items-center">
+          <div className="md:hidden flex items-center space-x-4">
+            <ThemeToggle />
             <button
               type="button"
-              className="text-gray-400 hover:text-white p-2"
+              className="text-gray-400 hover:text-foreground p-2"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
             >
               {isMenuOpen ? (
@@ -151,8 +155,8 @@ const Navbar = () => {
                 to={item.href}
                 className={`block px-3 py-2 rounded-md text-base font-medium ${
                   isActive(item.href)
-                    ? 'text-openfund-green'
-                    : 'text-gray-300 hover:text-white'
+                    ? 'text-primary'
+                    : 'text-muted-foreground hover:text-foreground'
                 }`}
                 onClick={() => setIsMenuOpen(false)}
               >
@@ -161,12 +165,12 @@ const Navbar = () => {
             ))}
             <Link
               to="/account"
-              className="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white"
+              className="block px-3 py-2 rounded-md text-base font-medium text-muted-foreground hover:text-foreground"
               onClick={() => setIsMenuOpen(false)}
             >
               <div className="flex items-center">
-                <Avatar className="h-6 w-6 mr-2 bg-openfund-gray-light">
-                  <AvatarFallback className="bg-openfund-green text-openfund-gray-dark text-xs">
+                <Avatar className="h-6 w-6 mr-2 bg-muted">
+                  <AvatarFallback className="bg-primary text-primary-foreground text-xs">
                     JD
                   </AvatarFallback>
                 </Avatar>
@@ -176,7 +180,7 @@ const Navbar = () => {
             <div className="mt-4">
               <Button 
                 variant="outline" 
-                className="w-full border-openfund-green text-openfund-green"
+                className="w-full border-primary text-primary"
                 onClick={() => setIsMenuOpen(false)}
               >
                 Connect

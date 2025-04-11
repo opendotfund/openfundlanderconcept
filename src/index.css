@@ -5,6 +5,48 @@
 
 @layer base {
   :root {
+    /* Light mode */
+    --background: 210 50% 98%; /* #F8FAFC */
+    --foreground: 222 47% 11%;
+
+    --card: 0 0% 100%; /* #FFFFFF */
+    --card-foreground: 222 47% 11%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 47% 11%;
+
+    --primary: 210 100% 50%; /* #0EA5E9 blue */
+    --primary-foreground: 210 40% 98%;
+
+    --secondary: 210 40% 96%;
+    --secondary-foreground: 222 47% 11%;
+
+    --muted: 210 40% 96%;
+    --muted-foreground: 215 16% 47%;
+
+    --accent: 210 100% 50%; /* #0EA5E9 blue */
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 214 32% 91%;
+    --input: 214 32% 91%;
+    --ring: 210 100% 50%;
+
+    --radius: 0.5rem;
+    
+    --sidebar-background: 210 50% 98%;
+    --sidebar-foreground: 222 47% 11%;
+    --sidebar-primary: 210 100% 50%; /* Blue */
+    --sidebar-primary-foreground: 210 40% 98%;
+    --sidebar-accent: 0 0% 100%;
+    --sidebar-accent-foreground: 222 47% 11%;
+    --sidebar-border: 214 32% 91%;
+    --sidebar-ring: 210 100% 50%;
+  }
+  
+  .dark {
     --background: 0 0% 7%; /* #121212 */
     --foreground: 0 0% 100%;
 
@@ -62,11 +104,11 @@
   }
   .green-glow::after {
     content: "";
-    @apply absolute -inset-[1px] rounded-lg bg-openfund-green/20 blur-sm -z-10;
+    @apply absolute -inset-[1px] rounded-lg bg-primary/20 blur-sm -z-10;
   }
   
   .card-gradient {
-    @apply bg-gradient-to-b from-openfund-gray-medium to-openfund-gray-dark;
+    @apply bg-gradient-to-b from-muted to-card;
   }
   
   .open-fund-text {
@@ -74,10 +116,10 @@
   }
   
   .open-fund-text span:first-child {
-    @apply text-openfund-green;
+    @apply text-primary;
   }
   
   .open-fund-text span:last-child {
-    @apply text-white;
+    @apply text-foreground;
   }
 }
