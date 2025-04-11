@@ -39,7 +39,7 @@ const FundManager = () => {
   const fundData = {
     name: "Alpha Seekers #1",
     manager: "0x7a...3fe1",
-    aum: "$1,500,000",
+    aum: "$1,577,892",
     performance: "+24.7%",
     performanceIsPositive: true,
     withdrawalsPending: "$53,500",
@@ -47,14 +47,14 @@ const FundManager = () => {
     nextWithdrawalWindow: "04/21/2025",
     timeUntilWithdrawal: "10 days",
     holdings: [
-      { name: "Bitcoin", symbol: "BTC", amount: "7.94", value: "$521,400", change: "+7.8%", allocation: 34.8, isUp: true },
-      { name: "Ethereum", symbol: "ETH", amount: "62.5", value: "$216,250", change: "+5.2%", allocation: 14.4, isUp: true },
-      { name: "Solana", symbol: "SOL", amount: "870", value: "$135,720", change: "+8.5%", allocation: 9.1, isUp: true },
-      { name: "USDC", symbol: "USDC", amount: "180,000", value: "$180,000", change: "0.0%", allocation: 12.0, isUp: true },
-      { name: "Apple", symbol: "AAPL", amount: "420", value: "$88,200", change: "+3.2%", allocation: 5.9, isUp: true },
-      { name: "Tesla", symbol: "TSLA", amount: "185", value: "$44,770", change: "+2.1%", allocation: 3.0, isUp: true },
-      { name: "Gold", symbol: "GOLD", amount: "28.5", value: "$67,830", change: "+0.8%", allocation: 4.5, isUp: true },
-      { name: "Other", symbol: "", amount: "", value: "$246,030", change: "", allocation: 16.3, isUp: true }
+      { name: "Bitcoin", symbol: "BTC", amount: "7.94", value: "$521,400", change: "+7.8%", allocation: 33.0, isUp: true },
+      { name: "Ethereum", symbol: "ETH", amount: "62.5", value: "$216,250", change: "+5.2%", allocation: 13.7, isUp: true },
+      { name: "Solana", symbol: "SOL", amount: "870", value: "$135,720", change: "+8.5%", allocation: 8.6, isUp: true },
+      { name: "USDC", symbol: "USDC", amount: "230,000", value: "$230,000", change: "0.0%", allocation: 14.6, isUp: true },
+      { name: "Apple", symbol: "AAPL", amount: "420", value: "$88,200", change: "+3.2%", allocation: 5.6, isUp: true },
+      { name: "Tesla", symbol: "TSLA", amount: "185", value: "$44,770", change: "+2.1%", allocation: 2.8, isUp: true },
+      { name: "Gold", symbol: "GOLD", amount: "28.5", value: "$67,830", change: "+0.8%", allocation: 4.3, isUp: true },
+      { name: "Other", symbol: "", amount: "", value: "$273,722", change: "", allocation: 17.4, isUp: true }
     ],
     recentTransactions: [
       { type: "Buy", asset: "Bitcoin", amount: "1.45 BTC", value: "$95,120", time: "1h ago" },
@@ -69,16 +69,16 @@ const FundManager = () => {
       { investor: "0x3f...0e4f", amount: "$3,000", requested: "5d ago", status: "Pending", processingDate: "04/21/2025" }
     ],
     chartData: [
-      { date: '2024-01', value: 950000 },
-      { date: '2024-02', value: 1000000 },
-      { date: '2024-03', value: 1080000 },
-      { date: '2024-04', value: 1150000 },
-      { date: '2024-05', value: 1240000 },
-      { date: '2024-06', value: 1300000 },
-      { date: '2024-07', value: 1380000 },
-      { date: '2024-08', value: 1425000 },
-      { date: '2024-09', value: 1460000 },
-      { date: '2024-10', value: 1500000 }
+      { date: '2024-01', value: 1000000 },
+      { date: '2024-02', value: 1050000 },
+      { date: '2024-03', value: 1120000 },
+      { date: '2024-04', value: 1180000 },
+      { date: '2024-05', value: 1250000 },
+      { date: '2024-06', value: 1310000 },
+      { date: '2024-07', value: 1390000 },
+      { date: '2024-08', value: 1435000 },
+      { date: '2024-09', value: 1490000 },
+      { date: '2024-10', value: 1577892 }
     ]
   };
 

@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import {
   Area,
@@ -59,7 +58,7 @@ const fetchPriceData = async (asset: string, timeframe: string, isPortfolio: boo
       }
       
       // Portfolio starting value based on portfolio name for consistency
-      const portfolioBaseValue = portfolioName === "Alpha Seekers #1" ? 1500000 : 250000;
+      const portfolioBaseValue = portfolioName === "Alpha Seekers #1" ? 1577892 : 250000;
       
       // Generate data points based on timeframe
       const dataPoints = 
