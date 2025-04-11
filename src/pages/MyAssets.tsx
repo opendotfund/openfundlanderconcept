@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -45,10 +45,10 @@ const portfolioData = {
 
 const AssetRow = ({ asset, type }: { asset: any, type: string }) => {
   return (
-    <div className="flex items-center justify-between py-3 border-b border-openfund-gray-light">
+    <div className="flex items-center justify-between py-3 border-b border-border">
       <div>
         <div className="font-medium">{asset.name}</div>
-        <div className="text-sm text-gray-400">
+        <div className="text-sm text-muted-foreground">
           {type === 'funds' ? 
             `${asset.shares} shares` : 
             type === 'commodities' ? 
@@ -74,15 +74,34 @@ const AssetRow = ({ asset, type }: { asset: any, type: string }) => {
 };
 
 const MyAssets = () => {
+  const [isDark, setIsDark] = useState(true);
+  
+  // Check theme on mount and when it changes
+  useEffect(() => {
+    const checkTheme = () => {
+      const savedTheme = localStorage.getItem('theme');
+      setIsDark(savedTheme === 'dark');
+    };
+    
+    checkTheme();
+    
+    // Set up event listener for theme changes
+    window.addEventListener('storage', checkTheme);
+    
+    return () => {
+      window.removeEventListener('storage', checkTheme);
+    };
+  }, []);
+  
   return (
-    <div className="min-h-screen bg-openfund-gray-dark text-white">
+    <div className="min-h-screen bg-background text-foreground transition-colors duration-300">
       <Navbar />
       <main className="container mx-auto px-4 py-8">
         <h1 className="text-3xl font-bold mb-8">My Portfolio</h1>
         
         {/* Portfolio Overview */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-          <Card className="bg-openfund-gray-medium border-openfund-gray-light col-span-2">
+          <Card className="bg-card border-border col-span-2">
             <CardHeader>
               <CardTitle>Portfolio Value</CardTitle>
             </CardHeader>
@@ -145,22 +164,22 @@ const MyAssets = () => {
             </CardContent>
           </Card>
           
-          <Card className="bg-openfund-gray-medium border-openfund-gray-light">
+          <Card className="bg-card border-border">
             <CardHeader>
               <CardTitle>Actions</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
-                <button className="w-full bg-openfund-green hover:bg-openfund-green-dark text-openfund-gray-dark py-2 rounded-md font-medium">
+                <button className="w-full bg-primary hover:bg-primary/90 text-primary-foreground py-2 rounded-md font-medium">
                   Deposit Funds
                 </button>
-                <button className="w-full bg-transparent border border-openfund-gray-light hover:bg-openfund-gray-light/10 py-2 rounded-md font-medium">
+                <button className="w-full bg-transparent border border-border hover:bg-secondary py-2 rounded-md font-medium">
                   Withdraw Funds
                 </button>
-                <button className="w-full bg-transparent border border-openfund-gray-light hover:bg-openfund-gray-light/10 py-2 rounded-md font-medium">
+                <button className="w-full bg-transparent border border-border hover:bg-secondary py-2 rounded-md font-medium">
                   Trade Assets
                 </button>
-                <button className="w-full bg-transparent border border-openfund-gray-light hover:bg-openfund-gray-light/10 py-2 rounded-md font-medium">
+                <button className="w-full bg-transparent border border-border hover:bg-secondary py-2 rounded-md font-medium">
                   Rebalance Portfolio
                 </button>
               </div>
@@ -171,13 +190,13 @@ const MyAssets = () => {
         {/* Asset Sections */}
         <div className="space-y-8">
           {/* Stocks Section */}
-          <Card className="bg-openfund-gray-medium border-openfund-gray-light">
+          <Card className="bg-card border-border">
             <CardHeader className="flex flex-row justify-between items-center">
               <div className="flex items-center gap-2">
                 <BarChart4 size={20} className="text-blue-500" />
                 <CardTitle>Stocks</CardTitle>
               </div>
-              <div className="text-sm text-gray-400">
+              <div className="text-sm text-muted-foreground">
                 ${portfolioData.assets.stocks.reduce((sum, asset) => sum + asset.value, 0).toLocaleString()}
               </div>
             </CardHeader>
@@ -191,13 +210,13 @@ const MyAssets = () => {
           </Card>
           
           {/* Crypto Section */}
-          <Card className="bg-openfund-gray-medium border-openfund-gray-light">
+          <Card className="bg-card border-border">
             <CardHeader className="flex flex-row justify-between items-center">
               <div className="flex items-center gap-2">
                 <Bitcoin size={20} className="text-orange-500" />
                 <CardTitle>Crypto</CardTitle>
               </div>
-              <div className="text-sm text-gray-400">
+              <div className="text-sm text-muted-foreground">
                 ${portfolioData.assets.crypto.reduce((sum, asset) => sum + asset.value, 0).toLocaleString()}
               </div>
             </CardHeader>
@@ -211,13 +230,13 @@ const MyAssets = () => {
           </Card>
           
           {/* Commodities Section */}
-          <Card className="bg-openfund-gray-medium border-openfund-gray-light">
+          <Card className="bg-card border-border">
             <CardHeader className="flex flex-row justify-between items-center">
               <div className="flex items-center gap-2">
                 <DollarSign size={20} className="text-yellow-500" />
                 <CardTitle>Commodities</CardTitle>
               </div>
-              <div className="text-sm text-gray-400">
+              <div className="text-sm text-muted-foreground">
                 ${portfolioData.assets.commodities.reduce((sum, asset) => sum + asset.value, 0).toLocaleString()}
               </div>
             </CardHeader>
@@ -231,13 +250,13 @@ const MyAssets = () => {
           </Card>
           
           {/* Funds Section */}
-          <Card className="bg-openfund-gray-medium border-openfund-gray-light">
+          <Card className="bg-card border-border">
             <CardHeader className="flex flex-row justify-between items-center">
               <div className="flex items-center gap-2">
                 <Briefcase size={20} className="text-green-500" />
                 <CardTitle>Funds</CardTitle>
               </div>
-              <div className="text-sm text-gray-400">
+              <div className="text-sm text-muted-foreground">
                 ${portfolioData.assets.funds.reduce((sum, asset) => sum + asset.value, 0).toLocaleString()}
               </div>
             </CardHeader>

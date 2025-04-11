@@ -105,6 +105,24 @@ interface AssetListProps {
 export const AssetList = ({ type, onSelect, selectedAsset, limit, searchQuery = '' }: AssetListProps) => {
   const [assets, setAssets] = useState<Asset[]>([]);
   const [filteredAssets, setFilteredAssets] = useState<Asset[]>([]);
+  const [isDark, setIsDark] = useState(true);
+  
+  // Check theme on mount and when it changes
+  useEffect(() => {
+    const checkTheme = () => {
+      const savedTheme = localStorage.getItem('theme');
+      setIsDark(savedTheme === 'dark');
+    };
+    
+    checkTheme();
+    
+    // Set up event listener for theme changes
+    window.addEventListener('storage', checkTheme);
+    
+    return () => {
+      window.removeEventListener('storage', checkTheme);
+    };
+  }, []);
   
   useEffect(() => {
     const assetData = generateAssets(type);
@@ -165,13 +183,13 @@ export const AssetList = ({ type, onSelect, selectedAsset, limit, searchQuery = 
                 </TableCell>
                 <TableCell className="text-right">${asset.price}</TableCell>
                 <TableCell className="text-right">
-                  <span className={`flex items-center justify-end ${parseFloat(asset.change) < 0 ? 'text-red-500' : 'text-primary'}`}>
+                  <span className={`flex items-center justify-end ${parseFloat(asset.change) < 0 ? 'text-red-500' : 'text-green-500'}`}>
                     {parseFloat(asset.change) < 0 ? (
                       <ChevronDown size={16} />
                     ) : (
                       <ChevronUp size={16} />
                     )}
-                    <span className="ml-0.5">{Math.abs(parseFloat(asset.change))}%</span>
+                    <span className="ml-0.5 whitespace-nowrap">{Math.abs(parseFloat(asset.change))}%</span>
                   </span>
                 </TableCell>
               </TableRow>

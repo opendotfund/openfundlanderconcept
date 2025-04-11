@@ -299,6 +299,7 @@ const ExploreFunds = () => {
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState('');
   const [activeTab, setActiveTab] = useState('traditional');
+  const [isDark, setIsDark] = useState(true);
   
   const [fundTypeFilter, setFundTypeFilter] = useState<string[]>([]);
   const [minDepositFilter, setMinDepositFilter] = useState<number>(0);
@@ -310,6 +311,21 @@ const ExploreFunds = () => {
   const [sortOption, setSortOption] = useState<SortOption>('performance-high');
   
   const [displayFunds, setDisplayFunds] = useState<Fund[]>([]);
+  
+  useEffect(() => {
+    const checkTheme = () => {
+      const savedTheme = localStorage.getItem('theme');
+      setIsDark(savedTheme === 'dark');
+    };
+    
+    checkTheme();
+    
+    window.addEventListener('storage', checkTheme);
+    
+    return () => {
+      window.removeEventListener('storage', checkTheme);
+    };
+  }, []);
   
   useEffect(() => {
     let funds: Fund[] = [];
@@ -413,15 +429,15 @@ const ExploreFunds = () => {
   };
   
   return (
-    <div className="min-h-screen bg-openfund-gray-dark text-white flex flex-col">
+    <div className="min-h-screen bg-background text-foreground flex flex-col transition-colors duration-300">
       <Navbar />
       
       <main className="flex-grow container mx-auto px-4 py-8">
         <h1 className="text-3xl md:text-4xl font-bold mb-6">
-          Explore <span className="text-openfund-green">Investment Funds</span>
+          Explore <span className="text-primary">Investment Funds</span>
         </h1>
         
-        <p className="text-gray-300 text-lg mb-8 max-w-3xl">
+        <p className="text-muted-foreground text-lg mb-8 max-w-3xl">
           Discover traditional hedge funds and crypto investment vehicles with proven track records. Compare performance, strategies, and minimum investments to find the right opportunity for your portfolio.
         </p>
         
@@ -431,7 +447,7 @@ const ExploreFunds = () => {
               placeholder="Search funds..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="bg-openfund-gray-dark mr-2 w-full sm:w-64"
+              className="bg-card mr-2 w-full sm:w-64"
             />
             <Button variant="outline" size="icon">
               <Search className="h-4 w-4" />
@@ -446,10 +462,10 @@ const ExploreFunds = () => {
                   Filter
                   {(fundTypeFilter.length > 0 || minDepositFilter > 0 || minPerformanceFilter > 0 || 
                     minYearsFilter > 0 || maxVolatilityFilter < 100) && 
-                    <Badge className="ml-1 bg-openfund-green text-black">Active</Badge>}
+                    <Badge className="ml-1 bg-primary text-primary-foreground">Active</Badge>}
                 </Button>
               </PopoverTrigger>
-              <PopoverContent className="w-80 bg-openfund-gray-medium border-openfund-gray-light p-4">
+              <PopoverContent className="w-80 bg-card border-border p-4">
                 <div className="space-y-4">
                   <h3 className="font-medium mb-2">Filter Funds</h3>
                   
@@ -550,7 +566,7 @@ const ExploreFunds = () => {
                     <Button variant="outline" size="sm" onClick={resetFilters}>
                       Reset All
                     </Button>
-                    <Button className="bg-openfund-green hover:bg-openfund-green-dark text-black" size="sm" onClick={() => setFilterMenuOpen(false)}>
+                    <Button className="bg-primary hover:bg-primary/90" size="sm" onClick={() => setFilterMenuOpen(false)}>
                       Apply Filters
                     </Button>
                   </div>
@@ -570,7 +586,7 @@ const ExploreFunds = () => {
                   {sortOption === 'volatility-low' && "Least Volatile"}
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent className="bg-openfund-gray-medium border-openfund-gray-light">
+              <DropdownMenuContent className="bg-card border-border">
                 <DropdownMenuItem onClick={() => setSortOption('performance-high')}>
                   Highest Performance
                 </DropdownMenuItem>
@@ -595,7 +611,7 @@ const ExploreFunds = () => {
         </div>
         
         <Tabs defaultValue="traditional" onValueChange={setActiveTab} value={activeTab}>
-          <TabsList className="w-full mb-8 bg-openfund-gray-medium">
+          <TabsList className="w-full mb-8 bg-secondary">
             <TabsTrigger value="traditional" className="flex-1">Traditional Hedge Funds</TabsTrigger>
             <TabsTrigger value="crypto" className="flex-1">Crypto Funds</TabsTrigger>
             <TabsTrigger value="openfund" className="flex-1">OpenFund DeFi Funds</TabsTrigger>
@@ -606,14 +622,14 @@ const ExploreFunds = () => {
             {displayFunds.length > 0 ? (
               <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
                 {displayFunds.map((fund) => (
-                  <Card key={fund.id} className="bg-openfund-gray-medium border-openfund-gray-light hover:border-openfund-green/50 transition-colors">
+                  <Card key={fund.id} className="bg-card border-border hover:border-primary/50 transition-colors">
                     <CardHeader>
                       <div className="flex justify-between items-start">
                         <div>
                           <CardTitle>{fund.name}</CardTitle>
-                          <CardDescription className="text-gray-400">Founded: {fund.year} • Manager: {fund.manager}</CardDescription>
+                          <CardDescription className="text-muted-foreground">Founded: {fund.year} • Manager: {fund.manager}</CardDescription>
                         </div>
-                        <div className="bg-openfund-green/10 text-openfund-green px-2 py-1 rounded">
+                        <div className="bg-primary/10 text-primary px-2 py-1 rounded">
                           <div className="flex items-center">
                             <TrendingUp size={14} className="mr-1" />
                             <span>{fund.performance}</span>
@@ -622,33 +638,33 @@ const ExploreFunds = () => {
                       </div>
                     </CardHeader>
                     <CardContent>
-                      <p className="text-gray-300 text-sm mb-4">{fund.description}</p>
+                      <p className="text-muted-foreground text-sm mb-4">{fund.description}</p>
                       <div className="space-y-3">
                         <div className="flex justify-between">
-                          <span className="text-gray-400">Assets Under Management</span>
+                          <span className="text-muted-foreground">Assets Under Management</span>
                           <span className="font-medium">{fund.aum}</span>
                         </div>
                         <div className="flex justify-between">
-                          <span className="text-gray-400">Average Annual Return</span>
+                          <span className="text-muted-foreground">Average Annual Return</span>
                           <span className="font-medium">{fund.returns}</span>
                         </div>
                         <div className="flex justify-between">
-                          <span className="text-gray-400">Investment Focus</span>
+                          <span className="text-muted-foreground">Investment Focus</span>
                           <span className="font-medium">{fund.focus}</span>
                         </div>
                         <div className="flex justify-between">
-                          <span className="text-gray-400">Min Investment</span>
+                          <span className="text-muted-foreground">Min Investment</span>
                           <span className="font-medium">{fund.minInvestment}</span>
                         </div>
                         <div className="flex justify-between">
-                          <span className="text-gray-400">Volatility</span>
+                          <span className="text-muted-foreground">Volatility</span>
                           <span className="font-medium">{fund.volatility}</span>
                         </div>
                       </div>
                     </CardContent>
                     <CardFooter>
                       <Button 
-                        className="w-full bg-openfund-green hover:bg-openfund-green-dark text-openfund-gray-dark"
+                        className="w-full bg-primary hover:bg-primary/90"
                         onClick={() => handleViewDetails(fund)}
                       >
                         View Details
@@ -660,7 +676,7 @@ const ExploreFunds = () => {
             ) : (
               <div className="text-center py-12">
                 <h3 className="text-xl font-medium mb-2">No funds match your search criteria</h3>
-                <p className="text-gray-400">Try adjusting your filters or search term</p>
+                <p className="text-muted-foreground">Try adjusting your filters or search term</p>
                 <Button variant="outline" className="mt-4" onClick={resetFilters}>
                   Reset Filters
                 </Button>
@@ -672,14 +688,14 @@ const ExploreFunds = () => {
             {displayFunds.length > 0 ? (
               <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
                 {displayFunds.map((fund) => (
-                  <Card key={fund.id} className="bg-openfund-gray-medium border-openfund-gray-light hover:border-openfund-green/50 transition-colors">
+                  <Card key={fund.id} className="bg-card border-border hover:border-primary/50 transition-colors">
                     <CardHeader>
                       <div className="flex justify-between items-start">
                         <div>
                           <CardTitle>{fund.name}</CardTitle>
-                          <CardDescription className="text-gray-400">Founded: {fund.year} • Manager: {fund.manager}</CardDescription>
+                          <CardDescription className="text-muted-foreground">Founded: {fund.year} • Manager: {fund.manager}</CardDescription>
                         </div>
-                        <div className="bg-openfund-green/10 text-openfund-green px-2 py-1 rounded">
+                        <div className="bg-primary/10 text-primary px-2 py-1 rounded">
                           <div className="flex items-center">
                             <TrendingUp size={14} className="mr-1" />
                             <span>{fund.performance}</span>
@@ -688,33 +704,33 @@ const ExploreFunds = () => {
                       </div>
                     </CardHeader>
                     <CardContent>
-                      <p className="text-gray-300 text-sm mb-4">{fund.description}</p>
+                      <p className="text-muted-foreground text-sm mb-4">{fund.description}</p>
                       <div className="space-y-3">
                         <div className="flex justify-between">
-                          <span className="text-gray-400">Assets Under Management</span>
+                          <span className="text-muted-foreground">Assets Under Management</span>
                           <span className="font-medium">{fund.aum}</span>
                         </div>
                         <div className="flex justify-between">
-                          <span className="text-gray-400">Average Annual Return</span>
+                          <span className="text-muted-foreground">Average Annual Return</span>
                           <span className="font-medium">{fund.returns}</span>
                         </div>
                         <div className="flex justify-between">
-                          <span className="text-gray-400">Investment Focus</span>
+                          <span className="text-muted-foreground">Investment Focus</span>
                           <span className="font-medium">{fund.focus}</span>
                         </div>
                         <div className="flex justify-between">
-                          <span className="text-gray-400">Min Investment</span>
+                          <span className="text-muted-foreground">Min Investment</span>
                           <span className="font-medium">{fund.minInvestment}</span>
                         </div>
                         <div className="flex justify-between">
-                          <span className="text-gray-400">Volatility</span>
+                          <span className="text-muted-foreground">Volatility</span>
                           <span className="font-medium">{fund.volatility}</span>
                         </div>
                       </div>
                     </CardContent>
                     <CardFooter>
                       <Button 
-                        className="w-full bg-openfund-green hover:bg-openfund-green-dark text-openfund-gray-dark"
+                        className="w-full bg-primary hover:bg-primary/90"
                         onClick={() => handleViewDetails(fund)}
                       >
                         View Details
@@ -726,7 +742,7 @@ const ExploreFunds = () => {
             ) : (
               <div className="text-center py-12">
                 <h3 className="text-xl font-medium mb-2">No funds match your search criteria</h3>
-                <p className="text-gray-400">Try adjusting your filters or search term</p>
+                <p className="text-muted-foreground">Try adjusting your filters or search term</p>
                 <Button variant="outline" className="mt-4" onClick={resetFilters}>
                   Reset Filters
                 </Button>
@@ -735,16 +751,16 @@ const ExploreFunds = () => {
           </TabsContent>
           
           <TabsContent value="openfund">
-            <div className="bg-openfund-gray-medium rounded-lg p-6 mb-6 text-center">
-              <div className="mx-auto w-16 h-16 bg-openfund-gray-light rounded-full flex items-center justify-center mb-4">
-                <BarChart3 size={32} className="text-openfund-green" />
+            <div className="bg-card rounded-lg p-6 mb-6 text-center">
+              <div className="mx-auto w-16 h-16 bg-secondary rounded-full flex items-center justify-center mb-4">
+                <BarChart3 size={32} className="text-primary" />
               </div>
               <h2 className="text-xl font-bold mb-2">OpenFund DeFi Investment Funds</h2>
-              <p className="text-gray-300 mb-6 max-w-2xl mx-auto">
+              <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">
                 Discover decentralized hedge funds powered by OpenFund's advanced trading infrastructure. 
                 Share profits, build a track record, and grow your portfolio together.
               </p>
-              <Button className="bg-openfund-green hover:bg-openfund-green-dark text-openfund-gray-dark">
+              <Button className="bg-primary hover:bg-primary/90">
                 Explore OpenFund DeFi Funds
               </Button>
             </div>
@@ -752,14 +768,14 @@ const ExploreFunds = () => {
             {displayFunds.length > 0 ? (
               <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
                 {displayFunds.map((fund) => (
-                  <Card key={fund.id} className="bg-openfund-gray-medium border-openfund-gray-light hover:border-openfund-green/50 transition-colors">
+                  <Card key={fund.id} className="bg-card border-border hover:border-primary/50 transition-colors">
                     <CardHeader>
                       <div className="flex justify-between items-start">
                         <div>
                           <CardTitle>{fund.name}</CardTitle>
-                          <CardDescription className="text-gray-400">Created by {fund.manager}</CardDescription>
+                          <CardDescription className="text-muted-foreground">Created by {fund.manager}</CardDescription>
                         </div>
-                        <div className="bg-openfund-green/10 text-openfund-green px-2 py-1 rounded">
+                        <div className="bg-primary/10 text-primary px-2 py-1 rounded">
                           <div className="flex items-center">
                             <TrendingUp size={14} className="mr-1" />
                             <span>{fund.performance}</span>
@@ -770,38 +786,38 @@ const ExploreFunds = () => {
                     <CardContent>
                       <div className="flex mb-3">
                         {"assetTypes" in fund && fund.assetTypes.map((type) => (
-                          <Badge key={type} className="mr-2 bg-openfund-gray-light text-openfund-green border-openfund-green">
+                          <Badge key={type} className="mr-2 bg-secondary text-primary border-primary">
                             {type}
                           </Badge>
                         ))}
-                        <Badge className="bg-openfund-gray-light text-blue-400 border-blue-400">{fund.focus}</Badge>
+                        <Badge className="bg-secondary text-blue-500 border-blue-500">{fund.focus}</Badge>
                       </div>
                       <div className="space-y-3">
                         <div className="flex justify-between">
-                          <span className="text-gray-400">AUM</span>
+                          <span className="text-muted-foreground">AUM</span>
                           <span className="font-medium">{fund.aum}</span>
                         </div>
                         <div className="flex justify-between">
-                          <span className="text-gray-400">Investors</span>
+                          <span className="text-muted-foreground">Investors</span>
                           <span className="font-medium">{fund.investors || "N/A"}</span>
                         </div>
                         <div className="flex justify-between">
-                          <span className="text-gray-400">Min Investment</span>
+                          <span className="text-muted-foreground">Min Investment</span>
                           <span className="font-medium">{fund.minInvestment}</span>
                         </div>
                         <div className="flex justify-between">
-                          <span className="text-gray-400">Performance Fee</span>
+                          <span className="text-muted-foreground">Performance Fee</span>
                           <span className="font-medium">2/20</span>
                         </div>
                         <div className="flex justify-between">
-                          <span className="text-gray-400">Volatility</span>
+                          <span className="text-muted-foreground">Volatility</span>
                           <span className="font-medium">{fund.volatility}</span>
                         </div>
                       </div>
                     </CardContent>
                     <CardFooter>
                       <Button 
-                        className="w-full bg-openfund-green hover:bg-openfund-green-dark text-openfund-gray-dark"
+                        className="w-full bg-primary hover:bg-primary/90"
                         onClick={() => handleViewDetails(fund)}
                       >
                         Invest Now
@@ -813,7 +829,7 @@ const ExploreFunds = () => {
             ) : (
               <div className="text-center py-12">
                 <h3 className="text-xl font-medium mb-2">No funds match your search criteria</h3>
-                <p className="text-gray-400">Try adjusting your filters or search term</p>
+                <p className="text-muted-foreground">Try adjusting your filters or search term</p>
                 <Button variant="outline" className="mt-4" onClick={resetFilters}>
                   Reset Filters
                 </Button>
@@ -823,37 +839,37 @@ const ExploreFunds = () => {
           
           <TabsContent value="my-investments">
             <div className="space-y-6">
-              <Card className="bg-openfund-gray-medium border-openfund-gray-light">
+              <Card className="bg-card border-border">
                 <CardHeader>
                   <CardTitle>Your Portfolio Overview</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                    <div className="bg-openfund-gray-dark p-4 rounded-lg">
+                    <div className="bg-secondary p-4 rounded-lg">
                       <div className="flex items-center mb-2">
-                        <Briefcase size={16} className="mr-2 text-openfund-green" />
-                        <span className="text-gray-400">Total Invested</span>
+                        <Briefcase size={16} className="mr-2 text-primary" />
+                        <span className="text-muted-foreground">Total Invested</span>
                       </div>
                       <div className="text-xl font-bold">$12,500</div>
                     </div>
-                    <div className="bg-openfund-gray-dark p-4 rounded-lg">
+                    <div className="bg-secondary p-4 rounded-lg">
                       <div className="flex items-center mb-2">
-                        <TrendingUp size={16} className="mr-2 text-openfund-green" />
-                        <span className="text-gray-400">Current Value</span>
+                        <TrendingUp size={16} className="mr-2 text-primary" />
+                        <span className="text-muted-foreground">Current Value</span>
                       </div>
                       <div className="text-xl font-bold">$14,250</div>
                     </div>
-                    <div className="bg-openfund-gray-dark p-4 rounded-lg">
+                    <div className="bg-secondary p-4 rounded-lg">
                       <div className="flex items-center mb-2">
-                        <Percent size={16} className="mr-2 text-openfund-green" />
-                        <span className="text-gray-400">Total Return</span>
+                        <Percent size={16} className="mr-2 text-primary" />
+                        <span className="text-muted-foreground">Total Return</span>
                       </div>
-                      <div className="text-xl font-bold text-openfund-green">+14%</div>
+                      <div className="text-xl font-bold text-primary">+14%</div>
                     </div>
-                    <div className="bg-openfund-gray-dark p-4 rounded-lg">
+                    <div className="bg-secondary p-4 rounded-lg">
                       <div className="flex items-center mb-2">
-                        <Briefcase size={16} className="mr-2 text-openfund-green" />
-                        <span className="text-gray-400">Active Funds</span>
+                        <Briefcase size={16} className="mr-2 text-primary" />
+                        <span className="text-muted-foreground">Active Funds</span>
                       </div>
                       <div className="text-xl font-bold">3</div>
                     </div>
@@ -865,15 +881,15 @@ const ExploreFunds = () => {
                       {[1, 2, 3].map((investment) => (
                         <div 
                           key={investment}
-                          className="bg-openfund-gray-dark p-4 rounded-lg flex justify-between items-center"
+                          className="bg-secondary p-4 rounded-lg flex justify-between items-center"
                         >
                           <div>
                             <div className="font-medium">Alpha Seekers #{investment}</div>
-                            <div className="text-sm text-gray-400">Invested: $4,{investment}00</div>
+                            <div className="text-sm text-muted-foreground">Invested: $4,{investment}00</div>
                           </div>
                           <div className="text-right">
-                            <div className="text-openfund-green font-medium">+{12 + investment * 4}%</div>
-                            <div className="text-sm text-gray-400">Current: ${(4000 + investment * 400 + investment * 200).toLocaleString()}</div>
+                            <div className="text-primary font-medium">+{12 + investment * 4}%</div>
+                            <div className="text-sm text-muted-foreground">Current: $4,{investment + 5}50</div>
                           </div>
                         </div>
                       ))}
