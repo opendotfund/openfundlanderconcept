@@ -12,37 +12,249 @@ import {
 } from 'recharts';
 import { ChartContainer, ChartTooltipContent } from '@/components/ui/chart';
 import { useIsMobile } from '@/hooks/use-mobile';
-import { 
-  getAssetHistoricalData, 
-  getAssetPrice, 
-  subscribeToAssetUpdates, 
-  unsubscribeFromAssetUpdates,
-  formatPrice,
-  formatCurrency,
-  formatLargeNumber,
-  AssetPrice,
-  PriceDataPoint
-} from '@/services/assetService';
+
+interface PriceData {
+  name: string;
+  value: number;
+  volume: number;
+}
+
+interface ChartDataPoint {
+  date: string;
+  value: number;
+}
 
 interface AssetChartProps {
   asset?: string;
   timeframe: string;
   isPortfolio?: boolean;
   portfolioName?: string;
-  portfolioData?: { date: string; value: number }[];
+  portfolioData?: ChartDataPoint[];
 }
 
-interface FormattedChartData {
-  name: string;
-  value: number;
-  volume: number;
-}
+const fetchPriceData = async (asset: string, timeframe: string, isPortfolio: boolean = false, portfolioName: string = '', portfolioData?: ChartDataPoint[]): Promise<PriceData[]> => {
+  try {
+    const baseValues: Record<string, number> = {
+      'bitcoin': 80000.00,
+      'ethereum': 1600.00,
+      'solana': 135.80,
+      'apple': 182.40,
+      'tesla': 178.32,
+      'gold': 2312.75
+    };
+    
+    if (isPortfolio) {
+      if (portfolioData && portfolioData.length > 0 && timeframe === '90d') {
+        return portfolioData.map((dataPoint, index) => ({
+          name: dataPoint.date,
+          value: dataPoint.value,
+          volume: Math.floor(Math.random() * dataPoint.value * 0.05)
+        }));
+      }
+      
+      const portfolioBaseValue = portfolioName === "Alpha Seekers #1" ? 1577892 : 250000;
+      const endValue = portfolioBaseValue;
+      
+      const dataPoints = 
+        timeframe === '1h' ? 60 : 
+        timeframe === '24h' ? 24 : 
+        timeframe === '7d' ? 7 : 
+        timeframe === '30d' ? 30 : 
+        timeframe === '90d' ? 90 : 
+        365;
+      
+      let lastValue = portfolioBaseValue * 0.8;
+      const targetValue = portfolioBaseValue;
+      
+      const getVolatilityFactor = () => {
+        if (timeframe === '1h') return 0.0005;
+        if (timeframe === '24h') return 0.001;
+        if (timeframe === '7d') return 0.003;
+        if (timeframe === '30d') return 0.004;
+        if (timeframe === '90d') return 0.005;
+        return 0.006;
+      };
+      
+      const volatilityFactor = getVolatilityFactor();
+      const variance = portfolioBaseValue * volatilityFactor;
+      
+      const seedValue = portfolioName.length;
+      
+      const getTrendFactor = () => {
+        if (timeframe === '1h') {
+          return [0.4, -0.1, 0.3, -0.1, 0.3];
+        } else if (timeframe === '24h') {
+          return [0.4, 0.3, -0.1, 0.2, -0.1, 0.2];
+        } else if (timeframe === '7d') {
+          return [0.2, 0.4, 0.3, -0.1, 0.2, -0.1, 0.3];
+        } else {
+          return [0.25, 0.2, -0.1, 0.15, -0.05, 0.2];
+        }
+      };
+      
+      const trendFactors = getTrendFactor();
+      
+      const growthNeeded = targetValue - lastValue;
+      const averageGrowthPerPoint = growthNeeded / dataPoints;
+      
+      const data: PriceData[] = [];
+      for (let i = 0; i < dataPoints; i++) {
+        const trendIndex = i % trendFactors.length;
+        const trendFactor = trendFactors[trendIndex];
+        
+        const cycle = Math.sin(i / (dataPoints * 0.2)) * 0.1;
+        
+        const baseChange = averageGrowthPerPoint * (1 + (Math.random() * 0.5));
+        
+        const change = baseChange + (Math.random() - 0.4 + trendFactor + cycle) * variance;
+        
+        const finalChange = Math.random() > 0.3 ? Math.abs(change) : -Math.abs(change) * 0.5;
+        
+        lastValue = Math.max(portfolioBaseValue * 0.7, lastValue + finalChange);
+        
+        if (i === dataPoints - 1) {
+          lastValue = endValue;
+        }
+        
+        let label = '';
+        if (timeframe === '1h') {
+          // For 1 hour, show more minute markers
+          if (i % 5 === 0 || i === dataPoints - 1) {
+            label = `${60-i}m`;
+          }
+        } else if (timeframe === '24h') {
+          // For 24 hours, show more hour markers
+          if (i % 2 === 0 || i === dataPoints - 1) {
+            label = `${24-i}h`;
+          }
+        } else if (timeframe === '7d') {
+          // For 7 days, show day labels: D7, D6, D5, etc.
+          label = `Day ${7-i}`;
+        } else if (timeframe === '30d') {
+          // For 30 days, show weekly labels: W4, W3, W2, W1
+          const weekNum = Math.floor((30-i)/7) + 1;
+          if (i % 7 === 0 || i === dataPoints - 1) {
+            label = `Week ${weekNum}`;
+          }
+        } else if (timeframe === '90d') {
+          // For 90 days, show monthly labels: Month 3, Month 2, Month 1
+          const monthNum = Math.floor((90-i)/30) + 1;
+          if (i % 15 === 0 || i === dataPoints - 1) {
+            label = `Month ${monthNum}`;
+          }
+        } else {
+          // For 1 year, show monthly labels: Jan, Feb, Mar, etc.
+          const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+          const monthNum = Math.floor((365-i)/30) % 12;
+          if (i % 30 === 0 || i === dataPoints - 1) {
+            label = monthNames[monthNum];
+          }
+        }
+        
+        data.push({
+          name: label,
+          value: parseFloat(lastValue.toFixed(2)),
+          volume: Math.floor(Math.random() * portfolioBaseValue * 0.05)
+        });
+      }
+      
+      return data.reverse();
+    } else {
+      const baseValue = baseValues[asset.toLowerCase()] || 100;
+      
+      const dataPoints = 
+        timeframe === '1h' ? 60 : 
+        timeframe === '24h' ? 24 : 
+        timeframe === '7d' ? 7 : 
+        timeframe === '30d' ? 30 : 
+        timeframe === '90d' ? 90 : 
+        365;
+      
+      let lastValue = baseValue;
+      
+      const getVolatilityFactor = () => {
+        if (timeframe === '1h') return 0.0008;
+        if (timeframe === '24h') return 0.002;
+        if (timeframe === '7d') return 0.004;
+        if (timeframe === '30d') return 0.006;
+        if (timeframe === '90d') return 0.008;
+        return 0.01;
+      };
+      
+      const volatilityFactor = getVolatilityFactor();
+      const variance = baseValue * volatilityFactor;
+      
+      const assetTrend = () => {
+        if (asset.toLowerCase() === 'bitcoin') return 0.08;
+        if (asset.toLowerCase() === 'ethereum') return 0.05;
+        if (asset.toLowerCase() === 'solana') return 0.1;
+        if (asset.toLowerCase() === 'tesla') return -0.02;
+        return 0;
+      };
+      
+      const trend = assetTrend() / dataPoints;
+      
+      const data: PriceData[] = [];
+      for (let i = 0; i < dataPoints; i++) {
+        const dailyCycle = Math.sin(i / 12) * 0.3;
+        const weeklyCycle = Math.sin(i / 30) * 0.2;
+        
+        const cycleEffect = (timeframe === '1h' || timeframe === '24h') ? dailyCycle : weeklyCycle;
+        const change = (Math.random() - 0.5 + trend + cycleEffect * volatilityFactor) * variance;
+        lastValue = Math.max(1, lastValue + change);
+        
+        let label = '';
+        if (timeframe === '1h') {
+          // For 1 hour, show more minute markers
+          if (i % 5 === 0 || i === dataPoints - 1) {
+            label = `${60-i}m`;
+          }
+        } else if (timeframe === '24h') {
+          // For 24 hours, ensure every hour has a label
+          if (i % 2 === 0 || i === dataPoints - 1) {
+            label = `${24-i}h`;
+          }
+        } else if (timeframe === '7d') {
+          // For 7 days, show day labels
+          label = `Day ${7-i}`;
+        } else if (timeframe === '30d') {
+          // For 30 days, show more week markers
+          const weekNum = Math.ceil((30-i)/7);
+          if (i % 7 === 0 || i === dataPoints - 1) {
+            label = `Week ${weekNum}`;
+          }
+        } else if (timeframe === '90d') {
+          // For 90 days, show more month markers
+          const monthNum = Math.floor((90-i)/30) + 1;
+          if (i % 15 === 0 || i === dataPoints - 1) {
+            label = `Month ${monthNum}`;
+          }
+        } else {
+          // For 1 year, show monthly labels
+          const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+          const monthNum = Math.floor((365-i)/30) % 12;
+          if (i % 30 === 0 || i === dataPoints - 1) {
+            label = monthNames[monthNum];
+          }
+        }
+        
+        data.push({
+          name: label,
+          value: parseFloat(lastValue.toFixed(2)),
+          volume: Math.floor(Math.random() * baseValue * 100 * (1 + Math.sin(i/10) * 0.3))
+        });
+      }
+      
+      return data.reverse();
+    }
+  } catch (error) {
+    console.error("Error fetching price data:", error);
+    return [];
+  }
+};
 
 export const AssetChart = ({ asset = 'bitcoin', timeframe, isPortfolio = false, portfolioName = '', portfolioData }: AssetChartProps) => {
-  const [chartData, setChartData] = useState<FormattedChartData[]>([]);
-  const [currentPrice, setCurrentPrice] = useState<number>(0);
-  const [priceChange, setPriceChange] = useState<number>(0);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [chartData, setChartData] = useState<PriceData[]>([]);
   const [isLightMode, setIsLightMode] = useState<boolean>(false);
   const isMobile = useIsMobile();
   
@@ -64,108 +276,29 @@ export const AssetChart = ({ asset = 'bitcoin', timeframe, isPortfolio = false, 
   }, []);
   
   useEffect(() => {
-    let subscriptionId: string | null = null;
-    
-    const fetchInitialData = async () => {
-      setIsLoading(true);
-      
-      try {
-        if (isPortfolio && portfolioData) {
-          // For portfolio data, use the provided data
-          const formattedData = portfolioData.map((item) => ({
-            name: item.date,
-            value: item.value,
-            volume: Math.floor(Math.random() * item.value * 0.05)
-          }));
-          
-          setChartData(formattedData);
-          setCurrentPrice(formattedData[formattedData.length - 1]?.value || 0);
-          
-          const firstPrice = formattedData[0]?.value || 0;
-          const lastPrice = formattedData[formattedData.length - 1]?.value || 0;
-          const changePct = firstPrice > 0 ? ((lastPrice - firstPrice) / firstPrice) * 100 : 0;
-          setPriceChange(changePct);
-        } else {
-          // For regular assets, fetch from our service
-          const priceData = await getAssetPrice(asset);
-          setCurrentPrice(priceData.price);
-          setPriceChange(priceData.change24h);
-          
-          const historicalData = await getAssetHistoricalData(asset, timeframe);
-          
-          // Format historical data for the chart
-          const formattedData = formatChartData(historicalData.prices, timeframe);
-          setChartData(formattedData);
-          
-          // Subscribe to real-time updates
-          subscriptionId = subscribeToAssetUpdates(asset, (updatedPrice) => {
-            setCurrentPrice(updatedPrice.price);
-            setPriceChange(updatedPrice.change24h);
-          });
-        }
-      } catch (error) {
-        console.error("Error fetching asset data:", error);
-      } finally {
-        setIsLoading(false);
-      }
+    const getInitialData = async () => {
+      const data = await fetchPriceData(asset, timeframe, isPortfolio, portfolioName, portfolioData);
+      setChartData(data);
     };
     
-    fetchInitialData();
+    getInitialData();
     
-    // Cleanup subscription
-    return () => {
-      if (subscriptionId) {
-        unsubscribeFromAssetUpdates(subscriptionId);
-      }
-    };
+    const intervalId = setInterval(async () => {
+      const data = await fetchPriceData(asset, timeframe, isPortfolio, portfolioName, portfolioData);
+      setChartData(data);
+    }, 30000);
+    
+    return () => clearInterval(intervalId);
   }, [asset, timeframe, isPortfolio, portfolioName, portfolioData]);
+
+  const isPositive = chartData.length >= 2 && 
+    chartData[chartData.length - 1].value > chartData[0].value;
   
-  // Format timestamp to appropriate label based on timeframe
-  const formatTimestampForTimeframe = (timestamp: number, timeframe: string, index: number, total: number): string => {
-    const date = new Date(timestamp);
-    
-    // For sparse labeling, only show some labels based on position
-    const showLabel = () => {
-      if (total <= 12) return true;
-      if (total <= 24) return index % 2 === 0 || index === total - 1;
-      if (total <= 60) return index % 5 === 0 || index === total - 1;
-      return index % 10 === 0 || index === total - 1;
-    };
-    
-    if (!showLabel()) return '';
-    
-    switch (timeframe) {
-      case '1h':
-        return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-      case '24h':
-        return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-      case '7d':
-        return date.toLocaleDateString([], { weekday: 'short' });
-      case '30d':
-      case '90d':
-        return date.toLocaleDateString([], { month: 'short', day: 'numeric' });
-      case '12m':
-        return date.toLocaleDateString([], { month: 'short', year: '2-digit' });
-      default:
-        return date.toLocaleDateString();
-    }
-  };
+  const percentChange = chartData.length >= 2 ? 
+    ((chartData[chartData.length - 1].value - chartData[0].value) / chartData[0].value) * 100 : 0;
   
-  // Format raw price data to chart format
-  const formatChartData = (priceData: PriceDataPoint[], timeframe: string): FormattedChartData[] => {
-    if (!priceData || priceData.length === 0) return [];
-    
-    return priceData.map((point, index) => ({
-      name: formatTimestampForTimeframe(point.timestamp, timeframe, index, priceData.length),
-      value: point.price,
-      volume: point.volume || Math.floor(point.price * 1000 * (1 + Math.sin(index/10) * 0.3))
-    }));
-  };
-  
-  const isPositive = priceChange >= 0;
-  
-  const formattedPercent = isPositive ? 
-    `+${priceChange.toFixed(2)}%` : `${priceChange.toFixed(2)}%`;
+  const formattedPercent = percentChange >= 0 ? 
+    `+${percentChange.toFixed(2)}%` : `${percentChange.toFixed(2)}%`;
 
   const displayName = isPortfolio ? 'Portfolio Value' : `${asset.charAt(0).toUpperCase() + asset.slice(1)} Price`;
   
@@ -182,110 +315,102 @@ export const AssetChart = ({ asset = 'bitcoin', timeframe, isPortfolio = false, 
 
   return (
     <div className="w-full h-full">
-      <div className={`flex ${isMobile ? 'flex-col gap-1' : 'items-center justify-between'} mb-2`}>
-        <div className={`${isMobile ? 'text-lg' : 'text-xl'} font-medium`}>
-          {displayName}
+      {chartData.length > 0 && (
+        <div className={`flex ${isMobile ? 'flex-col gap-1' : 'items-center justify-between'} mb-2`}>
+          <div className={`${isMobile ? 'text-lg' : 'text-xl'} font-medium`}>
+            {displayName}
+          </div>
+          <div className="flex items-center gap-2">
+            <span className={`${isMobile ? 'text-xl' : 'text-2xl'} font-bold`}>
+              ${chartData[chartData.length - 1].value.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}
+            </span>
+            <span className={`${isMobile ? 'text-xs' : 'text-sm'} font-medium ${isPositive ? 'text-primary' : 'text-red-500'}`}>
+              {formattedPercent}
+            </span>
+          </div>
         </div>
-        <div className="flex items-center gap-2">
-          <span className={`${isMobile ? 'text-xl' : 'text-2xl'} font-bold`}>
-            {isLoading ? 'Loading...' : (
-              isPortfolio ?
-                formatCurrency(currentPrice) :
-                `$${formatPrice(currentPrice)}`
-            )}
-          </span>
-          <span className={`${isMobile ? 'text-xs' : 'text-sm'} font-medium ${isPositive ? 'text-primary' : 'text-red-500'}`}>
-            {formattedPercent}
-          </span>
-        </div>
-      </div>
+      )}
       
       <div style={{ height: chartHeight }}>
-        {isLoading ? (
-          <div className="h-full flex items-center justify-center">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
-          </div>
-        ) : (
-          <ChartContainer
-            config={{
-              value: {
-                label: isPortfolio ? "Portfolio Value" : "Price",
-                color: chartColor
-              },
-              volume: {
-                label: "Volume",
-                color: isLightMode ? "#D1D5DB" : "#404040"
-              }
-            }}
-          >
-            <ResponsiveContainer width="100%" height="100%">
-              <AreaChart
-                data={chartData}
-                margin={margins}
-              >
-                <defs>
-                  <linearGradient id="colorPrice" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor={chartColor} stopOpacity={0.3} />
-                    <stop offset="95%" stopColor={chartColor} stopOpacity={0} />
-                  </linearGradient>
-                </defs>
-                <XAxis 
-                  dataKey="name"
-                  tickLine={false}
-                  axisLine={true}
-                  dy={isMobile ? 15 : 18}
-                  tick={{ 
-                    fill: isLightMode ? '#666' : '#888', 
-                    fontSize: isMobile ? 9 : 11
-                  }}
-                  height={isMobile ? 50 : 55}
-                  padding={{ left: 5, right: 5 }}
-                  interval={0}
-                  tickFormatter={(value) => value || ''}
-                  tickMargin={10}
-                  minTickGap={2}
-                  allowDataOverflow={false}
-                />
-                <YAxis 
-                  tickLine={false}
-                  axisLine={true}
-                  tick={{ 
-                    fill: isLightMode ? '#666' : '#888', 
-                    fontSize: isMobile ? 10 : 12 
-                  }}
-                  domain={['auto', 'auto']}
-                  dx={isMobile ? -5 : -10}
-                  width={isMobile ? 40 : 60}
-                  tickFormatter={(value) => isMobile 
-                    ? value >= 1000 
-                      ? `$${(value/1000).toFixed(0)}K` 
-                      : `$${value}`
-                    : `$${formatPrice(value)}`
-                  }
-                />
-                <Tooltip 
-                  content={<ChartTooltipContent />} 
-                  cursor={{ stroke: isLightMode ? '#999' : '#666', strokeWidth: 1, strokeDasharray: '5 5' }}
-                />
-                <Area 
-                  type="monotone"
-                  dataKey="value"
-                  stroke={chartColor}
-                  strokeWidth={2}
-                  fillOpacity={1}
-                  fill="url(#colorPrice)"
-                  activeDot={{ r: 6, fill: chartColor, strokeWidth: 0 }}
-                />
-                <Bar 
-                  dataKey="volume" 
-                  fill={isLightMode ? "#D1D5DB" : "#404040"}
-                  opacity={0.3}
-                  barSize={isMobile ? 3 : 5}
-                />
-              </AreaChart>
-            </ResponsiveContainer>
-          </ChartContainer>
-        )}
+        <ChartContainer
+          config={{
+            value: {
+              label: isPortfolio ? "Portfolio Value" : "Price",
+              color: chartColor
+            },
+            volume: {
+              label: "Volume",
+              color: isLightMode ? "#D1D5DB" : "#404040"
+            }
+          }}
+        >
+          <ResponsiveContainer width="100%" height="100%">
+            <AreaChart
+              data={chartData}
+              margin={margins}
+            >
+              <defs>
+                <linearGradient id="colorPrice" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="5%" stopColor={chartColor} stopOpacity={0.3} />
+                  <stop offset="95%" stopColor={chartColor} stopOpacity={0} />
+                </linearGradient>
+              </defs>
+              <XAxis 
+                dataKey="name"
+                tickLine={false}
+                axisLine={true}
+                dy={isMobile ? 15 : 18}
+                tick={{ 
+                  fill: isLightMode ? '#666' : '#888', 
+                  fontSize: isMobile ? 9 : 11
+                }}
+                height={isMobile ? 50 : 55}
+                padding={{ left: 5, right: 5 }}
+                interval={0}
+                tickFormatter={(value) => value || ''}
+                tickMargin={10}
+                minTickGap={2}
+                allowDataOverflow={false}
+              />
+              <YAxis 
+                tickLine={false}
+                axisLine={true}
+                tick={{ 
+                  fill: isLightMode ? '#666' : '#888', 
+                  fontSize: isMobile ? 10 : 12 
+                }}
+                domain={['auto', 'auto']}
+                dx={isMobile ? -5 : -10}
+                width={isMobile ? 40 : 60}
+                tickFormatter={(value) => isMobile 
+                  ? value >= 1000 
+                    ? `$${(value/1000).toFixed(0)}K` 
+                    : `$${value}`
+                  : `$${value.toLocaleString()}`
+                }
+              />
+              <Tooltip 
+                content={<ChartTooltipContent />} 
+                cursor={{ stroke: isLightMode ? '#999' : '#666', strokeWidth: 1, strokeDasharray: '5 5' }}
+              />
+              <Area 
+                type="monotone"
+                dataKey="value"
+                stroke={chartColor}
+                strokeWidth={2}
+                fillOpacity={1}
+                fill="url(#colorPrice)"
+                activeDot={{ r: 6, fill: chartColor, strokeWidth: 0 }}
+              />
+              <Bar 
+                dataKey="volume" 
+                fill={isLightMode ? "#D1D5DB" : "#404040"}
+                opacity={0.3}
+                barSize={isMobile ? 3 : 5}
+              />
+            </AreaChart>
+          </ResponsiveContainer>
+        </ChartContainer>
       </div>
     </div>
   );

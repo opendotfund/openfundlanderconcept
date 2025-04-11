@@ -15,7 +15,7 @@ export const TimeframeSelector = ({ timeframe, onChange }: TimeframeSelectorProp
     { value: '7d', label: '7D' },
     { value: '30d', label: '30D' },
     { value: '90d', label: '90D' },
-    { value: '12m', label: '1Y' }, // Updated from '1y' to '12m' to match assetService
+    { value: '1y', label: '1Y' },
   ];
   
   const isMobile = useIsMobile();

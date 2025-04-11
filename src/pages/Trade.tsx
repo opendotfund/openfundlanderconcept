@@ -13,7 +13,6 @@ import { useIsMobile } from '@/hooks/use-mobile';
 import { Toaster } from "@/components/ui/toaster";
 
 const Trade = () => {
-  // Updated default timeframe to match API expectations
   const [selectedAsset, setSelectedAsset] = useState('bitcoin');
   const [timeframe, setTimeframe] = useState('24h');
   const [assetType, setAssetType] = useState<'crypto' | 'stocks' | 'commodities'>('crypto');

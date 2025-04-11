@@ -32,13 +32,8 @@ import { FundShareSwap } from '@/components/FundShareSwap';
 import { FundHoldingsPieChart } from '@/components/FundHoldingsPieChart';
 import { traditionalFunds, cryptoFunds, openfundFunds, getAllFunds, Fund as FundType } from '@/data/funds';
 
-// Generate historical price data for a fund using the actual fund values from data/funds.ts
-const generateHistoricalData = (fund: FundType) => {
+const generateHistoricalData = (baseValue: number, volatility: number, uptrend: boolean) => {
   const data = [];
-  const baseValue = fund.aumValue ? fund.aumValue / 1000000 : fund.minInvestmentValue; // Use a sensible starting price
-  const volatility = fund.volatilityValue / 100;
-  const uptrend = fund.performanceValue > 0;
-
   let currentValue = baseValue;
   
   for (let i = 0; i < 12; i++) { // 12 months of data
@@ -48,7 +43,7 @@ const generateHistoricalData = (fund: FundType) => {
       Math.max(currentValue * (1 - change), baseValue * 0.5);
     
     data.push({
-      date: new Date(2024, i, 1).toLocaleString('default', { month: 'short' }),
+      month: new Date(2024, i, 1).toLocaleString('default', { month: 'short' }),
       value: parseFloat(currentValue.toFixed(2))
     });
   }
@@ -61,15 +56,11 @@ const generateComparisonData = (fundData: FundType) => {
   const fundVolatility = fundData.volatilityValue / 100;
   const marketVolatility = 0.2;
   
-  const fundPerformance = generateHistoricalData(fundData);
-  const marketPerformance = generateHistoricalData({
-    ...fundData,
-    volatilityValue: 20,
-    performanceValue: 10
-  });
+  const fundPerformance = generateHistoricalData(baseValue, fundVolatility, fundData.performanceValue > 0);
+  const marketPerformance = generateHistoricalData(baseValue, marketVolatility, true);
   
   return fundPerformance.map((item, index) => ({
-    month: item.date,
+    month: item.month,
     fund: item.value,
     market: marketPerformance[index].value
   }));
@@ -78,10 +69,9 @@ const generateComparisonData = (fundData: FundType) => {
 const FundDetail = () => {
   const { fundId, type } = useParams<{ fundId: string, type: string }>();
   const [fund, setFund] = useState<FundType | null>(null);
-  const [timeframe, setTimeframe] = useState('12m'); // Updated from '1y' to '12m' to match assetService
+  const [timeframe, setTimeframe] = useState('12m');
   const [activeTab, setActiveTab] = useState('overview');
   const [showSwapWidget, setShowSwapWidget] = useState(false);
-  const [portfolioData, setPortfolioData] = useState<{ date: string; value: number }[]>([]);
   const navigate = useNavigate();
   const isMobile = useIsMobile();
   const { toast } = useToast();
@@ -103,11 +93,6 @@ const FundDetail = () => {
       }
       
       setFund(foundFund || null);
-
-      // Generate portfolio data based on the found fund
-      if (foundFund) {
-        setPortfolioData(generateHistoricalData(foundFund));
-      }
     }
   }, [fundId, type]);
   
@@ -130,11 +115,6 @@ const FundDetail = () => {
   }
   
   const isDefiFund = fund.type === 'Decentralized Fund';
-  const fundAssetId = type === 'traditional' 
-    ? `traditional-fund-${fund.id}` 
-    : type === 'crypto'
-    ? `crypto-fund-${fund.id}`
-    : `defi-fund-${fund.id}`;
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -191,19 +171,10 @@ const FundDetail = () => {
               </CardHeader>
               <CardContent>
                 <div className="h-[350px]">
-                  {portfolioData.length > 0 ? (
-                    <AssetChart 
-                      asset={fundAssetId}
-                      timeframe={timeframe}
-                      isPortfolio={true}
-                      portfolioName={fund.name}
-                      portfolioData={portfolioData}
-                    />
-                  ) : (
-                    <div className="h-full flex items-center justify-center">
-                      <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
-                    </div>
-                  )}
+                  <AssetChart 
+                    asset={fund.name.toLowerCase().replace(' ', '-')} 
+                    timeframe={timeframe} 
+                  />
                 </div>
               </CardContent>
             </Card>
