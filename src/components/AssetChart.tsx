@@ -156,7 +156,7 @@ export const AssetChart = ({ asset, timeframe }: AssetChartProps) => {
         <ResponsiveContainer width="100%" height="100%">
           <AreaChart
             data={chartData}
-            margin={{ top: 10, right: 30, left: 60, bottom: 30 }}
+            margin={{ top: 10, right: 30, left: 60, bottom: 60 }}
           >
             <defs>
               <linearGradient id="colorPrice" x1="0" y1="0" x2="0" y2="1">
@@ -170,6 +170,8 @@ export const AssetChart = ({ asset, timeframe }: AssetChartProps) => {
               axisLine={false}
               dy={20}
               tick={{ fill: '#888', fontSize: 12 }}
+              height={60}
+              padding={{ left: 0, right: 0 }}
             />
             <YAxis 
               tickLine={false}
