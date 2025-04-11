@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Navbar from '@/components/Navbar';
@@ -83,10 +84,7 @@ const Index = () => {
                   <p className="text-muted-foreground mb-6">
                     Browse through verified trading strategies across cryptocurrencies, stocks, and commodities. Invest in funds that match your risk profile.
                   </p>
-                  <Button 
-                    className="bg-primary hover:bg-primary/90 text-primary-foreground flex items-center"
-                    asChild
-                  >
+                  <Button asChild>
                     <Link to="/explore">
                       Explore Strategies <ArrowRight size={16} className="ml-2" />
                     </Link>
@@ -141,7 +139,7 @@ const Index = () => {
             </p>
             <div className="flex flex-col sm:flex-row justify-center gap-4">
               <Button 
-                className="bg-primary hover:bg-primary/90 text-primary-foreground text-lg px-8 py-6"
+                className="text-lg px-8 py-6 h-auto"
                 asChild
               >
                 <Link to="/trade">
@@ -149,7 +147,8 @@ const Index = () => {
                 </Link>
               </Button>
               <Button 
-                className="bg-transparent border-2 border-primary text-primary hover:bg-primary/10 text-lg px-8 py-6"
+                variant="outline"
+                className="border-2 border-primary text-primary hover:bg-primary/10 text-lg px-8 py-6 h-auto"
                 asChild
               >
                 <Link to="/fund">
@@ -213,7 +212,6 @@ const Index = () => {
                   <p className="text-muted-foreground">Join our waitlist to be notified when we launch.</p>
                 </div>
                 <Button 
-                  className="bg-primary hover:bg-primary/90 text-primary-foreground flex items-center"
                   asChild
                 >
                   <Link to="/coming-soon">

@@ -204,7 +204,7 @@ const FundDetail = () => {
   
   if (!fund) {
     return (
-      <div className="min-h-screen bg-openfund-gray-dark text-white">
+      <div className="min-h-screen bg-background text-foreground">
         <Navbar />
         <div className="container mx-auto px-4 py-16 text-center">
           <h1 className="text-2xl font-bold mb-4">Fund not found</h1>
@@ -218,7 +218,7 @@ const FundDetail = () => {
   }
   
   return (
-    <div className="min-h-screen bg-openfund-gray-dark text-white">
+    <div className="min-h-screen bg-background text-foreground">
       <Navbar />
       
       <main className="container mx-auto px-4 py-8">
@@ -236,12 +236,12 @@ const FundDetail = () => {
             <h1 className="text-3xl font-bold">
               {fund.name}
               {fund.type === 'Decentralized Fund' && (
-                <Badge className="ml-3 bg-openfund-green/20 text-openfund-green">
+                <Badge className="ml-3 bg-primary/20 text-primary">
                   DeFi Fund
                 </Badge>
               )}
             </h1>
-            <p className="text-gray-400 mt-1">
+            <p className="text-muted-foreground mt-1">
               {fund.type === 'Decentralized Fund' ? 
                 `Created by ${fund.manager}` : 
                 `${fund.type} • Manager: ${fund.manager}`}
@@ -249,12 +249,12 @@ const FundDetail = () => {
           </div>
           
           <div className="flex flex-col items-end">
-            <div className="bg-openfund-gray-medium px-4 py-2 rounded-lg">
-              <div className="flex items-center text-openfund-green mb-1">
+            <div className="bg-card px-4 py-2 rounded-lg">
+              <div className="flex items-center text-primary mb-1">
                 <TrendingUp size={16} className="mr-1" />
                 <span className="font-semibold text-xl">{fund.performance}</span>
               </div>
-              <div className="text-sm text-gray-400">Annual Return</div>
+              <div className="text-sm text-muted-foreground">Annual Return</div>
             </div>
           </div>
         </div>
@@ -262,7 +262,7 @@ const FundDetail = () => {
         {/* Performance Chart */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <div className="lg:col-span-2">
-            <Card className="bg-openfund-gray-medium border-openfund-gray-light mb-6">
+            <Card className="mb-6">
               <CardHeader className="flex flex-row justify-between items-center">
                 <CardTitle>Performance History</CardTitle>
                 <TimeframeSelector 
@@ -281,7 +281,7 @@ const FundDetail = () => {
             </Card>
             
             <Tabs defaultValue={activeTab} onValueChange={setActiveTab}>
-              <TabsList className="bg-openfund-gray-medium mb-4">
+              <TabsList className="bg-card mb-4">
                 <TabsTrigger value="overview">Overview</TabsTrigger>
                 <TabsTrigger value="strategy">Strategy</TabsTrigger>
                 <TabsTrigger value="holdings">Holdings</TabsTrigger>
@@ -291,7 +291,7 @@ const FundDetail = () => {
               </TabsList>
               
               <TabsContent value="overview">
-                <Card className="bg-openfund-gray-medium border-openfund-gray-light">
+                <Card className="bg-card border-card">
                   <CardHeader>
                     <CardTitle>Fund Overview</CardTitle>
                   </CardHeader>
@@ -331,7 +331,7 @@ const FundDetail = () => {
               </TabsContent>
               
               <TabsContent value="strategy">
-                <Card className="bg-openfund-gray-medium border-openfund-gray-light">
+                <Card className="bg-card border-card">
                   <CardHeader>
                     <CardTitle>Investment Strategy</CardTitle>
                   </CardHeader>
@@ -387,21 +387,21 @@ const FundDetail = () => {
                     
                     <h3 className="text-lg font-medium mb-3">Key Metrics</h3>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-                      <div className="bg-openfund-gray-dark p-4 rounded-lg">
+                      <div className="bg-card p-4 rounded-lg">
                         <div className="flex items-center mb-1">
                           <TrendingUp size={18} className="mr-2 text-openfund-green" />
                           <span className="text-gray-400">Annual Return</span>
                         </div>
                         <div className="text-xl font-semibold">{fund.returns}</div>
                       </div>
-                      <div className="bg-openfund-gray-dark p-4 rounded-lg">
+                      <div className="bg-card p-4 rounded-lg">
                         <div className="flex items-center mb-1">
                           <BarChart3 size={18} className="mr-2 text-blue-400" />
                           <span className="text-gray-400">Volatility</span>
                         </div>
                         <div className="text-xl font-semibold">{fund.volatility}</div>
                       </div>
-                      <div className="bg-openfund-gray-dark p-4 rounded-lg">
+                      <div className="bg-card p-4 rounded-lg">
                         <div className="flex items-center mb-1">
                           <Percent size={18} className="mr-2 text-purple-400" />
                           <span className="text-gray-400">Sharpe Ratio</span>
@@ -416,7 +416,7 @@ const FundDetail = () => {
               </TabsContent>
               
               <TabsContent value="holdings">
-                <Card className="bg-openfund-gray-medium border-openfund-gray-light">
+                <Card className="bg-card border-card">
                   <CardHeader>
                     <CardTitle>Top Holdings</CardTitle>
                   </CardHeader>
@@ -424,9 +424,9 @@ const FundDetail = () => {
                     {fund.topHoldings ? (
                       <div className="space-y-4">
                         {fund.topHoldings.map((holding: string, index: number) => (
-                          <div key={index} className="flex items-center justify-between bg-openfund-gray-dark p-4 rounded-lg">
+                          <div key={index} className="flex items-center justify-between bg-card p-4 rounded-lg">
                             <div className="flex items-center">
-                              <div className="w-10 h-10 bg-openfund-gray-medium rounded-full flex items-center justify-center mr-3">
+                              <div className="w-10 h-10 bg-card rounded-full flex items-center justify-center mr-3">
                                 {holding.charAt(0)}
                               </div>
                               <span className="font-medium">{holding}</span>
@@ -447,7 +447,7 @@ const FundDetail = () => {
               
               {fund.type === 'Decentralized Fund' && (
                 <TabsContent value="governance">
-                  <Card className="bg-openfund-gray-medium border-openfund-gray-light">
+                  <Card className="bg-card border-card">
                     <CardHeader>
                       <CardTitle>Governance Structure</CardTitle>
                     </CardHeader>
@@ -475,14 +475,14 @@ const FundDetail = () => {
                         </div>
                       </div>
                       
-                      <div className="bg-openfund-gray-dark p-4 rounded-lg mb-6">
+                      <div className="bg-card p-4 rounded-lg mb-6">
                         <h3 className="font-medium mb-2">Active Proposals</h3>
                         <div className="space-y-2">
-                          <div className="flex justify-between items-center bg-openfund-gray-medium p-3 rounded">
+                          <div className="flex justify-between items-center bg-card p-3 rounded">
                             <span>Add exposure to Arbitrum ecosystem</span>
                             <Badge className="bg-blue-500">Voting</Badge>
                           </div>
-                          <div className="flex justify-between items-center bg-openfund-gray-medium p-3 rounded">
+                          <div className="flex justify-between items-center bg-card p-3 rounded">
                             <span>Increase USDC allocation to 10%</span>
                             <Badge className="bg-yellow-500/80">Pending</Badge>
                           </div>
@@ -499,7 +499,7 @@ const FundDetail = () => {
           
           <div className="space-y-6">
             {/* Fund details card */}
-            <Card className="bg-openfund-gray-medium border-openfund-gray-light">
+            <Card>
               <CardHeader>
                 <CardTitle>Fund Details</CardTitle>
               </CardHeader>
@@ -510,7 +510,7 @@ const FundDetail = () => {
                       <DollarSign className="h-4 w-4 mr-1" />
                       Fee Structure
                     </h3>
-                    <div className="bg-openfund-gray-dark p-3 rounded-md grid grid-cols-2 gap-2">
+                    <div className="bg-card p-3 rounded-md grid grid-cols-2 gap-2">
                       <div>
                         <div className="text-sm text-gray-400">Management Fee</div>
                         <div className="font-medium">{fund.managementFee || "2%"}</div>
@@ -539,7 +539,7 @@ const FundDetail = () => {
                       <Calendar className="h-4 w-4 mr-1" />
                       Withdrawal Terms
                     </h3>
-                    <div className="bg-openfund-gray-dark p-3 rounded-md">
+                    <div className="bg-card p-3 rounded-md">
                       <div className="mb-2">
                         <div className="text-sm text-gray-400">Lock-up Period</div>
                         <div className="font-medium">{fund.lockupPeriod || "N/A"}</div>
@@ -557,7 +557,7 @@ const FundDetail = () => {
                         </div>
                       )}
                       {fund.nextWithdrawalWindow && (
-                        <div className="mt-2 pt-2 border-t border-openfund-gray-light">
+                        <div className="mt-2 pt-2 border-t border-card">
                           <div className="text-sm text-gray-400">Next Withdrawal Window</div>
                           <div className="font-medium">{fund.nextWithdrawalWindow}</div>
                         </div>
@@ -592,7 +592,7 @@ const FundDetail = () => {
                       <Info className="h-4 w-4 mr-1" />
                       Additional Information
                     </h3>
-                    <div className="bg-openfund-gray-dark p-3 rounded-md space-y-2">
+                    <div className="bg-card p-3 rounded-md space-y-2">
                       {fund.type === 'Decentralized Fund' ? (
                         <>
                           <div>
@@ -658,7 +658,7 @@ const FundDetail = () => {
             </Card>
             
             {/* Risk disclaimer */}
-            <div className="bg-openfund-gray-dark p-4 rounded-lg border border-openfund-gray-medium">
+            <div className="bg-card p-4 rounded-lg border">
               <div className="flex items-start">
                 <AlertTriangle className="h-5 w-5 text-amber-400 mt-0.5 mr-2 flex-shrink-0" />
                 <p className="text-sm text-gray-400">

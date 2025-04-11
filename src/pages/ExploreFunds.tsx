@@ -664,7 +664,8 @@ const ExploreFunds = () => {
                     </CardContent>
                     <CardFooter>
                       <Button 
-                        className="w-full bg-primary hover:bg-primary/90"
+                        className="w-full"
+                        variant="default"
                         onClick={() => handleViewDetails(fund)}
                       >
                         View Details
@@ -730,7 +731,8 @@ const ExploreFunds = () => {
                     </CardContent>
                     <CardFooter>
                       <Button 
-                        className="w-full bg-primary hover:bg-primary/90"
+                        className="w-full"
+                        variant="default"
                         onClick={() => handleViewDetails(fund)}
                       >
                         View Details
@@ -760,7 +762,7 @@ const ExploreFunds = () => {
                 Discover decentralized hedge funds powered by OpenFund's advanced trading infrastructure. 
                 Share profits, build a track record, and grow your portfolio together.
               </p>
-              <Button className="bg-primary hover:bg-primary/90">
+              <Button className="bg-primary hover:bg-primary/90 text-primary-foreground">
                 Explore OpenFund DeFi Funds
               </Button>
             </div>
@@ -817,7 +819,8 @@ const ExploreFunds = () => {
                     </CardContent>
                     <CardFooter>
                       <Button 
-                        className="w-full bg-primary hover:bg-primary/90"
+                        className="w-full"
+                        variant="default"
                         onClick={() => handleViewDetails(fund)}
                       >
                         Invest Now
