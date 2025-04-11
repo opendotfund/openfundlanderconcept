@@ -11,7 +11,6 @@ import { TradeHistory } from '@/components/TradeHistory';
 import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
 import { useIsMobile } from '@/hooks/use-mobile';
-import { Toaster } from "@/components/ui/toaster";
 
 const Trade = () => {
   const [selectedAsset, setSelectedAsset] = useState('bitcoin');
@@ -24,10 +23,6 @@ const Trade = () => {
     if (value === 'crypto' || value === 'stocks' || value === 'commodities') {
       setAssetType(value);
     }
-  };
-
-  const handleAssetSelect = (asset: string) => {
-    setSelectedAsset(asset);
   };
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -93,7 +88,7 @@ const Trade = () => {
                 <TabsContent value="crypto">
                   <AssetList 
                     type="crypto" 
-                    onSelect={handleAssetSelect} 
+                    onSelect={setSelectedAsset} 
                     selectedAsset={selectedAsset}
                     searchQuery={searchQuery}
                   />
@@ -102,7 +97,7 @@ const Trade = () => {
                 <TabsContent value="stocks">
                   <AssetList 
                     type="stocks" 
-                    onSelect={handleAssetSelect} 
+                    onSelect={setSelectedAsset} 
                     selectedAsset={selectedAsset}
                     searchQuery={searchQuery}
                   />
@@ -111,7 +106,7 @@ const Trade = () => {
                 <TabsContent value="commodities">
                   <AssetList 
                     type="commodities" 
-                    onSelect={handleAssetSelect} 
+                    onSelect={setSelectedAsset} 
                     selectedAsset={selectedAsset}
                     searchQuery={searchQuery}
                   />
@@ -122,7 +117,6 @@ const Trade = () => {
         </div>
       </div>
       <Footer />
-      <Toaster />
     </div>
   );
 };

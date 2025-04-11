@@ -39,12 +39,10 @@ export const FundShareSwap = ({ fundName, fundId, onClose }: FundShareSwapProps)
       return;
     }
 
-    // Show fund investment confirmation toast notification with auto-dismiss after 5 seconds
     toast({
-      title: "Investment Confirmed",
-      description: `Successfully invested ${amount} USDC for ${shares} shares in ${fundName}`,
-      variant: "default",
-      duration: 5000
+      title: "Investment Successful",
+      description: `You have invested ${amount} USDC for ${shares} shares in ${fundName}`,
+      variant: "default"
     });
     
     // Close the swap widget after successful transaction
