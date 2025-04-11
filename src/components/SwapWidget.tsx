@@ -1,6 +1,5 @@
-
 import React, { useState, useEffect } from 'react';
-import { ArrowDown, Settings, ArrowRight, Plus } from 'lucide-react';
+import { ArrowDown, Settings, Search } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { 
@@ -16,9 +15,18 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { Slider } from "@/components/ui/slider";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from "@/components/ui/command";
 
 interface SwapWidgetProps {
   selectedAsset?: string;
+}
+
+interface Asset {
+  value: string;
+  label: string;
+  category: 'crypto' | 'stocks' | 'commodities';
 }
 
 export const SwapWidget = ({ selectedAsset = 'bitcoin' }: SwapWidgetProps) => {
@@ -35,8 +43,13 @@ export const SwapWidget = ({ selectedAsset = 'bitcoin' }: SwapWidgetProps) => {
   const [limitPrice, setLimitPrice] = useState<string>('');
   const [showTakeProfit, setShowTakeProfit] = useState<boolean>(false);
   const [showStopLoss, setShowStopLoss] = useState<boolean>(false);
+  const [fromSearchQuery, setFromSearchQuery] = useState<string>('');
+  const [toSearchQuery, setToSearchQuery] = useState<string>('');
+  const [fromAssetCategory, setFromAssetCategory] = useState<'all' | 'crypto' | 'stocks' | 'commodities'>('all');
+  const [toAssetCategory, setToAssetCategory] = useState<'all' | 'crypto' | 'stocks' | 'commodities'>('all');
+  const [fromAssetPopoverOpen, setFromAssetPopoverOpen] = useState<boolean>(false);
+  const [toAssetPopoverOpen, setToAssetPopoverOpen] = useState<boolean>(false);
 
-  // Sample exchange rate calculation with more accurate prices
   const calculateExchangeRate = (from: string, to: string, amount: string): string => {
     const rates: Record<string, number> = {
       'bitcoin': 80000,
@@ -64,12 +77,9 @@ export const SwapWidget = ({ selectedAsset = 'bitcoin' }: SwapWidgetProps) => {
     }
   };
 
-  // Function to suggest TP and SL based on current price
   useEffect(() => {
     if (toAmount && parseFloat(toAmount) > 0) {
-      // Suggest 5% higher for take profit
       const tpSuggestion = (parseFloat(toAmount) * 1.05).toFixed(6);
-      // Suggest 5% lower for stop loss
       const slSuggestion = (parseFloat(toAmount) * 0.95).toFixed(6);
       
       setTakeProfitPrice(tpSuggestion);
@@ -77,7 +87,6 @@ export const SwapWidget = ({ selectedAsset = 'bitcoin' }: SwapWidgetProps) => {
     }
   }, [toAmount]);
 
-  // Initialize limit price with the current market price
   useEffect(() => {
     if (swapMode === 'limit') {
       const currentPrice = calculateExchangeRate(fromAsset, toAsset, '1');
@@ -100,11 +109,13 @@ export const SwapWidget = ({ selectedAsset = 'bitcoin' }: SwapWidgetProps) => {
   const handleFromAssetChange = (value: string) => {
     setFromAsset(value);
     setToAmount(calculateExchangeRate(value, toAsset, fromAmount));
+    setFromAssetPopoverOpen(false);
   };
 
   const handleToAssetChange = (value: string) => {
     setToAsset(value);
     setToAmount(calculateExchangeRate(fromAsset, value, fromAmount));
+    setToAssetPopoverOpen(false);
   };
 
   const handleTakeProfitChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -120,7 +131,6 @@ export const SwapWidget = ({ selectedAsset = 'bitcoin' }: SwapWidgetProps) => {
   };
 
   const handleSwapClick = () => {
-    // Swap the assets and amounts
     const tempAsset = fromAsset;
     const tempAmount = fromAmount;
     
@@ -170,15 +180,60 @@ export const SwapWidget = ({ selectedAsset = 'bitcoin' }: SwapWidgetProps) => {
     });
   };
 
-  const assets = [
-    { value: 'usdt', label: 'USDT' },
-    { value: 'bitcoin', label: 'BTC' },
-    { value: 'ethereum', label: 'ETH' },
-    { value: 'solana', label: 'SOL' },
-    { value: 'apple', label: 'AAPL' },
-    { value: 'tesla', label: 'TSLA' },
-    { value: 'gold', label: 'GOLD' }
+  const assets: Asset[] = [
+    { value: 'usdt', label: 'USDT', category: 'crypto' },
+    { value: 'bitcoin', label: 'BTC', category: 'crypto' },
+    { value: 'ethereum', label: 'ETH', category: 'crypto' },
+    { value: 'solana', label: 'SOL', category: 'crypto' },
+    { value: 'cardano', label: 'ADA', category: 'crypto' },
+    { value: 'polkadot', label: 'DOT', category: 'crypto' },
+    { value: 'avalanche', label: 'AVAX', category: 'crypto' },
+    { value: 'polygon', label: 'MATIC', category: 'crypto' },
+    { value: 'dogecoin', label: 'DOGE', category: 'crypto' },
+    { value: 'shiba inu', label: 'SHIB', category: 'crypto' },
+    { value: 'chainlink', label: 'LINK', category: 'crypto' },
+    { value: 'uniswap', label: 'UNI', category: 'crypto' },
+    { value: 'aave', label: 'AAVE', category: 'crypto' },
+    { value: 'litecoin', label: 'LTC', category: 'crypto' },
+    { value: 'cosmos', label: 'ATOM', category: 'crypto' },
+    
+    { value: 'apple', label: 'AAPL', category: 'stocks' },
+    { value: 'tesla', label: 'TSLA', category: 'stocks' },
+    { value: 'microsoft', label: 'MSFT', category: 'stocks' },
+    { value: 'amazon', label: 'AMZN', category: 'stocks' },
+    { value: 'nvidia', label: 'NVDA', category: 'stocks' },
+    { value: 'google', label: 'GOOGL', category: 'stocks' },
+    { value: 'meta', label: 'META', category: 'stocks' },
+    { value: 'netflix', label: 'NFLX', category: 'stocks' },
+    { value: 'disney', label: 'DIS', category: 'stocks' },
+    { value: 'paypal', label: 'PYPL', category: 'stocks' },
+    { value: 'adobe', label: 'ADBE', category: 'stocks' },
+    { value: 'salesforce', label: 'CRM', category: 'stocks' },
+    { value: 'amd', label: 'AMD', category: 'stocks' },
+    { value: 'intel', label: 'INTC', category: 'stocks' },
+    { value: 'walmart', label: 'WMT', category: 'stocks' },
+    
+    { value: 'gold', label: 'GOLD', category: 'commodities' },
+    { value: 'silver', label: 'SLV', category: 'commodities' },
+    { value: 'crude oil', label: 'OIL', category: 'commodities' },
+    { value: 'natural gas', label: 'GAS', category: 'commodities' },
+    { value: 'copper', label: 'COPP', category: 'commodities' },
+    { value: 'platinum', label: 'PLAT', category: 'commodities' },
+    { value: 'palladium', label: 'PALL', category: 'commodities' },
+    { value: 'wheat', label: 'WHEA', category: 'commodities' },
+    { value: 'corn', label: 'CORN', category: 'commodities' },
+    { value: 'coffee', label: 'COFF', category: 'commodities' }
   ];
+
+  const getFilteredAssets = (category: 'all' | 'crypto' | 'stocks' | 'commodities', query: string) => {
+    return assets.filter(asset => 
+      (category === 'all' || asset.category === category) && 
+      (asset.label.toLowerCase().includes(query.toLowerCase()) || asset.value.toLowerCase().includes(query.toLowerCase()))
+    );
+  };
+
+  const filteredFromAssets = getFilteredAssets(fromAssetCategory, fromSearchQuery);
+  const filteredToAssets = getFilteredAssets(toAssetCategory, toSearchQuery);
 
   const getGasFee = () => {
     switch (gasOption) {
@@ -194,6 +249,11 @@ export const SwapWidget = ({ selectedAsset = 'bitcoin' }: SwapWidgetProps) => {
 
   const toggleStopLoss = () => {
     setShowStopLoss(!showStopLoss);
+  };
+
+  const getAssetLabel = (assetValue: string) => {
+    const asset = assets.find(a => a.value === assetValue);
+    return asset ? asset.label : assetValue.toUpperCase();
   };
 
   return (
@@ -277,7 +337,6 @@ export const SwapWidget = ({ selectedAsset = 'bitcoin' }: SwapWidgetProps) => {
       </div>
 
       <div className="space-y-4">
-        {/* From */}
         <div className="bg-secondary p-4 rounded-lg">
           <div className="flex justify-between mb-2">
             <label className="text-muted-foreground text-sm">From</label>
@@ -291,22 +350,99 @@ export const SwapWidget = ({ selectedAsset = 'bitcoin' }: SwapWidgetProps) => {
               onChange={handleFromAmountChange}
               className="bg-background border-border"
             />
-            <Select value={fromAsset} onValueChange={handleFromAssetChange}>
-              <SelectTrigger className="w-[120px]">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                {assets.map((asset) => (
-                  <SelectItem key={asset.value} value={asset.value}>
-                    {asset.label}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+            <Popover open={fromAssetPopoverOpen} onOpenChange={setFromAssetPopoverOpen}>
+              <PopoverTrigger asChild>
+                <Button variant="outline" className="w-[150px] justify-between">
+                  {getAssetLabel(fromAsset)}
+                  <span className="sr-only">Select asset</span>
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-[300px] p-0" align="end">
+                <Command>
+                  <CommandInput placeholder="Search assets..." value={fromSearchQuery} onValueChange={setFromSearchQuery} />
+                  <div className="border-t">
+                    <Tabs defaultValue="all" value={fromAssetCategory} onValueChange={(value) => setFromAssetCategory(value as any)}>
+                      <div className="p-1">
+                        <TabsList className="grid grid-cols-4">
+                          <TabsTrigger value="all">All</TabsTrigger>
+                          <TabsTrigger value="crypto">Crypto</TabsTrigger>
+                          <TabsTrigger value="stocks">Stocks</TabsTrigger>
+                          <TabsTrigger value="commodities">Commodities</TabsTrigger>
+                        </TabsList>
+                      </div>
+                      <TabsContent value="all" className="mt-0">
+                        <ScrollArea className="h-[300px]">
+                          <CommandEmpty>No asset found.</CommandEmpty>
+                          <CommandGroup>
+                            {filteredFromAssets.map((asset) => (
+                              <CommandItem
+                                key={asset.value}
+                                value={asset.value}
+                                onSelect={handleFromAssetChange}
+                                className="cursor-pointer"
+                              >
+                                {asset.label}
+                              </CommandItem>
+                            ))}
+                          </CommandGroup>
+                        </ScrollArea>
+                      </TabsContent>
+                      <TabsContent value="crypto" className="mt-0">
+                        <ScrollArea className="h-[300px]">
+                          <CommandGroup>
+                            {filteredFromAssets.map((asset) => (
+                              <CommandItem
+                                key={asset.value}
+                                value={asset.value}
+                                onSelect={handleFromAssetChange}
+                                className="cursor-pointer"
+                              >
+                                {asset.label}
+                              </CommandItem>
+                            ))}
+                          </CommandGroup>
+                        </ScrollArea>
+                      </TabsContent>
+                      <TabsContent value="stocks" className="mt-0">
+                        <ScrollArea className="h-[300px]">
+                          <CommandGroup>
+                            {filteredFromAssets.map((asset) => (
+                              <CommandItem
+                                key={asset.value}
+                                value={asset.value}
+                                onSelect={handleFromAssetChange}
+                                className="cursor-pointer"
+                              >
+                                {asset.label}
+                              </CommandItem>
+                            ))}
+                          </CommandGroup>
+                        </ScrollArea>
+                      </TabsContent>
+                      <TabsContent value="commodities" className="mt-0">
+                        <ScrollArea className="h-[300px]">
+                          <CommandGroup>
+                            {filteredFromAssets.map((asset) => (
+                              <CommandItem
+                                key={asset.value}
+                                value={asset.value}
+                                onSelect={handleFromAssetChange}
+                                className="cursor-pointer"
+                              >
+                                {asset.label}
+                              </CommandItem>
+                            ))}
+                          </CommandGroup>
+                        </ScrollArea>
+                      </TabsContent>
+                    </Tabs>
+                  </div>
+                </Command>
+              </PopoverContent>
+            </Popover>
           </div>
         </div>
 
-        {/* Swap button */}
         <div className="flex justify-center">
           <Button 
             variant="ghost" 
@@ -318,7 +454,6 @@ export const SwapWidget = ({ selectedAsset = 'bitcoin' }: SwapWidgetProps) => {
           </Button>
         </div>
 
-        {/* To */}
         <div className="bg-secondary p-4 rounded-lg">
           <div className="flex justify-between mb-2">
             <label className="text-muted-foreground text-sm">To</label>
@@ -332,22 +467,99 @@ export const SwapWidget = ({ selectedAsset = 'bitcoin' }: SwapWidgetProps) => {
               onChange={handleToAmountChange}
               className="bg-background border-border"
             />
-            <Select value={toAsset} onValueChange={handleToAssetChange}>
-              <SelectTrigger className="w-[120px]">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                {assets.map((asset) => (
-                  <SelectItem key={asset.value} value={asset.value}>
-                    {asset.label}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+            <Popover open={toAssetPopoverOpen} onOpenChange={setToAssetPopoverOpen}>
+              <PopoverTrigger asChild>
+                <Button variant="outline" className="w-[150px] justify-between">
+                  {getAssetLabel(toAsset)}
+                  <span className="sr-only">Select asset</span>
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-[300px] p-0" align="end">
+                <Command>
+                  <CommandInput placeholder="Search assets..." value={toSearchQuery} onValueChange={setToSearchQuery} />
+                  <div className="border-t">
+                    <Tabs defaultValue="all" value={toAssetCategory} onValueChange={(value) => setToAssetCategory(value as any)}>
+                      <div className="p-1">
+                        <TabsList className="grid grid-cols-4">
+                          <TabsTrigger value="all">All</TabsTrigger>
+                          <TabsTrigger value="crypto">Crypto</TabsTrigger>
+                          <TabsTrigger value="stocks">Stocks</TabsTrigger>
+                          <TabsTrigger value="commodities">Commodities</TabsTrigger>
+                        </TabsList>
+                      </div>
+                      <TabsContent value="all" className="mt-0">
+                        <ScrollArea className="h-[300px]">
+                          <CommandEmpty>No asset found.</CommandEmpty>
+                          <CommandGroup>
+                            {filteredToAssets.map((asset) => (
+                              <CommandItem
+                                key={asset.value}
+                                value={asset.value}
+                                onSelect={handleToAssetChange}
+                                className="cursor-pointer"
+                              >
+                                {asset.label}
+                              </CommandItem>
+                            ))}
+                          </CommandGroup>
+                        </ScrollArea>
+                      </TabsContent>
+                      <TabsContent value="crypto" className="mt-0">
+                        <ScrollArea className="h-[300px]">
+                          <CommandGroup>
+                            {filteredToAssets.map((asset) => (
+                              <CommandItem
+                                key={asset.value}
+                                value={asset.value}
+                                onSelect={handleToAssetChange}
+                                className="cursor-pointer"
+                              >
+                                {asset.label}
+                              </CommandItem>
+                            ))}
+                          </CommandGroup>
+                        </ScrollArea>
+                      </TabsContent>
+                      <TabsContent value="stocks" className="mt-0">
+                        <ScrollArea className="h-[300px]">
+                          <CommandGroup>
+                            {filteredToAssets.map((asset) => (
+                              <CommandItem
+                                key={asset.value}
+                                value={asset.value}
+                                onSelect={handleToAssetChange}
+                                className="cursor-pointer"
+                              >
+                                {asset.label}
+                              </CommandItem>
+                            ))}
+                          </CommandGroup>
+                        </ScrollArea>
+                      </TabsContent>
+                      <TabsContent value="commodities" className="mt-0">
+                        <ScrollArea className="h-[300px]">
+                          <CommandGroup>
+                            {filteredToAssets.map((asset) => (
+                              <CommandItem
+                                key={asset.value}
+                                value={asset.value}
+                                onSelect={handleToAssetChange}
+                                className="cursor-pointer"
+                              >
+                                {asset.label}
+                              </CommandItem>
+                            ))}
+                          </CommandGroup>
+                        </ScrollArea>
+                      </TabsContent>
+                    </Tabs>
+                  </div>
+                </Command>
+              </PopoverContent>
+            </Popover>
           </div>
         </div>
 
-        {/* Limit Price */}
         {swapMode === 'limit' && (
           <div className="bg-secondary p-4 rounded-lg">
             <div className="mb-2">
@@ -363,9 +575,7 @@ export const SwapWidget = ({ selectedAsset = 'bitcoin' }: SwapWidgetProps) => {
           </div>
         )}
 
-        {/* Optional Take Profit and Stop Loss toggles */}
         <div className="space-y-3">
-          {/* Take Profit Toggle */}
           <div className="flex items-center justify-between bg-secondary p-3 rounded-lg">
             <div className="flex items-center space-x-2">
               <Label htmlFor="take-profit" className="text-muted-foreground text-sm">Take Profit</Label>
@@ -377,7 +587,6 @@ export const SwapWidget = ({ selectedAsset = 'bitcoin' }: SwapWidgetProps) => {
             </div>
           </div>
 
-          {/* Take Profit Input (conditionally rendered) */}
           {showTakeProfit && (
             <div className="bg-secondary p-3 rounded-lg">
               <div className="mb-2">
@@ -393,7 +602,6 @@ export const SwapWidget = ({ selectedAsset = 'bitcoin' }: SwapWidgetProps) => {
             </div>
           )}
 
-          {/* Stop Loss Toggle */}
           <div className="flex items-center justify-between bg-secondary p-3 rounded-lg">
             <div className="flex items-center space-x-2">
               <Label htmlFor="stop-loss" className="text-muted-foreground text-sm">Stop Loss</Label>
@@ -405,7 +613,6 @@ export const SwapWidget = ({ selectedAsset = 'bitcoin' }: SwapWidgetProps) => {
             </div>
           </div>
 
-          {/* Stop Loss Input (conditionally rendered) */}
           {showStopLoss && (
             <div className="bg-secondary p-3 rounded-lg">
               <div className="mb-2">
@@ -422,13 +629,11 @@ export const SwapWidget = ({ selectedAsset = 'bitcoin' }: SwapWidgetProps) => {
           )}
         </div>
 
-        {/* Exchange rate */}
         <div className="text-sm text-muted-foreground flex justify-between items-center">
           <span>Exchange Rate</span>
           <span>1 {fromAsset.toUpperCase()} ≈ {calculateExchangeRate(fromAsset, toAsset, '1')} {toAsset.toUpperCase()}</span>
         </div>
 
-        {/* Swap button */}
         <Button 
           className="w-full"
           onClick={handleSwap}
