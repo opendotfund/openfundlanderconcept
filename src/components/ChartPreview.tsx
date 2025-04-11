@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Card } from "@/components/ui/card";
 import { 
@@ -14,14 +13,21 @@ import { useIsMobile } from '@/hooks/use-mobile';
 
 // Berkshire Hathaway Class A accurate sample data for the chart (BRK.A)
 const data = [
-  { date: 'Jan', price: 542000 },
-  { date: 'Feb', price: 551200 },
-  { date: 'Mar', price: 562100 },
-  { date: 'Apr', price: 566400 },
-  { date: 'May', price: 568500 },
-  { date: 'Jun', price: 570100 },
-  { date: 'Jul', price: 572000 },
-  { date: 'Aug', price: 567870 },
+  { date: '1 Jan', price: 542000 },
+  { date: '15 Jan', price: 547000 },
+  { date: '1 Feb', price: 551200 },
+  { date: '15 Feb', price: 558500 },
+  { date: '1 Mar', price: 562100 },
+  { date: '15 Mar', price: 564300 },
+  { date: '1 Apr', price: 566400 },
+  { date: '15 Apr', price: 567800 },
+  { date: '1 May', price: 568500 },
+  { date: '15 May', price: 569200 },
+  { date: '1 Jun', price: 570100 },
+  { date: '15 Jun', price: 570900 },
+  { date: '1 Jul', price: 572000 },
+  { date: '15 Jul', price: 567870 },
+  { date: '1 Aug', price: 567870 },
 ];
 
 const CustomTooltip = ({ active, payload, label }: any) => {
@@ -81,7 +87,7 @@ const ChartPreview = () => {
                       dy={isMobile ? 5 : 10}
                       height={isMobile ? 20 : 30}
                       tickMargin={isMobile ? 2 : 5}
-                      interval={isMobile ? 2 : 0} // Show all labels on desktop
+                      interval={isMobile ? 2 : 1} // Show fewer labels on mobile
                     />
                     <YAxis 
                       tick={{ fill: 'var(--color-text-subdued)', fontSize: isMobile ? 10 : 12 }}

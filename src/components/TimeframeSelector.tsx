@@ -21,23 +21,21 @@ export const TimeframeSelector = ({ timeframe, onChange }: TimeframeSelectorProp
   const isMobile = useIsMobile();
   
   return (
-    <div className={`flex flex-wrap ${isMobile ? 'justify-center w-full' : 'justify-end md:w-auto'}`}>
-      <div className={`grid ${isMobile ? 'grid-cols-6 w-full gap-0.5' : 'flex space-x-1'}`}>
-        {timeframes.map((tf) => (
-          <Button
-            key={tf.value}
-            variant={timeframe === tf.value ? 'default' : 'outline'}
-            size={isMobile ? "sm" : "sm"}
-            onClick={() => onChange(tf.value)}
-            className={`${timeframe === tf.value ? 
-              'dark:bg-openfund-green dark:text-openfund-gray-dark bg-openfund-blue text-white hover:bg-openfund-blue-dark dark:hover:bg-openfund-green-dark' : 
-              'text-gray-500 dark:text-gray-300 hover:text-foreground dark:hover:text-white'
-            } ${isMobile ? 'px-1 py-0.5 h-6 text-xs min-w-0' : ''}`}
-          >
-            {tf.label}
-          </Button>
-        ))}
-      </div>
+    <div className="flex space-x-1">
+      {timeframes.map((tf) => (
+        <Button
+          key={tf.value}
+          variant={timeframe === tf.value ? 'default' : 'outline'}
+          size={isMobile ? "sm" : "sm"}
+          onClick={() => onChange(tf.value)}
+          className={`${timeframe === tf.value ? 
+            'dark:bg-openfund-green dark:text-openfund-gray-dark bg-openfund-blue text-white hover:bg-openfund-blue-dark dark:hover:bg-openfund-green-dark' : 
+            'text-gray-500 dark:text-gray-300 hover:text-foreground dark:hover:text-white'
+          } ${isMobile ? 'px-2.5 py-0.5 h-6 text-xs' : ''}`}
+        >
+          {tf.label}
+        </Button>
+      ))}
     </div>
   );
 };

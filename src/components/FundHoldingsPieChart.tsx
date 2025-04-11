@@ -1,4 +1,3 @@
-
 import React, { useMemo } from 'react';
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend } from 'recharts';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -80,8 +79,7 @@ export const FundHoldingsPieChart: React.FC<FundHoldingsPieChartProps> = ({
     return acc;
   }, {} as Record<string, { label: string, color: string }>);
 
-  // Adjusted chart height to prevent overflow
-  const chartHeight = isMobile ? "220px" : (isDeFiFund ? "360px" : "270px");
+  const chartHeight = isMobile ? "220px" : (isDeFiFund ? "380px" : "280px");
   const outerRadius = isMobile ? (isDeFiFund ? 70 : 60) : (isDeFiFund ? 120 : 90);
   const legendVerticalAlign = isMobile ? "bottom" : "bottom";
 
@@ -92,11 +90,11 @@ export const FundHoldingsPieChart: React.FC<FundHoldingsPieChartProps> = ({
       <CardHeader className={cn(isMobile ? "p-3 pb-1" : "")}>
         <CardTitle>{title}</CardTitle>
       </CardHeader>
-      <CardContent className={cn(isMobile ? "p-2 pt-0" : "", "overflow-hidden")}>
+      <CardContent className={cn(isMobile ? "p-2 pt-0" : "")}>
         <div className="w-full" style={{ height: chartHeight }}>
           <ChartContainer config={config} className="h-full w-full">
             <ResponsiveContainer width="100%" height="100%">
-              <PieChart margin={isMobile ? { top: 0, right: 0, bottom: 20, left: 0 } : { top: 5, right: 10, left: 10, bottom: 25 }}>
+              <PieChart margin={isMobile ? { top: 0, right: 0, bottom: 10, left: 0 } : { top: 5, right: 10, left: 10, bottom: 15 }}>
                 <Pie
                   data={enhancedHoldings}
                   cx="50%"
