@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Card } from "@/components/ui/card";
 import { 
@@ -71,7 +70,7 @@ const ChartPreview = () => {
                 <ResponsiveContainer width="100%" height={isMobile ? 200 : 250}>
                   <AreaChart
                     data={data}
-                    margin={isMobile ? { top: 5, right: 10, left: 0, bottom: 25 } : { top: 5, right: 20, left: 0, bottom: 30 }}
+                    margin={isMobile ? { top: 5, right: 5, left: 0, bottom: 15 } : { top: 5, right: 20, left: 0, bottom: 30 }}
                   >
                     <defs>
                       <linearGradient id="colorPrice" x1="0" y1="0" x2="0" y2="1">
@@ -83,13 +82,12 @@ const ChartPreview = () => {
                       dataKey="date" 
                       tick={{ 
                         fill: 'var(--color-text-subdued)', 
-                        fontSize: isMobile ? 9 : 11,
-                        width: 40 // Limit tick width
+                        fontSize: isMobile ? 9 : 11
                       }} 
-                      dy={isMobile ? 10 : 14}
-                      height={30}
-                      tickMargin={5}
-                      interval={isMobile ? 1 : 0} // Only show every other tick on mobile
+                      dy={isMobile ? 5 : 10}
+                      height={isMobile ? 20 : 30}
+                      tickMargin={isMobile ? 2 : 5}
+                      interval={isMobile ? 2 : 1} // Show fewer labels on mobile
                     />
                     <YAxis 
                       tick={{ fill: 'var(--color-text-subdued)', fontSize: isMobile ? 10 : 12 }}

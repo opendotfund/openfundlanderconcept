@@ -1,4 +1,3 @@
-
 import React, { useMemo } from 'react';
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend } from 'recharts';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -7,7 +6,6 @@ import { cn } from '@/lib/utils';
 import { useTheme } from 'next-themes';
 import { useIsMobile } from '@/hooks/use-mobile';
 
-// Define the types of data we'll be working with
 interface HoldingItem {
   name: string;
   value: number;
@@ -44,28 +42,25 @@ export const FundHoldingsPieChart: React.FC<FundHoldingsPieChartProps> = ({
     );
   }
 
-  // Enhanced colors based on theme and fund type
   const enhancedHoldings = useMemo(() => {
     return holdings.map(item => {
       let enhancedColor = item.color;
       
       if (isLightMode) {
-        // Blue variants in light mode
         if (item.name === "Major Coins") {
-          enhancedColor = "#0ea5e9"; // Sky blue
+          enhancedColor = "#0ea5e9";
         } else if (item.name === "Alt Coins") {
-          enhancedColor = "#3b82f6"; // Medium blue
+          enhancedColor = "#3b82f6";
         } else if (item.name === "Meme Coins") {
-          enhancedColor = "#2563eb"; // Dark blue
+          enhancedColor = "#2563eb";
         }
       } else {
-        // Green variants in dark mode
         if (item.name === "Major Coins") {
-          enhancedColor = "#10b981"; // Bright green
+          enhancedColor = "#10b981";
         } else if (item.name === "Alt Coins") {
-          enhancedColor = "#059669"; // Medium green
+          enhancedColor = "#059669";
         } else if (item.name === "Meme Coins") {
-          enhancedColor = "#047857"; // Dark green
+          enhancedColor = "#047857";
         }
       }
       
@@ -84,18 +79,18 @@ export const FundHoldingsPieChart: React.FC<FundHoldingsPieChartProps> = ({
     return acc;
   }, {} as Record<string, { label: string, color: string }>);
 
-  // Adjust chart dimensions based on screen size
-  const chartHeight = isMobile ? "250px" : (isDeFiFund ? "400px" : "300px");
-  const outerRadius = isMobile ? (isDeFiFund ? 80 : 70) : (isDeFiFund ? 120 : 90);
+  const chartHeight = isMobile ? "220px" : (isDeFiFund ? "380px" : "280px");
+  const outerRadius = isMobile ? (isDeFiFund ? 70 : 60) : (isDeFiFund ? 120 : 90);
+  const legendVerticalAlign = isMobile ? "bottom" : "bottom";
 
   return (
     <Card className={cn("bg-card border-card", className, {
-      "col-span-full": isDeFiFund // Make the chart take full width if it's a DeFi fund
+      "col-span-full": isDeFiFund
     })}>
-      <CardHeader className={cn(isMobile ? "p-3" : "")}>
+      <CardHeader className={cn(isMobile ? "p-3 pb-1" : "")}>
         <CardTitle>{title}</CardTitle>
       </CardHeader>
-      <CardContent className={cn(isMobile ? "p-2" : "")}>
+      <CardContent className={cn(isMobile ? "p-2 pt-0" : "")}>
         <div className="w-full" style={{ height: chartHeight }}>
           <ChartContainer config={config} className="h-full w-full">
             <ResponsiveContainer width="100%" height="100%">
@@ -103,7 +98,7 @@ export const FundHoldingsPieChart: React.FC<FundHoldingsPieChartProps> = ({
                 <Pie
                   data={enhancedHoldings}
                   cx="50%"
-                  cy="50%"
+                  cy="45%"
                   labelLine={false}
                   outerRadius={outerRadius}
                   fill="#8884d8"
@@ -134,15 +129,14 @@ export const FundHoldingsPieChart: React.FC<FundHoldingsPieChartProps> = ({
                 />
                 <Legend 
                   layout="horizontal" 
-                  verticalAlign="bottom" 
+                  verticalAlign={legendVerticalAlign}
                   align="center"
                   wrapperStyle={isMobile ? 
-                    { fontSize: "10px", marginTop: "5px", width: "100%", paddingBottom: "10px" } : 
+                    { fontSize: "10px", marginTop: "0px", width: "100%" } : 
                     { marginTop: "10px" }
                   }
                   iconSize={isMobile ? 8 : 10}
                   formatter={(value) => {
-                    // Truncate long names on mobile
                     const displayValue = isMobile && value.length > 10 ? 
                       `${value.substring(0, 8)}...` : value;
                     return <span className={cn("font-medium", isMobile ? "text-xs" : "text-sm")}>{displayValue}</span>;

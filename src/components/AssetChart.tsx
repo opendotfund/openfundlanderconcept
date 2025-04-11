@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from 'react';
 import {
   Area,
@@ -265,11 +266,57 @@ export const AssetChart = ({ asset = 'bitcoin', timeframe, isPortfolio = false, 
     ? (isPositive ? "#0EA5E9" : "#FF4545")
     : (isPositive ? "#00FF00" : "#FF4545");
   
-  const chartHeight = isMobile ? '260px' : '380px';
-  const margins = isMobile 
-    ? { top: 5, right: 5, left: 20, bottom: 40 }
-    : { top: 5, right: 10, left: 50, bottom: 60 };
+  // Adjust chart height to be more compact on mobile to avoid overflow
+  const chartHeight = isMobile ? '220px' : '380px';
   
+  // More compact margins on mobile
+  const margins = isMobile 
+    ? { top: 5, right: 5, left: 20, bottom: 20 }
+    : { top: 5, right: 10, left: 50, bottom: 30 };
+  
+  // Format X-axis labels based on timeframe
+  const formatXAxisTick = (value: string) => {
+    if (timeframe === '1h') {
+      // For 1h, show minutes like "50m" or "30m"
+      return value.includes('m') ? value : '';
+    } else if (timeframe === '24h') {
+      // For 24h, show hours like "12h" or "6h"
+      return value.includes('h') ? value : '';
+    } else if (timeframe === '7d') {
+      // For 7d, show days like "Day 3" or "D3"
+      return value;
+    } else if (timeframe === '30d') {
+      // For 30d, show weeks like "W3" or "W1"
+      return value.includes('W') ? value : '';
+    } else if (timeframe === '90d') {
+      // For 90d, always label weeks
+      return value.includes('W') ? value : '';
+    } else if (timeframe === '1y') {
+      // For 1y, show months
+      return value.includes('M') ? value : '';
+    }
+    return value;
+  };
+
+  // Determine how many ticks to show based on timeframe and screen size
+  const getTickInterval = () => {
+    if (isMobile) {
+      if (timeframe === '1h') return 10;  // Show every 10th tick (roughly 6 ticks)
+      if (timeframe === '24h') return 4;  // Show every 4th tick (roughly 6 ticks)
+      if (timeframe === '7d') return 1;   // Show every tick (7 ticks)
+      if (timeframe === '30d') return 5;  // Show approximately 6 ticks
+      if (timeframe === '90d') return 15; // Show approximately 6 ticks
+      return 60;                          // For 1y, show approximately 6 ticks
+    } else {
+      if (timeframe === '1h') return 5;   // Show every 5th tick
+      if (timeframe === '24h') return 3;  // Show every 3rd tick
+      if (timeframe === '7d') return 1;   // Show all 7 ticks
+      if (timeframe === '30d') return 4;  // Show approximately 8 ticks
+      if (timeframe === '90d') return 12; // Show approximately 8 ticks
+      return 30;                          // For 1y, show approximately 12 ticks
+    }
+  };
+
   return (
     <div className="w-full h-full">
       {chartData.length > 0 && (
@@ -288,7 +335,7 @@ export const AssetChart = ({ asset = 'bitcoin', timeframe, isPortfolio = false, 
         </div>
       )}
       
-      <div style={{ height: chartHeight }}>
+      <div style={{ height: chartHeight }} className="mb-0">
         <ChartContainer
           config={{
             value: {
@@ -316,17 +363,16 @@ export const AssetChart = ({ asset = 'bitcoin', timeframe, isPortfolio = false, 
                 dataKey="name"
                 tickLine={false}
                 axisLine={false}
-                dy={isMobile ? 10 : 16}
+                dy={isMobile ? 5 : 10}
                 tick={{ 
                   fill: isLightMode ? '#666' : '#888', 
-                  fontSize: isMobile ? 9 : 11,
-                  width: 30,
-                  textAnchor: 'middle'
+                  fontSize: isMobile ? 9 : 11
                 }}
-                height={isMobile ? 40 : 50}
-                padding={{ left: 10, right: 10 }}
-                interval={isMobile ? "preserveStartEnd" : (timeframe === '90d' || timeframe === '1y' ? 6 : 'preserveEnd')}
-                tickMargin={8}
+                height={isMobile ? 25 : 40}
+                padding={{ left: 5, right: 5 }}
+                interval={getTickInterval()}
+                tickFormatter={formatXAxisTick}
+                tickMargin={2}
               />
               <YAxis 
                 tickLine={false}
