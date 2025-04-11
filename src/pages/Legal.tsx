@@ -18,10 +18,9 @@ const Legal = () => {
           <h1 className="text-3xl font-bold mb-6 text-center">Legal Information</h1>
           
           <Tabs defaultValue="privacy" value={activeTab} onValueChange={setActiveTab} className="w-full">
-            <TabsList className="grid w-full grid-cols-3 mb-8">
+            <TabsList className="grid w-full grid-cols-2 mb-8">
               <TabsTrigger value="privacy">Privacy Policy</TabsTrigger>
               <TabsTrigger value="terms">Terms of Service</TabsTrigger>
-              <TabsTrigger value="license">DLT License</TabsTrigger>
             </TabsList>
             
             <TabsContent value="privacy">
@@ -183,11 +182,19 @@ const Legal = () => {
                     
                     <section>
                       <h3 className="text-xl font-semibold mb-2">3. Regulatory Compliance</h3>
-                      <p>
+                      <p className="mb-2">
                         OpenFund operates under a Distributed Ledger Technology (DLT) License issued by the Gibraltar Financial Services Commission (GFSC) 
-                        in accordance with the Financial Services (Distributed Ledger Technology Providers) Regulations 2020. Our DLT license allows us to 
-                        use distributed ledger technology for storing or transmitting value belonging to others and operate as a regulated provider of 
-                        digital asset services.
+                        in accordance with the Financial Services (Distributed Ledger Technology Providers) Regulations 2020.
+                      </p>
+                      <p className="mb-2">
+                        Our DLT license authorizes OpenFund to use distributed ledger technology for storing or transmitting value belonging to others 
+                        and operate as a regulated provider of digital asset services. The license ensures we comply with nine regulatory principles 
+                        including honesty and integrity, customer care, financial resources, risk management, protection of client assets, corporate 
+                        governance, cyber security, financial crime prevention, and resilience.
+                      </p>
+                      <p>
+                        As a DLT license holder, OpenFund is subject to ongoing supervision by the GFSC, providing additional protection for our users 
+                        through regular audits, compliance checks, robust security measures, and strict AML/KYC procedures.
                       </p>
                     </section>
                     
@@ -249,7 +256,28 @@ const Legal = () => {
                     </section>
                     
                     <section>
-                      <h3 className="text-xl font-semibold mb-2">9. Prohibited Activities</h3>
+                      <h3 className="text-xl font-semibold mb-2">9. DLT License Verification</h3>
+                      <p className="mb-2">
+                        OpenFund Limited holds a Distributed Ledger Technology (DLT) Provider License issued by the 
+                        Gibraltar Financial Services Commission (GFSC), License Number DLT0023/2024.
+                      </p>
+                      <p>
+                        Our DLT license status can be verified on the Gibraltar Financial Services Commission's public register.
+                      </p>
+                      <div className="mt-4">
+                        <a 
+                          href="https://www.fsc.gi/regulated-entity/search" 
+                          target="_blank" 
+                          rel="noopener noreferrer"
+                          className="flex items-center text-primary hover:underline"
+                        >
+                          Verify our license on GFSC website <ExternalLink size={14} className="ml-1" />
+                        </a>
+                      </div>
+                    </section>
+                    
+                    <section>
+                      <h3 className="text-xl font-semibold mb-2">10. Prohibited Activities</h3>
                       <p className="mb-2">You agree not to:</p>
                       <ul className="list-disc pl-6 space-y-1">
                         <li>Use our services for illegal purposes</li>
@@ -261,7 +289,7 @@ const Legal = () => {
                     </section>
                     
                     <section>
-                      <h3 className="text-xl font-semibold mb-2">10. Limitation of Liability</h3>
+                      <h3 className="text-xl font-semibold mb-2">11. Limitation of Liability</h3>
                       <p>
                         To the maximum extent permitted by law, OpenFund, its affiliates, officers, directors, employees, 
                         and agents shall not be liable for any indirect, incidental, special, consequential, or punitive 
@@ -271,7 +299,7 @@ const Legal = () => {
                     </section>
                     
                     <section>
-                      <h3 className="text-xl font-semibold mb-2">11. Termination</h3>
+                      <h3 className="text-xl font-semibold mb-2">12. Termination</h3>
                       <p>
                         We may terminate or suspend your account and access to our services immediately, without prior notice 
                         or liability, for any reason, including breach of these Terms. Upon termination, your right to use 
@@ -280,7 +308,7 @@ const Legal = () => {
                     </section>
                     
                     <section>
-                      <h3 className="text-xl font-semibold mb-2">12. Governing Law and Jurisdiction</h3>
+                      <h3 className="text-xl font-semibold mb-2">13. Governing Law and Jurisdiction</h3>
                       <p>
                         These Terms shall be governed by and construed in accordance with the laws of Gibraltar, without 
                         regard to its conflict of law provisions. Any dispute arising from these Terms shall be resolved 
@@ -289,7 +317,7 @@ const Legal = () => {
                     </section>
                     
                     <section>
-                      <h3 className="text-xl font-semibold mb-2">13. Changes to Terms</h3>
+                      <h3 className="text-xl font-semibold mb-2">14. Changes to Terms</h3>
                       <p>
                         We reserve the right to modify or replace these Terms at any time. If a revision is material, 
                         we will provide at least 30 days' notice prior to any new terms taking effect. What constitutes 
@@ -298,7 +326,7 @@ const Legal = () => {
                     </section>
                     
                     <section>
-                      <h3 className="text-xl font-semibold mb-2">14. Contact Us</h3>
+                      <h3 className="text-xl font-semibold mb-2">15. Contact Us</h3>
                       <p>
                         If you have any questions about these Terms, please contact us at:
                       </p>
@@ -316,122 +344,13 @@ const Legal = () => {
                         <p>Madison Building, Midtown, Queensway</p>
                         <p>Gibraltar GX11 1AA</p>
                       </div>
-                      <a 
-                        href="https://www.gibraltarlaw.com" 
-                        target="_blank" 
-                        rel="noopener noreferrer"
-                        className="flex items-center text-primary hover:underline"
-                      >
-                        Visit Website <ExternalLink size={14} className="ml-1" />
-                      </a>
-                    </section>
-                  </div>
-                </CardContent>
-              </Card>
-            </TabsContent>
-            
-            <TabsContent value="license">
-              <Card className="border-border">
-                <CardContent className="pt-6">
-                  <h2 className="text-2xl font-bold mb-4">Distributed Ledger Technology License</h2>
-                  <p className="text-muted-foreground mb-4">License Status: Active</p>
-                  
-                  <div className="space-y-6 text-foreground">
-                    <section>
-                      <h3 className="text-xl font-semibold mb-2">License Information</h3>
-                      <p>
-                        OpenFund Limited holds a Distributed Ledger Technology (DLT) Provider License issued by the 
-                        Gibraltar Financial Services Commission (GFSC), License Number DLT0023/2024.
-                      </p>
-                    </section>
-                    
-                    <section>
-                      <h3 className="text-xl font-semibold mb-2">Regulatory Framework</h3>
-                      <p>
-                        Our operations comply with the Financial Services (Distributed Ledger Technology Providers) 
-                        Regulations 2020, which establish a regulatory framework for businesses using blockchain or 
-                        distributed ledger technology to store or transmit value belonging to others.
-                      </p>
-                      <p className="mt-2">
-                        The DLT regulatory framework in Gibraltar was one of the first in the world specifically designed 
-                        for blockchain businesses and requires compliance with nine core principles:
-                      </p>
-                      <ul className="list-disc pl-6 space-y-1 mt-2">
-                        <li>Honesty and integrity</li>
-                        <li>Customer care</li>
-                        <li>Financial resources</li>
-                        <li>Risk management</li>
-                        <li>Protection of client assets</li>
-                        <li>Corporate governance</li>
-                        <li>Cyber security</li>
-                        <li>Financial crime prevention</li>
-                        <li>Resilience</li>
-                      </ul>
-                    </section>
-                    
-                    <section>
-                      <h3 className="text-xl font-semibold mb-2">What Our DLT License Covers</h3>
-                      <p>
-                        Our DLT license authorizes OpenFund to:
-                      </p>
-                      <ul className="list-disc pl-6 space-y-1 mt-2">
-                        <li>Operate a platform for trading digital assets</li>
-                        <li>Facilitate the creation and management of decentralized funds</li>
-                        <li>Provide custody services for digital assets</li>
-                        <li>Execute transactions on behalf of clients</li>
-                      </ul>
-                    </section>
-                    
-                    <section>
-                      <h3 className="text-xl font-semibold mb-2">User Protections</h3>
-                      <p>
-                        Operating under a DLT license means that OpenFund is subject to ongoing supervision by the GFSC, 
-                        providing additional protection for our users. This includes:
-                      </p>
-                      <ul className="list-disc pl-6 space-y-1 mt-2">
-                        <li>Regular audits and compliance checks</li>
-                        <li>Implementation of robust security measures</li>
-                        <li>Strict anti-money laundering (AML) and know your customer (KYC) procedures</li>
-                        <li>Segregation of client assets</li>
-                        <li>Maintenance of sufficient capital and liquidity</li>
-                      </ul>
-                    </section>
-                    
-                    <section>
-                      <h3 className="text-xl font-semibold mb-2">Verification</h3>
-                      <p>
-                        Our DLT license status can be verified on the Gibraltar Financial Services Commission's public register.
-                      </p>
-                      <div className="mt-4">
-                        <a 
-                          href="https://www.fsc.gi/regulated-entity/search" 
-                          target="_blank" 
-                          rel="noopener noreferrer"
-                          className="flex items-center text-primary hover:underline"
-                        >
-                          Verify our license on GFSC website <ExternalLink size={14} className="ml-1" />
-                        </a>
-                      </div>
-                    </section>
-                    
-                    <Separator className="my-6" />
-                    
-                    <section className="flex items-center justify-between">
                       <div>
-                        <p className="font-semibold">Regulatory Contact:</p>
+                        <p className="font-semibold mb-2">Regulatory Contact:</p>
                         <p>Gibraltar Financial Services Commission</p>
                         <p>PO Box 940, Suite 3, Ground Floor</p>
                         <p>Atlantic Suites, Europort Avenue</p>
                         <p>Gibraltar</p>
                       </div>
-                      <a 
-                        href="https://www.fsc.gi" 
-                        target="_blank" 
-                        rel="noopener noreferrer"
-                        className="flex items-center text-primary hover:underline"
-                      >
-                        Visit GFSC Website <ExternalLink size={14} className="ml-1" />
-                      </a>
                     </section>
                   </div>
                 </CardContent>

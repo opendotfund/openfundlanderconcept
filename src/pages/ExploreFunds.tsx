@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '@/components/Navbar';
@@ -445,7 +446,7 @@ const ExploreFunds = () => {
           Explore <span className="text-primary">Investment Funds</span>
         </h1>
         
-        <p className="text-muted-foreground text-lg mb-8 max-w-3xl">
+        <p className="text-muted-foreground text-lg mb-8 max-w-3xl mx-auto text-center">
           Discover traditional hedge funds and crypto investment vehicles with proven track records. Compare performance, strategies, and minimum investments to find the right opportunity for your portfolio.
         </p>
         

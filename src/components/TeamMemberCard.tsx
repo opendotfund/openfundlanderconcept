@@ -12,7 +12,7 @@ type TeamMemberCardProps = {
 
 const TeamMemberCard = ({ name, role, background, className }: TeamMemberCardProps) => {
   return (
-    <div className={cn("relative rounded-lg overflow-hidden", className)}>
+    <div className={cn("team-member-card relative rounded-lg overflow-hidden", className)}>
       {/* Border effect with theme-sensitive coloring */}
       <div className="absolute inset-0 rounded-lg border-2 dark:border-openfund-green border-openfund-blue animate-glow" 
         style={{ '--glow-color': 'var(--card-border-glow)' } as React.CSSProperties}>
@@ -22,7 +22,7 @@ const TeamMemberCard = ({ name, role, background, className }: TeamMemberCardPro
       <div className="bg-card dark:border-openfund-green/50 border-openfund-blue/50 border rounded-lg overflow-hidden p-6">
         <div className="flex flex-col items-center">
           <h3 className="text-xl font-bold mb-2">{name}</h3>
-          <p className="dark:text-openfund-green text-openfund-blue text-sm mb-1">{role}</p>
+          <p className="role mb-1">{role}</p>
           <p className="text-muted-foreground text-sm text-center">{background}</p>
         </div>
       </div>
