@@ -300,221 +300,227 @@ const FundDetail = () => {
               </CardContent>
             </Card>
             
-            <Tabs value={activeTab} onValueChange={setActiveTab}>
-              <TabsList className="bg-card mb-4">
-                <TabsTrigger value="overview">Overview</TabsTrigger>
-                <TabsTrigger value="strategy">Strategy</TabsTrigger>
-                {!isDefiFund && <TabsTrigger value="holdings">Holdings</TabsTrigger>}
-              </TabsList>
-              
-              <TabsContent value="overview">
-                <Card className="bg-card border-card">
-                  <CardHeader>
-                    <CardTitle>Fund Overview</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-gray-200 mb-6">{fund.description}</p>
-                    
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-4">
-                      <div className="flex justify-between">
-                        <span className="text-gray-400">Assets Under Management</span>
-                        <span className="font-medium">{fund.aum}</span>
-                      </div>
-                      {fund.investors && (
-                        <div className="flex justify-between">
-                          <span className="text-gray-400">Active Investors</span>
-                          <span className="font-medium">{fund.investors}</span>
-                        </div>
-                      )}
-                      <div className="flex justify-between">
-                        <span className="text-gray-400">Focus</span>
-                        <span className="font-medium">{fund.focus}</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-gray-400">Inception Date</span>
-                        <span className="font-medium">{fund.inceptionDate || fund.year}</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-gray-400">Min Investment</span>
-                        <span className="font-medium">{fund.minInvestment}</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-gray-400">Risk Level</span>
-                        <span className="font-medium">{fund.riskLevel || fund.volatility}</span>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              </TabsContent>
-              
-              <TabsContent value="strategy">
-                <Card className="bg-card border-card">
-                  <CardHeader>
-                    <CardTitle>Investment Strategy</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-gray-200 mb-6">
-                      {fund.fundStrategy || 
-                        `${fund.name} employs a ${fund.focus.toLowerCase()} approach, focusing on ${
-                          fund.type === 'Crypto Fund' ? 
-                          'digital assets and blockchain technologies' : 
-                          fund.type === 'Decentralized Fund' ? 
-                          'decentralized finance protocols and yield opportunities' : 
-                          'identifying undervalued companies with strong fundamentals'
-                        }.`}
-                    </p>
-                    
-                    {isDefiFund && (
-                      <div className="bg-card p-4 rounded-lg mb-6 border border-card">
-                        <h3 className="font-medium mb-3 text-lg">Action Plan Summary</h3>
-                        <ul className="space-y-3">
-                          <li className="flex items-start">
-                            <div className="bg-primary/20 text-primary rounded-full p-1 mr-3 mt-0.5">
-                              <TrendingUp size={16} />
-                            </div>
-                            <div>
-                              <span className="font-medium block mb-1">Growth Strategy</span>
-                              <span className="text-sm text-gray-400">
-                                {fund.focus === 'Layer 1' ? 
-                                  'Strategic allocation across major Layer 1 protocols with staking for passive yield generation' : 
-                                  'Position in established DeFi protocols with focus on liquidity mining and yield farming'}
-                              </span>
-                            </div>
-                          </li>
-                          <li className="flex items-start">
-                            <div className="bg-primary/20 text-primary rounded-full p-1 mr-3 mt-0.5">
-                              <Briefcase size={16} />
-                            </div>
-                            <div>
-                              <span className="font-medium block mb-1">Risk Management</span>
-                              <span className="text-sm text-gray-400">
-                                Portfolio diversification across multiple protocols with automatic rebalancing based on market conditions
-                              </span>
-                            </div>
-                          </li>
-                          <li className="flex items-start">
-                            <div className="bg-primary/20 text-primary rounded-full p-1 mr-3 mt-0.5">
-                              <BarChart3 size={16} />
-                            </div>
-                            <div>
-                              <span className="font-medium block mb-1">Performance Targets</span>
-                              <span className="text-sm text-gray-400">
-                                Targeted annual return of {fund.returns} with quarterly portfolio rebalancing and active monitoring
-                              </span>
-                            </div>
-                          </li>
-                        </ul>
-                      </div>
-                    )}
-                    
-                    {fund.benchmarkIndex && (
-                      <div className="mb-6">
-                        <div className="flex justify-between mb-2">
-                          <span className="text-gray-400">Benchmark</span>
-                          <span className="font-medium">{fund.benchmarkIndex}</span>
-                        </div>
-                        <div className="flex justify-between mb-2">
-                          <span className="text-gray-400">Benchmark Performance</span>
-                          <span className="font-medium">{fund.benchmarkPerformance}</span>
-                        </div>
-                        <div className="flex justify-between">
-                          <span className="text-gray-400">Alpha</span>
-                          <span className={`font-medium ${
-                            parseFloat(fund.performance.replace('+', '').replace('%', '')) > 
-                            parseFloat(fund.benchmarkPerformance.replace('+', '').replace('%', '')) ?
-                            'text-openfund-green' : 'text-red-500'
-                          }`}>
-                            {`${(parseFloat(fund.performance.replace('+', '').replace('%', '')) - 
-                              parseFloat(fund.benchmarkPerformance.replace('+', '').replace('%', ''))).toFixed(1)}%`}
-                          </span>
-                        </div>
-                      </div>
-                    )}
-                    
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-4 mb-6">
-                      <div className="flex justify-between">
-                        <span className="text-gray-400">Management Style</span>
-                        <span className="font-medium">Active</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-gray-400">Investment Horizon</span>
-                        <span className="font-medium">
-                          {fund.type === 'TradFi Fund' ? 'Long Term' : 
-                           fund.type === 'Crypto Fund' ? 'Medium Term' : 'Variable'}
-                        </span>
-                      </div>
-                    </div>
-                    
-                    <h3 className="text-lg font-medium mb-3">Key Metrics</h3>
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-                      <div className="bg-card p-4 rounded-lg">
-                        <div className="flex items-center mb-1">
-                          <TrendingUp size={18} className="mr-2 text-openfund-green" />
-                          <span className="text-gray-400">Annual Return</span>
-                        </div>
-                        <div className="text-xl font-semibold">{fund.returns}</div>
-                      </div>
-                      <div className="bg-card p-4 rounded-lg">
-                        <div className="flex items-center mb-1">
-                          <BarChart3 size={18} className="mr-2 text-blue-400" />
-                          <span className="text-gray-400">Volatility</span>
-                        </div>
-                        <div className="text-xl font-semibold">{fund.volatility}</div>
-                      </div>
-                      <div className="bg-card p-4 rounded-lg">
-                        <div className="flex items-center mb-1">
-                          <Percent size={18} className="mr-2 text-purple-400" />
-                          <span className="text-gray-400">Sharpe Ratio</span>
-                        </div>
-                        <div className="text-xl font-semibold">
-                          {(fund.returnsValue / (fund.volatilityValue * 0.1)).toFixed(2)}
-                        </div>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              </TabsContent>
-              
-              <TabsContent value="holdings">
-                <Card className="bg-card border-card">
-                  <CardHeader>
-                    <CardTitle>Holdings Breakdown</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    {fund.holdingsBreakdown ? (
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <FundHoldingsPieChart 
-                          holdings={fund.holdingsBreakdown}
-                          title="Asset Allocation"
-                        />
+            <div className="mb-6">
+              <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+                <TabsList className="w-full bg-card mb-4">
+                  <TabsTrigger className="flex-1" value="overview">Overview</TabsTrigger>
+                  <TabsTrigger className="flex-1" value="strategy">Strategy</TabsTrigger>
+                  {(!isDefiFund) && <TabsTrigger className="flex-1" value="holdings">Holdings</TabsTrigger>}
+                </TabsList>
+                
+                <div className="mt-4">
+                  <TabsContent value="overview" className="mt-0">
+                    <Card className="bg-card border-card">
+                      <CardHeader>
+                        <CardTitle>Fund Overview</CardTitle>
+                      </CardHeader>
+                      <CardContent>
+                        <p className="text-gray-200 mb-6">{fund.description}</p>
                         
-                        <div className="space-y-4">
-                          <h3 className="text-lg font-medium mb-3">Top Holdings</h3>
-                          {fund.topHoldings && fund.topHoldings.map((holding: string, index: number) => (
-                            <div key={index} className="flex items-center justify-between bg-card p-4 rounded-lg">
-                              <div className="flex items-center">
-                                <div className="w-10 h-10 bg-card rounded-full flex items-center justify-center mr-3">
-                                  {holding.charAt(0)}
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-4">
+                          <div className="flex justify-between">
+                            <span className="text-gray-400">Assets Under Management</span>
+                            <span className="font-medium">{fund.aum}</span>
+                          </div>
+                          {fund.investors && (
+                            <div className="flex justify-between">
+                              <span className="text-gray-400">Active Investors</span>
+                              <span className="font-medium">{fund.investors}</span>
+                            </div>
+                          )}
+                          <div className="flex justify-between">
+                            <span className="text-gray-400">Focus</span>
+                            <span className="font-medium">{fund.focus}</span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span className="text-gray-400">Inception Date</span>
+                            <span className="font-medium">{fund.inceptionDate || fund.year}</span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span className="text-gray-400">Min Investment</span>
+                            <span className="font-medium">{fund.minInvestment}</span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span className="text-gray-400">Risk Level</span>
+                            <span className="font-medium">{fund.riskLevel || fund.volatility}</span>
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </TabsContent>
+                  
+                  <TabsContent value="strategy" className="mt-0">
+                    <Card className="bg-card border-card">
+                      <CardHeader>
+                        <CardTitle>Investment Strategy</CardTitle>
+                      </CardHeader>
+                      <CardContent>
+                        <p className="text-gray-200 mb-6">
+                          {fund.fundStrategy || 
+                            `${fund.name} employs a ${fund.focus.toLowerCase()} approach, focusing on ${
+                              fund.type === 'Crypto Fund' ? 
+                              'digital assets and blockchain technologies' : 
+                              fund.type === 'Decentralized Fund' ? 
+                              'decentralized finance protocols and yield opportunities' : 
+                              'identifying undervalued companies with strong fundamentals'
+                            }.`}
+                        </p>
+                        
+                        {isDefiFund && (
+                          <div className="bg-card p-4 rounded-lg mb-6 border border-card">
+                            <h3 className="font-medium mb-3 text-lg">Action Plan Summary</h3>
+                            <ul className="space-y-3">
+                              <li className="flex items-start">
+                                <div className="bg-primary/20 text-primary rounded-full p-1 mr-3 mt-0.5">
+                                  <TrendingUp size={16} />
                                 </div>
-                                <span className="font-medium">{holding}</span>
-                              </div>
-                              <div className="text-right">
-                                <div className="font-semibold">{(20 - index * 3).toFixed(1)}%</div>
-                                <div className="text-xs text-gray-400">
-                                  ${((fund.aumValue || 1000000) * (20 - index * 3) / 100).toLocaleString()}
+                                <div>
+                                  <span className="font-medium block mb-1">Growth Strategy</span>
+                                  <span className="text-sm text-gray-400">
+                                    {fund.focus === 'Layer 1' ? 
+                                      'Strategic allocation across major Layer 1 protocols with staking for passive yield generation' : 
+                                      'Position in established DeFi protocols with focus on liquidity mining and yield farming'}
+                                  </span>
                                 </div>
+                              </li>
+                              <li className="flex items-start">
+                                <div className="bg-primary/20 text-primary rounded-full p-1 mr-3 mt-0.5">
+                                  <Briefcase size={16} />
+                                </div>
+                                <div>
+                                  <span className="font-medium block mb-1">Risk Management</span>
+                                  <span className="text-sm text-gray-400">
+                                    Portfolio diversification across multiple protocols with automatic rebalancing based on market conditions
+                                  </span>
+                                </div>
+                              </li>
+                              <li className="flex items-start">
+                                <div className="bg-primary/20 text-primary rounded-full p-1 mr-3 mt-0.5">
+                                  <BarChart3 size={16} />
+                                </div>
+                                <div>
+                                  <span className="font-medium block mb-1">Performance Targets</span>
+                                  <span className="text-sm text-gray-400">
+                                    Targeted annual return of {fund.returns} with quarterly portfolio rebalancing and active monitoring
+                                  </span>
+                                </div>
+                              </li>
+                            </ul>
+                          </div>
+                        )}
+                        
+                        {fund.benchmarkIndex && (
+                          <div className="mb-6">
+                            <div className="flex justify-between mb-2">
+                              <span className="text-gray-400">Benchmark</span>
+                              <span className="font-medium">{fund.benchmarkIndex}</span>
+                            </div>
+                            <div className="flex justify-between mb-2">
+                              <span className="text-gray-400">Benchmark Performance</span>
+                              <span className="font-medium">{fund.benchmarkPerformance}</span>
+                            </div>
+                            <div className="flex justify-between">
+                              <span className="text-gray-400">Alpha</span>
+                              <span className={`font-medium ${
+                                parseFloat(fund.performance.replace('+', '').replace('%', '')) > 
+                                parseFloat(fund.benchmarkPerformance.replace('+', '').replace('%', '')) ?
+                                'text-openfund-green' : 'text-red-500'
+                              }`}>
+                                {`${(parseFloat(fund.performance.replace('+', '').replace('%', '')) - 
+                                  parseFloat(fund.benchmarkPerformance.replace('+', '').replace('%', ''))).toFixed(1)}%`}
+                              </span>
+                            </div>
+                          </div>
+                        )}
+                        
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-4 mb-6">
+                          <div className="flex justify-between">
+                            <span className="text-gray-400">Management Style</span>
+                            <span className="font-medium">Active</span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span className="text-gray-400">Investment Horizon</span>
+                            <span className="font-medium">
+                              {fund.type === 'TradFi Fund' ? 'Long Term' : 
+                               fund.type === 'Crypto Fund' ? 'Medium Term' : 'Variable'}
+                            </span>
+                          </div>
+                        </div>
+                        
+                        <h3 className="text-lg font-medium mb-3">Key Metrics</h3>
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                          <div className="bg-card p-4 rounded-lg">
+                            <div className="flex items-center mb-1">
+                              <TrendingUp size={18} className="mr-2 text-openfund-green" />
+                              <span className="text-gray-400">Annual Return</span>
+                            </div>
+                            <div className="text-xl font-semibold">{fund.returns}</div>
+                          </div>
+                          <div className="bg-card p-4 rounded-lg">
+                            <div className="flex items-center mb-1">
+                              <BarChart3 size={18} className="mr-2 text-blue-400" />
+                              <span className="text-gray-400">Volatility</span>
+                            </div>
+                            <div className="text-xl font-semibold">{fund.volatility}</div>
+                          </div>
+                          <div className="bg-card p-4 rounded-lg">
+                            <div className="flex items-center mb-1">
+                              <Percent size={18} className="mr-2 text-purple-400" />
+                              <span className="text-gray-400">Sharpe Ratio</span>
+                            </div>
+                            <div className="text-xl font-semibold">
+                              {(fund.returnsValue / (fund.volatilityValue * 0.1)).toFixed(2)}
+                            </div>
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </TabsContent>
+                  
+                  {!isDefiFund && (
+                    <TabsContent value="holdings" className="mt-0">
+                      <Card className="bg-card border-card">
+                        <CardHeader>
+                          <CardTitle>Holdings Breakdown</CardTitle>
+                        </CardHeader>
+                        <CardContent>
+                          {fund.holdingsBreakdown ? (
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                              <FundHoldingsPieChart 
+                                holdings={fund.holdingsBreakdown}
+                                title="Asset Allocation"
+                              />
+                              
+                              <div className="space-y-4">
+                                <h3 className="text-lg font-medium mb-3">Top Holdings</h3>
+                                {fund.topHoldings && fund.topHoldings.map((holding: string, index: number) => (
+                                  <div key={index} className="flex items-center justify-between bg-card p-4 rounded-lg">
+                                    <div className="flex items-center">
+                                      <div className="w-10 h-10 bg-card rounded-full flex items-center justify-center mr-3">
+                                        {holding.charAt(0)}
+                                      </div>
+                                      <span className="font-medium">{holding}</span>
+                                    </div>
+                                    <div className="text-right">
+                                      <div className="font-semibold">{(20 - index * 3).toFixed(1)}%</div>
+                                      <div className="text-xs text-gray-400">
+                                        ${((fund.aumValue || 1000000) * (20 - index * 3) / 100).toLocaleString()}
+                                      </div>
+                                    </div>
+                                  </div>
+                                ))}
                               </div>
                             </div>
-                          ))}
-                        </div>
-                      </div>
-                    ) : (
-                      <p className="text-gray-400">Detailed holdings information is not available for this fund.</p>
-                    )}
-                  </CardContent>
-                </Card>
-              </TabsContent>
-            </Tabs>
+                          ) : (
+                            <p className="text-gray-400">Detailed holdings information is not available for this fund.</p>
+                          )}
+                        </CardContent>
+                      </Card>
+                    </TabsContent>
+                  )}
+                </div>
+              </Tabs>
+            </div>
           </div>
           
           <div className="space-y-6">

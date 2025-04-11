@@ -51,43 +51,45 @@ export const FundHoldingsPieChart: React.FC<FundHoldingsPieChartProps> = ({
       </CardHeader>
       <CardContent>
         <div className="h-[300px] w-full">
-          <ChartContainer config={config} className="h-full">
-            <PieChart>
-              <Pie
-                data={holdings}
-                cx="50%"
-                cy="50%"
-                labelLine={false}
-                outerRadius={100}
-                fill="#8884d8"
-                dataKey="value"
-              >
-                {holdings.map((entry, index) => (
-                  <Cell key={`cell-${index}`} fill={entry.color} />
-                ))}
-              </Pie>
-              <Tooltip
-                content={({ active, payload }) => (
-                  <ChartTooltipContent 
-                    active={active} 
-                    payload={payload}
-                    formatter={(value, name) => {
-                      return (
-                        <div className="flex justify-between gap-2">
-                          <span className="font-medium">{name}:</span>
-                          <span>{value}%</span>
-                        </div>
-                      );
-                    }}
-                  />
-                )}
-              />
-              <Legend 
-                layout="horizontal" 
-                verticalAlign="bottom" 
-                align="center"
-              />
-            </PieChart>
+          <ChartContainer config={config} className="h-full w-full">
+            <ResponsiveContainer width="100%" height="100%">
+              <PieChart>
+                <Pie
+                  data={holdings}
+                  cx="50%"
+                  cy="50%"
+                  labelLine={false}
+                  outerRadius={90}
+                  fill="#8884d8"
+                  dataKey="value"
+                >
+                  {holdings.map((entry, index) => (
+                    <Cell key={`cell-${index}`} fill={entry.color} />
+                  ))}
+                </Pie>
+                <Tooltip
+                  content={({ active, payload }) => (
+                    <ChartTooltipContent 
+                      active={active} 
+                      payload={payload}
+                      formatter={(value, name) => {
+                        return (
+                          <div className="flex justify-between gap-2">
+                            <span className="font-medium">{name}:</span>
+                            <span>{value}%</span>
+                          </div>
+                        );
+                      }}
+                    />
+                  )}
+                />
+                <Legend 
+                  layout="horizontal" 
+                  verticalAlign="bottom" 
+                  align="center"
+                />
+              </PieChart>
+            </ResponsiveContainer>
           </ChartContainer>
         </div>
       </CardContent>
