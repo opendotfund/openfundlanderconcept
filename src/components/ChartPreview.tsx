@@ -10,6 +10,7 @@ import {
   Tooltip, 
   ResponsiveContainer 
 } from 'recharts';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 // Berkshire Hathaway Class A accurate sample data for the chart (BRK.A)
 const data = [
@@ -42,33 +43,35 @@ const CustomTooltip = ({ active, payload, label }: any) => {
 };
 
 const ChartPreview = () => {
+  const isMobile = useIsMobile();
+
   return (
-    <section className="py-20 bg-card">
+    <section className="py-10 md:py-20 bg-card">
       <div className="container mx-auto px-4">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">
+        <div className="text-center mb-8 md:mb-12">
+          <h2 className="text-2xl md:text-4xl font-bold mb-2 md:mb-4">
             Advanced <span className="text-primary">Trading Tools</span>
           </h2>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            Access professional-grade charts, analysis tools, and real-time market data to make informed decisions
+          <p className="text-base md:text-xl text-muted-foreground max-w-3xl mx-auto">
+            Access professional-grade charts, analysis tools, and real-time market data
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
-          <div className="green-glow">
-            <Card className="bg-card border-primary/20 overflow-hidden h-80">
-              <div className="p-4">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-10 items-center">
+          <div className="green-glow order-2 lg:order-1">
+            <Card className="bg-card border-primary/20 overflow-hidden h-60 md:h-80">
+              <div className="p-3 md:p-4">
                 <div className="flex justify-between items-center mb-2">
                   <div className="flex items-center">
-                    <div className="h-3 w-3 rounded-full bg-primary mr-2"></div>
-                    <span className="font-bold">BRK.A (Berkshire Hathaway)</span>
+                    <div className="h-2 md:h-3 w-2 md:w-3 rounded-full bg-primary mr-2"></div>
+                    <span className="font-bold text-sm md:text-base">BRK.A</span>
                   </div>
-                  <span className="text-primary">+4.8%</span>
+                  <span className="text-primary text-sm md:text-base">+4.8%</span>
                 </div>
-                <ResponsiveContainer width="100%" height={250}>
+                <ResponsiveContainer width="100%" height={isMobile ? 200 : 250}>
                   <AreaChart
                     data={data}
-                    margin={{ top: 5, right: 20, left: 0, bottom: 25 }}
+                    margin={isMobile ? { top: 5, right: 10, left: 0, bottom: 20 } : { top: 5, right: 20, left: 0, bottom: 25 }}
                   >
                     <defs>
                       <linearGradient id="colorPrice" x1="0" y1="0" x2="0" y2="1">
@@ -78,12 +81,14 @@ const ChartPreview = () => {
                     </defs>
                     <XAxis 
                       dataKey="date" 
-                      tick={{ fill: 'var(--color-text-subdued)' }} 
-                      dy={10} // Move the x-axis labels down
+                      tick={{ fill: 'var(--color-text-subdued)', fontSize: isMobile ? 10 : 12 }} 
+                      dy={isMobile ? 5 : 10}
+                      interval={isMobile ? "preserveStartEnd" : 0}
                     />
                     <YAxis 
-                      tick={{ fill: 'var(--color-text-subdued)' }}
-                      tickFormatter={(value) => `$${(value/1000)}k`}
+                      tick={{ fill: 'var(--color-text-subdued)', fontSize: isMobile ? 10 : 12 }}
+                      tickFormatter={(value) => isMobile ? `$${(value/1000)}k` : `$${(value/1000)}k`}
+                      width={isMobile ? 35 : 45}
                     />
                     <CartesianGrid strokeDasharray="3 3" stroke="var(--color-border)" />
                     <Tooltip content={<CustomTooltip />} />
@@ -100,13 +105,13 @@ const ChartPreview = () => {
             </Card>
           </div>
 
-          <div className="space-y-6">
-            <div className="bg-card p-6 rounded-xl border border-border">
-              <h3 className="text-2xl font-bold mb-4">Dominate Every Market</h3>
-              <p className="text-muted-foreground mb-4">
-                Get instant access to every major market with millisecond-precision data feeds
+          <div className="space-y-4 md:space-y-6 order-1 lg:order-2">
+            <div className="bg-card p-4 md:p-6 rounded-xl border border-border">
+              <h3 className="text-xl md:text-2xl font-bold mb-2 md:mb-4">Dominate Every Market</h3>
+              <p className="text-sm md:text-base text-muted-foreground mb-3 md:mb-4">
+                Get instant access to every major market
               </p>
-              <ul className="space-y-3 text-sm">
+              <ul className="space-y-2 md:space-y-3 text-xs md:text-sm">
                 <li className="flex justify-between">
                   <span>BTC/USD</span>
                   <span className="text-primary">$80,000 <span className="text-xs">+2.4%</span></span>
@@ -126,15 +131,15 @@ const ChartPreview = () => {
               </ul>
             </div>
             
-            <div className="flex-1 grid grid-cols-2 gap-4">
-              <div className="bg-card p-4 rounded-xl border border-border">
-                <h4 className="font-medium">Trading Volume</h4>
-                <p className="text-primary text-xl font-bold">$12.4B</p>
+            <div className="grid grid-cols-2 gap-3 md:gap-4">
+              <div className="bg-card p-3 md:p-4 rounded-xl border border-border">
+                <h4 className="font-medium text-sm md:text-base">Trading Volume</h4>
+                <p className="text-primary text-lg md:text-xl font-bold">$12.4B</p>
                 <p className="text-xs text-muted-foreground">24h change</p>
               </div>
-              <div className="bg-card p-4 rounded-xl border border-border">
-                <h4 className="font-medium">Active Traders</h4>
-                <p className="text-primary text-xl font-bold">241K+</p>
+              <div className="bg-card p-3 md:p-4 rounded-xl border border-border">
+                <h4 className="font-medium text-sm md:text-base">Active Traders</h4>
+                <p className="text-primary text-lg md:text-xl font-bold">241K+</p>
                 <p className="text-xs text-muted-foreground">Worldwide</p>
               </div>
             </div>

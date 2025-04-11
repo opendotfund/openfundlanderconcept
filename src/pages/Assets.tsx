@@ -160,18 +160,18 @@ const Assets = () => {
     <div className="min-h-screen bg-openfund-gray-dark text-white flex flex-col">
       <Navbar />
 
-      <main className="flex-grow container mx-auto px-4 py-8">
+      <main className="flex-grow container mx-auto px-3 md:px-4 py-4 md:py-8">
         {expandedCategory ? (
           // Expanded category view
           <div>
-            <div className="flex flex-wrap justify-between items-center gap-4 mb-6">
-              <h1 className="text-2xl font-bold">All {getCategoryTitle(expandedCategory)}</h1>
-              <Button variant="outline" onClick={() => setExpandedCategory(null)}>
+            <div className="flex flex-wrap justify-between items-center gap-2 md:gap-4 mb-4 md:mb-6">
+              <h1 className="text-xl md:text-2xl font-bold">All {getCategoryTitle(expandedCategory)}</h1>
+              <Button variant="outline" size={isMobile ? "sm" : "default"} onClick={() => setExpandedCategory(null)}>
                 Back to Overview
               </Button>
             </div>
             
-            <div className="mb-6">
+            <div className="mb-4 md:mb-6">
               <form onSubmit={handleSearch} className="flex gap-2">
                 <Input
                   placeholder={`Search ${expandedCategory}...`}
@@ -186,7 +186,7 @@ const Assets = () => {
             </div>
             
             <Card className="bg-openfund-gray-dark border-openfund-gray-light">
-              <CardContent className="p-6">
+              <CardContent className="p-3 md:p-6">
                 <AssetList 
                   type={expandedCategory as AssetType} 
                   onSelect={handleAssetSelect}
@@ -197,13 +197,13 @@ const Assets = () => {
           </div>
         ) : (
           // Regular asset detail view
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-8">
             {/* Left Section - Asset Chart and Swap */}
             <div className="lg:col-span-2">
-              <div className="bg-openfund-gray-medium rounded-lg p-4 sm:p-6 mb-6">
-                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 sm:mb-6">
+              <div className="bg-openfund-gray-medium rounded-lg p-3 sm:p-6 mb-4 sm:mb-6">
+                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-3 sm:mb-6">
                   <div>
-                    <h1 className="text-xl sm:text-2xl font-bold">{selectedAsset.charAt(0).toUpperCase() + selectedAsset.slice(1)}</h1>
+                    <h1 className="text-lg sm:text-2xl font-bold">{selectedAsset.charAt(0).toUpperCase() + selectedAsset.slice(1)}</h1>
                     <div className="flex items-center mt-2">
                       <span className="text-lg sm:text-xl font-bold text-openfund-green mr-2">
                         {getAssetPrice(selectedAsset)}
@@ -227,31 +227,31 @@ const Assets = () => {
                 />
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 mb-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4 sm:mb-6">
                 {/* Swap Widget */}
-                <div className="bg-openfund-gray-medium rounded-lg p-4 sm:p-6">
-                  <h2 className="text-lg sm:text-xl font-bold mb-4">Trade {selectedAsset.charAt(0).toUpperCase() + selectedAsset.slice(1)}</h2>
+                <div className="bg-openfund-gray-medium rounded-lg p-3 sm:p-6">
+                  <h2 className="text-base sm:text-xl font-bold mb-3 sm:mb-4">Trade {selectedAsset.charAt(0).toUpperCase() + selectedAsset.slice(1)}</h2>
                   <SwapWidget selectedAsset={selectedAsset} />
                 </div>
 
                 {/* Asset Info */}
-                <div className="bg-openfund-gray-medium rounded-lg p-4 sm:p-6">
-                  <h2 className="text-lg sm:text-xl font-bold mb-4">About {selectedAsset.charAt(0).toUpperCase() + selectedAsset.slice(1)}</h2>
-                  <p className="text-gray-300 mb-4 text-sm sm:text-base">
-                    This is a placeholder description for {selectedAsset}. The actual content would contain relevant information about the asset, its history, use cases, and other important details that investors might be interested in.
+                <div className="bg-openfund-gray-medium rounded-lg p-3 sm:p-6">
+                  <h2 className="text-base sm:text-xl font-bold mb-3 sm:mb-4">About {selectedAsset.charAt(0).toUpperCase() + selectedAsset.slice(1)}</h2>
+                  <p className="text-gray-300 mb-3 sm:mb-4 text-xs sm:text-base">
+                    This is a placeholder description for {selectedAsset}. The actual content would contain relevant information about the asset.
                   </p>
-                  <div className="grid grid-cols-1 gap-4">
+                  <div className="grid grid-cols-1 gap-3 sm:gap-4">
                     <div>
-                      <p className="text-gray-400 text-sm">Market Cap</p>
-                      <p className="text-base sm:text-lg font-medium">{getMarketCap(selectedAsset)}</p>
+                      <p className="text-gray-400 text-xs sm:text-sm">Market Cap</p>
+                      <p className="text-sm sm:text-lg font-medium">{getMarketCap(selectedAsset)}</p>
                     </div>
                     <div>
-                      <p className="text-gray-400 text-sm">Volume (24h)</p>
-                      <p className="text-base sm:text-lg font-medium">{get24hVolume(selectedAsset)}</p>
+                      <p className="text-gray-400 text-xs sm:text-sm">Volume (24h)</p>
+                      <p className="text-sm sm:text-lg font-medium">{get24hVolume(selectedAsset)}</p>
                     </div>
                     <div>
-                      <p className="text-gray-400 text-sm">Circulating Supply</p>
-                      <p className="text-base sm:text-lg font-medium">{getCirculatingSupply(selectedAsset)}</p>
+                      <p className="text-gray-400 text-xs sm:text-sm">Circulating Supply</p>
+                      <p className="text-sm sm:text-lg font-medium">{getCirculatingSupply(selectedAsset)}</p>
                     </div>
                   </div>
                 </div>
@@ -260,8 +260,8 @@ const Assets = () => {
 
             {/* Right Section - Asset Categories */}
             <div className="lg:col-span-1">
-              <div className="bg-openfund-gray-medium rounded-lg p-4 sm:p-6">
-                <div className="mb-4 sm:mb-6">
+              <div className="bg-openfund-gray-medium rounded-lg p-3 sm:p-6">
+                <div className="mb-3 sm:mb-6">
                   <form onSubmit={handleSearch} className="flex gap-2">
                     <Input
                       placeholder="Search assets..."
@@ -275,18 +275,18 @@ const Assets = () => {
                   </form>
                 </div>
                 
-                <div className="space-y-4 sm:space-y-6">
+                <div className="space-y-3 sm:space-y-6">
                   {/* Crypto Section */}
                   <Card className="bg-openfund-gray-dark border-openfund-gray-light">
-                    <CardHeader className="pb-2 p-3 sm:p-4">
-                      <CardTitle className="text-base sm:text-lg flex justify-between items-center">
+                    <CardHeader className="pb-1 p-2 sm:p-4">
+                      <CardTitle className="text-sm sm:text-lg flex justify-between items-center">
                         <span>Top Cryptocurrencies</span>
-                        <Button variant="ghost" size="sm" className="text-openfund-green text-xs sm:text-sm" onClick={() => handleSeeMore("crypto")}>
+                        <Button variant="ghost" size="sm" className="text-openfund-green text-xs" onClick={() => handleSeeMore("crypto")}>
                           View All
                         </Button>
                       </CardTitle>
                     </CardHeader>
-                    <CardContent className="p-3 sm:p-4">
+                    <CardContent className="p-2 sm:p-4">
                       <AssetList 
                         type="crypto" 
                         onSelect={handleAssetSelect}
@@ -298,15 +298,15 @@ const Assets = () => {
                   
                   {/* Stocks Section */}
                   <Card className="bg-openfund-gray-dark border-openfund-gray-light">
-                    <CardHeader className="pb-2 p-3 sm:p-4">
-                      <CardTitle className="text-base sm:text-lg flex justify-between items-center">
+                    <CardHeader className="pb-1 p-2 sm:p-4">
+                      <CardTitle className="text-sm sm:text-lg flex justify-between items-center">
                         <span>Top Stocks</span>
-                        <Button variant="ghost" size="sm" className="text-openfund-green text-xs sm:text-sm" onClick={() => handleSeeMore("stocks")}>
+                        <Button variant="ghost" size="sm" className="text-openfund-green text-xs" onClick={() => handleSeeMore("stocks")}>
                           View All
                         </Button>
                       </CardTitle>
                     </CardHeader>
-                    <CardContent className="p-3 sm:p-4">
+                    <CardContent className="p-2 sm:p-4">
                       <AssetList 
                         type="stocks" 
                         onSelect={handleAssetSelect}
@@ -318,15 +318,15 @@ const Assets = () => {
                   
                   {/* Commodities Section */}
                   <Card className="bg-openfund-gray-dark border-openfund-gray-light">
-                    <CardHeader className="pb-2 p-3 sm:p-4">
-                      <CardTitle className="text-base sm:text-lg flex justify-between items-center">
+                    <CardHeader className="pb-1 p-2 sm:p-4">
+                      <CardTitle className="text-sm sm:text-lg flex justify-between items-center">
                         <span>Top Commodities</span>
-                        <Button variant="ghost" size="sm" className="text-openfund-green text-xs sm:text-sm" onClick={() => handleSeeMore("commodities")}>
+                        <Button variant="ghost" size="sm" className="text-openfund-green text-xs" onClick={() => handleSeeMore("commodities")}>
                           View All
                         </Button>
                       </CardTitle>
                     </CardHeader>
-                    <CardContent className="p-3 sm:p-4">
+                    <CardContent className="p-2 sm:p-4">
                       <AssetList 
                         type="commodities" 
                         onSelect={handleAssetSelect}

@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { 
@@ -9,6 +10,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Clock, TrendingDown, TrendingUp } from 'lucide-react';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 interface TradeHistoryProps {
   asset: string;
@@ -57,20 +59,20 @@ const generateTradeHistoryData = (asset: string): Trade[] => {
 
 export const TradeHistory = ({ asset }: TradeHistoryProps) => {
   const trades = generateTradeHistoryData(asset);
+  const isMobile = useIsMobile();
   
-  // Increased the height of the scroll area even further from 450px to 480px
   return (
-    <ScrollArea className="h-[480px]">
+    <ScrollArea className={`h-[300px] ${isMobile ? 'h-[350px]' : 'h-[480px]'}`}>
       <Table>
         <TableHeader>
           <TableRow className="hover:bg-transparent">
-            <TableHead>Type</TableHead>
-            <TableHead>Amount</TableHead>
-            <TableHead className="text-right">Price</TableHead>
-            <TableHead className="text-right">Total</TableHead>
-            <TableHead className="text-right">
+            <TableHead className={isMobile ? "px-2 py-2" : ""}>Type</TableHead>
+            <TableHead className={isMobile ? "px-2 py-2" : ""}>Amount</TableHead>
+            <TableHead className={`text-right ${isMobile ? "px-2 py-2" : ""}`}>Price</TableHead>
+            <TableHead className={`text-right ${isMobile ? "px-2 py-2" : ""}`}>Total</TableHead>
+            <TableHead className={`text-right ${isMobile ? "px-2 py-2" : ""}`}>
               <div className="flex items-center justify-end">
-                <Clock size={14} className="mr-1" />
+                <Clock size={isMobile ? 12 : 14} className="mr-1" />
                 Time
               </div>
             </TableHead>
@@ -79,20 +81,33 @@ export const TradeHistory = ({ asset }: TradeHistoryProps) => {
         <TableBody>
           {trades.map((trade) => (
             <TableRow key={trade.id}>
-              <TableCell>
+              <TableCell className={isMobile ? "px-2 py-2 text-xs" : ""}>
                 <span className={`flex items-center ${trade.type === 'buy' ? 'text-openfund-green' : 'text-red-500'}`}>
                   {trade.type === 'buy' ? (
-                    <TrendingUp size={16} className="mr-1" />
+                    <TrendingUp size={isMobile ? 12 : 16} className="mr-1" />
                   ) : (
-                    <TrendingDown size={16} className="mr-1" />
+                    <TrendingDown size={isMobile ? 12 : 16} className="mr-1" />
                   )}
                   {trade.type.toUpperCase()}
                 </span>
               </TableCell>
-              <TableCell>{trade.amount} {asset.slice(0, 3).toUpperCase()}</TableCell>
-              <TableCell className="text-right">${trade.price}</TableCell>
-              <TableCell className="text-right">${trade.total}</TableCell>
-              <TableCell className="text-right text-gray-400 text-sm">{trade.date}</TableCell>
+              <TableCell className={isMobile ? "px-2 py-2 text-xs" : ""}>
+                {isMobile && trade.amount.length > 5 
+                  ? trade.amount.substring(0, 5) 
+                  : trade.amount} {asset.slice(0, 3).toUpperCase()}
+              </TableCell>
+              <TableCell className={`text-right ${isMobile ? "px-2 py-2 text-xs" : ""}`}>
+                ${trade.price}
+              </TableCell>
+              <TableCell className={`text-right ${isMobile ? "px-2 py-2 text-xs" : ""}`}>
+                ${trade.total}
+              </TableCell>
+              <TableCell className={`text-right text-gray-400 ${isMobile ? "px-2 py-2 text-xs" : "text-sm"}`}>
+                {isMobile 
+                  ? new Date(trade.date).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})
+                  : trade.date
+                }
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>

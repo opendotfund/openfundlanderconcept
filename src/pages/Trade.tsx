@@ -33,14 +33,14 @@ const Trade = () => {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <Navbar />
-      <div className="container mx-auto px-4 py-8">
-        <h1 className="text-3xl font-bold mb-8">Trade Assets</h1>
+      <div className="container mx-auto px-3 md:px-4 py-4 md:py-8">
+        <h1 className="text-2xl md:text-3xl font-bold mb-4 md:mb-8">Trade Assets</h1>
         
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-6">
           <div className="lg:col-span-2">
-            <div className="bg-card border border-border p-6 rounded-lg mb-6">
-              <div className="flex justify-between items-center mb-4">
-                <h2 className="text-xl font-bold">
+            <div className="bg-card border border-border p-3 md:p-6 rounded-lg mb-4 md:mb-6">
+              <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-3 md:mb-4 gap-2">
+                <h2 className="text-lg md:text-xl font-bold">
                   {selectedAsset.charAt(0).toUpperCase() + selectedAsset.slice(1)} Price Chart
                 </h2>
                 <TimeframeSelector 
@@ -48,26 +48,26 @@ const Trade = () => {
                   onChange={setTimeframe}
                 />
               </div>
-              <div className="h-[380px]">
+              <div>
                 <AssetChart asset={selectedAsset} timeframe={timeframe} />
               </div>
             </div>
             
-            <div className="bg-card border border-border p-6 rounded-lg">
-              <h2 className="text-xl font-bold mb-4">Trade History</h2>
+            <div className="bg-card border border-border p-3 md:p-6 rounded-lg">
+              <h2 className="text-lg md:text-xl font-bold mb-3 md:mb-4">Trade History</h2>
               <TradeHistory asset={selectedAsset} />
             </div>
           </div>
           
-          <div className="space-y-6">
-            <div className="bg-card border border-border p-6 rounded-lg">
-              <h2 className="text-xl font-bold mb-4">Trade</h2>
+          <div className="space-y-4 md:space-y-6">
+            <div className="bg-card border border-border p-3 md:p-6 rounded-lg">
+              <h2 className="text-lg md:text-xl font-bold mb-3 md:mb-4">Trade</h2>
               <SwapWidget selectedAsset={selectedAsset} />
             </div>
             
-            <div className="bg-card border border-border p-6 rounded-lg">
-              <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 gap-3">
-                <h2 className="text-xl font-bold">Popular Assets</h2>
+            <div className="bg-card border border-border p-3 md:p-6 rounded-lg">
+              <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-3 md:mb-4 gap-2">
+                <h2 className="text-lg md:text-xl font-bold">Popular Assets</h2>
                 <div className="relative w-full sm:w-auto">
                   <Input
                     placeholder="Search assets..."
@@ -79,8 +79,8 @@ const Trade = () => {
                 </div>
               </div>
               
-              <Tabs defaultValue="crypto" value={assetType} onValueChange={handleAssetTypeChange} className="mb-4">
-                <TabsList className="grid grid-cols-3 mb-4">
+              <Tabs defaultValue="crypto" value={assetType} onValueChange={handleAssetTypeChange} className="mb-3 md:mb-4">
+                <TabsList className="grid grid-cols-3 mb-3 md:mb-4">
                   <TabsTrigger value="crypto">Crypto</TabsTrigger>
                   <TabsTrigger value="stocks">Stocks</TabsTrigger>
                   <TabsTrigger value="commodities">Commodities</TabsTrigger>

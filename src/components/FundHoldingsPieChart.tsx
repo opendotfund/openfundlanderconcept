@@ -5,6 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
 import { cn } from '@/lib/utils';
 import { useTheme } from 'next-themes';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 // Define the types of data we'll be working with
 interface HoldingItem {
@@ -28,6 +29,7 @@ export const FundHoldingsPieChart: React.FC<FundHoldingsPieChartProps> = ({
 }) => {
   const { theme } = useTheme();
   const isLightMode = theme === 'light';
+  const isMobile = useIsMobile();
   
   if (!holdings || holdings.length === 0) {
     return (
@@ -82,27 +84,28 @@ export const FundHoldingsPieChart: React.FC<FundHoldingsPieChartProps> = ({
     return acc;
   }, {} as Record<string, { label: string, color: string }>);
 
-  // Set chart height
-  const chartHeight = isDeFiFund ? "400px" : "300px";
+  // Adjust chart dimensions based on screen size
+  const chartHeight = isMobile ? "250px" : (isDeFiFund ? "400px" : "300px");
+  const outerRadius = isMobile ? (isDeFiFund ? 80 : 70) : (isDeFiFund ? 120 : 90);
 
   return (
     <Card className={cn("bg-card border-card", className, {
       "col-span-full": isDeFiFund // Make the chart take full width if it's a DeFi fund
     })}>
-      <CardHeader>
+      <CardHeader className={cn(isMobile ? "p-3" : "")}>
         <CardTitle>{title}</CardTitle>
       </CardHeader>
-      <CardContent>
-        <div className={`h-[${chartHeight}] w-full relative`} style={{ height: chartHeight }}>
+      <CardContent className={cn(isMobile ? "p-2" : "")}>
+        <div className="w-full" style={{ height: chartHeight }}>
           <ChartContainer config={config} className="h-full w-full">
             <ResponsiveContainer width="100%" height="100%">
-              <PieChart>
+              <PieChart margin={isMobile ? { top: 0, right: 0, bottom: 0, left: 0 } : { top: 5, right: 10, left: 10, bottom: 5 }}>
                 <Pie
                   data={enhancedHoldings}
                   cx="50%"
                   cy="50%"
                   labelLine={false}
-                  outerRadius={isDeFiFund ? 120 : 90}
+                  outerRadius={outerRadius}
                   fill="#8884d8"
                   dataKey="value"
                 >
@@ -133,9 +136,9 @@ export const FundHoldingsPieChart: React.FC<FundHoldingsPieChartProps> = ({
                   layout="horizontal" 
                   verticalAlign="bottom" 
                   align="center"
-                  className="mt-4"
+                  wrapperStyle={isMobile ? { fontSize: "10px", marginTop: "5px" } : { marginTop: "10px" }}
                   formatter={(value) => {
-                    return <span className="text-sm font-medium">{value}</span>;
+                    return <span className={cn("font-medium", isMobile ? "text-xs" : "text-sm")}>{value}</span>;
                   }}
                 />
               </PieChart>
