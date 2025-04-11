@@ -11,30 +11,30 @@ import {
   ResponsiveContainer 
 } from 'recharts';
 
-// S&P 500 sample data for the chart - consistently rising trend
+// Berkshire Hathaway Class A accurate sample data for the chart (BRK.A)
 const data = [
-  { date: '1 Jan', price: 4769 },
-  { date: '15 Jan', price: 4825 },
-  { date: '1 Feb', price: 4958 },
-  { date: '15 Feb', price: 5029 },
-  { date: '1 Mar', price: 5123 },
-  { date: '15 Mar', price: 5234 },
-  { date: '1 Apr', price: 5310 },
-  { date: '15 Apr', price: 5385 },
-  { date: '1 May', price: 5435 },
-  { date: '15 May', price: 5495 },
-  { date: '1 Jun', price: 5518 },
-  { date: '15 Jun', price: 5531 },
-  { date: '1 Jul', price: 5572 },
-  { date: '15 Jul', price: 5605 },
-  { date: '1 Aug', price: 5628 },
+  { date: '1 Jan', price: 542000 },
+  { date: '15 Jan', price: 547000 },
+  { date: '1 Feb', price: 551200 },
+  { date: '15 Feb', price: 558500 },
+  { date: '1 Mar', price: 562100 },
+  { date: '15 Mar', price: 564300 },
+  { date: '1 Apr', price: 566400 },
+  { date: '15 Apr', price: 567800 },
+  { date: '1 May', price: 568500 },
+  { date: '15 May', price: 569200 },
+  { date: '1 Jun', price: 570100 },
+  { date: '15 Jun', price: 570900 },
+  { date: '1 Jul', price: 572000 },
+  { date: '15 Jul', price: 567870 },
+  { date: '1 Aug', price: 567870 },
 ];
 
 const CustomTooltip = ({ active, payload, label }: any) => {
   if (active && payload && payload.length) {
     return (
       <div className="bg-card p-3 border border-border rounded-md">
-        <p className="text-sm">{`${label}: $${payload[0].value}`}</p>
+        <p className="text-sm">{`${label}: $${payload[0].value.toLocaleString()}`}</p>
       </div>
     );
   }
@@ -61,9 +61,9 @@ const ChartPreview = () => {
                 <div className="flex justify-between items-center mb-2">
                   <div className="flex items-center">
                     <div className="h-3 w-3 rounded-full bg-primary mr-2"></div>
-                    <span className="font-bold">S&P 500</span>
+                    <span className="font-bold">BRK.A (Berkshire Hathaway)</span>
                   </div>
-                  <span className="text-primary">+18.2%</span>
+                  <span className="text-primary">+4.8%</span>
                 </div>
                 <ResponsiveContainer width="100%" height={250}>
                   <AreaChart
@@ -81,7 +81,10 @@ const ChartPreview = () => {
                       tick={{ fill: 'var(--color-text-subdued)' }} 
                       dy={10} // Move the x-axis labels down
                     />
-                    <YAxis tick={{ fill: 'var(--color-text-subdued)' }} />
+                    <YAxis 
+                      tick={{ fill: 'var(--color-text-subdued)' }}
+                      tickFormatter={(value) => `$${(value/1000)}k`}
+                    />
                     <CartesianGrid strokeDasharray="3 3" stroke="var(--color-border)" />
                     <Tooltip content={<CustomTooltip />} />
                     <Area 
@@ -114,11 +117,11 @@ const ChartPreview = () => {
                 </li>
                 <li className="flex justify-between">
                   <span>GOLD</span>
-                  <span className="text-primary">$2,331 <span className="text-xs">+0.5%</span></span>
+                  <span className="text-primary">$2,380 <span className="text-xs">+0.5%</span></span>
                 </li>
                 <li className="flex justify-between">
-                  <span>S&P 500</span>
-                  <span className="text-primary">$5,628 <span className="text-xs">+18.2%</span></span>
+                  <span>BRK.A</span>
+                  <span className="text-primary">$567,870 <span className="text-xs">+4.8%</span></span>
                 </li>
               </ul>
             </div>

@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { ArrowDown, Settings, Check } from 'lucide-react';
 import { Input } from '@/components/ui/input';
@@ -36,7 +35,6 @@ export const SwapWidget = ({ selectedAsset = 'bitcoin' }: SwapWidgetProps) => {
   const [showTakeProfit, setShowTakeProfit] = useState<boolean>(false);
   const [showStopLoss, setShowStopLoss] = useState<boolean>(false);
 
-  // Complete list of all available assets
   const assets = [
     { value: 'usdt', label: 'USDT' },
     { value: 'bitcoin', label: 'BTC' },
@@ -54,7 +52,6 @@ export const SwapWidget = ({ selectedAsset = 'bitcoin' }: SwapWidgetProps) => {
     { value: 'polkadot', label: 'DOT' }
   ];
 
-  // Sample exchange rate calculation with more accurate prices
   const calculateExchangeRate = (from: string, to: string, amount: string): string => {
     const rates: Record<string, number> = {
       'bitcoin': 80000,
@@ -90,12 +87,9 @@ export const SwapWidget = ({ selectedAsset = 'bitcoin' }: SwapWidgetProps) => {
     }
   };
 
-  // Function to suggest TP and SL based on current price
   useEffect(() => {
     if (toAmount && parseFloat(toAmount) > 0) {
-      // Suggest 5% higher for take profit
       const tpSuggestion = (parseFloat(toAmount) * 1.05).toFixed(6);
-      // Suggest 5% lower for stop loss
       const slSuggestion = (parseFloat(toAmount) * 0.95).toFixed(6);
       
       setTakeProfitPrice(tpSuggestion);
@@ -103,7 +97,6 @@ export const SwapWidget = ({ selectedAsset = 'bitcoin' }: SwapWidgetProps) => {
     }
   }, [toAmount]);
 
-  // Initialize limit price with the current market price
   useEffect(() => {
     if (swapMode === 'limit') {
       const currentPrice = calculateExchangeRate(fromAsset, toAsset, '1');
@@ -146,7 +139,6 @@ export const SwapWidget = ({ selectedAsset = 'bitcoin' }: SwapWidgetProps) => {
   };
 
   const handleSwapClick = () => {
-    // Swap the assets and amounts
     const tempAsset = fromAsset;
     const tempAmount = fromAmount;
     
@@ -189,14 +181,12 @@ export const SwapWidget = ({ selectedAsset = 'bitcoin' }: SwapWidgetProps) => {
       orderDetails.push(`Stop Loss at: ${stopLossPrice}`);
     }
 
-    // Show trade confirmation toast with animation
     toast({
       title: "Trade Confirmed",
       description: orderDetails.join('\n'),
       variant: "default",
-      duration: 5000, // 5 seconds
-      className: "animate-fade-in",
-      icon: <Check className="h-5 w-5 text-green-500" />
+      duration: 5000,
+      className: "animate-fade-in"
     });
   };
 
@@ -216,7 +206,6 @@ export const SwapWidget = ({ selectedAsset = 'bitcoin' }: SwapWidgetProps) => {
     setShowStopLoss(!showStopLoss);
   };
 
-  // Make sure selectedAsset is always in sync with toAsset
   useEffect(() => {
     if (selectedAsset && selectedAsset !== toAsset) {
       setToAsset(selectedAsset);
@@ -304,7 +293,6 @@ export const SwapWidget = ({ selectedAsset = 'bitcoin' }: SwapWidgetProps) => {
       </div>
 
       <div className="space-y-4">
-        {/* From */}
         <div className="bg-secondary p-4 rounded-lg">
           <div className="flex justify-between mb-2">
             <label className="text-muted-foreground text-sm">From</label>
@@ -333,7 +321,6 @@ export const SwapWidget = ({ selectedAsset = 'bitcoin' }: SwapWidgetProps) => {
           </div>
         </div>
 
-        {/* Swap button */}
         <div className="flex justify-center">
           <Button 
             variant="ghost" 
@@ -345,7 +332,6 @@ export const SwapWidget = ({ selectedAsset = 'bitcoin' }: SwapWidgetProps) => {
           </Button>
         </div>
 
-        {/* To */}
         <div className="bg-secondary p-4 rounded-lg">
           <div className="flex justify-between mb-2">
             <label className="text-muted-foreground text-sm">To</label>
@@ -374,7 +360,6 @@ export const SwapWidget = ({ selectedAsset = 'bitcoin' }: SwapWidgetProps) => {
           </div>
         </div>
 
-        {/* Limit Price */}
         {swapMode === 'limit' && (
           <div className="bg-secondary p-4 rounded-lg">
             <div className="mb-2">
@@ -390,9 +375,7 @@ export const SwapWidget = ({ selectedAsset = 'bitcoin' }: SwapWidgetProps) => {
           </div>
         )}
 
-        {/* Optional Take Profit and Stop Loss toggles */}
         <div className="space-y-3">
-          {/* Take Profit Toggle */}
           <div className="flex items-center justify-between bg-secondary p-3 rounded-lg">
             <div className="flex items-center space-x-2">
               <Label htmlFor="take-profit" className="text-muted-foreground text-sm">Take Profit</Label>
@@ -404,7 +387,6 @@ export const SwapWidget = ({ selectedAsset = 'bitcoin' }: SwapWidgetProps) => {
             </div>
           </div>
 
-          {/* Take Profit Input (conditionally rendered) */}
           {showTakeProfit && (
             <div className="bg-secondary p-3 rounded-lg">
               <div className="mb-2">
@@ -420,7 +402,6 @@ export const SwapWidget = ({ selectedAsset = 'bitcoin' }: SwapWidgetProps) => {
             </div>
           )}
 
-          {/* Stop Loss Toggle */}
           <div className="flex items-center justify-between bg-secondary p-3 rounded-lg">
             <div className="flex items-center space-x-2">
               <Label htmlFor="stop-loss" className="text-muted-foreground text-sm">Stop Loss</Label>
@@ -432,7 +413,6 @@ export const SwapWidget = ({ selectedAsset = 'bitcoin' }: SwapWidgetProps) => {
             </div>
           </div>
 
-          {/* Stop Loss Input (conditionally rendered) */}
           {showStopLoss && (
             <div className="bg-secondary p-3 rounded-lg">
               <div className="mb-2">
@@ -449,13 +429,11 @@ export const SwapWidget = ({ selectedAsset = 'bitcoin' }: SwapWidgetProps) => {
           )}
         </div>
 
-        {/* Exchange rate */}
         <div className="text-sm text-muted-foreground flex justify-between items-center">
           <span>Exchange Rate</span>
           <span>1 {fromAsset.toUpperCase()} ≈ {calculateExchangeRate(fromAsset, toAsset, '1')} {toAsset.toUpperCase()}</span>
         </div>
 
-        {/* Swap button */}
         <Button 
           className="w-full"
           onClick={handleSwap}
