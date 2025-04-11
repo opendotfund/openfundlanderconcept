@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -195,5 +196,15 @@
 
   .light .fund-share-widget button {
     @apply bg-blue-500 hover:bg-blue-600 text-white;
+  }
+  
+  /* Testnet badge colors for light/dark mode */
+  .testnet-badge {
+    @apply text-xs px-1.5 py-0.5 rounded font-medium ml-1 transition-colors duration-300;
+    @apply bg-openfund-blue text-white;
+  }
+  
+  .dark .testnet-badge {
+    @apply bg-openfund-green text-black;
   }
 }
