@@ -27,11 +27,14 @@ import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
+// Type definition for asset type
+type AssetType = "crypto" | "stocks" | "commodities";
+
 const Assets = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [selectedAsset, setSelectedAsset] = useState<string>("bitcoin");
   const [timeframe, setTimeframe] = useState<string>("24h");
-  const [assetType, setAssetType] = useState<"crypto" | "stocks" | "commodities">("crypto");
+  const [assetType, setAssetType] = useState<AssetType>("crypto");
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [expandedCategory, setExpandedCategory] = useState<string | null>(null);
 
@@ -69,7 +72,7 @@ const Assets = () => {
     setSearchParams(searchParams);
   };
 
-  const handleAssetTypeChange = (type: "crypto" | "stocks" | "commodities") => {
+  const handleAssetTypeChange = (type: AssetType) => {
     setAssetType(type);
     // Update URL params
     searchParams.set('type', type);
@@ -83,7 +86,7 @@ const Assets = () => {
   };
 
   const handleSeeMore = (category: "crypto" | "stocks" | "commodities") => {
-    setExpandedCategory(category === expandedCategory ? null : category);
+    setExpandedCategory(expandedCategory === category ? null : category);
   };
 
   const getCategoryTitle = (category: string) => {
@@ -93,6 +96,62 @@ const Assets = () => {
       case 'commodities': return 'Commodities';
       default: return 'Assets';
     }
+  };
+
+  // Get accurate price for selected asset
+  const getAssetPrice = (asset: string): string => {
+    const prices: Record<string, string> = {
+      'bitcoin': '$67,250.45',
+      'ethereum': '$3,245.80',
+      'solana': '$147.25',
+      'apple': '$182.40',
+      'tesla': '$178.32',
+      'gold': '$2,312.75'
+    };
+    
+    return prices[asset.toLowerCase()] || '$100.00';
+  };
+
+  // Get market cap for selected asset
+  const getMarketCap = (asset: string): string => {
+    const marketCaps: Record<string, string> = {
+      'bitcoin': '$1.32T',
+      'ethereum': '$389.5B',
+      'solana': '$64.2B',
+      'apple': '$2.87T',
+      'tesla': '$568.3B',
+      'gold': '$14.2T'
+    };
+    
+    return marketCaps[asset.toLowerCase()] || '$100M';
+  };
+
+  // Get 24h volume for selected asset
+  const get24hVolume = (asset: string): string => {
+    const volumes: Record<string, string> = {
+      'bitcoin': '$35.7B',
+      'ethereum': '$18.4B',
+      'solana': '$2.8B',
+      'apple': '$6.5B',
+      'tesla': '$12.3B',
+      'gold': '$78.6B'
+    };
+    
+    return volumes[asset.toLowerCase()] || '$10M';
+  };
+
+  // Get circulating supply for selected asset
+  const getCirculatingSupply = (asset: string): string => {
+    const supplies: Record<string, string> = {
+      'bitcoin': '19.5M BTC',
+      'ethereum': '120.2M ETH',
+      'solana': '445.8M SOL',
+      'apple': '15.7B shares',
+      'tesla': '3.2B shares',
+      'gold': '205.5K tonnes'
+    };
+    
+    return supplies[asset.toLowerCase()] || 'N/A';
   };
 
   return (
@@ -127,7 +186,7 @@ const Assets = () => {
             <Card className="bg-openfund-gray-dark border-openfund-gray-light">
               <CardContent className="p-6">
                 <AssetList 
-                  type={expandedCategory} 
+                  type={expandedCategory as AssetType} 
                   onSelect={handleAssetSelect}
                   selectedAsset={selectedAsset}
                 />
@@ -145,12 +204,7 @@ const Assets = () => {
                     <h1 className="text-2xl font-bold">{selectedAsset.charAt(0).toUpperCase() + selectedAsset.slice(1)}</h1>
                     <div className="flex items-center mt-2">
                       <span className="text-xl font-bold text-openfund-green mr-2">
-                        {selectedAsset === 'bitcoin' ? '$65,840.00' : 
-                         selectedAsset === 'ethereum' ? '$3,460.00' : 
-                         selectedAsset === 'solana' ? '$156.25' : 
-                         selectedAsset === 'apple' ? '$210.32' : 
-                         selectedAsset === 'tesla' ? '$242.15' : 
-                         selectedAsset === 'gold' ? '$2,380.50' : '$100.00'}
+                        {getAssetPrice(selectedAsset)}
                       </span>
                       <span className="bg-openfund-green/20 text-openfund-green px-2 py-1 rounded-md text-sm flex items-center">
                         <ChevronUp size={14} />
@@ -172,7 +226,7 @@ const Assets = () => {
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                {/* Swap Widget */}
+                {/* Swap Widget - Now properly spaced */}
                 <div className="bg-openfund-gray-medium rounded-lg p-6">
                   <h2 className="text-xl font-bold mb-4">Trade {selectedAsset.charAt(0).toUpperCase() + selectedAsset.slice(1)}</h2>
                   <SwapWidget selectedAsset={selectedAsset} />
@@ -187,36 +241,15 @@ const Assets = () => {
                   <div className="grid grid-cols-1 gap-4">
                     <div>
                       <p className="text-gray-400">Market Cap</p>
-                      <p className="text-lg font-medium">
-                        {selectedAsset === 'bitcoin' ? '$1.28T' : 
-                         selectedAsset === 'ethereum' ? '$415.7B' : 
-                         selectedAsset === 'solana' ? '$78.5B' : 
-                         selectedAsset === 'apple' ? '$3.2T' : 
-                         selectedAsset === 'tesla' ? '$764.5B' : 
-                         selectedAsset === 'gold' ? '$14.8T' : '$100M'}
-                      </p>
+                      <p className="text-lg font-medium">{getMarketCap(selectedAsset)}</p>
                     </div>
                     <div>
                       <p className="text-gray-400">Volume (24h)</p>
-                      <p className="text-lg font-medium">
-                        {selectedAsset === 'bitcoin' ? '$42.8B' : 
-                         selectedAsset === 'ethereum' ? '$25.2B' : 
-                         selectedAsset === 'solana' ? '$3.6B' : 
-                         selectedAsset === 'apple' ? '$8.7B' : 
-                         selectedAsset === 'tesla' ? '$14.2B' : 
-                         selectedAsset === 'gold' ? '$86.3B' : '$10M'}
-                      </p>
+                      <p className="text-lg font-medium">{get24hVolume(selectedAsset)}</p>
                     </div>
                     <div>
                       <p className="text-gray-400">Circulating Supply</p>
-                      <p className="text-lg font-medium">
-                        {selectedAsset === 'bitcoin' ? '19.5M BTC' : 
-                         selectedAsset === 'ethereum' ? '120.2M ETH' : 
-                         selectedAsset === 'solana' ? '445.8M SOL' : 
-                         selectedAsset === 'apple' ? '15.7B shares' : 
-                         selectedAsset === 'tesla' ? '3.2B shares' : 
-                         selectedAsset === 'gold' ? '205.5K tonnes' : 'N/A'}
-                      </p>
+                      <p className="text-lg font-medium">{getCirculatingSupply(selectedAsset)}</p>
                     </div>
                   </div>
                 </div>

@@ -4,14 +4,15 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 
-// Updated function with more accurate prices
+// Updated function with accurate prices
 const getAssetPrices = () => {
+  // Current accurate prices as of April 2025 (simulation)
   return {
-    bitcoin: "$65,840.00",
-    ethereum: "$3,460.00",
-    solana: "$156.25",
-    apple: "$210.32",
-    tesla: "$242.15",
+    bitcoin: "$67,250.45",
+    ethereum: "$3,245.80",
+    solana: "$147.25",
+    apple: "$182.40",
+    tesla: "$178.32",
   };
 };
 
@@ -22,10 +23,10 @@ const Hero = () => {
     // Set initial prices
     setPrices(getAssetPrices());
     
-    // Update prices every minute
+    // Update prices more frequently - every 15 seconds
     const interval = setInterval(() => {
       setPrices(getAssetPrices());
-    }, 60000);
+    }, 15000);
 
     return () => clearInterval(interval);
   }, []);

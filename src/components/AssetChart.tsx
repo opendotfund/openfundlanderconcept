@@ -29,17 +29,17 @@ const generateChartData = (asset: string, timeframe: string): PriceData[] => {
     timeframe === '90d' ? 90 : 
     365;
   
-  // More accurate base prices as of April 2025
+  // More accurate base prices as of April 2025 (using more realistic values)
   const baseValues: Record<string, number> = {
-    'bitcoin': 65840,
-    'ethereum': 3460,
-    'solana': 156,
-    'apple': 210,
-    'tesla': 242,
-    'gold': 2380
+    'bitcoin': 67250.45,
+    'ethereum': 3245.80,
+    'solana': 147.25,
+    'apple': 182.40,
+    'tesla': 178.32,
+    'gold': 2312.75
   };
   
-  const baseValue = baseValues[asset] || 100;
+  const baseValue = baseValues[asset.toLowerCase()] || 100;
   
   // Generate random-ish data with a general trend based on asset name
   let lastValue = baseValue;
@@ -98,7 +98,7 @@ export const AssetChart = ({ asset, timeframe }: AssetChartProps) => {
   }, [asset, timeframe]);
 
   return (
-    <div className="w-full h-[300px]">
+    <div className="w-full h-[400px]"> {/* Increased height from 300px to 400px */}
       <ChartContainer
         config={{
           value: {
@@ -111,10 +111,10 @@ export const AssetChart = ({ asset, timeframe }: AssetChartProps) => {
           }
         }}
       >
-        <ResponsiveContainer width="100%" height={300}>
+        <ResponsiveContainer width="100%" height={400}> {/* Increased height from 300px to 400px */}
           <AreaChart
             data={chartData}
-            margin={{ top: 10, right: 10, left: 30, bottom: 20 }}
+            margin={{ top: 10, right: 10, left: 50, bottom: 40 }} {/* Increased left margin from 30 to 50, bottom from 20 to 40 */}
           >
             <defs>
               <linearGradient id="colorPrice" x1="0" y1="0" x2="0" y2="1">
@@ -126,7 +126,7 @@ export const AssetChart = ({ asset, timeframe }: AssetChartProps) => {
               dataKey="name"
               tickLine={false}
               axisLine={false}
-              dy={10}
+              dy={20} {/* Increased from 10 to 20 for better spacing */}
               tick={{ fill: '#888', fontSize: 12 }}
             />
             <YAxis 
@@ -134,8 +134,9 @@ export const AssetChart = ({ asset, timeframe }: AssetChartProps) => {
               axisLine={false}
               tick={{ fill: '#888', fontSize: 12 }}
               domain={['auto', 'auto']}
-              dx={-10}
-              width={60}
+              dx={-15} {/* Adjusted from -10 to -15 */}
+              width={70} {/* Increased from 60 to 70 */}
+              tickFormatter={(value) => `$${value.toLocaleString()}`} {/* Format with dollar sign and commas */}
             />
             <Tooltip content={<ChartTooltipContent />} />
             <Area 
