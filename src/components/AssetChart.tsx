@@ -141,23 +141,23 @@ export const AssetChart = ({ asset, timeframe }: AssetChartProps) => {
         </div>
       )}
       
-      <div className="h-[360px]"> {/* Increased height from default */}
+      <div className="h-[400px]">
         <ChartContainer
           config={{
             value: {
               label: "Price",
-              color: isPositive ? "#00FF00" : "#FF4545",
+              color: isPositive ? "#00FF00" : "#FF4545"
             },
             volume: {
               label: "Volume",
-              color: "#404040",
+              color: "#404040"
             }
           }}
         >
           <ResponsiveContainer width="100%" height="100%">
             <AreaChart
               data={chartData}
-              margin={{ top: 10, right: 30, left: 60, bottom: 80 }} {/* Increased bottom margin */}
+              margin={{ top: 10, right: 30, left: 60, bottom: 100 }}
             >
               <defs>
                 <linearGradient id="colorPrice" x1="0" y1="0" x2="0" y2="1">
@@ -171,7 +171,7 @@ export const AssetChart = ({ asset, timeframe }: AssetChartProps) => {
                 axisLine={false}
                 dy={20}
                 tick={{ fill: '#888', fontSize: 12 }}
-                height={70} {/* Increased height */}
+                height={80}
                 padding={{ left: 0, right: 0 }}
               />
               <YAxis 
