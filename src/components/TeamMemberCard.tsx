@@ -19,11 +19,12 @@ const TeamMemberCard = ({ name, role, background, imageSrc, className }: TeamMem
       {/* Card content */}
       <div className="bg-card border border-openfund-green/50 rounded-lg overflow-hidden p-4">
         <div className="flex flex-col items-center">
-          <div className="w-24 h-24 mb-4 rounded-full overflow-hidden border-2 border-openfund-green">
+          <div className="w-24 h-24 mb-4 rounded-full overflow-hidden border-2 border-openfund-green relative">
             <img 
               src={imageSrc} 
               alt={name} 
               className="w-full h-full object-cover"
+              style={{ objectPosition: 'center' }}
               onError={(e) => {
                 const target = e.target as HTMLImageElement;
                 target.src = "https://via.placeholder.com/150?text=" + name.charAt(0);

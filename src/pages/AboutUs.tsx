@@ -12,31 +12,31 @@ const AboutUs = () => {
       name: "Misha Stastna",
       role: "Co-Founder & CEO",
       background: "Crypto Native",
-      imageSrc: "https://via.placeholder.com/150",
+      imageSrc: "/lovable-uploads/b960b399-7a50-4d7e-9f6c-2c2f983e3823.png#x=117&y=381&width=204&height=204",
     },
     {
       name: "Dr. Ahmed Al-Gebali",
       role: "Advisor",
       background: "2011 CFO of the year at Dubai Islamic Bank",
-      imageSrc: "https://via.placeholder.com/150",
+      imageSrc: "/lovable-uploads/b960b399-7a50-4d7e-9f6c-2c2f983e3823.png#x=698&y=381&width=204&height=204",
     },
     {
       name: "@Dagger100x",
       role: "Advisor",
       background: "Crypto Native",
-      imageSrc: "https://via.placeholder.com/150",
+      imageSrc: "/lovable-uploads/b960b399-7a50-4d7e-9f6c-2c2f983e3823.png#x=1191&y=381&width=204&height=204",
     },
     {
       name: "Abdul Fayed",
       role: "Co-Founder",
       background: "TradFi Native",
-      imageSrc: "https://via.placeholder.com/150",
+      imageSrc: "/lovable-uploads/b960b399-7a50-4d7e-9f6c-2c2f983e3823.png#x=450&y=614&width=204&height=204",
     },
     {
       name: "@0xSoda",
       role: "Co-Founder & CTO",
       background: "Crypto Native",
-      imageSrc: "https://via.placeholder.com/150",
+      imageSrc: "/lovable-uploads/b960b399-7a50-4d7e-9f6c-2c2f983e3823.png#x=936&y=614&width=204&height=204",
     },
   ];
 
