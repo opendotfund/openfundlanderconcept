@@ -1,3 +1,4 @@
+
 import React, { useMemo } from 'react';
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend } from 'recharts';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -46,35 +47,23 @@ export const FundHoldingsPieChart: React.FC<FundHoldingsPieChartProps> = ({
     return holdings.map(item => {
       let enhancedColor = item.color;
       
-      if (isDeFiFund) {
-        // DeFi fund color scheme
-        if (isLightMode) {
-          // Blue variants in light mode
-          if (item.name === "Major Coins") {
-            enhancedColor = "#0ea5e9"; // Sky blue
-          } else if (item.name === "Alt Coins") {
-            enhancedColor = "#3b82f6"; // Medium blue
-          } else if (item.name === "Meme Coins") {
-            enhancedColor = "#2563eb"; // Dark blue
-          }
-        } else {
-          // Green variants in dark mode
-          if (item.name === "Major Coins") {
-            enhancedColor = "#10b981"; // Bright green
-          } else if (item.name === "Alt Coins") {
-            enhancedColor = "#059669"; // Medium green
-          } else if (item.name === "Meme Coins") {
-            enhancedColor = "#047857"; // Dark green
-          }
+      if (isLightMode) {
+        // Blue variants in light mode
+        if (item.name === "Major Coins") {
+          enhancedColor = "#0ea5e9"; // Sky blue
+        } else if (item.name === "Alt Coins") {
+          enhancedColor = "#3b82f6"; // Medium blue
+        } else if (item.name === "Meme Coins") {
+          enhancedColor = "#2563eb"; // Dark blue
         }
       } else {
-        // Other funds - keep the original enhanced colors
+        // Green variants in dark mode
         if (item.name === "Major Coins") {
-          enhancedColor = "#3b82f6"; // Bright blue for major coins
+          enhancedColor = "#10b981"; // Bright green
         } else if (item.name === "Alt Coins") {
-          enhancedColor = "#8b5cf6"; // Vibrant purple for alt coins
+          enhancedColor = "#059669"; // Medium green
         } else if (item.name === "Meme Coins") {
-          enhancedColor = "#f97316"; // Strong orange for meme coins
+          enhancedColor = "#047857"; // Dark green
         }
       }
       
@@ -83,7 +72,7 @@ export const FundHoldingsPieChart: React.FC<FundHoldingsPieChartProps> = ({
         color: enhancedColor
       };
     });
-  }, [holdings, isDeFiFund, isLightMode]);
+  }, [holdings, isLightMode]);
 
   const config = enhancedHoldings.reduce((acc, item) => {
     acc[item.name] = { 
@@ -93,7 +82,7 @@ export const FundHoldingsPieChart: React.FC<FundHoldingsPieChartProps> = ({
     return acc;
   }, {} as Record<string, { label: string, color: string }>);
 
-  // Adjust pie chart height for DeFi funds
+  // Set chart height
   const chartHeight = isDeFiFund ? "400px" : "300px";
 
   return (
@@ -114,17 +103,13 @@ export const FundHoldingsPieChart: React.FC<FundHoldingsPieChartProps> = ({
                   cy="50%"
                   labelLine={false}
                   outerRadius={isDeFiFund ? 120 : 90}
-                  innerRadius={isDeFiFund ? 40 : 0} // Add inner radius for 3D-like donut effect for DeFi funds
                   fill="#8884d8"
                   dataKey="value"
-                  paddingAngle={isDeFiFund ? 4 : 0} // Add padding between segments for 3D effect
                 >
                   {enhancedHoldings.map((entry, index) => (
                     <Cell 
                       key={`cell-${index}`} 
-                      fill={entry.color} 
-                      strokeWidth={isDeFiFund ? 4 : 2}
-                      stroke={isDeFiFund ? (isLightMode ? "#ffffff" : "#121212") : undefined}  // Add strokes for 3D effect
+                      fill={entry.color}
                     />
                   ))}
                 </Pie>
