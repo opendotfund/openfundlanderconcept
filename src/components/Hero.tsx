@@ -41,15 +41,15 @@ const Hero = () => {
               <div className="absolute -top-4 -right-4 bg-openfund-green text-openfund-gray-dark px-4 py-2 rounded-lg font-bold">
                 Featured Investment
               </div>
-              <h3 className="text-2xl font-bold mb-2">OpenFund Green Energy</h3>
-              <p className="text-gray-300 mb-6">A curated portfolio of renewable energy companies with strong growth potential.</p>
+              <h3 className="text-2xl font-bold mb-2">Berkshire Hathaway</h3>
+              <p className="text-gray-300 mb-6">World-class conglomerate with a long history of exceptional returns led by Warren Buffett.</p>
               <div className="flex justify-between items-center mb-4">
                 <span className="text-gray-400">Year-to-date return</span>
-                <span className="text-openfund-green font-bold text-xl">+27.4%</span>
+                <span className="text-openfund-green font-bold text-xl">+15.3%</span>
               </div>
               <div className="flex justify-between items-center mb-6">
-                <span className="text-gray-400">AUM</span>
-                <span className="font-bold">$5.2M</span>
+                <span className="text-gray-400">Share Price</span>
+                <span className="font-bold">$567,870</span>
               </div>
               <Button className="w-full bg-openfund-green hover:bg-openfund-green-dark text-openfund-gray-dark">
                 View Details

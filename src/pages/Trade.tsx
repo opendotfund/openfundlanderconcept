@@ -7,6 +7,7 @@ import { TimeframeSelector } from '@/components/TimeframeSelector';
 import { SwapWidget } from '@/components/SwapWidget';
 import { AssetList } from '@/components/AssetList';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { TradeHistory } from '@/components/TradeHistory';
 
 const Trade = () => {
   const [selectedAsset, setSelectedAsset] = useState('bitcoin');
@@ -38,6 +39,11 @@ const Trade = () => {
                 />
               </div>
               <AssetChart asset={selectedAsset} timeframe={timeframe} />
+            </div>
+            
+            <div className="bg-openfund-gray-medium p-6 rounded-lg">
+              <h2 className="text-xl font-bold mb-4">Trade History</h2>
+              <TradeHistory asset={selectedAsset} />
             </div>
           </div>
           
