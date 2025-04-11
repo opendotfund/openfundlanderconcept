@@ -5,7 +5,11 @@ import Footer from '@/components/Footer';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { ArrowUpRight, ArrowDownRight, Briefcase, LineChart, Bitcoin, DollarSign, BarChart4, User, Wallet, Settings, Bell } from 'lucide-react';
+import { ArrowUpRight, ArrowDownRight, Briefcase, LineChart, Bitcoin, DollarSign, BarChart4, User, Wallet, Settings, Bell, FileCheck, FileText, BadgeCheck, ShieldCheck, CircleDollarSign } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { KYCForm } from '@/components/KYCForm';
 
 // Mock data for portfolio overview (using the same data from MyAssets page)
 const portfolioData = {
@@ -110,6 +114,10 @@ const Account = () => {
                     <span>Portfolio</span>
                   </button>
                   <button className="w-full text-left px-3 py-2 rounded flex items-center space-x-3 hover:bg-openfund-gray-light/20">
+                    <BadgeCheck size={18} />
+                    <span>KYC</span>
+                  </button>
+                  <button className="w-full text-left px-3 py-2 rounded flex items-center space-x-3 hover:bg-openfund-gray-light/20">
                     <Settings size={18} />
                     <span>Settings</span>
                   </button>
@@ -125,9 +133,10 @@ const Account = () => {
           {/* Main Content */}
           <div className="md:col-span-3">
             <Tabs defaultValue="portfolio" className="w-full">
-              <TabsList className="grid w-full grid-cols-3 bg-openfund-gray-medium">
+              <TabsList className="grid w-full grid-cols-4 bg-openfund-gray-medium">
                 <TabsTrigger value="portfolio">Portfolio</TabsTrigger>
                 <TabsTrigger value="activity">Activity</TabsTrigger>
+                <TabsTrigger value="kyc">KYC</TabsTrigger>
                 <TabsTrigger value="settings">Settings</TabsTrigger>
               </TabsList>
               
@@ -286,6 +295,62 @@ const Account = () => {
                   </CardHeader>
                   <CardContent>
                     <p className="text-gray-400">Your recent transactions and activities will appear here.</p>
+                  </CardContent>
+                </Card>
+              </TabsContent>
+              
+              <TabsContent value="kyc">
+                <Card className="bg-openfund-gray-medium border-openfund-gray-light mb-6">
+                  <CardHeader>
+                    <CardTitle className="flex items-center">
+                      <BadgeCheck size={20} className="mr-2 text-openfund-green" />
+                      Verification Status
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="space-y-4">
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <h3 className="text-lg font-medium">Identity Verification</h3>
+                          <p className="text-sm text-gray-400">Government ID and proof of address</p>
+                        </div>
+                        <div className="px-3 py-1 rounded-full bg-yellow-500/20 text-yellow-500 text-sm">
+                          Pending
+                        </div>
+                      </div>
+                      
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <h3 className="text-lg font-medium">Tax Information</h3>
+                          <p className="text-sm text-gray-400">Tax residency and reporting</p>
+                        </div>
+                        <div className="px-3 py-1 rounded-full bg-red-500/20 text-red-500 text-sm">
+                          Not Submitted
+                        </div>
+                      </div>
+                      
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <h3 className="text-lg font-medium">Account Access Level</h3>
+                          <p className="text-sm text-gray-400">Current trading limits and capabilities</p>
+                        </div>
+                        <div className="px-3 py-1 rounded-full bg-openfund-gray-light/20 text-gray-400 text-sm">
+                          Basic
+                        </div>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+                
+                <Card className="bg-openfund-gray-medium border-openfund-gray-light">
+                  <CardHeader>
+                    <CardTitle className="flex items-center">
+                      <FileCheck size={20} className="mr-2 text-openfund-green" />
+                      Submit KYC Documents
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <KYCForm />
                   </CardContent>
                 </Card>
               </TabsContent>

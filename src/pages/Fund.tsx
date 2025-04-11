@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { 
@@ -13,7 +12,8 @@ import {
   Percent,
   Settings,
   Sliders,
-  BarChart
+  BarChart,
+  Hexagon
 } from 'lucide-react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
@@ -49,7 +49,6 @@ const Fund = () => {
             
             <TabsContent value="explore">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {/* Popular Fund Cards */}
                 {[1, 2, 3, 4].map((fund) => (
                   <Card key={fund} className="bg-openfund-gray-medium border-openfund-gray-light hover:border-openfund-green/50 transition-colors">
                     <CardHeader>
@@ -206,6 +205,15 @@ const Fund = () => {
                             </div>
                             <span className="text-xs text-gray-400">2/20 fee structure</span>
                           </Button>
+                          <Button 
+                            className="w-full flex justify-between items-center bg-openfund-green hover:bg-openfund-green-dark text-openfund-gray-dark"
+                          >
+                            <div className="flex items-center">
+                              <Hexagon size={16} className="mr-2" />
+                              <span>Launch Fund Manager DApp</span>
+                            </div>
+                            <span className="text-xs text-openfund-gray-dark">Connect</span>
+                          </Button>
                         </div>
                       </div>
                       
@@ -275,7 +283,6 @@ const Fund = () => {
           </div>
         </div>
         
-        {/* Decorative elements */}
         <div className="absolute top-1/3 left-1/4 w-64 h-64 bg-openfund-green/10 rounded-full blur-3xl -z-0"></div>
         <div className="absolute bottom-1/3 right-1/4 w-96 h-96 bg-openfund-green/5 rounded-full blur-3xl -z-0"></div>
       </section>
