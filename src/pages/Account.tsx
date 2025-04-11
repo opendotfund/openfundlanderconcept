@@ -6,7 +6,29 @@ import Footer from '@/components/Footer';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { ArrowUpRight, ArrowDownRight, Briefcase, LineChart, Bitcoin, DollarSign, BarChart4, User, Wallet, Settings, FileCheck, CircleDollarSign, Copy, Share, Link, Users, Mail, Edit, Camera } from 'lucide-react';
+import { 
+  ArrowUpRight, 
+  ArrowDownRight, 
+  Briefcase, 
+  LineChart, 
+  Bitcoin, 
+  DollarSign, 
+  BarChart4, 
+  User, 
+  Wallet, 
+  Settings, 
+  FileCheck, 
+  CircleDollarSign, 
+  Copy, 
+  Share, 
+  Link, 
+  Users, 
+  Mail, 
+  Edit, 
+  Camera,
+  CheckCircle,
+  Shield
+} from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -183,7 +205,7 @@ const Account = () => {
                     className={`w-full text-left px-3 py-2 rounded flex items-center space-x-3 ${activeTab === 'kyc' ? 'bg-openfund-gray-light/20 text-openfund-green' : 'hover:bg-openfund-gray-light/20'}`}
                     onClick={() => setActiveTab('kyc')}
                   >
-                    <BadgeCheck size={18} />
+                    <CheckCircle size={18} />
                     <span>KYC</span>
                   </button>
                   <button 
@@ -319,7 +341,7 @@ const Account = () => {
                 <Card className="bg-openfund-gray-medium border-openfund-gray-light">
                   <CardHeader>
                     <CardTitle className="flex items-center">
-                      <ShieldCheck size={20} className="mr-2 text-openfund-green" />
+                      <Shield size={20} className="mr-2 text-openfund-green" />
                       Account Security
                     </CardTitle>
                   </CardHeader>
@@ -499,7 +521,7 @@ const Account = () => {
                 <Card className="bg-openfund-gray-medium border-openfund-gray-light mb-6">
                   <CardHeader>
                     <CardTitle className="flex items-center">
-                      <BadgeCheck size={20} className="mr-2 text-openfund-green" />
+                      <CheckCircle size={20} className="mr-2 text-openfund-green" />
                       Verification Status
                     </CardTitle>
                   </CardHeader>
