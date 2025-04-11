@@ -1,4 +1,3 @@
-
 import axios from 'axios';
 
 // Type definitions
@@ -480,7 +479,8 @@ export const subscribeToAssetUpdates = (
 };
 
 // Store active subscriptions for cleanup
-const subscriptions: Record<string, number> = {};
+// Updated type to NodeJS.Timeout to fix TypeScript error
+const subscriptions: Record<string, NodeJS.Timeout> = {};
 
 /**
  * Unsubscribe from real-time updates
