@@ -8,7 +8,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { toast } from 'sonner';
-import { MailIcon, Phone, MapPin, Clock, Send } from 'lucide-react';
+import { MailIcon, MapPin, Send } from 'lucide-react';
 
 const Contact = () => {
   const [name, setName] = useState('');
@@ -49,7 +49,7 @@ const Contact = () => {
             </p>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
             <Card className="bg-openfund-gray-medium border-openfund-gray-light">
               <CardContent className="p-6 flex flex-col items-center text-center">
                 <div className="w-12 h-12 bg-openfund-green/20 rounded-full flex items-center justify-center mb-4">
@@ -69,29 +69,13 @@ const Contact = () => {
             <Card className="bg-openfund-gray-medium border-openfund-gray-light">
               <CardContent className="p-6 flex flex-col items-center text-center">
                 <div className="w-12 h-12 bg-openfund-green/20 rounded-full flex items-center justify-center mb-4">
-                  <Phone className="text-openfund-green" size={24} />
-                </div>
-                <h3 className="text-lg font-bold mb-2">Call Us</h3>
-                <p className="text-gray-400 mb-4">Mon-Fri from 9am to 5pm EST</p>
-                <a 
-                  href="tel:+18005551234" 
-                  className="text-openfund-green hover:underline"
-                >
-                  +1 (800) 555-1234
-                </a>
-              </CardContent>
-            </Card>
-            
-            <Card className="bg-openfund-gray-medium border-openfund-gray-light">
-              <CardContent className="p-6 flex flex-col items-center text-center">
-                <div className="w-12 h-12 bg-openfund-green/20 rounded-full flex items-center justify-center mb-4">
                   <MapPin className="text-openfund-green" size={24} />
                 </div>
                 <h3 className="text-lg font-bold mb-2">Office</h3>
                 <p className="text-gray-400 mb-4">Visit our headquarters</p>
                 <address className="text-openfund-green not-italic">
-                  123 Blockchain Ave<br />
-                  San Francisco, CA 94105
+                  7125 Missisauga Rd.<br />
+                  Ontario Canada
                 </address>
               </CardContent>
             </Card>
@@ -195,7 +179,7 @@ const Contact = () => {
                   <div>
                     <h3 className="font-bold mb-2">What are the fees?</h3>
                     <p className="text-gray-400 text-sm">
-                      Trading fees are typically 0.1% per trade. Fund managers can set their own fee structures.
+                      OpenFund charges a one-time fee of $750 to create a fund, which gives users access to trade Crypto, Stocks, and Commodities all from one platform. This comprehensive solution enables fund managers to diversify their portfolios across multiple asset classes.
                     </p>
                   </div>
                   <div className="text-center mt-8">
