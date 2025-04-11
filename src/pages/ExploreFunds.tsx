@@ -271,11 +271,31 @@ const openfundFunds = [1, 2, 3, 4, 5].map((fund) => ({
   assetTypes: fund % 3 === 0 ? ['Crypto'] : fund % 3 === 1 ? ['Crypto', 'Stock'] : ['Crypto', 'Commodity']
 }));
 
-type Fund = (typeof traditionalFunds)[0] | (typeof cryptoFunds)[0] | (typeof openfundFunds)[0] & {
+// Update the Fund type definition to include all necessary properties
+type Fund = {
+  id: number;
+  name: string;
+  manager: string;
+  aum: string;
+  returns: string;
+  returnsValue: number;
+  focus: string;
+  minInvestment: string;
+  minInvestmentValue: number;
+  year: string;
+  yearValue: number;
+  description: string;
+  performance: string;
+  performanceValue: number;
+  type: string;
+  volatility: string;
+  volatilityValue: number;
+  // Add the missing properties with optional markers
   investors?: number;
   assetTypes?: string[];
   aumValue?: number;
 };
+
 type SortOption = 'performance-high' | 'performance-low' | 'year-old' | 'year-new' | 'volatility-high' | 'volatility-low';
 
 const ExploreFunds = () => {
