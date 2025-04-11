@@ -58,8 +58,8 @@ const generateAssets = (type: string): Asset[] => {
 
   // Updated accurate price points
   const basePrices: Record<string, number> = {
-    'bitcoin': 69000,
-    'ethereum': 3900,
+    'bitcoin': 80000,
+    'ethereum': 1600,
     'solana': 156,
     'cardano': 0.58,
     'polkadot': 7.45,

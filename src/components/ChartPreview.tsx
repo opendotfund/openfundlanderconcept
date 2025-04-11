@@ -99,18 +99,18 @@ const ChartPreview = () => {
 
           <div className="space-y-6">
             <div className="bg-card p-6 rounded-xl border border-border">
-              <h3 className="text-2xl font-bold mb-4">Real-Time Data</h3>
+              <h3 className="text-2xl font-bold mb-4">Dominate Every Market</h3>
               <p className="text-muted-foreground mb-4">
-                Get instant access to market movements with millisecond-precision data feeds
+                Get instant access to every major market with millisecond-precision data feeds
               </p>
               <ul className="space-y-3 text-sm">
                 <li className="flex justify-between">
                   <span>BTC/USD</span>
-                  <span className="text-primary">$66,421 <span className="text-xs">+2.4%</span></span>
+                  <span className="text-primary">$80,000 <span className="text-xs">+2.4%</span></span>
                 </li>
                 <li className="flex justify-between">
                   <span>ETH/USD</span>
-                  <span className="text-primary">$3,773 <span className="text-xs">+1.8%</span></span>
+                  <span className="text-primary">$1,600 <span className="text-xs">+1.8%</span></span>
                 </li>
                 <li className="flex justify-between">
                   <span>GOLD</span>

@@ -34,8 +34,8 @@ export const SwapWidget = ({ selectedAsset = 'bitcoin' }: SwapWidgetProps) => {
   // Sample exchange rate calculation with more accurate prices
   const calculateExchangeRate = (from: string, to: string, amount: string): string => {
     const rates: Record<string, number> = {
-      'bitcoin': 65840,
-      'ethereum': 3460,
+      'bitcoin': 80000,
+      'ethereum': 1600,
       'solana': 156,
       'apple': 210,
       'tesla': 242,
@@ -177,9 +177,9 @@ export const SwapWidget = ({ selectedAsset = 'bitcoin' }: SwapWidgetProps) => {
 
   const getGasFee = () => {
     switch (gasOption) {
-      case 'rapid': return '0.00500 ETH ($17.30)';
-      case 'fast': return '0.00300 ETH ($10.38)';
-      default: return '0.00150 ETH ($5.19)';
+      case 'rapid': return '0.00500 ETH ($8.00)';
+      case 'fast': return '0.00300 ETH ($4.80)';
+      default: return '0.00150 ETH ($2.40)';
     }
   };
 
