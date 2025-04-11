@@ -7,22 +7,22 @@ import { Link } from 'react-router-dom';
 const HowItWorks = () => {
   const steps = [
     {
-      icon: <Wallet className="w-10 h-10 text-primary" />,
+      icon: <Wallet className="w-10 h-10 text-primary transition-colors duration-300" />,
       title: "Connect Wallet",
       description: "Connect your crypto wallet for immediate decentralized access to DeFi funds and tokenized assets"
     },
     {
-      icon: <ShieldCheck className="w-10 h-10 text-primary" />,
+      icon: <ShieldCheck className="w-10 h-10 text-primary transition-colors duration-300" />,
       title: "Optional KYC",
       description: "Verify your identity to unlock TradFi funds, partner funds, fund creation and bank transfer deposits"
     },
     {
-      icon: <BarChart2 className="w-10 h-10 text-primary" />,
+      icon: <BarChart2 className="w-10 h-10 text-primary transition-colors duration-300" />,
       title: "Choose Assets",
       description: "Select from DeFi funds, tokenized stocks, and commodities based on your verification level"
     },
     {
-      icon: <ArrowUpCircle className="w-10 h-10 text-primary" />,
+      icon: <ArrowUpCircle className="w-10 h-10 text-primary transition-colors duration-300" />,
       title: "Start Trading",
       description: "Execute trades with our intuitive platform and monitor performance in real-time"
     },

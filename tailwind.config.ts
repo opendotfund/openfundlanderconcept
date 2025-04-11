@@ -99,10 +99,10 @@ export default {
 				},
                 'glow': {
                     '0%, 100%': { 
-                        filter: 'drop-shadow(0 0 0.75rem rgba(0, 255, 0, 0.5))' 
+                        filter: 'drop-shadow(0 0 0.75rem var(--glow-color, rgba(0, 255, 0, 0.5)))' 
                     },
                     '50%': { 
-                        filter: 'drop-shadow(0 0 1.75rem rgba(0, 255, 0, 0.7))' 
+                        filter: 'drop-shadow(0 0 1.75rem var(--glow-color, rgba(0, 255, 0, 0.7)))' 
                     },
                 }
 			},

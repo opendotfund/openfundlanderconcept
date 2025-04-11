@@ -27,9 +27,19 @@ const ThemeToggle = () => {
     if (isDark) {
       document.documentElement.classList.add('dark');
       document.documentElement.classList.remove('light');
+      
+      // Update openfund custom properties for logo and animation
+      document.documentElement.style.setProperty('--logo-color', '#00FF00');
+      document.documentElement.style.setProperty('--logo-dot-color', '#00FF00');
+      document.documentElement.style.setProperty('--glow-color', 'rgba(0, 255, 0, 0.7)');
     } else {
       document.documentElement.classList.add('light');
       document.documentElement.classList.remove('dark');
+      
+      // Update openfund custom properties for logo and animation
+      document.documentElement.style.setProperty('--logo-color', '#0EA5E9');
+      document.documentElement.style.setProperty('--logo-dot-color', '#0EA5E9');
+      document.documentElement.style.setProperty('--glow-color', 'rgba(14, 165, 233, 0.7)');
     }
   };
 

@@ -121,10 +121,11 @@
   }
   
   .open-fund-text span:first-child {
-    @apply text-primary;
+    @apply text-primary transition-colors duration-300;
   }
   
   .open-fund-text span:last-child {
-    @apply text-foreground;
+    @apply text-foreground transition-colors duration-300;
   }
 }
+
