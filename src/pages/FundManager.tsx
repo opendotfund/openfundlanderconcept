@@ -163,16 +163,14 @@ const FundManager = () => {
                 />
               </CardHeader>
               <CardContent>
-                <div className="h-[300px]">
-                  <AssetChart 
-                    asset={selectedAsset} 
-                    timeframe={timeframe} 
-                  />
-                </div>
+                <AssetChart 
+                  asset={selectedAsset} 
+                  timeframe={timeframe} 
+                />
               </CardContent>
             </Card>
             
-            <div className="mt-10">
+            <div className="mt-16">
               <Tabs defaultValue="holdings">
                 <TabsList className="bg-openfund-gray-medium mb-2">
                   <TabsTrigger value="holdings">Portfolio Holdings</TabsTrigger>

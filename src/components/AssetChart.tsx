@@ -141,69 +141,71 @@ export const AssetChart = ({ asset, timeframe }: AssetChartProps) => {
         </div>
       )}
       
-      <ChartContainer
-        config={{
-          value: {
-            label: "Price",
-            color: isPositive ? "#00FF00" : "#FF4545",
-          },
-          volume: {
-            label: "Volume",
-            color: "#404040",
-          }
-        }}
-      >
-        <ResponsiveContainer width="100%" height="100%">
-          <AreaChart
-            data={chartData}
-            margin={{ top: 10, right: 30, left: 60, bottom: 70 }}
-          >
-            <defs>
-              <linearGradient id="colorPrice" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor={isPositive ? "#00FF00" : "#FF4545"} stopOpacity={0.3} />
-                <stop offset="95%" stopColor={isPositive ? "#00FF00" : "#FF4545"} stopOpacity={0} />
-              </linearGradient>
-            </defs>
-            <XAxis 
-              dataKey="name"
-              tickLine={false}
-              axisLine={false}
-              dy={20}
-              tick={{ fill: '#888', fontSize: 12 }}
-              height={60}
-              padding={{ left: 0, right: 0 }}
-            />
-            <YAxis 
-              tickLine={false}
-              axisLine={false}
-              tick={{ fill: '#888', fontSize: 12 }}
-              domain={['auto', 'auto']}
-              dx={-15}
-              width={70}
-              tickFormatter={(value) => `$${value.toLocaleString()}`}
-            />
-            <Tooltip 
-              content={<ChartTooltipContent />} 
-              cursor={{ stroke: '#666', strokeWidth: 1, strokeDasharray: '5 5' }}
-            />
-            <Area 
-              type="monotone"
-              dataKey="value"
-              stroke={isPositive ? "#00FF00" : "#FF4545"}
-              strokeWidth={2}
-              fillOpacity={1}
-              fill="url(#colorPrice)"
-              activeDot={{ r: 6, fill: isPositive ? "#00FF00" : "#FF4545", strokeWidth: 0 }}
-            />
-            <Bar 
-              dataKey="volume" 
-              fill="#404040"
-              opacity={0.3}
-              barSize={5}
-            />
-          </AreaChart>
-        </ResponsiveContainer>
-      </ChartContainer>
+      <div className="h-[360px]"> {/* Increased height from default */}
+        <ChartContainer
+          config={{
+            value: {
+              label: "Price",
+              color: isPositive ? "#00FF00" : "#FF4545",
+            },
+            volume: {
+              label: "Volume",
+              color: "#404040",
+            }
+          }}
+        >
+          <ResponsiveContainer width="100%" height="100%">
+            <AreaChart
+              data={chartData}
+              margin={{ top: 10, right: 30, left: 60, bottom: 80 }} {/* Increased bottom margin */}
+            >
+              <defs>
+                <linearGradient id="colorPrice" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="5%" stopColor={isPositive ? "#00FF00" : "#FF4545"} stopOpacity={0.3} />
+                  <stop offset="95%" stopColor={isPositive ? "#00FF00" : "#FF4545"} stopOpacity={0} />
+                </linearGradient>
+              </defs>
+              <XAxis 
+                dataKey="name"
+                tickLine={false}
+                axisLine={false}
+                dy={20}
+                tick={{ fill: '#888', fontSize: 12 }}
+                height={70} {/* Increased height */}
+                padding={{ left: 0, right: 0 }}
+              />
+              <YAxis 
+                tickLine={false}
+                axisLine={false}
+                tick={{ fill: '#888', fontSize: 12 }}
+                domain={['auto', 'auto']}
+                dx={-15}
+                width={70}
+                tickFormatter={(value) => `$${value.toLocaleString()}`}
+              />
+              <Tooltip 
+                content={<ChartTooltipContent />} 
+                cursor={{ stroke: '#666', strokeWidth: 1, strokeDasharray: '5 5' }}
+              />
+              <Area 
+                type="monotone"
+                dataKey="value"
+                stroke={isPositive ? "#00FF00" : "#FF4545"}
+                strokeWidth={2}
+                fillOpacity={1}
+                fill="url(#colorPrice)"
+                activeDot={{ r: 6, fill: isPositive ? "#00FF00" : "#FF4545", strokeWidth: 0 }}
+              />
+              <Bar 
+                dataKey="volume" 
+                fill="#404040"
+                opacity={0.3}
+                barSize={5}
+              />
+            </AreaChart>
+          </ResponsiveContainer>
+        </ChartContainer>
+      </div>
     </div>
   );
 };
