@@ -27,7 +27,8 @@ import {
   Edit, 
   Camera,
   CheckCircle,
-  Shield
+  Shield,
+  Star
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -121,6 +122,17 @@ const Account = () => {
     timezone: 'GMT-4 (Eastern Time)'
   });
 
+  // Simulated referral stats
+  const referralStats = {
+    totalReferrals: 127,
+    earnedRewards: 3875.42,
+    airdropPoints: 4250,
+    level: 4,
+    pointsToNextLevel: 750,
+    nextLevelPoints: 5000,
+    progress: 85 // percentage to next level
+  };
+
   useEffect(() => {
     if (tabParam === 'portfolio' || tabParam === 'profile' || 
         tabParam === 'kyc' || tabParam === 'settings' || tabParam === 'referral') {
@@ -212,7 +224,7 @@ const Account = () => {
                     className={`w-full text-left px-3 py-2 rounded flex items-center space-x-3 ${activeTab === 'referral' ? 'bg-openfund-gray-light/20 text-openfund-green' : 'hover:bg-openfund-gray-light/20'}`}
                     onClick={() => setActiveTab('referral')}
                   >
-                    <Share size={18} />
+                    <Star size={18} />
                     <span>Referrals</span>
                   </button>
                   <button 
@@ -577,7 +589,7 @@ const Account = () => {
                 <Card className="bg-openfund-gray-medium border-openfund-gray-light mb-6">
                   <CardHeader>
                     <CardTitle className="flex items-center">
-                      <Users size={20} className="mr-2 text-openfund-green" />
+                      <Star size={20} className="mr-2 text-openfund-green" />
                       Referral Program
                     </CardTitle>
                   </CardHeader>
@@ -593,6 +605,19 @@ const Account = () => {
                           <li>Boost your <span className="text-openfund-green font-medium">$OF Airdrop</span> allocation points</li>
                           <li>Both you and your referral receive <span className="text-openfund-green font-medium">$25 USDC</span> trading credit</li>
                         </ul>
+                      </div>
+
+                      <div>
+                        <div className="flex items-center justify-between mb-3">
+                          <h4 className="text-lg font-medium">Referral Level {referralStats.level}</h4>
+                          <span className="text-sm text-gray-400">{referralStats.airdropPoints}/{referralStats.nextLevelPoints} points to Level {referralStats.level + 1}</span>
+                        </div>
+                        <div className="space-y-2">
+                          <Progress value={referralStats.progress} className="h-2" />
+                          <p className="text-sm text-gray-400 text-right">
+                            {referralStats.pointsToNextLevel} more points needed
+                          </p>
+                        </div>
                       </div>
 
                       <div className="bg-openfund-gray-dark p-5 rounded-lg">
@@ -626,18 +651,42 @@ const Account = () => {
                         <h4 className="text-lg font-medium">Your Referral Stats</h4>
                         <div className="grid grid-cols-3 gap-4">
                           <div className="bg-openfund-gray-dark p-4 rounded-lg text-center">
-                            <p className="text-xl font-bold text-openfund-green mb-1">0</p>
+                            <p className="text-xl font-bold text-openfund-green mb-1">{referralStats.totalReferrals}</p>
                             <p className="text-gray-400 text-sm">Total Referrals</p>
                           </div>
                           <div className="bg-openfund-gray-dark p-4 rounded-lg text-center">
-                            <p className="text-xl font-bold text-openfund-green mb-1">0 USDC</p>
+                            <p className="text-xl font-bold text-openfund-green mb-1">{referralStats.earnedRewards.toFixed(2)} USDC</p>
                             <p className="text-gray-400 text-sm">Earned Rewards</p>
                           </div>
                           <div className="bg-openfund-gray-dark p-4 rounded-lg text-center">
-                            <p className="text-xl font-bold text-openfund-green mb-1">0</p>
+                            <p className="text-xl font-bold text-openfund-green mb-1">{referralStats.airdropPoints}</p>
                             <p className="text-gray-400 text-sm">Airdrop Points</p>
                           </div>
                         </div>
+                      </div>
+
+                      <div>
+                        <h4 className="text-lg font-medium mb-3">Recent Referrals</h4>
+                        <div className="space-y-3">
+                          {[...Array(5)].map((_, i) => (
+                            <div key={i} className="bg-openfund-gray-dark p-3 rounded-lg flex justify-between items-center">
+                              <div className="flex items-center">
+                                <div className="w-8 h-8 rounded-full bg-openfund-gray-light flex items-center justify-center text-xs font-bold mr-3">
+                                  {["AB", "CD", "EF", "GH", "IJ"][i]}
+                                </div>
+                                <div>
+                                  <p className="font-medium">{["Alex Brown", "Chris Davis", "Emma Fischer", "George Hansen", "Isabella Jones"][i]}</p>
+                                  <p className="text-xs text-gray-400">Joined {[3, 5, 7, 10, 14][i]} days ago</p>
+                                </div>
+                              </div>
+                              <div className="text-right">
+                                <p className="font-medium text-openfund-green">{[125, 87, 105, 134, 98][i]} points</p>
+                                <p className="text-xs text-gray-400">{[(125*0.75).toFixed(2), (87*0.75).toFixed(2), (105*0.75).toFixed(2), (134*0.75).toFixed(2), (98*0.75).toFixed(2)][i]} USDC</p>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                        <Button variant="outline" className="w-full mt-4">View All Referrals</Button>
                       </div>
 
                       <div>
