@@ -2,9 +2,8 @@
 import React from 'react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
-import TeamMember from '@/components/TeamMember';
 import TeamMemberCard from '@/components/TeamMemberCard';
-import { Hexagon, Users } from 'lucide-react';
+import { Users } from 'lucide-react';
 
 const AboutUs = () => {
   const teamMembers = {

@@ -1,4 +1,3 @@
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -57,6 +56,7 @@
     --color-primary-dark: var(--color-blue-dark);
     --color-text-subdued: #555555;
     --color-border: #e5e5e5;
+    --card-border-glow: rgba(14, 165, 233, 0.7); /* Blue glow for light mode */
   }
   
   .dark {
@@ -111,6 +111,7 @@
     --color-primary-dark: var(--color-green-dark);
     --color-text-subdued: #888888;
     --color-border: #333333;
+    --card-border-glow: rgba(0, 255, 0, 0.7); /* Green glow for dark mode */
   }
 }
 
@@ -206,5 +207,18 @@
   
   .dark .testnet-badge {
     @apply bg-openfund-green text-black;
+  }
+  
+  /* Team member card styling for light/dark mode */
+  .team-member-card {
+    @apply transition-colors duration-300;
+  }
+  
+  .light .team-member-card .role {
+    @apply text-openfund-blue;
+  }
+  
+  .dark .team-member-card .role {
+    @apply text-openfund-green;
   }
 }
