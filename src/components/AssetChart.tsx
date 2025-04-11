@@ -284,8 +284,10 @@ export const AssetChart = ({ asset = 'bitcoin', timeframe, isPortfolio = false, 
     ? (isPositive ? "#0EA5E9" : "#FF4545")
     : (isPositive ? "#00FF00" : "#FF4545");
   
-  const chartHeight = isMobile ? '200px' : '360px';
+  // Adjust chart height to eliminate extra space
+  const chartHeight = isMobile ? '180px' : '340px';
   
+  // Adjust margins to fit content better
   const margins = isMobile 
     ? { top: 5, right: 5, left: 20, bottom: 20 }
     : { top: 10, right: 10, left: 50, bottom: 30 };
@@ -308,8 +310,10 @@ export const AssetChart = ({ asset = 'bitcoin', timeframe, isPortfolio = false, 
       const day = 30 - Math.floor(index * (30 / dataLength));
       return day % 7 === 0 ? `W${Math.ceil(day/7)}` : '';
     } else if (timeframe === '90d') {
+      // For 90d view, show monthly labels (M1, M2, M3)
       const day = 90 - Math.floor(index * (90 / dataLength));
-      return day % 15 === 0 ? `W${Math.ceil(day/7)}` : '';
+      const monthNum = Math.floor(day / 30) + 1;
+      return day % 30 === 0 ? `M${monthNum}` : '';
     } else if (timeframe === '1y') {
       const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
       const day = 365 - Math.floor(index * (365 / dataLength));
@@ -335,7 +339,7 @@ export const AssetChart = ({ asset = 'bitcoin', timeframe, isPortfolio = false, 
       if (timeframe === '24h') return 6;
       if (timeframe === '7d') return 1;
       if (timeframe === '30d') return 7;
-      if (timeframe === '90d') return 15;
+      if (timeframe === '90d') return 30; // Show only monthly ticks on mobile
       if (timeframe === '1y') return 60;
       return 10;
     } else {
@@ -343,7 +347,7 @@ export const AssetChart = ({ asset = 'bitcoin', timeframe, isPortfolio = false, 
       if (timeframe === '24h') return 4;
       if (timeframe === '7d') return 1;
       if (timeframe === '30d') return 7;
-      if (timeframe === '90d') return 15;
+      if (timeframe === '90d') return 30; // Show only monthly ticks on desktop
       if (timeframe === '1y') return 30;
       return 5;
     }
@@ -406,6 +410,7 @@ export const AssetChart = ({ asset = 'bitcoin', timeframe, isPortfolio = false, 
                 tickFormatter={formatXAxisTick}
                 tickMargin={3}
                 minTickGap={2}
+                allowDataOverflow={false}
               />
               <YAxis 
                 tickLine={false}

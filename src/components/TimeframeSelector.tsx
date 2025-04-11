@@ -21,7 +21,7 @@ export const TimeframeSelector = ({ timeframe, onChange }: TimeframeSelectorProp
   const isMobile = useIsMobile();
   
   return (
-    <div className="flex flex-wrap justify-center w-full md:justify-end md:w-auto">
+    <div className={`flex flex-wrap ${isMobile ? 'justify-center w-full' : 'justify-end md:w-auto'}`}>
       <div className={`grid ${isMobile ? 'grid-cols-6 w-full gap-0.5' : 'flex space-x-1'}`}>
         {timeframes.map((tf) => (
           <Button

@@ -40,24 +40,24 @@ const Trade = () => {
           <div className="lg:col-span-2">
             <div className="bg-card border border-border p-3 md:p-6 rounded-lg mb-4 md:mb-6">
               <div className="flex flex-col mb-3 md:mb-4 gap-2">
-                <h2 className="text-lg md:text-xl font-bold">
-                  {selectedAsset.charAt(0).toUpperCase() + selectedAsset.slice(1)} Price Chart
-                </h2>
-                {isMobile && (
+                <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-2">
+                  <h2 className="text-lg md:text-xl font-bold">
+                    {selectedAsset.charAt(0).toUpperCase() + selectedAsset.slice(1)} Price Chart
+                  </h2>
+                  {isMobile && (
+                    <TimeframeSelector 
+                      timeframe={timeframe} 
+                      onChange={setTimeframe}
+                    />
+                  )}
+                </div>
+                {!isMobile && (
                   <TimeframeSelector 
                     timeframe={timeframe} 
                     onChange={setTimeframe}
                   />
                 )}
               </div>
-              {!isMobile && (
-                <div className="mb-4">
-                  <TimeframeSelector 
-                    timeframe={timeframe} 
-                    onChange={setTimeframe}
-                  />
-                </div>
-              )}
               <div className="w-full">
                 <AssetChart asset={selectedAsset} timeframe={timeframe} />
               </div>
