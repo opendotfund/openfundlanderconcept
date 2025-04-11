@@ -502,31 +502,34 @@ const FundDetail = () => {
                     </CardHeader>
                     <CardContent>
                       {fund.holdingsBreakdown ? (
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div className={isDefiFund ? "" : "grid grid-cols-1 md:grid-cols-2 gap-6"}>
                           <FundHoldingsPieChart 
                             holdings={fund.holdingsBreakdown}
                             title="Asset Allocation"
+                            isDeFiFund={isDefiFund}
                           />
                           
-                          <div className="space-y-4">
-                            <h3 className="text-lg font-medium mb-3">Top Holdings</h3>
-                            {fund.topHoldings && fund.topHoldings.map((holding: string, index: number) => (
-                              <div key={index} className="flex items-center justify-between bg-card p-4 rounded-lg">
-                                <div className="flex items-center">
-                                  <div className="w-10 h-10 bg-card rounded-full flex items-center justify-center mr-3">
-                                    {holding.charAt(0)}
+                          {!isDefiFund && (
+                            <div className="space-y-4">
+                              <h3 className="text-lg font-medium mb-3">Top Holdings</h3>
+                              {fund.topHoldings && fund.topHoldings.map((holding: string, index: number) => (
+                                <div key={index} className="flex items-center justify-between bg-card p-4 rounded-lg">
+                                  <div className="flex items-center">
+                                    <div className="w-10 h-10 bg-card rounded-full flex items-center justify-center mr-3">
+                                      {holding.charAt(0)}
+                                    </div>
+                                    <span className="font-medium">{holding}</span>
                                   </div>
-                                  <span className="font-medium">{holding}</span>
-                                </div>
-                                <div className="text-right">
-                                  <div className="font-semibold">{(20 - index * 3).toFixed(1)}%</div>
-                                  <div className="text-xs text-gray-400">
-                                    ${((fund.aumValue || 1000000) * (20 - index * 3) / 100).toLocaleString()}
+                                  <div className="text-right">
+                                    <div className="font-semibold">{(20 - index * 3).toFixed(1)}%</div>
+                                    <div className="text-xs text-gray-400">
+                                      ${((fund.aumValue || 1000000) * (20 - index * 3) / 100).toLocaleString()}
+                                    </div>
                                   </div>
                                 </div>
-                              </div>
-                            ))}
-                          </div>
+                              ))}
+                            </div>
+                          )}
                         </div>
                       ) : (
                         <p className="text-gray-400">Detailed holdings information is not available for this fund.</p>
