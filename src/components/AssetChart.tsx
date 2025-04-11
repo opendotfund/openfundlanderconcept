@@ -126,7 +126,7 @@ export const AssetChart = ({ asset, timeframe }: AssetChartProps) => {
   return (
     <div className="w-full h-full">
       {chartData.length > 0 && (
-        <div className="flex items-center justify-between mb-4">
+        <div className="flex items-center justify-between mb-2">
           <div className="text-xl font-medium">
             {asset.charAt(0).toUpperCase() + asset.slice(1)} Price
           </div>
@@ -141,7 +141,7 @@ export const AssetChart = ({ asset, timeframe }: AssetChartProps) => {
         </div>
       )}
       
-      <div className="h-[400px]">
+      <div className="h-[380px]">
         <ChartContainer
           config={{
             value: {
@@ -157,7 +157,7 @@ export const AssetChart = ({ asset, timeframe }: AssetChartProps) => {
           <ResponsiveContainer width="100%" height="100%">
             <AreaChart
               data={chartData}
-              margin={{ top: 5, right: 20, left: 70, bottom: 100 }}
+              margin={{ top: 5, right: 10, left: 50, bottom: 40 }}
             >
               <defs>
                 <linearGradient id="colorPrice" x1="0" y1="0" x2="0" y2="1">
@@ -169,9 +169,9 @@ export const AssetChart = ({ asset, timeframe }: AssetChartProps) => {
                 dataKey="name"
                 tickLine={false}
                 axisLine={false}
-                dy={16}
+                dy={10}
                 tick={{ fill: '#888', fontSize: 12 }}
-                height={80}
+                height={50}
                 padding={{ left: 0, right: 0 }}
               />
               <YAxis 
@@ -179,8 +179,8 @@ export const AssetChart = ({ asset, timeframe }: AssetChartProps) => {
                 axisLine={false}
                 tick={{ fill: '#888', fontSize: 12 }}
                 domain={['auto', 'auto']}
-                dx={-15}
-                width={70}
+                dx={-10}
+                width={60}
                 tickFormatter={(value) => `$${value.toLocaleString()}`}
               />
               <Tooltip 

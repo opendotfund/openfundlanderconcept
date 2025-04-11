@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { 
@@ -163,15 +162,17 @@ const FundManager = () => {
                   onChange={setTimeframe}
                 />
               </CardHeader>
-              <CardContent className="pb-12">
-                <AssetChart 
-                  asset={selectedAsset} 
-                  timeframe={timeframe} 
-                />
+              <CardContent>
+                <div className="h-[380px]">
+                  <AssetChart 
+                    asset={selectedAsset} 
+                    timeframe={timeframe} 
+                  />
+                </div>
               </CardContent>
             </Card>
             
-            <div className="mt-28">
+            <div className="mt-6">
               <Tabs defaultValue="holdings">
                 <TabsList className="bg-openfund-gray-medium mb-2">
                   <TabsTrigger value="holdings">Portfolio Holdings</TabsTrigger>

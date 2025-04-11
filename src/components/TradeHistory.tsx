@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { 
@@ -59,9 +58,9 @@ const generateTradeHistoryData = (asset: string): Trade[] => {
 export const TradeHistory = ({ asset }: TradeHistoryProps) => {
   const trades = generateTradeHistoryData(asset);
   
-  // Increased the height of the scroll area from 300px to 450px
+  // Increased the height of the scroll area even further from 450px to 480px
   return (
-    <ScrollArea className="h-[450px]">
+    <ScrollArea className="h-[480px]">
       <Table>
         <TableHeader>
           <TableRow className="hover:bg-transparent">
