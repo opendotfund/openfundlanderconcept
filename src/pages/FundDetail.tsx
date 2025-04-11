@@ -12,7 +12,8 @@ import {
   AlertTriangle,
   Users,
   BarChart3,
-  Percent 
+  Percent,
+  ArrowDownToLine
 } from 'lucide-react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
@@ -24,6 +25,7 @@ import { Separator } from '@/components/ui/separator';
 import { AssetChart } from '@/components/AssetChart';
 import { TimeframeSelector } from '@/components/TimeframeSelector';
 import { useIsMobile } from '@/hooks/use-mobile';
+import { useToast } from '@/hooks/use-toast';
 
 // Sample fund data (in a real app this would come from an API)
 const traditionalFunds = [
@@ -178,7 +180,8 @@ const FundDetail = () => {
   const [activeTab, setActiveTab] = useState('overview');
   const navigate = useNavigate();
   const isMobile = useIsMobile();
-  
+  const { toast } = useToast();
+
   useEffect(() => {
     // Find the fund based on the ID and type
     if (fundId) {

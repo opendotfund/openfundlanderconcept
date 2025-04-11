@@ -55,7 +55,7 @@ const Hero = () => {
                 className="w-full bg-openfund-green hover:bg-openfund-green-dark text-openfund-gray-dark"
                 asChild
               >
-                <Link to="/fund-detail/stocks/berkshire-hathaway">
+                <Link to="/fund-detail/traditional/1">
                   View Details
                 </Link>
               </Button>
