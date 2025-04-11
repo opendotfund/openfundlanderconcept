@@ -50,6 +50,51 @@ export const SwapWidget = ({ selectedAsset = 'bitcoin' }: SwapWidgetProps) => {
   const [fromAssetPopoverOpen, setFromAssetPopoverOpen] = useState<boolean>(false);
   const [toAssetPopoverOpen, setToAssetPopoverOpen] = useState<boolean>(false);
 
+  const assets: Asset[] = [
+    { value: 'usdt', label: 'USDT', category: 'crypto' },
+    { value: 'bitcoin', label: 'BTC', category: 'crypto' },
+    { value: 'ethereum', label: 'ETH', category: 'crypto' },
+    { value: 'solana', label: 'SOL', category: 'crypto' },
+    { value: 'cardano', label: 'ADA', category: 'crypto' },
+    { value: 'polkadot', label: 'DOT', category: 'crypto' },
+    { value: 'avalanche', label: 'AVAX', category: 'crypto' },
+    { value: 'polygon', label: 'MATIC', category: 'crypto' },
+    { value: 'dogecoin', label: 'DOGE', category: 'crypto' },
+    { value: 'shiba inu', label: 'SHIB', category: 'crypto' },
+    { value: 'chainlink', label: 'LINK', category: 'crypto' },
+    { value: 'uniswap', label: 'UNI', category: 'crypto' },
+    { value: 'aave', label: 'AAVE', category: 'crypto' },
+    { value: 'litecoin', label: 'LTC', category: 'crypto' },
+    { value: 'cosmos', label: 'ATOM', category: 'crypto' },
+    
+    { value: 'apple', label: 'AAPL', category: 'stocks' },
+    { value: 'tesla', label: 'TSLA', category: 'stocks' },
+    { value: 'microsoft', label: 'MSFT', category: 'stocks' },
+    { value: 'amazon', label: 'AMZN', category: 'stocks' },
+    { value: 'nvidia', label: 'NVDA', category: 'stocks' },
+    { value: 'google', label: 'GOOGL', category: 'stocks' },
+    { value: 'meta', label: 'META', category: 'stocks' },
+    { value: 'netflix', label: 'NFLX', category: 'stocks' },
+    { value: 'disney', label: 'DIS', category: 'stocks' },
+    { value: 'paypal', label: 'PYPL', category: 'stocks' },
+    { value: 'adobe', label: 'ADBE', category: 'stocks' },
+    { value: 'salesforce', label: 'CRM', category: 'stocks' },
+    { value: 'amd', label: 'AMD', category: 'stocks' },
+    { value: 'intel', label: 'INTC', category: 'stocks' },
+    { value: 'walmart', label: 'WMT', category: 'stocks' },
+    
+    { value: 'gold', label: 'GOLD', category: 'commodities' },
+    { value: 'silver', label: 'SLV', category: 'commodities' },
+    { value: 'crude oil', label: 'OIL', category: 'commodities' },
+    { value: 'natural gas', label: 'GAS', category: 'commodities' },
+    { value: 'copper', label: 'COPP', category: 'commodities' },
+    { value: 'platinum', label: 'PLAT', category: 'commodities' },
+    { value: 'palladium', label: 'PALL', category: 'commodities' },
+    { value: 'wheat', label: 'WHEA', category: 'commodities' },
+    { value: 'corn', label: 'CORN', category: 'commodities' },
+    { value: 'coffee', label: 'COFF', category: 'commodities' }
+  ];
+
   const calculateExchangeRate = (from: string, to: string, amount: string): string => {
     const rates: Record<string, number> = {
       'bitcoin': 80000,
@@ -94,6 +139,12 @@ export const SwapWidget = ({ selectedAsset = 'bitcoin' }: SwapWidgetProps) => {
     }
   }, [swapMode, fromAsset, toAsset]);
 
+  useEffect(() => {
+    if (selectedAsset) {
+      setToAsset(selectedAsset);
+    }
+  }, [selectedAsset]);
+
   const handleFromAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setFromAmount(value);
@@ -116,6 +167,14 @@ export const SwapWidget = ({ selectedAsset = 'bitcoin' }: SwapWidgetProps) => {
     setToAsset(value);
     setToAmount(calculateExchangeRate(fromAsset, value, fromAmount));
     setToAssetPopoverOpen(false);
+  };
+
+  const handleAssetSelect = (value: string) => {
+    if (fromAssetPopoverOpen) {
+      handleFromAssetChange(value);
+    } else if (toAssetPopoverOpen) {
+      handleToAssetChange(value);
+    }
   };
 
   const handleTakeProfitChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -181,58 +240,13 @@ export const SwapWidget = ({ selectedAsset = 'bitcoin' }: SwapWidgetProps) => {
     });
   };
 
-  const handleAssetSelect = (value: string) => {
-    if (fromAssetPopoverOpen) {
-      handleFromAssetChange(value);
-    } else if (toAssetPopoverOpen) {
-      handleToAssetChange(value);
-    }
+  const toggleTakeProfit = () => {
+    setShowTakeProfit(!showTakeProfit);
   };
 
-  const assets: Asset[] = [
-    { value: 'usdt', label: 'USDT', category: 'crypto' },
-    { value: 'bitcoin', label: 'BTC', category: 'crypto' },
-    { value: 'ethereum', label: 'ETH', category: 'crypto' },
-    { value: 'solana', label: 'SOL', category: 'crypto' },
-    { value: 'cardano', label: 'ADA', category: 'crypto' },
-    { value: 'polkadot', label: 'DOT', category: 'crypto' },
-    { value: 'avalanche', label: 'AVAX', category: 'crypto' },
-    { value: 'polygon', label: 'MATIC', category: 'crypto' },
-    { value: 'dogecoin', label: 'DOGE', category: 'crypto' },
-    { value: 'shiba inu', label: 'SHIB', category: 'crypto' },
-    { value: 'chainlink', label: 'LINK', category: 'crypto' },
-    { value: 'uniswap', label: 'UNI', category: 'crypto' },
-    { value: 'aave', label: 'AAVE', category: 'crypto' },
-    { value: 'litecoin', label: 'LTC', category: 'crypto' },
-    { value: 'cosmos', label: 'ATOM', category: 'crypto' },
-    
-    { value: 'apple', label: 'AAPL', category: 'stocks' },
-    { value: 'tesla', label: 'TSLA', category: 'stocks' },
-    { value: 'microsoft', label: 'MSFT', category: 'stocks' },
-    { value: 'amazon', label: 'AMZN', category: 'stocks' },
-    { value: 'nvidia', label: 'NVDA', category: 'stocks' },
-    { value: 'google', label: 'GOOGL', category: 'stocks' },
-    { value: 'meta', label: 'META', category: 'stocks' },
-    { value: 'netflix', label: 'NFLX', category: 'stocks' },
-    { value: 'disney', label: 'DIS', category: 'stocks' },
-    { value: 'paypal', label: 'PYPL', category: 'stocks' },
-    { value: 'adobe', label: 'ADBE', category: 'stocks' },
-    { value: 'salesforce', label: 'CRM', category: 'stocks' },
-    { value: 'amd', label: 'AMD', category: 'stocks' },
-    { value: 'intel', label: 'INTC', category: 'stocks' },
-    { value: 'walmart', label: 'WMT', category: 'stocks' },
-    
-    { value: 'gold', label: 'GOLD', category: 'commodities' },
-    { value: 'silver', label: 'SLV', category: 'commodities' },
-    { value: 'crude oil', label: 'OIL', category: 'commodities' },
-    { value: 'natural gas', label: 'GAS', category: 'commodities' },
-    { value: 'copper', label: 'COPP', category: 'commodities' },
-    { value: 'platinum', label: 'PLAT', category: 'commodities' },
-    { value: 'palladium', label: 'PALL', category: 'commodities' },
-    { value: 'wheat', label: 'WHEA', category: 'commodities' },
-    { value: 'corn', label: 'CORN', category: 'commodities' },
-    { value: 'coffee', label: 'COFF', category: 'commodities' }
-  ];
+  const toggleStopLoss = () => {
+    setShowStopLoss(!showStopLoss);
+  };
 
   const getFilteredAssets = (category: 'all' | 'crypto' | 'stocks' | 'commodities', query: string) => {
     return assets.filter(asset => 
@@ -241,8 +255,10 @@ export const SwapWidget = ({ selectedAsset = 'bitcoin' }: SwapWidgetProps) => {
     );
   };
 
-  const filteredFromAssets = getFilteredAssets(fromAssetCategory, fromSearchQuery);
-  const filteredToAssets = getFilteredAssets(toAssetCategory, toSearchQuery);
+  const getAssetLabel = (assetValue: string) => {
+    const asset = assets.find(a => a.value === assetValue);
+    return asset ? asset.label : assetValue.toUpperCase();
+  };
 
   const getGasFee = () => {
     switch (gasOption) {
@@ -252,18 +268,8 @@ export const SwapWidget = ({ selectedAsset = 'bitcoin' }: SwapWidgetProps) => {
     }
   };
 
-  const toggleTakeProfit = () => {
-    setShowTakeProfit(!showTakeProfit);
-  };
-
-  const toggleStopLoss = () => {
-    setShowStopLoss(!showStopLoss);
-  };
-
-  const getAssetLabel = (assetValue: string) => {
-    const asset = assets.find(a => a.value === assetValue);
-    return asset ? asset.label : assetValue.toUpperCase();
-  };
+  const filteredFromAssets = getFilteredAssets(fromAssetCategory, fromSearchQuery);
+  const filteredToAssets = getFilteredAssets(toAssetCategory, toSearchQuery);
 
   return (
     <Card className="bg-background border-border p-4">
@@ -391,7 +397,7 @@ export const SwapWidget = ({ selectedAsset = 'bitcoin' }: SwapWidgetProps) => {
                         <ScrollArea className="h-[300px]">
                           <CommandEmpty>No asset found.</CommandEmpty>
                           <CommandGroup>
-                            {filteredFromAssets.map((asset) => (
+                            {filteredFromAssets.length > 0 ? filteredFromAssets.map((asset) => (
                               <CommandItem
                                 key={asset.value}
                                 value={asset.value}
@@ -399,14 +405,15 @@ export const SwapWidget = ({ selectedAsset = 'bitcoin' }: SwapWidgetProps) => {
                               >
                                 {asset.label}
                               </CommandItem>
-                            ))}
+                            )) : <div className="py-6 text-center text-sm">No assets found</div>}
                           </CommandGroup>
                         </ScrollArea>
                       </TabsContent>
                       <TabsContent value="crypto" className="mt-0">
                         <ScrollArea className="h-[300px]">
+                          <CommandEmpty>No crypto asset found.</CommandEmpty>
                           <CommandGroup>
-                            {filteredFromAssets.map((asset) => (
+                            {filteredFromAssets.length > 0 ? filteredFromAssets.map((asset) => (
                               <CommandItem
                                 key={asset.value}
                                 value={asset.value}
@@ -414,14 +421,15 @@ export const SwapWidget = ({ selectedAsset = 'bitcoin' }: SwapWidgetProps) => {
                               >
                                 {asset.label}
                               </CommandItem>
-                            ))}
+                            )) : <div className="py-6 text-center text-sm">No crypto assets found</div>}
                           </CommandGroup>
                         </ScrollArea>
                       </TabsContent>
                       <TabsContent value="stocks" className="mt-0">
                         <ScrollArea className="h-[300px]">
+                          <CommandEmpty>No stock found.</CommandEmpty>
                           <CommandGroup>
-                            {filteredFromAssets.map((asset) => (
+                            {filteredFromAssets.length > 0 ? filteredFromAssets.map((asset) => (
                               <CommandItem
                                 key={asset.value}
                                 value={asset.value}
@@ -429,14 +437,15 @@ export const SwapWidget = ({ selectedAsset = 'bitcoin' }: SwapWidgetProps) => {
                               >
                                 {asset.label}
                               </CommandItem>
-                            ))}
+                            )) : <div className="py-6 text-center text-sm">No stocks found</div>}
                           </CommandGroup>
                         </ScrollArea>
                       </TabsContent>
                       <TabsContent value="commodities" className="mt-0">
                         <ScrollArea className="h-[300px]">
+                          <CommandEmpty>No commodity found.</CommandEmpty>
                           <CommandGroup>
-                            {filteredFromAssets.map((asset) => (
+                            {filteredFromAssets.length > 0 ? filteredFromAssets.map((asset) => (
                               <CommandItem
                                 key={asset.value}
                                 value={asset.value}
@@ -444,7 +453,7 @@ export const SwapWidget = ({ selectedAsset = 'bitcoin' }: SwapWidgetProps) => {
                               >
                                 {asset.label}
                               </CommandItem>
-                            ))}
+                            )) : <div className="py-6 text-center text-sm">No commodities found</div>}
                           </CommandGroup>
                         </ScrollArea>
                       </TabsContent>
@@ -512,7 +521,7 @@ export const SwapWidget = ({ selectedAsset = 'bitcoin' }: SwapWidgetProps) => {
                         <ScrollArea className="h-[300px]">
                           <CommandEmpty>No asset found.</CommandEmpty>
                           <CommandGroup>
-                            {filteredToAssets.map((asset) => (
+                            {filteredToAssets.length > 0 ? filteredToAssets.map((asset) => (
                               <CommandItem
                                 key={asset.value}
                                 value={asset.value}
@@ -520,14 +529,15 @@ export const SwapWidget = ({ selectedAsset = 'bitcoin' }: SwapWidgetProps) => {
                               >
                                 {asset.label}
                               </CommandItem>
-                            ))}
+                            )) : <div className="py-6 text-center text-sm">No assets found</div>}
                           </CommandGroup>
                         </ScrollArea>
                       </TabsContent>
                       <TabsContent value="crypto" className="mt-0">
                         <ScrollArea className="h-[300px]">
+                          <CommandEmpty>No crypto asset found.</CommandEmpty>
                           <CommandGroup>
-                            {filteredToAssets.map((asset) => (
+                            {filteredToAssets.length > 0 ? filteredToAssets.map((asset) => (
                               <CommandItem
                                 key={asset.value}
                                 value={asset.value}
@@ -535,14 +545,15 @@ export const SwapWidget = ({ selectedAsset = 'bitcoin' }: SwapWidgetProps) => {
                               >
                                 {asset.label}
                               </CommandItem>
-                            ))}
+                            )) : <div className="py-6 text-center text-sm">No crypto assets found</div>}
                           </CommandGroup>
                         </ScrollArea>
                       </TabsContent>
                       <TabsContent value="stocks" className="mt-0">
                         <ScrollArea className="h-[300px]">
+                          <CommandEmpty>No stock found.</CommandEmpty>
                           <CommandGroup>
-                            {filteredToAssets.map((asset) => (
+                            {filteredToAssets.length > 0 ? filteredToAssets.map((asset) => (
                               <CommandItem
                                 key={asset.value}
                                 value={asset.value}
@@ -550,14 +561,15 @@ export const SwapWidget = ({ selectedAsset = 'bitcoin' }: SwapWidgetProps) => {
                               >
                                 {asset.label}
                               </CommandItem>
-                            ))}
+                            )) : <div className="py-6 text-center text-sm">No stocks found</div>}
                           </CommandGroup>
                         </ScrollArea>
                       </TabsContent>
                       <TabsContent value="commodities" className="mt-0">
                         <ScrollArea className="h-[300px]">
+                          <CommandEmpty>No commodity found.</CommandEmpty>
                           <CommandGroup>
-                            {filteredToAssets.map((asset) => (
+                            {filteredToAssets.length > 0 ? filteredToAssets.map((asset) => (
                               <CommandItem
                                 key={asset.value}
                                 value={asset.value}
@@ -565,7 +577,7 @@ export const SwapWidget = ({ selectedAsset = 'bitcoin' }: SwapWidgetProps) => {
                               >
                                 {asset.label}
                               </CommandItem>
-                            ))}
+                            )) : <div className="py-6 text-center text-sm">No commodities found</div>}
                           </CommandGroup>
                         </ScrollArea>
                       </TabsContent>
