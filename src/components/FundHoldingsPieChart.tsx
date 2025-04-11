@@ -1,3 +1,4 @@
+
 import React, { useMemo } from 'react';
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend } from 'recharts';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -79,7 +80,7 @@ export const FundHoldingsPieChart: React.FC<FundHoldingsPieChartProps> = ({
     return acc;
   }, {} as Record<string, { label: string, color: string }>);
 
-  const chartHeight = isMobile ? "220px" : (isDeFiFund ? "380px" : "280px");
+  const chartHeight = isMobile ? "200px" : (isDeFiFund ? "380px" : "280px");
   const outerRadius = isMobile ? (isDeFiFund ? 70 : 60) : (isDeFiFund ? 120 : 90);
   const legendVerticalAlign = isMobile ? "bottom" : "bottom";
 

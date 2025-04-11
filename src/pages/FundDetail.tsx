@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { 
@@ -282,12 +283,14 @@ const FundDetail = () => {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <div className="lg:col-span-2">
             <Card className="mb-6">
-              <CardHeader className="flex flex-row justify-between items-center">
-                <CardTitle>Performance History</CardTitle>
-                <TimeframeSelector 
-                  timeframe={timeframe} 
-                  onChange={setTimeframe}
-                />
+              <CardHeader>
+                <div className="flex flex-col space-y-2">
+                  <CardTitle>Performance History</CardTitle>
+                  <TimeframeSelector 
+                    timeframe={timeframe} 
+                    onChange={setTimeframe}
+                  />
+                </div>
               </CardHeader>
               <CardContent>
                 <div className="h-[350px]">

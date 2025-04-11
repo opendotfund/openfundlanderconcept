@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from 'react';
 import {
   Area,
@@ -123,11 +124,17 @@ const fetchPriceData = async (asset: string, timeframe: string, isPortfolio: boo
         } else if (timeframe === '7d') {
           label = `D${7-i}`;
         } else if (timeframe === '30d') {
-          label = `W${Math.ceil((30-i)/7)}`;
-        } else if (timeframe === '90d') {
-          const weekNum = Math.floor((90-i)/7);
+          const weekNum = Math.floor((30-i)/7) + 1;
           if (i % 7 === 0) {
             label = `W${weekNum}`;
+          } else {
+            label = '';
+          }
+        } else if (timeframe === '90d') {
+          // For 90 days, show monthly labels (M1, M2, M3)
+          const monthNum = Math.floor(i / 30) + 1;
+          if (i % 30 === 0) {
+            label = `M${monthNum}`;
           } else {
             label = '';
           }
@@ -195,19 +202,26 @@ const fetchPriceData = async (asset: string, timeframe: string, isPortfolio: boo
         
         let label = '';
         if (timeframe === '1h') {
+          // For 1 hour, show minutes: 55m, 50m, 45m, etc.
           if (i % 5 === 0) label = `${59-i}m`;
         } else if (timeframe === '24h') {
+          // For 24 hours, show hours: 23h, 20h, 17h, etc.
           if (i % 3 === 0) label = `${23-i}h`;
         } else if (timeframe === '7d') {
+          // For 7 days, show day labels: D7, D6, D5, etc.
           label = `D${7-i}`;
         } else if (timeframe === '30d') {
-          if (i % 7 === 0) label = `W${Math.ceil((30-i)/7)}`;
+          // For 30 days, show weekly labels: W4, W3, W2, W1
+          const weekNum = Math.ceil((30-i)/7);
+          if (i % 7 === 0) label = `W${weekNum}`;
         } else if (timeframe === '90d') {
-          const weekNum = Math.floor((90-i)/7);
-          if (i % 7 === 0) {
-            label = `W${weekNum}`;
+          // For 90 days, show monthly labels: M1, M2, M3
+          const monthNum = Math.floor(i / 30) + 1;
+          if (i % 30 === 0) {
+            label = `M${monthNum}`;
           }
         } else {
+          // For 1 year, show monthly labels: Jan, Feb, Mar, etc.
           const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
           const monthNum = Math.floor((365-i)/30) % 12;
           if (i % 30 === 0) {
@@ -295,19 +309,19 @@ export const AssetChart = ({ asset = 'bitcoin', timeframe, isPortfolio = false, 
 
   const getTickInterval = () => {
     if (isMobile) {
-      if (timeframe === '1h') return 15;
-      if (timeframe === '24h') return 6;
-      if (timeframe === '7d') return 2;
-      if (timeframe === '30d') return 10;
-      if (timeframe === '90d') return 21;
-      return 90;
+      if (timeframe === '1h') return 10; // Show every 10th tick on mobile for 1h
+      if (timeframe === '24h') return 4;  // Show every 4th tick on mobile for 24h
+      if (timeframe === '7d') return 1;   // Show every day on mobile for 7d
+      if (timeframe === '30d') return 3;  // Show every 3rd tick on mobile for 30d
+      if (timeframe === '90d') return 1;  // Show all month labels on mobile for 90d
+      return 2;                          // Show every other month for 1y
     } else {
-      if (timeframe === '1h') return 10;
-      if (timeframe === '24h') return 4;
-      if (timeframe === '7d') return 1;
-      if (timeframe === '30d') return 7;
-      if (timeframe === '90d') return 14;
-      return 60;
+      if (timeframe === '1h') return 6;  // Show every 6th tick on desktop for 1h
+      if (timeframe === '24h') return 3; // Show every 3rd tick on desktop for 24h
+      if (timeframe === '7d') return 1;  // Show every day on desktop for 7d
+      if (timeframe === '30d') return 1; // Show every week on desktop for 30d
+      if (timeframe === '90d') return 1; // Show all month labels on desktop for 90d
+      return 1;                         // Show every month for 1y
     }
   };
 
@@ -329,7 +343,7 @@ export const AssetChart = ({ asset = 'bitcoin', timeframe, isPortfolio = false, 
         </div>
       )}
       
-      <div style={{ height: chartHeight }} className="mb-0">
+      <div style={{ height: chartHeight }}>
         <ChartContainer
           config={{
             value: {
@@ -341,7 +355,6 @@ export const AssetChart = ({ asset = 'bitcoin', timeframe, isPortfolio = false, 
               color: isLightMode ? "#D1D5DB" : "#404040"
             }
           }}
-          className="pb-2"
         >
           <ResponsiveContainer width="100%" height="100%">
             <AreaChart
@@ -357,22 +370,22 @@ export const AssetChart = ({ asset = 'bitcoin', timeframe, isPortfolio = false, 
               <XAxis 
                 dataKey="name"
                 tickLine={false}
-                axisLine={false}
+                axisLine={true}
                 dy={isMobile ? 10 : 12}
                 tick={{ 
                   fill: isLightMode ? '#666' : '#888', 
-                  fontSize: isMobile ? 10 : 12
+                  fontSize: isMobile ? 9 : 11
                 }}
                 height={isMobile ? 35 : 40}
                 padding={{ left: 5, right: 5 }}
                 interval={getTickInterval()}
                 tickFormatter={formatXAxisTick}
                 tickMargin={5}
-                minTickGap={5}
+                minTickGap={2}
               />
               <YAxis 
                 tickLine={false}
-                axisLine={false}
+                axisLine={true}
                 tick={{ 
                   fill: isLightMode ? '#666' : '#888', 
                   fontSize: isMobile ? 10 : 12 
