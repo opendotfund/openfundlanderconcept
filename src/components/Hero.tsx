@@ -8,7 +8,7 @@ const Hero = () => {
     <section className="pt-24 pb-12 relative overflow-hidden transition-colors duration-300">
       <div className="container mx-auto px-4 relative z-10">
         <div className="grid md:grid-cols-2 gap-12 items-center">
-          <div>
+          <div className="flex flex-col items-center text-center">
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 transition-colors duration-300">
               The Modern Platform for <span className="text-primary transition-colors duration-300">Global Investments</span>
             </h1>
@@ -16,7 +16,7 @@ const Hero = () => {
               Trade stocks, crypto, commodities and more on a single platform. 
               Create or join community-managed funds with transparent performance.
             </p>
-            <div className="flex flex-wrap gap-4">
+            <div className="flex flex-wrap justify-center gap-4">
               <Button 
                 className="bg-primary hover:bg-primary/90 text-primary-foreground text-lg px-8 py-3 transition-colors duration-300"
                 asChild
