@@ -300,16 +300,34 @@ const FundDetail = () => {
             </Card>
             
             <div className="mb-6">
-              <Tabs defaultValue="overview" value={activeTab} onValueChange={setActiveTab}>
-                <div className="mb-6">
-                  <TabsList className="w-full bg-card">
-                    <TabsTrigger className="flex-1" value="overview">Overview</TabsTrigger>
-                    <TabsTrigger className="flex-1" value="strategy">Strategy</TabsTrigger>
-                    <TabsTrigger className="flex-1" value="holdings">Holdings</TabsTrigger>
-                  </TabsList>
-                </div>
+              <Tabs 
+                defaultValue="overview" 
+                value={activeTab} 
+                onValueChange={setActiveTab}
+                className="relative"
+              >
+                <TabsList className="w-full bg-card mb-8">
+                  <TabsTrigger 
+                    className="flex-1 z-10" 
+                    value="overview"
+                  >
+                    Overview
+                  </TabsTrigger>
+                  <TabsTrigger 
+                    className="flex-1 z-10" 
+                    value="strategy"
+                  >
+                    Strategy
+                  </TabsTrigger>
+                  <TabsTrigger 
+                    className="flex-1 z-10" 
+                    value="holdings"
+                  >
+                    Holdings
+                  </TabsTrigger>
+                </TabsList>
                 
-                <TabsContent value="overview">
+                <TabsContent value="overview" className="mt-0">
                   <Card className="bg-card border-card">
                     <CardHeader>
                       <CardTitle>Fund Overview</CardTitle>
@@ -349,7 +367,7 @@ const FundDetail = () => {
                   </Card>
                 </TabsContent>
                 
-                <TabsContent value="strategy">
+                <TabsContent value="strategy" className="mt-0">
                   <Card className="bg-card border-card">
                     <CardHeader>
                       <CardTitle>Investment Strategy</CardTitle>
@@ -477,7 +495,7 @@ const FundDetail = () => {
                   </Card>
                 </TabsContent>
                 
-                <TabsContent value="holdings">
+                <TabsContent value="holdings" className="mt-0">
                   <Card className="bg-card border-card">
                     <CardHeader>
                       <CardTitle>Holdings Breakdown</CardTitle>

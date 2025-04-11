@@ -50,7 +50,7 @@ export const FundHoldingsPieChart: React.FC<FundHoldingsPieChartProps> = ({
         <CardTitle>{title}</CardTitle>
       </CardHeader>
       <CardContent>
-        <div className="h-[300px] w-full">
+        <div className="h-[300px] w-full relative">
           <ChartContainer config={config} className="h-full w-full">
             <ResponsiveContainer width="100%" height="100%">
               <PieChart>
