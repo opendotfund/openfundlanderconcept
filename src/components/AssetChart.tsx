@@ -33,8 +33,8 @@ const fetchPriceData = async (asset: string, timeframe: string, isPortfolio: boo
     
     // Accurate base prices (simulated real-time data)
     const baseValues: Record<string, number> = {
-      'bitcoin': 62450.75,
-      'ethereum': 3042.30,
+      'bitcoin': 80000.00,
+      'ethereum': 1600.00,
       'solana': 135.80,
       'apple': 182.40,
       'tesla': 178.32,

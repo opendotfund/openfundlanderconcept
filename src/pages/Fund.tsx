@@ -204,23 +204,23 @@ const Fund = () => {
                       <div>
                         <h3 className="text-lg font-medium mb-4">Fund Management</h3>
                         <div className="space-y-4">
-                          <Button className="w-full flex justify-between items-center bg-secondary hover:bg-muted">
+                          <Button className="w-full flex justify-between items-center bg-secondary hover:bg-muted text-foreground">
                             <div className="flex items-center">
-                              <BarChart size={16} className="mr-2" />
+                              <BarChart size={16} className="mr-2 text-foreground" />
                               <span>Rebalance Portfolio</span>
                             </div>
                             <span className="text-xs text-muted-foreground">Last: 7d ago</span>
                           </Button>
-                          <Button className="w-full flex justify-between items-center bg-secondary hover:bg-muted">
+                          <Button className="w-full flex justify-between items-center bg-secondary hover:bg-muted text-foreground">
                             <div className="flex items-center">
-                              <Sliders size={16} className="mr-2" />
+                              <Sliders size={16} className="mr-2 text-foreground" />
                               <span>Update Strategy</span>
                             </div>
                             <span className="text-xs text-muted-foreground">DeFi Focus</span>
                           </Button>
-                          <Button className="w-full flex justify-between items-center bg-secondary hover:bg-muted">
+                          <Button className="w-full flex justify-between items-center bg-secondary hover:bg-muted text-foreground">
                             <div className="flex items-center">
-                              <Settings size={16} className="mr-2" />
+                              <Settings size={16} className="mr-2 text-foreground" />
                               <span>Fund Settings</span>
                             </div>
                             <span className="text-xs text-muted-foreground">2/20 fee structure</span>
