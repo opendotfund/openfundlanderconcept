@@ -16,6 +16,7 @@ import FundManager from './pages/FundManager';
 import ComingSoon from './pages/ComingSoon';
 import Careers from './pages/Careers';
 import Contact from './pages/Contact';
+import Legal from './pages/Legal';
 
 import './App.css';
 
@@ -42,6 +43,7 @@ function App() {
           <Route path="/coming-soon" element={<ComingSoon />} />
           <Route path="/careers" element={<Careers />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/legal" element={<Legal />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </div>

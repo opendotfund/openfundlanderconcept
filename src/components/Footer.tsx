@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Logo from './Logo';
@@ -7,7 +6,7 @@ import { Twitter, Github, Linkedin, Youtube } from 'lucide-react';
 
 const Footer = () => {
   return (
-    <footer className="bg-gray-100 dark:bg-openfund-gray-medium pt-16 pb-8 border-t border-gray-200 dark:border-openfund-gray-light transition-colors duration-300">
+    <footer className="bg-background pt-16 pb-8 border-t border-gray-200 dark:border-openfund-gray-light transition-colors duration-300">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
           <div className="space-y-4">
@@ -60,6 +59,7 @@ const Footer = () => {
               <li><a href="#" className="text-gray-700 dark:text-gray-400 hover:text-openfund-blue dark:hover:text-openfund-green transition-colors duration-300">Blog</a></li>
               <li><a href="#" className="text-gray-700 dark:text-gray-400 hover:text-openfund-blue dark:hover:text-openfund-green transition-colors duration-300">Press</a></li>
               <li><Link to="/contact" className="text-gray-700 dark:text-gray-400 hover:text-openfund-blue dark:hover:text-openfund-green transition-colors duration-300">Contact</Link></li>
+              <li><Link to="/legal" className="text-gray-700 dark:text-gray-400 hover:text-openfund-blue dark:hover:text-openfund-green transition-colors duration-300">Legal</Link></li>
             </ul>
           </div>
           
@@ -80,8 +80,8 @@ const Footer = () => {
             &copy; {new Date().getFullYear()} OpenFund. All rights reserved.
           </div>
           <div className="flex space-x-6 text-sm">
-            <a href="#" className="text-gray-700 dark:text-gray-400 hover:text-openfund-blue dark:hover:text-openfund-green transition-colors duration-300">Privacy Policy</a>
-            <a href="#" className="text-gray-700 dark:text-gray-400 hover:text-openfund-blue dark:hover:text-openfund-green transition-colors duration-300">Terms of Service</a>
+            <Link to="/legal?tab=privacy" className="text-gray-700 dark:text-gray-400 hover:text-openfund-blue dark:hover:text-openfund-green transition-colors duration-300">Privacy Policy</Link>
+            <Link to="/legal?tab=terms" className="text-gray-700 dark:text-gray-400 hover:text-openfund-blue dark:hover:text-openfund-green transition-colors duration-300">Terms of Service</Link>
             <a href="#" className="text-gray-700 dark:text-gray-400 hover:text-openfund-blue dark:hover:text-openfund-green transition-colors duration-300">Legal</a>
           </div>
         </div>
