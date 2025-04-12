@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { ArrowDown, Settings, Check } from 'lucide-react';
 import { Input } from '@/components/ui/input';
@@ -393,7 +394,7 @@ export const SwapWidget = ({ selectedAsset = 'bitcoin' }: SwapWidgetProps) => {
                 id="take-profit"
                 checked={showTakeProfit}
                 onCheckedChange={toggleTakeProfit}
-                className="dark:data-[state=checked]:bg-openfund-green dark:data-[state=checked]:border-openfund-green-light dark:data-[state=unchecked]:bg-muted dark:data-[state=unchecked]:border-muted-foreground"
+                className="transition-all duration-300 data-[state=checked]:shadow-glow dark:data-[state=checked]:bg-openfund-green dark:data-[state=checked]:border-openfund-green-light dark:data-[state=unchecked]:bg-muted/30 dark:data-[state=unchecked]:border-muted-foreground"
               />
             </div>
           </div>
@@ -420,7 +421,7 @@ export const SwapWidget = ({ selectedAsset = 'bitcoin' }: SwapWidgetProps) => {
                 id="stop-loss"
                 checked={showStopLoss}
                 onCheckedChange={toggleStopLoss}
-                className="dark:data-[state=checked]:bg-openfund-green dark:data-[state=checked]:border-openfund-green-light dark:data-[state=unchecked]:bg-muted dark:data-[state=unchecked]:border-muted-foreground"
+                className="transition-all duration-300 data-[state=checked]:shadow-glow dark:data-[state=checked]:bg-openfund-green dark:data-[state=checked]:border-openfund-green-light dark:data-[state=unchecked]:bg-muted/30 dark:data-[state=unchecked]:border-muted-foreground"
               />
             </div>
           </div>

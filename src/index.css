@@ -222,16 +222,34 @@
     @apply text-openfund-green;
   }
   
-  /* Enhanced toggle switch visibility for dark mode */
+  /* Enhanced toggle switch visibility and elegance for dark mode */
   .dark [role="switch"][data-state="checked"] {
-    @apply bg-openfund-green shadow-[0_0_5px_rgba(0,255,0,0.5)];
+    @apply bg-openfund-green shadow-[0_0_8px_rgba(0,255,0,0.4)] border border-openfund-green-light;
   }
   
   .dark [role="switch"][data-state="unchecked"] {
-    @apply bg-muted border-muted-foreground opacity-70;
+    @apply bg-muted/30 border border-muted-foreground/40 opacity-90;
   }
   
   .dark [role="switch"][data-state="checked"] span {
-    @apply bg-background;
+    @apply bg-background shadow-md;
+  }
+  
+  .shadow-glow {
+    box-shadow: 0 0 8px var(--color-primary);
+  }
+  
+  /* Animation for switch transition */
+  [role="switch"] {
+    @apply transition-all duration-300;
+  }
+  
+  [role="switch"] span {
+    @apply transition-all duration-300;
+  }
+  
+  /* Switch container styling */
+  .switch-container {
+    @apply p-1 rounded-full flex items-center;
   }
 }
