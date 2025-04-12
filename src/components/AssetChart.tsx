@@ -326,7 +326,7 @@ export const AssetChart = ({ asset = 'bitcoin', timeframe, isPortfolio = false, 
     : (isPositive ? "#00FF00" : "#FF4545");
   
   const margins = isMobile 
-    ? { top: 5, right: 5, left: 20, bottom: 5 }
+    ? { top: 5, right: 5, left: 20, bottom: 0 } // Changed bottom margin to 0 for mobile
     : { top: 10, right: 10, left: 50, bottom: 35 };
 
   return (
@@ -380,11 +380,11 @@ export const AssetChart = ({ asset = 'bitcoin', timeframe, isPortfolio = false, 
                   fill: isLightMode ? '#666' : '#888', 
                   fontSize: isMobile ? 9 : 11
                 }}
-                height={isMobile ? 20 : 45}
+                height={isMobile ? 20 : 45} // Reduced height on mobile
                 padding={{ left: 5, right: 5 }}
                 interval={timeframe === '30d' || timeframe === '90d' || timeframe === '1y' ? "preserveEnd" : 0}
                 tickFormatter={(value) => value || ''}
-                tickMargin={isMobile ? 2 : 5}
+                tickMargin={isMobile ? 0 : 5} // Reduced tickMargin on mobile
                 minTickGap={isMobile ? 30 : 50}
                 allowDataOverflow={false}
               />
