@@ -29,7 +29,7 @@ const Trade = () => {
   const handleAssetTypeChange = (value: string) => {
     if (value === 'crypto' || value === 'stocks' || value === 'commodities') {
       setAssetType(value);
-      window.scrollTo(0, 0);
+      // Removed the window.scrollTo(0, 0) that was causing the scroll to top behavior
     }
   };
 
@@ -39,7 +39,7 @@ const Trade = () => {
 
   const handleAssetSelect = (asset: string) => {
     setSelectedAsset(asset);
-    window.scrollTo(0, 0);
+    // Removed the window.scrollTo(0, 0) that was causing the scroll to top behavior
   };
 
   return (
