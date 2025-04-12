@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '@/components/Navbar';
@@ -612,7 +611,7 @@ const ExploreFunds = () => {
                   Most Volatile
                 </DropdownMenuItem>
                 <DropdownMenuItem onClick={() => setSortOption('volatility-low')}>
-                  Least Volatile
+                  Least Volatility
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
