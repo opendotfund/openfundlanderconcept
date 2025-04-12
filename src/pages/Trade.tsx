@@ -57,7 +57,7 @@ const Trade = () => {
                       {selectedAsset.charAt(0).toUpperCase() + selectedAsset.slice(1)} Price Chart
                     </h2>
                     <AssetSearch 
-                      assetType={assetType}
+                      assetType="all"
                       onSelect={handleAssetSelect}
                       currentAsset={selectedAsset}
                     />

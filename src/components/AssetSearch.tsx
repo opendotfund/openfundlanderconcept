@@ -46,6 +46,16 @@ const generateAssets = (type: string): { value: string; label: string }[] => {
     },
   };
 
+  if (type === 'all') {
+    // Return all assets when 'all' type is specified
+    return Object.values(assetTypes).flatMap(({ examples }) => 
+      examples.map((name) => ({
+        value: name,
+        label: name.charAt(0).toUpperCase() + name.slice(1)
+      }))
+    );
+  }
+
   const { examples } = assetTypes[type] || assetTypes.crypto;
   
   return examples.map((name) => ({
@@ -55,7 +65,7 @@ const generateAssets = (type: string): { value: string; label: string }[] => {
 };
 
 interface AssetSearchProps {
-  assetType: 'crypto' | 'stocks' | 'commodities';
+  assetType: 'crypto' | 'stocks' | 'commodities' | 'all';
   onSelect: (asset: string) => void;
   currentAsset: string;
 }
