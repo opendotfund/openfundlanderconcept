@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import {
   Area,
@@ -325,15 +324,12 @@ export const AssetChart = ({ asset = 'bitcoin', timeframe, isPortfolio = false, 
     ? (isPositive ? "#0EA5E9" : "#FF4545")
     : (isPositive ? "#00FF00" : "#FF4545");
   
-  // Adjusted height to fill available space better on mobile
-  const chartHeight = isMobile ? '280px' : '360px';
-  
   const margins = isMobile 
-    ? { top: 5, right: 5, left: 20, bottom: 20 }
-    : { top: 10, right: 10, left: 50, bottom: 50 };
+    ? { top: 5, right: 5, left: 20, bottom: 5 }
+    : { top: 10, right: 10, left: 50, bottom: 35 };
 
   return (
-    <div className="w-full">
+    <div className="w-full h-full">
       {chartData.length > 0 && (
         <div className={`flex ${isMobile ? 'flex-col gap-1' : 'items-center justify-between'} mb-2`}>
           <div className={`${isMobile ? 'text-lg' : 'text-xl'} font-medium`}>
@@ -350,7 +346,7 @@ export const AssetChart = ({ asset = 'bitcoin', timeframe, isPortfolio = false, 
         </div>
       )}
       
-      <div style={{ height: chartHeight }} className="w-full">
+      <div className="w-full h-[calc(100%-24px)]">
         <ChartContainer
           config={{
             value: {
@@ -378,16 +374,16 @@ export const AssetChart = ({ asset = 'bitcoin', timeframe, isPortfolio = false, 
                 dataKey="name"
                 tickLine={false}
                 axisLine={true}
-                dy={isMobile ? 10 : 18}
+                dy={isMobile ? 5 : 15}
                 tick={{ 
                   fill: isLightMode ? '#666' : '#888', 
                   fontSize: isMobile ? 9 : 11
                 }}
-                height={isMobile ? 30 : 55}
+                height={isMobile ? 20 : 45}
                 padding={{ left: 5, right: 5 }}
                 interval={timeframe === '30d' || timeframe === '90d' || timeframe === '1y' ? "preserveEnd" : 0}
                 tickFormatter={(value) => value || ''}
-                tickMargin={5}
+                tickMargin={isMobile ? 2 : 5}
                 minTickGap={isMobile ? 30 : 50}
                 allowDataOverflow={false}
               />

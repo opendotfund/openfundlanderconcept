@@ -21,12 +21,12 @@ export const TimeframeSelector = ({ timeframe, onChange }: TimeframeSelectorProp
   const isMobile = useIsMobile();
   
   return (
-    <div className="flex flex-wrap gap-1 justify-center sm:justify-end w-full">
+    <div className="flex flex-wrap gap-1 justify-end w-full">
       {timeframes.map((tf) => (
         <Button
           key={tf.value}
           variant={timeframe === tf.value ? 'default' : 'outline'}
-          size={isMobile ? "sm" : "sm"}
+          size="sm"
           onClick={() => onChange(tf.value)}
           className={`${timeframe === tf.value ? 
             'dark:bg-openfund-green dark:text-openfund-gray-dark bg-openfund-blue text-white hover:bg-openfund-blue-dark dark:hover:bg-openfund-green-dark' : 

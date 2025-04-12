@@ -59,8 +59,8 @@ const ChartPreview = () => {
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-10 items-center">
           <div className="green-glow order-2 lg:order-1">
-            <Card className="bg-card border-primary/20 overflow-hidden h-60 md:h-80">
-              <div className="p-3 md:p-4">
+            <Card className="bg-card border-primary/20 overflow-hidden h-[250px] md:h-[320px]">
+              <div className="p-3 md:p-4 h-full">
                 <div className="flex justify-between items-center mb-2">
                   <div className="flex items-center">
                     <div className="h-2 md:h-3 w-2 md:w-3 rounded-full bg-primary mr-2"></div>
@@ -68,10 +68,10 @@ const ChartPreview = () => {
                   </div>
                   <span className="text-primary text-sm md:text-base">+4.8%</span>
                 </div>
-                <ResponsiveContainer width="100%" height={isMobile ? 200 : 250}>
+                <ResponsiveContainer width="100%" height="90%">
                   <AreaChart
                     data={data}
-                    margin={isMobile ? { top: 5, right: 5, left: 0, bottom: 35 } : { top: 5, right: 20, left: 0, bottom: 45 }}
+                    margin={isMobile ? { top: 5, right: 5, left: 0, bottom: 5 } : { top: 5, right: 20, left: 0, bottom: 25 }}
                   >
                     <defs>
                       <linearGradient id="colorPrice" x1="0" y1="0" x2="0" y2="1">
@@ -85,9 +85,9 @@ const ChartPreview = () => {
                         fill: 'var(--color-text-subdued)', 
                         fontSize: isMobile ? 9 : 11
                       }} 
-                      dy={isMobile ? 12 : 15}
-                      height={isMobile ? 40 : 50}
-                      tickMargin={isMobile ? 8 : 10}
+                      dy={isMobile ? 5 : 15}
+                      height={isMobile ? 25 : 40}
+                      tickMargin={isMobile ? 2 : 8}
                       interval={isMobile ? 2 : 1}
                     />
                     <YAxis 
