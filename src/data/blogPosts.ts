@@ -1,3 +1,4 @@
+
 export interface BlogContentSection {
   type: 'paragraph' | 'heading' | 'list' | 'image' | 'steps';
   content?: string;
@@ -690,4 +691,292 @@ export const blogPosts: BlogPost[] = [
           {
             title: "Provide Liquidity",
             description: "Deposit your crypto assets into a liquidity pool on platforms like Uniswap, Curve, or Aave.",
-            imageUrl: "https
+            imageUrl: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=1200"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    id: "how-to-start-mining-cryptocurrency",
+    title: "How to Start Mining Cryptocurrency at Home in 2025",
+    excerpt: "Learn how to set up your own cryptocurrency mining operation at home, from selecting the right hardware to configuring your mining software and maximizing profits.",
+    date: "Q1 2025",
+    imageUrl: "https://images.unsplash.com/photo-1518770660439-4636190af475?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=1200",
+    category: "mining",
+    content: [
+      {
+        type: "paragraph",
+        content: "Mining cryptocurrency at home has become an accessible way for enthusiasts to participate in blockchain networks and earn rewards. With advancements in mining technology and increased profitability, setting up your own mining operation can be both exciting and rewarding."
+      },
+      {
+        type: "heading",
+        content: "Step-by-Step Guide to Home Mining"
+      },
+      {
+        type: "steps",
+        title: "Setting Up Your Mining Operation",
+        steps: [
+          {
+            title: "Research and Select a Cryptocurrency to Mine",
+            description: "Choose a cryptocurrency that aligns with your hardware capabilities and offers a favorable mining algorithm. Consider factors like mining difficulty, block rewards, and market value.",
+            imageUrl: "https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=1200"
+          },
+          {
+            title: "Acquire Suitable Mining Hardware",
+            description: "Invest in mining rigs or ASICs (Application-Specific Integrated Circuits) designed for your chosen cryptocurrency. Ensure your hardware has adequate hash rates and energy efficiency.",
+            imageUrl: "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=1200"
+          },
+          {
+            title: "Set Up a Secure Wallet",
+            description: "Create a digital wallet to receive your mining rewards. Use reputable wallet providers and enable security features like two-factor authentication.",
+            imageUrl: "https://images.unsplash.com/photo-1563013544-824ae1b704d3?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=1200"
+          },
+          {
+            title: "Join a Mining Pool",
+            description: "Participate in mining pools to increase the likelihood of earning consistent rewards. Research pools with low fees and reliable payout structures.",
+            imageUrl: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=1200"
+          },
+          {
+            title: "Configure Mining Software",
+            description: "Install mining software compatible with your hardware and chosen cryptocurrency. Optimize settings for performance and stability.",
+            imageUrl: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=1200"
+          },
+          {
+            title: "Monitor and Maintain Your Operation",
+            description: "Regularly check hardware performance, temperatures, and network connectivity. Stay updated with network changes and adjust configurations as needed.",
+            imageUrl: "https://images.unsplash.com/photo-1560254615-4d006aaf0faa?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=1200"
+          }
+        ]
+      },
+      {
+        type: "heading",
+        content: "Comparing Mining Hardware Options"
+      },
+      {
+        type: "paragraph",
+        content: "Different cryptocurrencies require different types of mining hardware. Here's a comparison of the most popular options:"
+      },
+      {
+        type: "list",
+        items: [
+          "ASIC Miners: Best for Bitcoin and other SHA-256 cryptocurrencies, highest hash rates but limited to specific algorithms",
+          "GPUs: Versatile for mining various cryptocurrencies, good for Ethereum and other memory-hard algorithms",
+          "CPUs: Entry-level mining for newer or privacy-focused cryptocurrencies, lower power but also lower profitability",
+          "FPGAs: Programmable hardware that can be optimized for different algorithms, balance between ASICs and GPUs"
+        ]
+      },
+      {
+        type: "image",
+        url: "https://images.unsplash.com/photo-1605792657660-596af9009e82?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=1200",
+        caption: "Modern cryptocurrency mining equipment has become more efficient and accessible for home miners"
+      },
+      {
+        type: "heading",
+        content: "Calculating Mining Profitability"
+      },
+      {
+        type: "paragraph",
+        content: "Before investing in mining hardware, it's essential to calculate potential profitability by considering:"
+      },
+      {
+        type: "list",
+        items: [
+          "Hardware costs and depreciation",
+          "Electricity costs in your area",
+          "Mining difficulty and network hash rate",
+          "Current cryptocurrency market value",
+          "Pool fees and potential rewards"
+        ]
+      },
+      {
+        type: "paragraph",
+        content: "At OpenFund, we recommend using mining calculators to estimate your potential returns before making any significant investments in mining equipment."
+      }
+    ]
+  },
+  {
+    id: "best-ethereum-layer-2-solutions",
+    title: "Best Ethereum Layer 2 Solutions to Watch in 2025",
+    excerpt: "Discover the top Ethereum Layer 2 scaling solutions that are revolutionizing transaction speeds, reducing costs, and enabling mainstream blockchain adoption.",
+    date: "Q1 2025",
+    imageUrl: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=1200",
+    category: "technology",
+    content: [
+      {
+        type: "paragraph",
+        content: "Ethereum's scalability challenges have led to the development of Layer 2 solutions that enhance transaction speeds and reduce costs. In 2025, several of these solutions have emerged as leaders in the space."
+      },
+      {
+        type: "heading",
+        content: "Top Ethereum Layer 2 Solutions"
+      },
+      {
+        type: "steps",
+        title: "Leading Layer 2 Platforms",
+        steps: [
+          {
+            title: "Arbitrum",
+            description: "Utilizes Optimistic Rollups to increase transaction throughput while maintaining Ethereum-level security. Supports a wide range of decentralized applications (dApps) and DeFi protocols.",
+            imageUrl: "https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=1200"
+          },
+          {
+            title: "Optimism",
+            description: "Employs Optimistic Rollups to enhance scalability with minimal changes to the Ethereum mainnet. Aims to create a 'Superchain' by integrating multiple Layer 2 chains.",
+            imageUrl: "https://images.unsplash.com/photo-1560254615-4d006aaf0faa?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=1200"
+          },
+          {
+            title: "zkSync",
+            description: "Leverages Zero-Knowledge Rollups to offer faster and more affordable transactions without compromising security. Focuses on smart contract compatibility to facilitate mass adoption.",
+            imageUrl: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=1200"
+          },
+          {
+            title: "Polygon (MATIC)",
+            description: "Operates as a sidechain, providing a suite of scaling solutions for Ethereum dApps. Known for its extensive adoption and growing ecosystem.",
+            imageUrl: "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=1200"
+          },
+          {
+            title: "StarkNet",
+            description: "Utilizes ZK-Rollups for high transaction efficiency and security. Supports complex smart contracts and advanced cryptographic proofs.",
+            imageUrl: "https://images.unsplash.com/photo-1518544333407-43025585e3f7?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=1200"
+          }
+        ]
+      },
+      {
+        type: "heading",
+        content: "Understanding Layer 2 Technology"
+      },
+      {
+        type: "paragraph",
+        content: "Layer 2 solutions work by processing transactions off the main Ethereum blockchain (Layer 1) while inheriting its security. There are several technical approaches to implementing Layer 2 scaling:"
+      },
+      {
+        type: "list",
+        items: [
+          "Optimistic Rollups: Assume transactions are valid by default and only run computations in case of disputes",
+          "Zero-Knowledge Rollups: Use cryptographic proofs to verify transactions without revealing their contents",
+          "State Channels: Enable participants to conduct transactions off-chain and only settle the final state on-chain",
+          "Sidechains: Independent blockchains that run parallel to Ethereum with their own consensus mechanisms"
+        ]
+      },
+      {
+        type: "image",
+        url: "https://images.unsplash.com/photo-1621416894569-0f39ed31d247?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=1200",
+        caption: "Layer 2 solutions are essential for scaling Ethereum to support mainstream adoption"
+      },
+      {
+        type: "heading",
+        content: "Key Metrics to Compare Layer 2 Solutions"
+      },
+      {
+        type: "list",
+        items: [
+          "Transaction Speed: The number of transactions processed per second",
+          "Transaction Cost: The average fee for processing a transaction",
+          "Finality Time: How long it takes for a transaction to become irreversible",
+          "Security Model: How the solution inherits or establishes security",
+          "dApp Ecosystem: The number and quality of applications built on the platform",
+          "Developer Experience: The ease of building and deploying applications",
+          "Interoperability: How well the solution integrates with other blockchain networks"
+        ]
+      },
+      {
+        type: "paragraph",
+        content: "As Ethereum continues to evolve, Layer 2 solutions will play a crucial role in addressing scalability challenges and enabling the next generation of blockchain applications."
+      }
+    ]
+  },
+  {
+    id: "how-to-stake-cardano-passive-income",
+    title: "How to Stake Cardano for Passive Income",
+    excerpt: "Learn the simple process of staking your Cardano (ADA) tokens to earn passive income while contributing to the network's security and decentralization.",
+    date: "Q1 2025",
+    imageUrl: "https://images.unsplash.com/photo-1470813740244-df37b8c1edcb?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=1200",
+    category: "investments",
+    content: [
+      {
+        type: "paragraph",
+        content: "Staking Cardano (ADA) allows holders to earn passive income by participating in the network's proof-of-stake consensus mechanism. With the introduction of financial products like the Cardano Staking Exchange-Traded Product (ETP), staking has become more accessible."
+      },
+      {
+        type: "heading",
+        content: "Understanding Cardano Staking"
+      },
+      {
+        type: "paragraph",
+        content: "Cardano uses a proof-of-stake consensus mechanism called Ouroboros, which allows ADA holders to delegate their tokens to stake pools that produce blocks on the network. In return, delegators receive a portion of the rewards generated by the pool."
+      },
+      {
+        type: "image",
+        url: "https://images.unsplash.com/photo-1501854140801-50d01698950b?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=1200",
+        caption: "Cardano's proof-of-stake system rewards participants while maintaining network security"
+      },
+      {
+        type: "heading",
+        content: "Steps to Stake Cardano"
+      },
+      {
+        type: "steps",
+        title: "How to Start Staking ADA",
+        steps: [
+          {
+            title: "Set Up a Cardano-Compatible Wallet",
+            description: "Use wallets like Daedalus or Yoroi to securely store your ADA tokens. Ensure your wallet supports staking functionalities.",
+            imageUrl: "https://images.unsplash.com/photo-1605792657660-596af9009e82?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=1200"
+          },
+          {
+            title: "Choose a Staking Pool",
+            description: "Research staking pools based on factors like performance, fees, and mission. Consider factors such as pool size, operator reputation, and consistent performance.",
+            imageUrl: "https://images.unsplash.com/photo-1469041797191-50ace28483c3?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=1200"
+          },
+          {
+            title: "Delegate Your ADA",
+            description: "Within your wallet, select a staking pool and delegate your ADA tokens. Delegation does not lock your tokens; you can spend them at any time.",
+            imageUrl: "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=1200"
+          },
+          {
+            title: "Earn Rewards",
+            description: "Receive staking rewards periodically, proportional to your delegation. Monitor your rewards and consider adjusting your delegation as desired.",
+            imageUrl: "https://images.unsplash.com/photo-1554224155-8d04cb21ed6c?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=1200"
+          }
+        ]
+      },
+      {
+        type: "heading",
+        content: "Key Considerations When Staking Cardano"
+      },
+      {
+        type: "list",
+        items: [
+          "Staking rewards are typically 4-5% annually, but vary based on network parameters and pool performance",
+          "There's a 2 ADA deposit required when delegating (refundable if you stop delegating)",
+          "Rewards are automatically compounded if you keep your delegation active",
+          "It takes approximately 15-20 days from initial delegation to receive your first rewards",
+          "Rewards are distributed every epoch (5 days) once the initial waiting period has passed"
+        ]
+      },
+      {
+        type: "heading",
+        content: "Choosing the Right Staking Pool"
+      },
+      {
+        type: "paragraph",
+        content: "When selecting a staking pool, consider these factors:"
+      },
+      {
+        type: "list",
+        items: [
+          "Pool Saturation: Oversaturated pools distribute fewer rewards per ADA delegated",
+          "Pledge Amount: Higher operator pledges often indicate more committed pool operators",
+          "Fees: Include fixed fees (minimum 340 ADA per epoch) and variable fees (percentage of rewards)",
+          "Performance: Look for pools with high block production efficiency",
+          "Mission and Values: Some pools donate a portion of their profits to charitable causes"
+        ]
+      },
+      {
+        type: "paragraph",
+        content: "At OpenFund, we recommend regularly reviewing your staking delegation to ensure optimal returns and alignment with your values. Remember that staking Cardano not only generates passive income but also contributes to the security and decentralization of the network."
+      }
+    ]
+  }
+];
