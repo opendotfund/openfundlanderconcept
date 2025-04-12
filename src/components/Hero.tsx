@@ -2,6 +2,7 @@
 import React from 'react';
 import { Button } from './ui/button';
 import { Link } from 'react-router-dom';
+import { ArrowDown } from 'lucide-react';
 
 const Hero = () => {
   return (
@@ -59,6 +60,42 @@ const Hero = () => {
                   View Details
                 </Link>
               </Button>
+              
+              {/* Trade Widget Preview */}
+              <div className="mt-6 p-4 bg-background border border-border rounded-lg transition-colors duration-300">
+                <div className="text-sm font-medium mb-2 flex justify-between items-center">
+                  <span>Quick Trade</span>
+                  <Link to="/trade" className="text-primary text-xs hover:underline">Open full trader →</Link>
+                </div>
+                <div className="flex items-center justify-between p-2 bg-card border border-border rounded-lg mb-3">
+                  <div className="flex flex-col">
+                    <span className="text-xs text-muted-foreground">From</span>
+                    <span className="font-semibold">$850,000</span>
+                  </div>
+                  <span className="text-xs bg-secondary px-2 py-1 rounded">USDC</span>
+                </div>
+                <div className="flex justify-center my-1">
+                  <div className="bg-muted rounded-full p-1">
+                    <ArrowDown size={14} className="text-muted-foreground" />
+                  </div>
+                </div>
+                <div className="flex items-center justify-between p-2 bg-card border border-border rounded-lg mb-3">
+                  <div className="flex flex-col">
+                    <span className="text-xs text-muted-foreground">To</span>
+                    <span className="font-semibold">1.49 shares</span>
+                  </div>
+                  <span className="text-xs bg-secondary px-2 py-1 rounded">BRK.A</span>
+                </div>
+                <Button 
+                  size="sm" 
+                  className="w-full bg-primary hover:bg-primary/90 text-primary-foreground text-xs"
+                  asChild
+                >
+                  <Link to="/trade?from=usdc&to=brk-a&amount=850000">
+                    Swap Now
+                  </Link>
+                </Button>
+              </div>
             </div>
           </div>
         </div>
