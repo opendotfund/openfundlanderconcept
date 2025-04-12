@@ -690,4 +690,10 @@ export const blogPosts: BlogPost[] = [
           {
             title: "Provide Liquidity",
             description: "Deposit your crypto assets into a liquidity pool on platforms like Uniswap, Curve, or Aave.",
-            imageUrl: "https
+            imageUrl: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=1200"
+          }
+        ]
+      }
+    ]
+  }
+];
