@@ -1,4 +1,3 @@
-
 export interface BlogContentSection {
   type: 'paragraph' | 'heading' | 'list' | 'image' | 'steps';
   content?: string;
@@ -29,7 +28,7 @@ export const blogPosts: BlogPost[] = [
     title: "What is Crypto Cold Storage and How Does it Work?",
     excerpt: "Learn about cold storage wallets, the most secure way to store your cryptocurrency and protect your digital assets from online threats.",
     date: "Q2 2025",
-    imageUrl: "https://images.unsplash.com/photo-1561428932-0cce8ecdcf74?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=1200",
+    imageUrl: "https://images.unsplash.com/photo-1518770660439-4636190af475?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=1200",
     category: "storage",
     content: [
       {
@@ -46,7 +45,7 @@ export const blogPosts: BlogPost[] = [
       },
       {
         type: "image",
-        url: "https://images.unsplash.com/photo-1625727661737-1fa2d725fa99?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=1200",
+        url: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=1200",
         caption: "Hardware wallets are popular cold storage devices for cryptocurrency"
       },
       {
@@ -579,7 +578,7 @@ export const blogPosts: BlogPost[] = [
           "Date of disposal",
           "Sale price in your local currency",
           "Fees associated with the transaction",
-          "Type of transaction (trade, sale, payment, etc.)",
+          "Type of transaction (trade, sell, payment, etc.)",
           "Wallet addresses involved (if relevant)",
           "Block explorer links or transaction IDs for verification"
         ]
