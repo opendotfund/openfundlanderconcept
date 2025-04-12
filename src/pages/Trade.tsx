@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { AssetChart } from '@/components/AssetChart';
 import Navbar from '@/components/Navbar';
@@ -22,11 +23,19 @@ const Trade = () => {
   const handleAssetTypeChange = (value: string) => {
     if (value === 'crypto' || value === 'stocks' || value === 'commodities') {
       setAssetType(value);
+      // Scroll to top when changing tabs
+      window.scrollTo(0, 0);
     }
   };
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(e.target.value);
+  };
+
+  // Scroll to top when selecting a new asset
+  const handleAssetSelect = (asset: string) => {
+    setSelectedAsset(asset);
+    window.scrollTo(0, 0);
   };
 
   return (
@@ -88,7 +97,7 @@ const Trade = () => {
                 <TabsContent value="crypto">
                   <AssetList 
                     type="crypto" 
-                    onSelect={setSelectedAsset} 
+                    onSelect={handleAssetSelect} 
                     selectedAsset={selectedAsset}
                     searchQuery={searchQuery}
                   />
@@ -97,7 +106,7 @@ const Trade = () => {
                 <TabsContent value="stocks">
                   <AssetList 
                     type="stocks" 
-                    onSelect={setSelectedAsset} 
+                    onSelect={handleAssetSelect} 
                     selectedAsset={selectedAsset}
                     searchQuery={searchQuery}
                   />
@@ -106,7 +115,7 @@ const Trade = () => {
                 <TabsContent value="commodities">
                   <AssetList 
                     type="commodities" 
-                    onSelect={setSelectedAsset} 
+                    onSelect={handleAssetSelect} 
                     selectedAsset={selectedAsset}
                     searchQuery={searchQuery}
                   />

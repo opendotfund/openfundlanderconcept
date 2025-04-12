@@ -65,6 +65,8 @@ const Assets = () => {
     // Update URL params
     searchParams.set('asset', asset);
     setSearchParams(searchParams);
+    // Scroll to top when selecting an asset
+    window.scrollTo(0, 0);
   };
 
   const handleTimeframeChange = (newTimeframe: string) => {
@@ -72,6 +74,8 @@ const Assets = () => {
     // Update URL params
     searchParams.set('timeframe', newTimeframe);
     setSearchParams(searchParams);
+    // Scroll to top when changing timeframe
+    window.scrollTo(0, 0);
   };
 
   const handleAssetTypeChange = (type: AssetType) => {
@@ -80,15 +84,21 @@ const Assets = () => {
     searchParams.set('type', type);
     setSearchParams(searchParams);
     setExpandedCategory(null); // Reset expanded category when changing asset type
+    // Scroll to top when changing asset type
+    window.scrollTo(0, 0);
   };
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     // Implement search functionality
+    // Scroll to top when searching
+    window.scrollTo(0, 0);
   };
 
   const handleSeeMore = (category: "crypto" | "stocks" | "commodities") => {
     setExpandedCategory(expandedCategory === category ? null : category);
+    // Scroll to top when expanding/collapsing category
+    window.scrollTo(0, 0);
   };
 
   const getCategoryTitle = (category: string) => {

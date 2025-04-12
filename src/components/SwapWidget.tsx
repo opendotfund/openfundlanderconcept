@@ -53,6 +53,11 @@ export const SwapWidget = ({ selectedAsset = 'bitcoin' }: SwapWidgetProps) => {
     { value: 'polkadot', label: 'DOT' }
   ];
 
+  const getAssetLabel = (value: string): string => {
+    const asset = assets.find(a => a.value === value);
+    return asset ? asset.label : value.toUpperCase();
+  };
+
   const calculateExchangeRate = (from: string, to: string, amount: string): string => {
     const rates: Record<string, number> = {
       'bitcoin': 80000,
@@ -169,9 +174,9 @@ export const SwapWidget = ({ selectedAsset = 'bitcoin' }: SwapWidgetProps) => {
 
     const orderDetails = [];
     if (swapMode === 'market') {
-      orderDetails.push(`Market order: ${fromAmount} ${fromAsset.toUpperCase()} for ${toAmount} ${toAsset.toUpperCase()}`);
+      orderDetails.push(`Market order: ${fromAmount} ${getAssetLabel(fromAsset)} for ${toAmount} ${getAssetLabel(toAsset)}`);
     } else {
-      orderDetails.push(`Limit order: ${fromAmount} ${fromAsset.toUpperCase()} for ${toAmount} ${toAsset.toUpperCase()} at ${limitPrice} ${toAsset.toUpperCase()}`);
+      orderDetails.push(`Limit order: ${fromAmount} ${getAssetLabel(fromAsset)} for ${toAmount} ${getAssetLabel(toAsset)} at ${limitPrice} ${getAssetLabel(toAsset)}`);
     }
     
     if (showTakeProfit && takeProfitPrice && parseFloat(takeProfitPrice) > 0) {
@@ -302,7 +307,7 @@ export const SwapWidget = ({ selectedAsset = 'bitcoin' }: SwapWidgetProps) => {
         <div className="bg-secondary p-5 rounded-xl">
           <div className="flex justify-between mb-2">
             <label className="text-muted-foreground text-sm">From</label>
-            <span className="text-muted-foreground text-sm">Balance: 1,000 USDT</span>
+            <span className="text-muted-foreground text-sm">Balance: 1,000 {getAssetLabel(fromAsset)}</span>
           </div>
           <div className="flex space-x-2">
             <Input 
@@ -341,7 +346,7 @@ export const SwapWidget = ({ selectedAsset = 'bitcoin' }: SwapWidgetProps) => {
         <div className="bg-secondary p-5 rounded-xl">
           <div className="flex justify-between mb-2">
             <label className="text-muted-foreground text-sm">To</label>
-            <span className="text-muted-foreground text-sm">Balance: 0.00 {toAsset.toUpperCase()}</span>
+            <span className="text-muted-foreground text-sm">Balance: 0.00 {getAssetLabel(toAsset)}</span>
           </div>
           <div className="flex space-x-2">
             <Input 
@@ -437,7 +442,7 @@ export const SwapWidget = ({ selectedAsset = 'bitcoin' }: SwapWidgetProps) => {
 
         <div className="text-sm text-muted-foreground flex justify-between items-center">
           <span>Exchange Rate</span>
-          <span>1 {fromAsset.toUpperCase()} ≈ {calculateExchangeRate(fromAsset, toAsset, '1')} {toAsset.toUpperCase()}</span>
+          <span>1 {getAssetLabel(fromAsset)} ≈ {calculateExchangeRate(fromAsset, toAsset, '1')} {getAssetLabel(toAsset)}</span>
         </div>
 
         <Button 
