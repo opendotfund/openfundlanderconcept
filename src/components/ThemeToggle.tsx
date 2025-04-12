@@ -1,13 +1,18 @@
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { Sun, Moon } from 'lucide-react';
 import { Toggle } from "@/components/ui/toggle";
 import { toast } from "sonner";
 
 const ThemeToggle = () => {
   const [isDarkMode, setIsDarkMode] = useState(true);
+  const [isFirstVisit, setIsFirstVisit] = useState(false);
+  const toggleRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
+    // Check if this is the first visit
+    const hasVisitedBefore = localStorage.getItem('hasVisitedBefore');
+    
     // Check if theme preference is stored in localStorage
     const savedTheme = localStorage.getItem('theme');
     
@@ -22,6 +27,26 @@ const ThemeToggle = () => {
       localStorage.setItem('theme', 'dark');
     }
 
+    // If this is the first visit, highlight the theme toggle and switch to light mode
+    if (!hasVisitedBefore) {
+      setIsFirstVisit(true);
+      
+      // Set a timeout to switch to light mode after the animation
+      const timer = setTimeout(() => {
+        setIsDarkMode(false);
+        applyTheme(false);
+        localStorage.setItem('theme', 'light');
+        setIsFirstVisit(false);
+        localStorage.setItem('hasVisitedBefore', 'true');
+        toast.success("Welcome! We've switched to light mode for you");
+      }, 3000);
+      
+      return () => clearTimeout(timer);
+    }
+
+    // Mark that the user has visited before
+    localStorage.setItem('hasVisitedBefore', 'true');
+    
     // Dispatch storage event to notify other components
     window.dispatchEvent(new Event('storage'));
   }, []);
@@ -77,12 +102,16 @@ const ThemeToggle = () => {
       pressed={isDarkMode} 
       onPressedChange={toggleTheme} 
       aria-label="Toggle theme"
-      className="rounded-full w-10 h-10 p-2.5"
+      className={`rounded-full w-10 h-10 p-2.5 relative z-10 ${isFirstVisit ? 'theme-toggle-highlight' : ''}`}
+      ref={toggleRef}
     >
       {isDarkMode ? (
         <Sun className="h-4 w-4" />
       ) : (
         <Moon className="h-4 w-4" />
+      )}
+      {isFirstVisit && (
+        <span className="absolute -inset-2 animate-pulse rounded-full ring-4 ring-primary"></span>
       )}
     </Toggle>
   );

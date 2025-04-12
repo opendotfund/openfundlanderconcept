@@ -25,8 +25,17 @@ import './App.css';
 
 function App() {
   useEffect(() => {
-    // Set dark mode as default
-    document.documentElement.classList.add('dark');
+    // Check saved theme from localStorage
+    const savedTheme = localStorage.getItem('theme');
+    
+    if (savedTheme === 'light') {
+      document.documentElement.classList.add('light');
+      document.documentElement.classList.remove('dark');
+    } else {
+      // Set dark mode as default if no preference
+      document.documentElement.classList.add('dark');
+      document.documentElement.classList.remove('light');
+    }
   }, []);
   
   return (
