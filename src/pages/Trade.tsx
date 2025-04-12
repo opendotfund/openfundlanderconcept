@@ -47,7 +47,7 @@ const Trade = () => {
       <div className="container mx-auto px-3 md:px-4 py-4 md:py-8">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-6">
           <div className="lg:col-span-2">
-            <div className="bg-card border border-border p-3 md:p-6 rounded-lg mb-4 md:mb-6">
+            <div className="bg-card border border-border p-3 md:p-4 rounded-lg mb-4">
               <div className="flex flex-col mb-2">
                 <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center w-full mb-1">
                   <h2 className="text-lg md:text-xl font-bold mb-1 sm:mb-0">
@@ -59,7 +59,7 @@ const Trade = () => {
                   />
                 </div>
               </div>
-              <div className="w-full flex justify-center items-center h-[280px] md:h-[360px]">
+              <div className="w-full flex justify-center items-center h-[250px] md:h-[320px]">
                 <AssetChart asset={selectedAsset} timeframe={timeframe} />
               </div>
             </div>
