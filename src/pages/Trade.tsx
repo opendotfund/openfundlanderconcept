@@ -51,7 +51,7 @@ const Trade = () => {
             <div className="bg-card border border-border p-3 md:p-4 rounded-lg mb-8">
               <div className="flex flex-col mb-2">
                 <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center w-full mb-1">
-                  <h2 className="text-lg md:text-xl font-bold mb-1 sm:mb-0">
+                  <h2 className="text-lg md:text-xl font-bold mb-1 sm:mb-0 mx-auto sm:mx-0 sm:mr-auto">
                     {selectedAsset.charAt(0).toUpperCase() + selectedAsset.slice(1)} Price Chart
                   </h2>
                   <TimeframeSelector 
