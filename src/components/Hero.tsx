@@ -48,7 +48,7 @@ const Hero = () => {
                 <span className="text-primary font-bold text-xl transition-colors duration-300">+15.3%</span>
               </div>
               <div className="flex justify-between items-center mb-6">
-                <span className="text-muted-foreground transition-colors duration-300">Share price</span>
+                <span className="text-muted-foreground transition-colors duration-300">Share Price</span>
                 <span className="font-bold transition-colors duration-300">$567,870</span>
               </div>
               <Button 

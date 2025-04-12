@@ -106,7 +106,7 @@ const MyAssets = () => {
               <CardTitle>Portfolio Value</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="flex flex-col gap-2">
+              <div className="flex items-end gap-2">
                 <div className="text-3xl font-bold">${portfolioData.totalValue.toLocaleString()}</div>
                 <div className={`flex items-center text-sm ${portfolioData.dailyChangePercent >= 0 ? 'text-green-500' : 'text-red-500'}`}>
                   {portfolioData.dailyChangePercent >= 0 ? 
