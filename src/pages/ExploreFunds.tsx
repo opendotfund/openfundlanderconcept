@@ -51,8 +51,248 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { DeFiCircularFlowChart } from '@/components/DeFiCircularFlowChart';
-import { traditionalFunds, cryptoFunds, openfundFunds, Fund } from '@/data/funds';
+
+const traditionalFunds = [
+  {
+    id: 1,
+    name: 'Berkshire Hathaway',
+    manager: 'Warren Buffett',
+    aum: '$700B',
+    returns: '20.1%',
+    returnsValue: 20.1,
+    focus: 'Value Investing',
+    minInvestment: '$400,000',
+    minInvestmentValue: 400000,
+    year: '1965',
+    yearValue: 1965,
+    description: 'American multinational conglomerate holding company led by Warren Buffett, known for its long-term value investing approach.',
+    performance: '+18.2%',
+    performanceValue: 18.2,
+    type: 'TradFi Fund',
+    volatility: 'Low',
+    volatilityValue: 15,
+  },
+  {
+    id: 2,
+    name: 'ARK Innovation ETF',
+    manager: 'Cathie Wood',
+    aum: '$16.1B',
+    returns: '39.1%',
+    returnsValue: 39.1,
+    focus: 'Disruptive Innovation',
+    minInvestment: '$100',
+    minInvestmentValue: 100,
+    year: '2014',
+    yearValue: 2014,
+    description: 'Actively managed ETF that invests in companies relevant to the theme of disruptive innovation.',
+    performance: '+15.7%',
+    performanceValue: 15.7,
+    type: 'TradFi Fund',
+    volatility: 'High',
+    volatilityValue: 65,
+  },
+  {
+    id: 3,
+    name: 'Bridgewater Associates',
+    manager: 'Ray Dalio (Founder)',
+    aum: '$140B',
+    returns: '12%',
+    returnsValue: 12,
+    focus: 'Global Macro',
+    minInvestment: '$10M',
+    minInvestmentValue: 10000000,
+    year: '1975',
+    yearValue: 1975,
+    description: 'World\'s largest hedge fund specializing in global macro investing strategies.',
+    performance: '+7.8%',
+    performanceValue: 7.8,
+    type: 'TradFi Fund',
+    volatility: 'Medium',
+    volatilityValue: 35,
+  },
+  {
+    id: 4,
+    name: 'Renaissance Technologies',
+    manager: 'Jim Simons (Founder)',
+    aum: '$110B',
+    returns: '66%',
+    returnsValue: 66,
+    focus: 'Quantitative Trading',
+    minInvestment: '$25M',
+    minInvestmentValue: 25000000,
+    year: '1982',
+    yearValue: 1982,
+    description: 'Highly quantitative hedge fund that relies on mathematical models to identify trading opportunities.',
+    performance: '+21.6%',
+    performanceValue: 21.6,
+    type: 'TradFi Fund',
+    volatility: 'Medium-High',
+    volatilityValue: 52,
+  },
+  {
+    id: 5,
+    name: 'Two Sigma Investments',
+    manager: 'John Overdeck & David Siegel',
+    aum: '$58B',
+    returns: '29%',
+    returnsValue: 29,
+    focus: 'Algorithmic Trading',
+    minInvestment: '$5M',
+    minInvestmentValue: 5000000,
+    year: '2001',
+    yearValue: 2001,
+    description: 'Hedge fund that uses machine learning, distributed computing, and other technologies for trading.',
+    performance: '+14.3%',
+    performanceValue: 14.3,
+    type: 'TradFi Fund',
+    volatility: 'Medium',
+    volatilityValue: 45,
+  },
+  {
+    id: 6,
+    name: 'Elliott Management',
+    manager: 'Paul Singer',
+    aum: '$48B',
+    returns: '14%',
+    returnsValue: 14,
+    focus: 'Activist Investing',
+    minInvestment: '$5M',
+    minInvestmentValue: 5000000,
+    year: '1977',
+    yearValue: 1977,
+    description: 'Hedge fund known for its activist investment style and focus on distressed securities.',
+    performance: '+9.2%',
+    performanceValue: 9.2,
+    type: 'TradFi Fund',
+    volatility: 'Medium-Low',
+    volatilityValue: 28,
+  }
+];
+
+const cryptoFunds = [
+  {
+    id: 1,
+    name: 'Grayscale Bitcoin Trust',
+    manager: 'Grayscale Investments',
+    aum: '$30.3B',
+    returns: '154%',
+    returnsValue: 154,
+    focus: 'Bitcoin',
+    minInvestment: '$50,000',
+    minInvestmentValue: 50000,
+    year: '2013',
+    yearValue: 2013,
+    description: 'The first publicly quoted Bitcoin investment vehicle offering exposure to Bitcoin.',
+    performance: '+65.2%',
+    performanceValue: 65.2,
+    type: 'Crypto Fund',
+    volatility: 'Very High',
+    volatilityValue: 85,
+  },
+  {
+    id: 2,
+    name: 'Pantera Capital',
+    manager: 'Dan Morehead',
+    aum: '$4.7B',
+    returns: '86.5%',
+    returnsValue: 86.5,
+    focus: 'Blockchain & Crypto',
+    minInvestment: '$100,000',
+    minInvestmentValue: 100000,
+    year: '2013',
+    yearValue: 2013,
+    description: 'One of the first U.S. Bitcoin investment firms and blockchain investment funds.',
+    performance: '+42.8%',
+    performanceValue: 42.8,
+    type: 'Crypto Fund',
+    volatility: 'High',
+    volatilityValue: 70,
+  },
+  {
+    id: 3,
+    name: 'Polychain Capital',
+    manager: 'Olaf Carlson-Wee',
+    aum: '$1B',
+    returns: '94.7%',
+    returnsValue: 94.7,
+    focus: 'Protocol Tokens',
+    minInvestment: '$250,000',
+    minInvestmentValue: 250000,
+    year: '2016',
+    yearValue: 2016,
+    description: 'Crypto fund investing in blockchain protocols and early-stage projects.',
+    performance: '+38.6%',
+    performanceValue: 38.6,
+    type: 'Crypto Fund',
+    volatility: 'High',
+    volatilityValue: 75,
+  },
+  {
+    id: 4,
+    name: '3 Arrows Capital',
+    manager: 'Su Zhu & Kyle Davies',
+    aum: '$2.8B',
+    returns: '112%',
+    returnsValue: 112,
+    focus: 'Crypto Trading',
+    minInvestment: '$500,000',
+    minInvestmentValue: 500000,
+    year: '2012',
+    yearValue: 2012,
+    description: 'Trading firm focused on emerging cryptocurrencies and blockchain companies.',
+    performance: '+49.7%',
+    performanceValue: 49.7,
+    type: 'Crypto Fund',
+    volatility: 'Very High',
+    volatilityValue: 90,
+  }
+];
+
+const openfundFunds = [1, 2, 3, 4, 5].map((fund) => ({
+  id: fund,
+  name: `Alpha Seekers #${fund}`,
+  manager: `0x7a...3fe${fund}`,
+  aum: `$${(342000 + fund * 25000).toLocaleString()}`,
+  aumValue: 342000 + fund * 25000,
+  returns: `${22 + fund * 3}%`,
+  returnsValue: 22 + fund * 3,
+  focus: fund % 2 === 0 ? 'Layer 1' : 'DeFi',
+  minInvestment: '$1,000',
+  minInvestmentValue: 1000,
+  year: `202${fund}`,
+  yearValue: 2020 + fund,
+  description: `Decentralized fund specializing in ${fund % 2 === 0 ? 'Layer 1 protocols' : 'DeFi investments'} with a focus on growth and yield opportunities.`,
+  performance: `+${12 + fund * 2}%`,
+  performanceValue: 12 + fund * 2,
+  type: 'Decentralized Fund',
+  investors: 75 + fund * 12,
+  volatility: fund % 2 === 0 ? 'High' : 'Medium-High',
+  volatilityValue: 55 + fund * 5,
+  assetTypes: fund % 3 === 0 ? ['Crypto'] : fund % 3 === 1 ? ['Crypto', 'Stock'] : ['Crypto', 'Commodity']
+}));
+
+type Fund = {
+  id: number;
+  name: string;
+  manager: string;
+  aum: string;
+  returns: string;
+  returnsValue: number;
+  focus: string;
+  minInvestment: string;
+  minInvestmentValue: number;
+  year: string;
+  yearValue: number;
+  description: string;
+  performance: string;
+  performanceValue: number;
+  type: string;
+  volatility: string;
+  volatilityValue: number;
+  investors?: number;
+  assetTypes?: string[];
+  aumValue?: number;
+};
 
 type SortOption = 'performance-high' | 'performance-low' | 'year-old' | 'year-new' | 'volatility-high' | 'volatility-low';
 
@@ -194,15 +434,7 @@ const ExploreFunds = () => {
         }
     }
     
-    // Ensure we scroll to the top when navigating
-    window.scrollTo(0, 0);
     navigate(`/fund-detail/${fundType}/${fund.id}`);
-  };
-
-  const handleLearnClick = () => {
-    // Ensure we scroll to the top when navigating
-    window.scrollTo(0, 0);
-    navigate('/how-defi-funds-work');
   };
   
   return (
@@ -380,7 +612,7 @@ const ExploreFunds = () => {
                   Most Volatile
                 </DropdownMenuItem>
                 <DropdownMenuItem onClick={() => setSortOption('volatility-low')}>
-                  Least Volatility
+                  Least Volatile
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
@@ -530,29 +762,18 @@ const ExploreFunds = () => {
           </TabsContent>
           
           <TabsContent value="openfund">
-            <div className="bg-card rounded-lg p-6 mb-6">
-              <div className="grid md:grid-cols-2 gap-8 items-center">
-                <div className="text-center md:text-left">
-                  <div className="mx-auto md:mx-0 w-16 h-16 bg-secondary rounded-full flex items-center justify-center mb-4">
-                    <BarChart3 size={32} className="text-primary" />
-                  </div>
-                  <h2 className="text-xl font-bold mb-2">OpenFund DeFi Investment Funds</h2>
-                  <p className="text-muted-foreground mb-6">
-                    Discover decentralized hedge funds powered by OpenFund's advanced trading infrastructure. 
-                    Share profits, build a track record, and grow your portfolio together.
-                  </p>
-                  <Button 
-                    className="bg-primary hover:bg-primary/90 text-primary-foreground"
-                    onClick={handleLearnClick}
-                  >
-                    Learn How OpenFund DeFi Funds Work
-                  </Button>
-                </div>
-                
-                <div className="hidden md:block h-[250px]">
-                  <DeFiCircularFlowChart />
-                </div>
+            <div className="bg-card rounded-lg p-6 mb-6 text-center">
+              <div className="mx-auto w-16 h-16 bg-secondary rounded-full flex items-center justify-center mb-4">
+                <BarChart3 size={32} className="text-primary" />
               </div>
+              <h2 className="text-xl font-bold mb-2">OpenFund DeFi Investment Funds</h2>
+              <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">
+                Discover decentralized hedge funds powered by OpenFund's advanced trading infrastructure. 
+                Share profits, build a track record, and grow your portfolio together.
+              </p>
+              <Button className="bg-primary hover:bg-primary/90 text-primary-foreground">
+                Explore OpenFund DeFi Funds
+              </Button>
             </div>
             
             {displayFunds.length > 0 ? (
@@ -574,9 +795,9 @@ const ExploreFunds = () => {
                       </div>
                     </CardHeader>
                     <CardContent>
-                      <div className="flex flex-wrap mb-3 gap-2">
-                        {"assetTypes" in fund && fund.assetTypes && fund.assetTypes.map((type) => (
-                          <Badge key={type} className="bg-secondary text-primary border-primary">
+                      <div className="flex mb-3">
+                        {"assetTypes" in fund && fund.assetTypes.map((type) => (
+                          <Badge key={type} className="mr-2 bg-secondary text-primary border-primary">
                             {type}
                           </Badge>
                         ))}

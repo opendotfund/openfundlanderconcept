@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import {
   Area,
@@ -231,15 +230,14 @@ const fetchPriceData = async (asset: string, timeframe: string, isPortfolio: boo
             label = `${60-i}m`;
           }
         } else if (timeframe === '24h') {
-          if (i % 3 === 0 || i === dataPoints - 1) {
+          if (i % 2 === 0 || i === dataPoints - 1) {
             label = `${24-i}h`;
           }
         } else if (timeframe === '7d') {
           label = `Day ${7-i}`;
         } else if (timeframe === '30d') {
-          // Fix overlap issues in 30d view by showing fewer labels
-          const weekNum = Math.floor((30-i)/7) + 1;
-          if ((i % 10 === 0 || i === dataPoints - 1) && i < dataPoints - 2) {
+          const weekNum = Math.ceil((30-i)/7);
+          if (i % 7 === 0 || i === dataPoints - 1) {
             label = `W${weekNum}`;
           }
         } else if (timeframe === '90d') {
@@ -248,10 +246,9 @@ const fetchPriceData = async (asset: string, timeframe: string, isPortfolio: boo
             label = `M${monthNum}`;
           }
         } else {
-          // Fix 1y view labels to avoid overlap
           const monthNames = ['Jan', 'Mar', 'May', 'Jul', 'Sep', 'Nov'];
           const monthNum = Math.floor((365-i)/30) % 12;
-          if ((i % 60 === 0 || i === dataPoints - 1) && i < dataPoints - 30) {
+          if (i % 60 === 0 || i === dataPoints - 1) {
             const idx = Math.floor(monthNum / 2);
             if (idx < monthNames.length) {
               label = monthNames[idx];
@@ -327,11 +324,10 @@ export const AssetChart = ({ asset = 'bitcoin', timeframe, isPortfolio = false, 
     ? (isPositive ? "#0EA5E9" : "#FF4545")
     : (isPositive ? "#00FF00" : "#FF4545");
   
-  // Adjust chart height for mobile to remove unnecessary space
-  const chartHeight = isMobile ? '180px' : '360px';
+  const chartHeight = isMobile ? '220px' : '360px';
   
   const margins = isMobile 
-    ? { top: 5, right: 5, left: 20, bottom: 30 }
+    ? { top: 5, right: 5, left: 20, bottom: 45 }
     : { top: 10, right: 10, left: 50, bottom: 50 };
 
   return (
@@ -380,17 +376,17 @@ export const AssetChart = ({ asset = 'bitcoin', timeframe, isPortfolio = false, 
                 dataKey="name"
                 tickLine={false}
                 axisLine={true}
-                dy={isMobile ? 10 : 18}
+                dy={isMobile ? 15 : 18}
                 tick={{ 
                   fill: isLightMode ? '#666' : '#888', 
                   fontSize: isMobile ? 9 : 11
                 }}
-                height={isMobile ? 35 : 55}
+                height={isMobile ? 50 : 55}
                 padding={{ left: 5, right: 5 }}
-                interval="preserveEnd"
+                interval={timeframe === '30d' || timeframe === '90d' || timeframe === '1y' ? "preserveEnd" : 0}
                 tickFormatter={(value) => value || ''}
-                tickMargin={5}
-                minTickGap={isMobile ? 40 : 60}
+                tickMargin={10}
+                minTickGap={isMobile ? 30 : 50}
                 allowDataOverflow={false}
               />
               <YAxis 
