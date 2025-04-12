@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Card } from "@/components/ui/card";
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
@@ -142,20 +143,27 @@ const ChartPreview = () => {
                   <span>BRK.A</span>
                   <span className="text-primary">$567,870 <span className="text-xs">+4.8%</span></span>
                 </li>
+                <li className="flex justify-between">
+                  <span>AAPL</span>
+                  <span className="text-primary">$192.75 <span className="text-xs">+1.2%</span></span>
+                </li>
+                <li className="flex justify-between">
+                  <span>TSLA</span>
+                  <span className="text-primary">$180.05 <span className="text-xs">+3.7%</span></span>
+                </li>
+                <li className="flex justify-between">
+                  <span>SPY</span>
+                  <span className="text-primary">$515.30 <span className="text-xs">+0.8%</span></span>
+                </li>
+                <li className="flex justify-between">
+                  <span>OIL</span>
+                  <span className="text-primary">$78.65 <span className="text-xs">-0.3%</span></span>
+                </li>
+                <li className="flex justify-between">
+                  <span>EUR/USD</span>
+                  <span className="text-primary">1.0740 <span className="text-xs">+0.1%</span></span>
+                </li>
               </ul>
-            </div>
-            
-            <div className="grid grid-cols-2 gap-3 md:gap-4">
-              <div className="bg-card p-3 md:p-4 rounded-xl border border-border">
-                <h4 className="font-medium text-sm md:text-base">Trading Volume</h4>
-                <p className="text-primary text-lg md:text-xl font-bold">$12.4B</p>
-                <p className="text-xs text-muted-foreground">24h change</p>
-              </div>
-              <div className="bg-card p-3 md:p-4 rounded-xl border border-border">
-                <h4 className="font-medium text-sm md:text-base">Active Traders</h4>
-                <p className="text-primary text-lg md:text-xl font-bold">241K+</p>
-                <p className="text-xs text-muted-foreground">Worldwide</p>
-              </div>
             </div>
           </div>
         </div>
