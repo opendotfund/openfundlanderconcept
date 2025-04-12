@@ -88,12 +88,14 @@ const ChartPreview = () => {
                       dy={isMobile ? 12 : 15}
                       height={isMobile ? 40 : 50}
                       tickMargin={isMobile ? 8 : 10}
-                      interval={0}
+                      interval={isMobile ? 2 : 1}
                     />
                     <YAxis 
                       tick={{ fill: 'var(--color-text-subdued)', fontSize: isMobile ? 10 : 12 }}
-                      tickFormatter={(value) => isMobile ? `$${(value/1000)}k` : `$${(value/1000)}k`}
-                      width={isMobile ? 35 : 45}
+                      tickFormatter={(value) => `$${(value/1000)}k`}
+                      width={isMobile ? 40 : 50}
+                      tickCount={6}
+                      domain={[540000, 575000]}
                     />
                     <CartesianGrid strokeDasharray="3 3" stroke="var(--color-border)" />
                     <Tooltip content={<CustomTooltip />} />
@@ -114,7 +116,7 @@ const ChartPreview = () => {
             <div className="bg-card p-4 md:p-6 rounded-xl border border-border">
               <h3 className="text-xl md:text-2xl font-bold mb-2 md:mb-4">Dominate Every Market</h3>
               <p className="text-sm md:text-base text-muted-foreground mb-3 md:mb-4">
-                Get instant access to every major market
+                Get instant access to every major market.
               </p>
               <ul className="space-y-2 md:space-y-3 text-xs md:text-sm">
                 <li className="flex justify-between">

@@ -27,6 +27,7 @@ import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useIsMobile } from '@/hooks/use-mobile';
+import { useLocation } from 'react-router-dom';
 
 // Type definition for asset type
 type AssetType = "crypto" | "stocks" | "commodities";
@@ -39,6 +40,12 @@ const Assets = () => {
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [expandedCategory, setExpandedCategory] = useState<string | null>(null);
   const isMobile = useIsMobile();
+  const location = useLocation();
+
+  useEffect(() => {
+    // Scroll to top when component mounts or location changes
+    window.scrollTo(0, 0);
+  }, [location]);
 
   useEffect(() => {
     // Get asset from URL or use default

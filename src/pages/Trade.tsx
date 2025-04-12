@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { AssetChart } from '@/components/AssetChart';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
@@ -12,6 +12,7 @@ import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
 import { useIsMobile } from '@/hooks/use-mobile';
 import { Toaster } from "@/components/ui/toaster";
+import { useLocation } from 'react-router-dom';
 
 const Trade = () => {
   const [selectedAsset, setSelectedAsset] = useState('bitcoin');
@@ -19,6 +20,12 @@ const Trade = () => {
   const [assetType, setAssetType] = useState<'crypto' | 'stocks' | 'commodities'>('crypto');
   const [searchQuery, setSearchQuery] = useState('');
   const isMobile = useIsMobile();
+  const location = useLocation();
+
+  useEffect(() => {
+    // Scroll to top when component mounts or location changes
+    window.scrollTo(0, 0);
+  }, [location]);
 
   const handleAssetTypeChange = (value: string) => {
     if (value === 'crypto' || value === 'stocks' || value === 'commodities') {

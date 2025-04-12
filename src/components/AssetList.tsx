@@ -174,7 +174,7 @@ export const AssetList = ({ type, onSelect, selectedAsset, limit, searchQuery = 
                     <div className="w-6 h-6 rounded-full bg-secondary flex items-center justify-center mr-2">
                       {asset.symbol.charAt(0)}
                     </div>
-                    <div>
+                    <div className="flex flex-col">
                       <div className="font-medium capitalize">{asset.name}</div>
                       <div className="text-xs text-muted-foreground">{asset.symbol}</div>
                     </div>

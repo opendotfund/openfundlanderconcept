@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import {
   Area,
@@ -62,7 +61,6 @@ const fetchPriceData = async (asset: string, timeframe: string, isPortfolio: boo
         }));
       }
       
-      // For funds, determine base value from the fund name
       let portfolioBaseValue = 0;
       
       if (portfolioName) {
@@ -143,36 +141,33 @@ const fetchPriceData = async (asset: string, timeframe: string, isPortfolio: boo
         
         let label = '';
         if (timeframe === '1h') {
-          // For 1 hour, show more minute markers
           if (i % 5 === 0 || i === dataPoints - 1) {
             label = `${60-i}m`;
           }
         } else if (timeframe === '24h') {
-          // For 24 hours, show more hour markers
           if (i % 2 === 0 || i === dataPoints - 1) {
             label = `${24-i}h`;
           }
         } else if (timeframe === '7d') {
-          // For 7 days, show day labels: D7, D6, D5, etc.
           label = `Day ${7-i}`;
         } else if (timeframe === '30d') {
-          // For 30 days, show weekly labels: W4, W3, W2, W1
           const weekNum = Math.floor((30-i)/7) + 1;
           if (i % 7 === 0 || i === dataPoints - 1) {
-            label = `Week ${weekNum}`;
+            label = `W${weekNum}`;
           }
         } else if (timeframe === '90d') {
-          // For 90 days, show monthly labels: Month 3, Month 2, Month 1
           const monthNum = Math.floor((90-i)/30) + 1;
-          if (i % 15 === 0 || i === dataPoints - 1) {
-            label = `Month ${monthNum}`;
+          if (i % 30 === 0 || i === dataPoints - 1) {
+            label = `M${monthNum}`;
           }
         } else {
-          // For 1 year, show monthly labels: Jan, Feb, Mar, etc.
-          const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+          const monthNames = ['Jan', 'Mar', 'May', 'Jul', 'Sep', 'Nov'];
           const monthNum = Math.floor((365-i)/30) % 12;
-          if (i % 30 === 0 || i === dataPoints - 1) {
-            label = monthNames[monthNum];
+          if (i % 60 === 0 || i === dataPoints - 1) {
+            const idx = Math.floor(monthNum / 2);
+            if (idx < monthNames.length) {
+              label = monthNames[idx];
+            }
           }
         }
         
@@ -231,36 +226,33 @@ const fetchPriceData = async (asset: string, timeframe: string, isPortfolio: boo
         
         let label = '';
         if (timeframe === '1h') {
-          // For 1 hour, show more minute markers
           if (i % 5 === 0 || i === dataPoints - 1) {
             label = `${60-i}m`;
           }
         } else if (timeframe === '24h') {
-          // For 24 hours, ensure every hour has a label
           if (i % 2 === 0 || i === dataPoints - 1) {
             label = `${24-i}h`;
           }
         } else if (timeframe === '7d') {
-          // For 7 days, show day labels
           label = `Day ${7-i}`;
         } else if (timeframe === '30d') {
-          // For 30 days, show more week markers
           const weekNum = Math.ceil((30-i)/7);
           if (i % 7 === 0 || i === dataPoints - 1) {
-            label = `Week ${weekNum}`;
+            label = `W${weekNum}`;
           }
         } else if (timeframe === '90d') {
-          // For 90 days, show more month markers
           const monthNum = Math.floor((90-i)/30) + 1;
-          if (i % 15 === 0 || i === dataPoints - 1) {
-            label = `Month ${monthNum}`;
+          if (i % 30 === 0 || i === dataPoints - 1) {
+            label = `M${monthNum}`;
           }
         } else {
-          // For 1 year, show monthly labels
-          const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+          const monthNames = ['Jan', 'Mar', 'May', 'Jul', 'Sep', 'Nov'];
           const monthNum = Math.floor((365-i)/30) % 12;
-          if (i % 30 === 0 || i === dataPoints - 1) {
-            label = monthNames[monthNum];
+          if (i % 60 === 0 || i === dataPoints - 1) {
+            const idx = Math.floor(monthNum / 2);
+            if (idx < monthNames.length) {
+              label = monthNames[idx];
+            }
           }
         }
         
@@ -334,7 +326,6 @@ export const AssetChart = ({ asset = 'bitcoin', timeframe, isPortfolio = false, 
   
   const chartHeight = isMobile ? '220px' : '360px';
   
-  // Increase bottom margin for better label visibility
   const margins = isMobile 
     ? { top: 5, right: 5, left: 20, bottom: 45 }
     : { top: 10, right: 10, left: 50, bottom: 50 };
@@ -392,10 +383,10 @@ export const AssetChart = ({ asset = 'bitcoin', timeframe, isPortfolio = false, 
                 }}
                 height={isMobile ? 50 : 55}
                 padding={{ left: 5, right: 5 }}
-                interval={0}
+                interval={timeframe === '30d' || timeframe === '90d' || timeframe === '1y' ? "preserveEnd" : 0}
                 tickFormatter={(value) => value || ''}
                 tickMargin={10}
-                minTickGap={2}
+                minTickGap={isMobile ? 30 : 50}
                 allowDataOverflow={false}
               />
               <YAxis 
