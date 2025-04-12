@@ -1,4 +1,6 @@
 
+# OpenFund robots.txt
+
 User-agent: Googlebot
 Allow: /
 
@@ -13,6 +15,10 @@ Allow: /
 
 User-agent: *
 Allow: /
+
+# Block access to admin or sensitive areas if needed
+# Disallow: /admin/
+# Disallow: /private/
 
 # Sitemap for OpenFund
 Sitemap: https://openfund.io/sitemap.xml
