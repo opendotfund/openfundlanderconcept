@@ -13,6 +13,7 @@ import { Search } from "lucide-react";
 import { useIsMobile } from '@/hooks/use-mobile';
 import { Toaster } from "@/components/ui/toaster";
 import { useLocation } from 'react-router-dom';
+import { AssetSearch } from '@/components/AssetSearch';
 
 const Trade = () => {
   const [selectedAsset, setSelectedAsset] = useState('bitcoin');
@@ -51,9 +52,16 @@ const Trade = () => {
             <div className="bg-card border border-border p-3 md:p-4 rounded-lg mb-8">
               <div className="flex flex-col mb-2">
                 <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center w-full mb-1">
-                  <h2 className="text-lg md:text-xl font-bold mb-1 sm:mb-0 mx-auto sm:mx-0 sm:mr-auto">
-                    {selectedAsset.charAt(0).toUpperCase() + selectedAsset.slice(1)} Price Chart
-                  </h2>
+                  <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-4 w-full sm:w-auto mb-2 sm:mb-0">
+                    <h2 className="text-lg md:text-xl font-bold mx-auto sm:mx-0">
+                      {selectedAsset.charAt(0).toUpperCase() + selectedAsset.slice(1)} Price Chart
+                    </h2>
+                    <AssetSearch 
+                      assetType={assetType}
+                      onSelect={handleAssetSelect}
+                      currentAsset={selectedAsset}
+                    />
+                  </div>
                   <TimeframeSelector 
                     timeframe={timeframe} 
                     onChange={setTimeframe}
