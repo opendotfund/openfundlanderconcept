@@ -63,8 +63,8 @@ const Trade = () => {
                   onChange={setTimeframe}
                 />
               </div>
-              {/* Chart container with fixed/auto height based on device */}
-              <div className="w-full h-auto flex justify-center items-center">
+              {/* Chart container with fixed height to properly fill the space */}
+              <div className="w-full flex justify-center items-center" style={{ height: isMobile ? '320px' : '360px' }}>
                 <AssetChart asset={selectedAsset} timeframe={timeframe} />
               </div>
             </div>

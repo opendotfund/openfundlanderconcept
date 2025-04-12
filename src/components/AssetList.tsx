@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import { Star } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -21,7 +20,6 @@ interface Asset {
   volume: string;
 }
 
-// Updated function to generate more accurate asset data
 const generateAssets = (type: string): Asset[] => {
   const assetTypes: Record<string, { prefix: string, basePrice: number, examples: string[] }> = {
     crypto: { 
@@ -56,7 +54,6 @@ const generateAssets = (type: string): Asset[] => {
     },
   };
 
-  // Updated accurate price points
   const basePrices: Record<string, number> = {
     'bitcoin': 80000,
     'ethereum': 1600,
@@ -78,10 +75,9 @@ const generateAssets = (type: string): Asset[] => {
   const { examples } = assetTypes[type] || assetTypes.crypto;
   
   return examples.map((name, index) => {
-    // Use specific price if available, otherwise calculate based on position
     const basePrice = basePrices[name] || assetTypes[type].basePrice * (1 + (index * 0.5));
     const seedValue = name.charCodeAt(0) + name.charCodeAt(name.length - 1);
-    const change = (((seedValue % 21) - 10) / 10) * 5; // Between -5% and +5%
+    const change = (((seedValue % 21) - 10) / 10) * 5;
     
     return {
       id: index + 1,
@@ -107,7 +103,6 @@ export const AssetList = ({ type, onSelect, selectedAsset, limit, searchQuery = 
   const [filteredAssets, setFilteredAssets] = useState<Asset[]>([]);
   const [isDark, setIsDark] = useState(true);
   
-  // Check theme on mount and when it changes
   useEffect(() => {
     const checkTheme = () => {
       const savedTheme = localStorage.getItem('theme');
@@ -116,7 +111,6 @@ export const AssetList = ({ type, onSelect, selectedAsset, limit, searchQuery = 
     
     checkTheme();
     
-    // Set up event listener for theme changes
     window.addEventListener('storage', checkTheme);
     
     return () => {
@@ -128,7 +122,6 @@ export const AssetList = ({ type, onSelect, selectedAsset, limit, searchQuery = 
     const assetData = generateAssets(type);
     setAssets(limit ? assetData.slice(0, limit) : assetData);
     
-    // Update asset data every minute to simulate real-time price updates
     const intervalId = setInterval(() => {
       const updatedData = generateAssets(type);
       setAssets(limit ? updatedData.slice(0, limit) : updatedData);
@@ -138,7 +131,6 @@ export const AssetList = ({ type, onSelect, selectedAsset, limit, searchQuery = 
   }, [type, limit]);
   
   useEffect(() => {
-    // Filter assets based on search query
     if (searchQuery.trim() === '') {
       setFilteredAssets(assets);
     } else {
@@ -156,7 +148,7 @@ export const AssetList = ({ type, onSelect, selectedAsset, limit, searchQuery = 
         <TableHeader>
           <TableRow className="hover:bg-transparent">
             <TableHead className="w-[60px]">Rank</TableHead>
-            <TableHead>Name</TableHead>
+            <TableHead className="text-left">Name</TableHead>
             <TableHead className="text-right">Price</TableHead>
           </TableRow>
         </TableHeader>
@@ -169,7 +161,7 @@ export const AssetList = ({ type, onSelect, selectedAsset, limit, searchQuery = 
                 className={`cursor-pointer ${selectedAsset === asset.name ? 'bg-primary/10 border-l-2 border-primary' : ''}`}
               >
                 <TableCell className="font-medium">{asset.id}</TableCell>
-                <TableCell>
+                <TableCell className="text-left">
                   <div className="flex items-center">
                     <div className="w-6 h-6 rounded-full bg-secondary flex items-center justify-center mr-2">
                       {asset.symbol.charAt(0)}
