@@ -64,7 +64,7 @@ const Trade = () => {
                 />
               </div>
               {/* Chart container with fixed height to properly fill the space */}
-              <div className="w-full flex justify-center items-center" style={{ height: isMobile ? '280px' : '360px' }}>
+              <div className="w-full flex justify-center items-center" style={{ height: isMobile ? '320px' : '360px' }}>
                 <AssetChart asset={selectedAsset} timeframe={timeframe} />
               </div>
             </div>
