@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from 'react';
 import {
   Area,
@@ -335,7 +336,7 @@ export const AssetChart = ({ asset = 'bitcoin', timeframe, isPortfolio = false, 
           <div className={`${isMobile ? 'text-lg' : 'text-xl'} font-medium`}>
             {displayName}
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 ml-auto pr-4">
             <span className={`${isMobile ? 'text-xl' : 'text-2xl'} font-bold`}>
               ${chartData[chartData.length - 1].value.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}
             </span>
