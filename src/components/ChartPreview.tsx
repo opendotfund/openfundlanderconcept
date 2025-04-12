@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Card } from "@/components/ui/card";
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
@@ -71,7 +72,7 @@ const ChartPreview = () => {
             Advanced <span className="text-primary">Trading Tools</span>
           </h2>
           <p className="text-base md:text-xl text-muted-foreground max-w-3xl mx-auto">
-            Access professional-grade charts, analysis tools and the industries leading trading tools. OpenFund allows fund managers to use their favourite trading tools when managing a fund.
+            Access professional-grade charts, analysis tools and the industry's leading trading tools. OpenFund allows fund managers to use their favourite trading tools when managing a fund.
           </p>
         </div>
 
