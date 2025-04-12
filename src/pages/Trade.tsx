@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { AssetChart } from '@/components/AssetChart';
 import Navbar from '@/components/Navbar';
@@ -23,14 +22,12 @@ const Trade = () => {
   const location = useLocation();
 
   useEffect(() => {
-    // Scroll to top when component mounts or location changes
     window.scrollTo(0, 0);
   }, [location]);
 
   const handleAssetTypeChange = (value: string) => {
     if (value === 'crypto' || value === 'stocks' || value === 'commodities') {
       setAssetType(value);
-      // Scroll to top when changing tabs
       window.scrollTo(0, 0);
     }
   };
@@ -39,7 +36,6 @@ const Trade = () => {
     setSearchQuery(e.target.value);
   };
 
-  // Scroll to top when selecting a new asset
   const handleAssetSelect = (asset: string) => {
     setSelectedAsset(asset);
     window.scrollTo(0, 0);
@@ -63,13 +59,12 @@ const Trade = () => {
                   />
                 </div>
               </div>
-              {/* Chart container with fixed height - adjusted to eliminate wasted space */}
               <div className="w-full flex justify-center items-center h-[280px] md:h-[360px]">
                 <AssetChart asset={selectedAsset} timeframe={timeframe} />
               </div>
             </div>
             
-            <div className="bg-card border border-border p-3 md:p-6 rounded-lg">
+            <div className="bg-card border border-border p-3 md:p-6 rounded-lg overflow-x-auto">
               <h2 className="text-lg md:text-xl font-bold mb-3 md:mb-4">Trade History</h2>
               <TradeHistory asset={selectedAsset} />
             </div>
