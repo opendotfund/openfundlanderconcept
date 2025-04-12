@@ -221,4 +221,17 @@
   .dark .team-member-card .role {
     @apply text-openfund-green;
   }
+  
+  /* Enhanced toggle switch visibility for dark mode */
+  .dark [role="switch"][data-state="checked"] {
+    @apply bg-openfund-green shadow-[0_0_5px_rgba(0,255,0,0.5)];
+  }
+  
+  .dark [role="switch"][data-state="unchecked"] {
+    @apply bg-muted border-muted-foreground opacity-70;
+  }
+  
+  .dark [role="switch"][data-state="checked"] span {
+    @apply bg-background;
+  }
 }
