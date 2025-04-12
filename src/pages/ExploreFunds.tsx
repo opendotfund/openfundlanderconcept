@@ -620,11 +620,11 @@ const ExploreFunds = () => {
         </div>
         
         <Tabs defaultValue="traditional" onValueChange={setActiveTab} value={activeTab}>
-          <TabsList className="w-full mb-8 bg-secondary">
-            <TabsTrigger value="traditional" className="flex-1">Traditional Hedge Funds</TabsTrigger>
-            <TabsTrigger value="crypto" className="flex-1">Crypto Funds</TabsTrigger>
-            <TabsTrigger value="openfund" className="flex-1">OpenFund DeFi Funds</TabsTrigger>
-            <TabsTrigger value="my-investments" className="flex-1">My Investments</TabsTrigger>
+          <TabsList className="w-full mb-8 bg-secondary grid grid-cols-2 gap-1 p-1">
+            <TabsTrigger value="traditional">Traditional Hedge Funds</TabsTrigger>
+            <TabsTrigger value="crypto">Crypto Funds</TabsTrigger>
+            <TabsTrigger value="openfund">OpenFund DeFi Funds</TabsTrigger>
+            <TabsTrigger value="my-investments">My Investments</TabsTrigger>
           </TabsList>
           
           <TabsContent value="traditional">
