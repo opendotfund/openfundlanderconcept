@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Chart, PieChart, Pie, Cell, ResponsiveContainer, Legend, Tooltip } from 'recharts';
+import { PieChart, Pie, Cell, ResponsiveContainer, Legend, Tooltip } from 'recharts';
 
 export const DeFiCircularFlowChart = () => {
   // Data for the circular flow chart
