@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '@/components/Navbar';
@@ -612,7 +611,7 @@ const ExploreFunds = () => {
                   Most Volatile
                 </DropdownMenuItem>
                 <DropdownMenuItem onClick={() => setSortOption('volatility-low')}>
-                  Least Volatile
+                  Least Volatility
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
@@ -771,8 +770,11 @@ const ExploreFunds = () => {
                 Discover decentralized hedge funds powered by OpenFund's advanced trading infrastructure. 
                 Share profits, build a track record, and grow your portfolio together.
               </p>
-              <Button className="bg-primary hover:bg-primary/90 text-primary-foreground">
-                Explore OpenFund DeFi Funds
+              <Button 
+                className="bg-primary hover:bg-primary/90 text-primary-foreground"
+                onClick={() => navigate('/how-defi-funds-work')}
+              >
+                Learn How OpenFund DeFi Funds Work
               </Button>
             </div>
             

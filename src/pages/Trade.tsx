@@ -55,7 +55,7 @@ const Trade = () => {
               <div className="flex flex-col mb-3 md:mb-4 gap-2">
                 <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center w-full">
                   <h2 className="text-lg md:text-xl font-bold">
-                    {selectedAsset.charAt(0).toUpperCase() + selectedAsset.slice(1)} Price Chart
+                    {selectedAsset.charAt(0).toUpperCase() + selectedAsset.slice(1)} price Chart
                   </h2>
                 </div>
                 <TimeframeSelector 
