@@ -631,7 +631,7 @@ const ExploreFunds = () => {
             {displayFunds.length > 0 ? (
               <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
                 {displayFunds.map((fund) => (
-                  <Card key={fund.id} className="bg-card border-border hover:border-primary/50 transition-colors">
+                  <Card key={fund.id} className="bg-card border-border hover:border-primary/50 transition-colors flex flex-col">
                     <CardHeader>
                       <div className="flex justify-between items-start">
                         <div>
@@ -646,7 +646,7 @@ const ExploreFunds = () => {
                         </div>
                       </div>
                     </CardHeader>
-                    <CardContent>
+                    <CardContent className="flex-grow">
                       <p className="text-muted-foreground text-sm mb-4">{fund.description}</p>
                       <div className="space-y-3">
                         <div className="flex justify-between">
@@ -671,7 +671,7 @@ const ExploreFunds = () => {
                         </div>
                       </div>
                     </CardContent>
-                    <CardFooter>
+                    <CardFooter className="mt-auto pt-4">
                       <Button 
                         className="w-full fund-invest-button"
                         variant="default"
@@ -698,7 +698,7 @@ const ExploreFunds = () => {
             {displayFunds.length > 0 ? (
               <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
                 {displayFunds.map((fund) => (
-                  <Card key={fund.id} className="bg-card border-border hover:border-primary/50 transition-colors">
+                  <Card key={fund.id} className="bg-card border-border hover:border-primary/50 transition-colors flex flex-col">
                     <CardHeader>
                       <div className="flex justify-between items-start">
                         <div>
@@ -713,7 +713,7 @@ const ExploreFunds = () => {
                         </div>
                       </div>
                     </CardHeader>
-                    <CardContent>
+                    <CardContent className="flex-grow">
                       <p className="text-muted-foreground text-sm mb-4">{fund.description}</p>
                       <div className="space-y-3">
                         <div className="flex justify-between">
@@ -738,7 +738,7 @@ const ExploreFunds = () => {
                         </div>
                       </div>
                     </CardContent>
-                    <CardFooter>
+                    <CardFooter className="mt-auto pt-4">
                       <Button 
                         className="w-full fund-invest-button"
                         variant="default"
@@ -779,7 +779,7 @@ const ExploreFunds = () => {
             {displayFunds.length > 0 ? (
               <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
                 {displayFunds.map((fund) => (
-                  <Card key={fund.id} className="bg-card border-border hover:border-primary/50 transition-colors">
+                  <Card key={fund.id} className="bg-card border-border hover:border-primary/50 transition-colors flex flex-col">
                     <CardHeader>
                       <div className="flex justify-between items-start">
                         <div>
@@ -794,14 +794,14 @@ const ExploreFunds = () => {
                         </div>
                       </div>
                     </CardHeader>
-                    <CardContent>
-                      <div className="flex mb-3">
-                        {"assetTypes" in fund && fund.assetTypes.map((type) => (
-                          <Badge key={type} className="mr-2 bg-secondary text-primary border-primary">
+                    <CardContent className="flex-grow">
+                      <div className="flex flex-wrap mb-3">
+                        {fund.assetTypes?.map((type) => (
+                          <Badge key={type} className="mr-2 mb-1 bg-secondary text-primary border-primary">
                             {type}
                           </Badge>
                         ))}
-                        <Badge className="bg-secondary text-blue-500 border-blue-500">{fund.focus}</Badge>
+                        <Badge className="bg-secondary text-blue-500 border-blue-500 mb-1">{fund.focus}</Badge>
                       </div>
                       <div className="space-y-3">
                         <div className="flex justify-between">
@@ -826,7 +826,7 @@ const ExploreFunds = () => {
                         </div>
                       </div>
                     </CardContent>
-                    <CardFooter>
+                    <CardFooter className="mt-auto pt-4">
                       <Button 
                         className="w-full fund-invest-button"
                         variant="default"

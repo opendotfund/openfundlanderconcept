@@ -156,7 +156,7 @@ export const AssetList = ({ type, onSelect, selectedAsset, limit, searchQuery = 
         <TableHeader>
           <TableRow className="hover:bg-transparent">
             <TableHead className="w-[60px]">Rank</TableHead>
-            <TableHead>Name</TableHead>
+            <TableHead className="text-left">Name</TableHead>
             <TableHead className="text-right">Price</TableHead>
           </TableRow>
         </TableHeader>
@@ -169,7 +169,7 @@ export const AssetList = ({ type, onSelect, selectedAsset, limit, searchQuery = 
                 className={`cursor-pointer ${selectedAsset === asset.name ? 'bg-primary/10 border-l-2 border-primary' : ''}`}
               >
                 <TableCell className="font-medium">{asset.id}</TableCell>
-                <TableCell>
+                <TableCell className="pl-0">
                   <div className="flex items-center">
                     <div className="w-6 h-6 rounded-full bg-secondary flex items-center justify-center mr-2">
                       {asset.symbol.charAt(0)}
