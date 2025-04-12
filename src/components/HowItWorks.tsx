@@ -9,22 +9,22 @@ const HowItWorks = () => {
     {
       icon: <Wallet className="w-10 h-10 text-primary transition-colors duration-300" />,
       title: "Connect Wallet",
-      description: "Connect your crypto wallet for immediate decentralized access to DeFi funds and tokenized assets"
+      description: "Connect your crypto wallet for immediate decentralized access to DeFi funds and tokenized assets."
     },
     {
       icon: <ShieldCheck className="w-10 h-10 text-primary transition-colors duration-300" />,
       title: "Optional KYC",
-      description: "Verify your identity to unlock TradFi funds, partner funds, fund creation and bank transfer deposits"
+      description: "Verify your identity to unlock TradFi funds, partner funds, fund creation and bank transfer deposits."
     },
     {
       icon: <BarChart2 className="w-10 h-10 text-primary transition-colors duration-300" />,
       title: "Choose Assets",
-      description: "Select from DeFi funds, tokenized stocks, and commodities based on your verification level"
+      description: "Select from DeFi funds, tokenized stocks, and commodities based on your verification level."
     },
     {
       icon: <ArrowUpCircle className="w-10 h-10 text-primary transition-colors duration-300" />,
       title: "Start Trading",
-      description: "Execute trades with our intuitive platform and monitor performance in real-time"
+      description: "Execute trades with our intuitive platform and monitor performance in real-time."
     },
   ];
 
@@ -71,19 +71,19 @@ const HowItWorks = () => {
                   <div className="rounded-full bg-primary/20 p-1 mt-1 transition-colors duration-300">
                     <div className="w-2 h-2 bg-primary rounded-full transition-colors duration-300"></div>
                   </div>
-                  <span className="text-muted-foreground transition-colors duration-300">Instant access to DeFi funds with wallet connection</span>
+                  <span className="text-muted-foreground transition-colors duration-300">Instant access to DeFi funds with wallet connection.</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <div className="rounded-full bg-primary/20 p-1 mt-1 transition-colors duration-300">
                     <div className="w-2 h-2 bg-primary rounded-full transition-colors duration-300"></div>
                   </div>
-                  <span className="text-muted-foreground transition-colors duration-300">Trade tokenized stocks and commodities</span>
+                  <span className="text-muted-foreground transition-colors duration-300">Trade tokenized stocks and commodities.</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <div className="rounded-full bg-primary/20 p-1 mt-1 transition-colors duration-300">
                     <div className="w-2 h-2 bg-primary rounded-full transition-colors duration-300"></div>
                   </div>
-                  <span className="text-muted-foreground transition-colors duration-300">Deposit using any cryptocurrency</span>
+                  <span className="text-muted-foreground transition-colors duration-300">Deposit using any cryptocurrency.</span>
                 </li>
               </ul>
               <Button 
@@ -104,19 +104,19 @@ const HowItWorks = () => {
                   <div className="rounded-full bg-primary/20 p-1 mt-1 transition-colors duration-300">
                     <div className="w-2 h-2 bg-primary rounded-full transition-colors duration-300"></div>
                   </div>
-                  <span className="text-muted-foreground transition-colors duration-300">Access to TradFi and partner funds</span>
+                  <span className="text-muted-foreground transition-colors duration-300">Access to TradFi and partner funds.</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <div className="rounded-full bg-primary/20 p-1 mt-1 transition-colors duration-300">
                     <div className="w-2 h-2 bg-primary rounded-full transition-colors duration-300"></div>
                   </div>
-                  <span className="text-muted-foreground transition-colors duration-300">Create your own managed funds</span>
+                  <span className="text-muted-foreground transition-colors duration-300">Create your own managed funds.</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <div className="rounded-full bg-primary/20 p-1 mt-1 transition-colors duration-300">
                     <div className="w-2 h-2 bg-primary rounded-full transition-colors duration-300"></div>
                   </div>
-                  <span className="text-muted-foreground transition-colors duration-300">Deposit via bank transfer and cryptocurrencies</span>
+                  <span className="text-muted-foreground transition-colors duration-300">Deposit via bank transfer and cryptocurrencies.</span>
                 </li>
               </ul>
               <Button 

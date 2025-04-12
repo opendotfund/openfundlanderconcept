@@ -5,7 +5,9 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
-import { Check, Users, BarChart3, DollarSign, TrendingUp, Shield, ArrowRight } from 'lucide-react';
+import { Check, Users, BarChart3, DollarSign, TrendingUp, Shield, ArrowRight, WalletCards, Coins } from 'lucide-react';
+import { DeFiFlowChart } from '@/components/DeFiFlowChart';
+import { DeFiCircularFlowChart } from '@/components/DeFiCircularFlowChart';
 
 const HowDefiFundsWork = () => {
   const location = useLocation();
@@ -31,6 +33,28 @@ const HowDefiFundsWork = () => {
           <Separator className="mb-10" />
           
           <div className="space-y-10">
+            {/* Investment Flow Chart */}
+            <section className="mb-12">
+              <h2 className="text-2xl font-bold mb-6">DeFi Fund Investment Flow</h2>
+              <div className="bg-card border border-border p-6 rounded-lg">
+                <p className="mb-6 text-muted-foreground">
+                  See how your investment flows through the OpenFund DeFi ecosystem, from initial deposit to returns distribution.
+                </p>
+                <DeFiFlowChart />
+              </div>
+            </section>
+            
+            {/* Circular Investment Flow */}
+            <section className="mb-12">
+              <h2 className="text-2xl font-bold mb-6">Capital Lifecycle</h2>
+              <div className="bg-card border border-border p-6 rounded-lg">
+                <p className="mb-6 text-muted-foreground">
+                  The complete lifecycle of your investment in OpenFund DeFi funds, showing how capital flows between investors, fund managers, and markets.
+                </p>
+                <DeFiCircularFlowChart />
+              </div>
+            </section>
+            
             {/* Core DeFi Fund Concepts */}
             <section>
               <h2 className="text-2xl font-bold mb-6">Core DeFi Fund Concepts</h2>
@@ -95,7 +119,8 @@ const HowDefiFundsWork = () => {
                   </CardHeader>
                   <CardContent>
                     <p>
-                      Fund token holders can participate in key decisions like trading strategy adjustments, risk parameters, and fee structures. This democratic approach gives investors a voice in fund management.</p>
+                      Fund token holders can participate in key decisions like trading strategy adjustments, risk parameters, and fee structures. This democratic approach gives investors a voice in fund management.
+                    </p>
                   </CardContent>
                 </Card>
               </div>
