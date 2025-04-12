@@ -116,10 +116,10 @@ const MyAssets = () => {
                   ${portfolioData.dailyChange.toLocaleString()} ({portfolioData.dailyChangePercent}%)
                 </div>
               </div>
-              <div className="mt-8">
-                <h3 className="text-lg font-medium mb-4">Asset Allocation</h3>
-                <div className="space-y-4">
-                  <div className="space-y-2">
+              <div className="mt-6">
+                <h3 className="text-lg font-medium mb-3">Asset Allocation</h3>
+                <div className="space-y-3">
+                  <div className="space-y-1.5">
                     <div className="flex justify-between items-center">
                       <div className="flex items-center gap-2">
                         <BarChart4 size={16} className="text-blue-500" />
@@ -129,7 +129,7 @@ const MyAssets = () => {
                     </div>
                     <Progress value={portfolioData.allocation.stocks} className="h-2" />
                   </div>
-                  <div className="space-y-2">
+                  <div className="space-y-1.5">
                     <div className="flex justify-between items-center">
                       <div className="flex items-center gap-2">
                         <Bitcoin size={16} className="text-orange-500" />
@@ -139,7 +139,7 @@ const MyAssets = () => {
                     </div>
                     <Progress value={portfolioData.allocation.crypto} className="h-2" />
                   </div>
-                  <div className="space-y-2">
+                  <div className="space-y-1.5">
                     <div className="flex justify-between items-center">
                       <div className="flex items-center gap-2">
                         <DollarSign size={16} className="text-yellow-500" />
@@ -149,7 +149,7 @@ const MyAssets = () => {
                     </div>
                     <Progress value={portfolioData.allocation.commodities} className="h-2" />
                   </div>
-                  <div className="space-y-2">
+                  <div className="space-y-1.5">
                     <div className="flex justify-between items-center">
                       <div className="flex items-center gap-2">
                         <Briefcase size={16} className="text-green-500" />

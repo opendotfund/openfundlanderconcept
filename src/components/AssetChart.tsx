@@ -378,17 +378,17 @@ export const AssetChart = ({ asset = 'bitcoin', timeframe, isPortfolio = false, 
                 dataKey="name"
                 tickLine={false}
                 axisLine={true}
-                dy={isMobile ? 10 : 18}
+                dy={isMobile ? 8 : 18}
                 tick={{ 
                   fill: isLightMode ? '#666' : '#888', 
                   fontSize: isMobile ? 9 : 11
                 }}
-                height={isMobile ? 30 : 55}
+                height={isMobile ? 25 : 55}
                 padding={{ left: 5, right: 5 }}
                 interval={timeframe === '30d' || timeframe === '90d' || timeframe === '1y' ? "preserveEnd" : 0}
                 tickFormatter={(value) => value || ''}
-                tickMargin={5}
-                minTickGap={isMobile ? 30 : 50}
+                tickMargin={isMobile ? 3 : 5}
+                minTickGap={isMobile ? 20 : 50}
                 allowDataOverflow={false}
               />
               <YAxis 
