@@ -1,60 +1,76 @@
-
 import React from 'react';
 import { Card } from "@/components/ui/card";
-import { 
-  AreaChart, 
-  Area, 
-  XAxis, 
-  YAxis, 
-  CartesianGrid, 
-  Tooltip, 
-  ResponsiveContainer 
-} from 'recharts';
+import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { useIsMobile } from '@/hooks/use-mobile';
 
 // Berkshire Hathaway Class A accurate sample data for the chart (BRK.A)
-const data = [
-  { date: '1 Jan', price: 542000 },
-  { date: '15 Jan', price: 547000 },
-  { date: '1 Feb', price: 551200 },
-  { date: '15 Feb', price: 558500 },
-  { date: '1 Mar', price: 562100 },
-  { date: '15 Mar', price: 564300 },
-  { date: '1 Apr', price: 566400 },
-  { date: '15 Apr', price: 567800 },
-  { date: '1 May', price: 568500 },
-  { date: '15 May', price: 569200 },
-  { date: '1 Jun', price: 570100 },
-  { date: '15 Jun', price: 570900 },
-  { date: '1 Jul', price: 572000 },
-  { date: '15 Jul', price: 567870 },
-  { date: '1 Aug', price: 567870 },
-];
-
-const CustomTooltip = ({ active, payload, label }: any) => {
+const data = [{
+  date: '1 Jan',
+  price: 542000
+}, {
+  date: '15 Jan',
+  price: 547000
+}, {
+  date: '1 Feb',
+  price: 551200
+}, {
+  date: '15 Feb',
+  price: 558500
+}, {
+  date: '1 Mar',
+  price: 562100
+}, {
+  date: '15 Mar',
+  price: 564300
+}, {
+  date: '1 Apr',
+  price: 566400
+}, {
+  date: '15 Apr',
+  price: 567800
+}, {
+  date: '1 May',
+  price: 568500
+}, {
+  date: '15 May',
+  price: 569200
+}, {
+  date: '1 Jun',
+  price: 570100
+}, {
+  date: '15 Jun',
+  price: 570900
+}, {
+  date: '1 Jul',
+  price: 572000
+}, {
+  date: '15 Jul',
+  price: 567870
+}, {
+  date: '1 Aug',
+  price: 567870
+}];
+const CustomTooltip = ({
+  active,
+  payload,
+  label
+}: any) => {
   if (active && payload && payload.length) {
-    return (
-      <div className="bg-card p-3 border border-border rounded-md">
+    return <div className="bg-card p-3 border border-border rounded-md">
         <p className="text-sm">{`${label}: $${payload[0].value.toLocaleString()}`}</p>
-      </div>
-    );
+      </div>;
   }
   return null;
 };
-
 const ChartPreview = () => {
   const isMobile = useIsMobile();
-
-  return (
-    <section className="py-10 md:py-20 bg-card">
+  return <section className="py-10 md:py-20 bg-card">
       <div className="container mx-auto px-4">
         <div className="text-center mb-8 md:mb-12">
           <h2 className="text-2xl md:text-4xl font-bold mb-2 md:mb-4">
             Advanced <span className="text-primary">Trading Tools</span>
           </h2>
-          <p className="text-base md:text-xl text-muted-foreground max-w-3xl mx-auto">
-            Access professional-grade charts, analysis tools, and real-time market data
-          </p>
+          <p className="text-base md:text-xl text-muted-foreground max-w-3xl mx-auto">Access professional-grade charts, analysis tools, and real-time market data. OpenFund allows fund managers to use their favourite trading tools when managing a fund.</p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-10 items-center">
@@ -69,43 +85,34 @@ const ChartPreview = () => {
                   <span className="text-primary text-sm md:text-base">+4.8%</span>
                 </div>
                 <ResponsiveContainer width="100%" height="90%">
-                  <AreaChart
-                    data={data}
-                    margin={isMobile ? { top: 5, right: 5, left: 0, bottom: 5 } : { top: 5, right: 20, left: 0, bottom: 25 }}
-                  >
+                  <AreaChart data={data} margin={isMobile ? {
+                  top: 5,
+                  right: 5,
+                  left: 0,
+                  bottom: 5
+                } : {
+                  top: 5,
+                  right: 20,
+                  left: 0,
+                  bottom: 25
+                }}>
                     <defs>
                       <linearGradient id="colorPrice" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="5%" stopColor="var(--color-primary)" stopOpacity={0.8}/>
-                        <stop offset="95%" stopColor="var(--color-primary)" stopOpacity={0}/>
+                        <stop offset="5%" stopColor="var(--color-primary)" stopOpacity={0.8} />
+                        <stop offset="95%" stopColor="var(--color-primary)" stopOpacity={0} />
                       </linearGradient>
                     </defs>
-                    <XAxis 
-                      dataKey="date" 
-                      tick={{ 
-                        fill: 'var(--color-text-subdued)', 
-                        fontSize: isMobile ? 9 : 11
-                      }} 
-                      dy={isMobile ? 5 : 15}
-                      height={isMobile ? 25 : 40}
-                      tickMargin={isMobile ? 2 : 8}
-                      interval={isMobile ? 2 : 1}
-                    />
-                    <YAxis 
-                      tick={{ fill: 'var(--color-text-subdued)', fontSize: isMobile ? 10 : 12 }}
-                      tickFormatter={(value) => `$${(value/1000)}k`}
-                      width={isMobile ? 40 : 50}
-                      tickCount={6}
-                      domain={[540000, 575000]}
-                    />
+                    <XAxis dataKey="date" tick={{
+                    fill: 'var(--color-text-subdued)',
+                    fontSize: isMobile ? 9 : 11
+                  }} dy={isMobile ? 5 : 15} height={isMobile ? 25 : 40} tickMargin={isMobile ? 2 : 8} interval={isMobile ? 2 : 1} />
+                    <YAxis tick={{
+                    fill: 'var(--color-text-subdued)',
+                    fontSize: isMobile ? 10 : 12
+                  }} tickFormatter={value => `$${value / 1000}k`} width={isMobile ? 40 : 50} tickCount={6} domain={[540000, 575000]} />
                     <CartesianGrid strokeDasharray="3 3" stroke="var(--color-border)" />
                     <Tooltip content={<CustomTooltip />} />
-                    <Area 
-                      type="monotone" 
-                      dataKey="price" 
-                      stroke="var(--color-primary)" 
-                      fillOpacity={1} 
-                      fill="url(#colorPrice)" 
-                    />
+                    <Area type="monotone" dataKey="price" stroke="var(--color-primary)" fillOpacity={1} fill="url(#colorPrice)" />
                   </AreaChart>
                 </ResponsiveContainer>
               </div>
@@ -153,8 +160,6 @@ const ChartPreview = () => {
           </div>
         </div>
       </div>
-    </section>
-  );
+    </section>;
 };
-
 export default ChartPreview;
