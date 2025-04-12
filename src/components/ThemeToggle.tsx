@@ -7,6 +7,7 @@ import { toast } from "sonner";
 const ThemeToggle = () => {
   const [isDarkMode, setIsDarkMode] = useState(true);
   const [isFirstVisit, setIsFirstVisit] = useState(false);
+  const [isTransitioning, setIsTransitioning] = useState(false);
   const toggleRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
@@ -30,15 +31,21 @@ const ThemeToggle = () => {
     // If this is the first visit, highlight the theme toggle and switch to light mode
     if (!hasVisitedBefore) {
       setIsFirstVisit(true);
+      setIsTransitioning(true);
       
       // Set a timeout to switch to light mode after the animation
       const timer = setTimeout(() => {
         setIsDarkMode(false);
         applyTheme(false);
         localStorage.setItem('theme', 'light');
-        setIsFirstVisit(false);
-        localStorage.setItem('hasVisitedBefore', 'true');
-        toast.success("Welcome! We've switched to light mode for you");
+        
+        // Wait a moment before removing the transitioning state
+        setTimeout(() => {
+          setIsFirstVisit(false);
+          setIsTransitioning(false);
+          localStorage.setItem('hasVisitedBefore', 'true');
+          toast.success("Welcome! We've switched to light mode for you");
+        }, 600);
       }, 3000);
       
       return () => clearTimeout(timer);
@@ -85,6 +92,7 @@ const ThemeToggle = () => {
   };
 
   const toggleTheme = () => {
+    setIsTransitioning(true);
     const newMode = !isDarkMode;
     setIsDarkMode(newMode);
     
@@ -94,26 +102,35 @@ const ThemeToggle = () => {
     // Save preference to localStorage
     localStorage.setItem('theme', newMode ? 'dark' : 'light');
     
-    toast.success(newMode ? "Dark mode activated" : "Light mode activated");
+    // Remove transitioning state after animation completes
+    setTimeout(() => {
+      setIsTransitioning(false);
+      toast.success(newMode ? "Dark mode activated" : "Light mode activated");
+    }, 600);
   };
 
   return (
-    <Toggle 
-      pressed={isDarkMode} 
-      onPressedChange={toggleTheme} 
-      aria-label="Toggle theme"
-      className={`rounded-full w-10 h-10 p-2.5 relative z-10 ${isFirstVisit ? 'theme-toggle-highlight' : ''}`}
-      ref={toggleRef}
-    >
-      {isDarkMode ? (
-        <Sun className="h-4 w-4" />
-      ) : (
-        <Moon className="h-4 w-4" />
+    <>
+      {(isFirstVisit || isTransitioning) && (
+        <div className="theme-transition-overlay fixed inset-0 bg-black/50 backdrop-blur-sm z-[99] pointer-events-none" />
       )}
-      {isFirstVisit && (
-        <span className="absolute -inset-2 animate-pulse rounded-full ring-4 ring-primary"></span>
-      )}
-    </Toggle>
+      <Toggle 
+        pressed={isDarkMode} 
+        onPressedChange={toggleTheme} 
+        aria-label="Toggle theme"
+        className={`rounded-full w-10 h-10 p-2.5 relative z-[100] ${isFirstVisit ? 'theme-toggle-highlight' : ''}`}
+        ref={toggleRef}
+      >
+        {isDarkMode ? (
+          <Sun className="h-4 w-4" />
+        ) : (
+          <Moon className="h-4 w-4" />
+        )}
+        {isFirstVisit && (
+          <span className="absolute -inset-2 animate-pulse rounded-full ring-4 ring-primary"></span>
+        )}
+      </Toggle>
+    </>
   );
 };
 

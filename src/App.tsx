@@ -25,6 +25,10 @@ import './App.css';
 
 function App() {
   useEffect(() => {
+    // Add a transition class to the html element for smoother theme changes
+    document.documentElement.classList.add('transition-colors');
+    document.documentElement.style.transitionDuration = '500ms';
+    
     // Check saved theme from localStorage
     const savedTheme = localStorage.getItem('theme');
     
@@ -36,6 +40,21 @@ function App() {
       document.documentElement.classList.add('dark');
       document.documentElement.classList.remove('light');
     }
+
+    // Listen for theme changes
+    const handleStorageChange = () => {
+      const currentTheme = localStorage.getItem('theme');
+      if (currentTheme === 'light') {
+        document.documentElement.classList.add('light');
+        document.documentElement.classList.remove('dark');
+      } else if (currentTheme === 'dark') {
+        document.documentElement.classList.add('dark');
+        document.documentElement.classList.remove('light');
+      }
+    };
+
+    window.addEventListener('storage', handleStorageChange);
+    return () => window.removeEventListener('storage', handleStorageChange);
   }, []);
   
   return (

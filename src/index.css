@@ -123,7 +123,7 @@
 
   html,
   body {
-    @apply transition-colors duration-300;
+    @apply transition-colors duration-500;
   }
 
   body {
@@ -273,6 +273,22 @@
     100% {
       transform: scale(0.98);
       box-shadow: 0 0 0 0 rgba(var(--primary), 0);
+    }
+  }
+  
+  /* Theme transition overlay */
+  .theme-transition-overlay {
+    opacity: 0;
+    animation: overlay-fade-in 0.3s ease forwards;
+    transition: opacity 0.6s ease;
+  }
+  
+  @keyframes overlay-fade-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
     }
   }
 }
