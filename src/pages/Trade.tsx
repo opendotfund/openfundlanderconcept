@@ -60,7 +60,7 @@ const Trade = () => {
                   />
                 </div>
               </div>
-              <div className="w-full flex justify-center items-center h-[300px] md:h-[400px]">
+              <div className="w-full flex justify-center items-center h-[400px] md:h-[500px]">
                 <AssetChart asset={selectedAsset} timeframe={timeframe} />
               </div>
             </div>
