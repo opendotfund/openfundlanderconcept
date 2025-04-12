@@ -8,10 +8,8 @@ import Footer from '@/components/Footer';
 import HowItWorks from '@/components/HowItWorks';
 import { Button } from '@/components/ui/button';
 import { Hexagon, ArrowRight, Users, TrendingUp, Shield, DollarSign } from 'lucide-react';
-
 const Index = () => {
-  return (
-    <div className="min-h-screen bg-background text-foreground">
+  return <div className="min-h-screen bg-background text-foreground">
       <Navbar />
       <Hero />
       <Features />
@@ -37,9 +35,7 @@ const Index = () => {
                   <Users className="text-primary" size={24} />
                 </div>
                 <h3 className="text-xl font-bold mb-3">Pooled Capital</h3>
-                <p className="text-muted-foreground mb-4">
-                  Raise funds from hundreds of investors to execute your trading strategy at scale
-                </p>
+                <p className="text-muted-foreground mb-4">Raise funds from hundreds of investors to execute your trading strategy at scale.</p>
                 <div className="flex justify-between items-center pt-3 border-t border-border">
                   <span className="text-sm text-muted-foreground">Active funds</span>
                   <span className="text-primary font-bold">324</span>
@@ -51,9 +47,7 @@ const Index = () => {
                   <TrendingUp className="text-primary" size={24} />
                 </div>
                 <h3 className="text-xl font-bold mb-3">Track Record</h3>
-                <p className="text-muted-foreground mb-4">
-                  Build a verifiable on-chain performance history to attract more investors
-                </p>
+                <p className="text-muted-foreground mb-4">Build a verifiable on-chain performance history to attract more investors.</p>
                 <div className="flex justify-between items-center pt-3 border-t border-border">
                   <span className="text-sm text-muted-foreground">Average ROI</span>
                   <span className="text-primary font-bold">+32.7%</span>
@@ -65,9 +59,7 @@ const Index = () => {
                   <Shield className="text-primary" size={24} />
                 </div>
                 <h3 className="text-xl font-bold mb-3">Smart Contracts</h3>
-                <p className="text-muted-foreground mb-4">
-                  Secure, transparent fund management with automated performance fees
-                </p>
+                <p className="text-muted-foreground mb-4">Secure, transparent fund management with automated performance fees.</p>
                 <div className="flex justify-between items-center pt-3 border-t border-border">
                   <span className="text-sm text-muted-foreground">Total locked value</span>
                   <span className="text-primary font-bold">$43.2M</span>
@@ -90,12 +82,22 @@ const Index = () => {
                   </Button>
                 </div>
                 <div className="space-y-4">
-                  {[
-                    { name: "Crypto Momentum", return: "+47.3%", aum: "$3.2M", traders: 1876 },
-                    { name: "Commodity Futures", return: "+31.8%", aum: "$5.7M", traders: 2341 },
-                    { name: "Global Stock Index", return: "+22.5%", aum: "$8.1M", traders: 3502 }
-                  ].map((fund, idx) => (
-                    <div key={idx} className="flex items-center justify-between p-3 bg-card rounded-lg border border-border">
+                  {[{
+                  name: "Crypto Momentum",
+                  return: "+47.3%",
+                  aum: "$3.2M",
+                  traders: 1876
+                }, {
+                  name: "Commodity Futures",
+                  return: "+31.8%",
+                  aum: "$5.7M",
+                  traders: 2341
+                }, {
+                  name: "Global Stock Index",
+                  return: "+22.5%",
+                  aum: "$8.1M",
+                  traders: 3502
+                }].map((fund, idx) => <div key={idx} className="flex items-center justify-between p-3 bg-card rounded-lg border border-border">
                       <div>
                         <div className="font-medium">{fund.name}</div>
                         <div className="text-xs text-muted-foreground">{fund.traders} traders</div>
@@ -104,18 +106,13 @@ const Index = () => {
                         <div className="text-primary font-bold">{fund.return}</div>
                         <div className="text-xs text-muted-foreground">AUM: {fund.aum}</div>
                       </div>
-                    </div>
-                  ))}
+                    </div>)}
                 </div>
               </div>
             </div>
             
             <div className="flex justify-center mt-10">
-              <Button 
-                variant="outline" 
-                className="border-primary text-primary hover:bg-primary/10"
-                asChild
-              >
+              <Button variant="outline" className="border-primary text-primary hover:bg-primary/10" asChild>
                 <Link to="/fund-manager">
                   Manage Your Own Fund <DollarSign size={16} className="ml-2" />
                 </Link>
@@ -137,19 +134,12 @@ const Index = () => {
               Join thousands of traders worldwide using OpenFund to access global markets.
             </p>
             <div className="flex flex-col sm:flex-row justify-center gap-4">
-              <Button 
-                className="text-lg px-8 py-3 h-auto"
-                asChild
-              >
+              <Button className="text-lg px-8 py-3 h-auto" asChild>
                 <Link to="/trade">
                   Trade Now
                 </Link>
               </Button>
-              <Button 
-                variant="outline"
-                className="border-2 border-primary text-primary hover:bg-primary/10 text-lg px-8 py-3 h-auto"
-                asChild
-              >
+              <Button variant="outline" className="border-2 border-primary text-primary hover:bg-primary/10 text-lg px-8 py-3 h-auto" asChild>
                 <Link to="/fund">
                   Start a Fund
                 </Link>
@@ -210,9 +200,7 @@ const Index = () => {
                   <p className="text-2xl font-semibold text-primary mb-1">Coming Soon!</p>
                   <p className="text-muted-foreground">Join our waitlist to be notified when we launch.</p>
                 </div>
-                <Button 
-                  asChild
-                >
+                <Button asChild>
                   <Link to="/coming-soon">
                     Join Waitlist <ArrowRight size={16} className="ml-2" />
                   </Link>
@@ -250,8 +238,6 @@ const Index = () => {
       </section>
       
       <Footer />
-    </div>
-  );
+    </div>;
 };
-
 export default Index;
