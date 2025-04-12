@@ -45,7 +45,7 @@ export const blogPosts: BlogPost[] = [
       },
       {
         type: "image",
-        url: "https://images.unsplash.com/photo-1620321023374-d1a68fbc720d?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=1200",
+        url: "https://images.unsplash.com/photo-1625727661737-1fa2d725fa99?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=1200",
         caption: "Hardware wallets are popular cold storage devices for cryptocurrency"
       },
       {
@@ -655,449 +655,39 @@ export const blogPosts: BlogPost[] = [
     ]
   },
   {
-    id: "how-to-start-mining-cryptocurrency",
-    title: "How to Start Mining Cryptocurrency at Home in 2025",
-    excerpt: "Learn how to set up a profitable home mining operation with the right hardware, software, and strategies to maximize your cryptocurrency earnings.",
+    id: "defi-yield-farming-guide",
+    title: "DeFi Yield Farming: Beginner's Guide to Maximizing Crypto Returns",
+    excerpt: "Discover how to earn passive income through DeFi yield farming, understand the risks and rewards, and learn strategies to maximize your returns.",
     date: "Q1 2025",
-    imageUrl: "https://images.unsplash.com/photo-1516245834210-c4c142787335?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=1200",
-    category: "mining",
-    content: [
-      {
-        type: "paragraph",
-        content: "Mining cryptocurrency at home has become an accessible way for enthusiasts to participate in blockchain networks and earn rewards. With advancements in mining technology and increased profitability, setting up your own mining operation can be both exciting and rewarding."
-      },
-      {
-        type: "heading",
-        content: "Research and Select a Cryptocurrency to Mine"
-      },
-      {
-        type: "paragraph",
-        content: "The first step in starting your mining journey is choosing the right cryptocurrency. Not all cryptocurrencies can be mined efficiently at home, so it's important to consider which ones align best with your hardware capabilities and investment goals."
-      },
-      {
-        type: "list",
-        items: [
-          "Look for cryptocurrencies with ASIC-resistant algorithms if you're using GPU mining",
-          "Consider mining difficulty and block rewards—lower difficulty means better chances of earning rewards",
-          "Research the market value and future potential of the cryptocurrency",
-          "Evaluate the energy consumption requirements for mining different coins"
-        ]
-      },
-      {
-        type: "image",
-        url: "https://images.unsplash.com/photo-1518770660439-4636190af475?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=1200",
-        caption: "Selecting the right cryptocurrency to mine depends on hardware compatibility and market potential"
-      },
-      {
-        type: "heading",
-        content: "Acquire Suitable Mining Hardware"
-      },
-      {
-        type: "paragraph",
-        content: "Your choice of mining hardware will significantly impact your profitability. There are several options available, each with its own advantages and limitations."
-      },
-      {
-        type: "image",
-        url: "https://images.unsplash.com/photo-1625727661737-1fa2d725fa99?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=1200",
-        caption: "Modern cryptocurrency mining rigs with multiple GPUs"
-      },
-      {
-        type: "steps",
-        title: "Mining Hardware Options",
-        steps: [
-          {
-            title: "CPU Mining",
-            description: "The most accessible but least efficient method. Only viable for specific cryptocurrencies designed for CPU mining.",
-            imageUrl: "https://images.unsplash.com/photo-1591799264318-7e6ef8ddb7ea?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=1200"
-          },
-          {
-            title: "GPU Mining",
-            description: "More efficient than CPU mining and versatile for mining various cryptocurrencies. Graphics cards from NVIDIA and AMD are popular choices.",
-            imageUrl: "https://images.unsplash.com/photo-1591488320449-011701bb6704?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=1200"
-          },
-          {
-            title: "ASIC Mining",
-            description: "Application-Specific Integrated Circuits designed for mining specific cryptocurrencies. Highly efficient but limited to specific algorithms.",
-            imageUrl: "https://images.unsplash.com/photo-1640826514546-7d93b56a9a1f?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=1200"
-          }
-        ]
-      },
-      {
-        type: "heading",
-        content: "Set Up a Secure Wallet"
-      },
-      {
-        type: "paragraph",
-        content: "Before you start mining, you need a secure wallet to receive your mining rewards. Choose a wallet that's compatible with the cryptocurrency you're mining and prioritizes security."
-      },
-      {
-        type: "list",
-        items: [
-          "Hardware wallets like Ledger or Trezor offer the highest security",
-          "Software wallets provide a balance of convenience and security",
-          "Enable two-factor authentication whenever possible",
-          "Keep your private keys offline and secure"
-        ]
-      },
-      {
-        type: "heading",
-        content: "Join a Mining Pool"
-      },
-      {
-        type: "paragraph",
-        content: "Mining pools combine the computing power of multiple miners to increase the chances of solving blocks and earning rewards. For home miners, this is often more profitable than solo mining."
-      },
-      {
-        type: "image",
-        url: "https://images.unsplash.com/photo-1621416894569-0f39ed31d247?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=1200",
-        caption: "Mining pools distribute rewards proportionally based on contributed computing power"
-      },
-      {
-        type: "list",
-        items: [
-          "Research pool fees and payment structures",
-          "Check the pool's minimum payout threshold",
-          "Consider the pool's server location for optimal connectivity",
-          "Look for pools with good reputation and community support"
-        ]
-      },
-      {
-        type: "heading",
-        content: "Configure Mining Software"
-      },
-      {
-        type: "paragraph",
-        content: "Mining software connects your hardware to the blockchain network and mining pool. Different cryptocurrencies and hardware may require specific mining software."
-      },
-      {
-        type: "steps",
-        title: "Setting Up Mining Software",
-        steps: [
-          {
-            title: "Download Mining Software",
-            description: "Popular options include NiceHash, CGMiner, XMRig, and T-Rex Miner. Choose software that's compatible with your hardware and cryptocurrency."
-          },
-          {
-            title: "Configure Pool Settings",
-            description: "Enter your mining pool's address, port number, and your wallet address where rewards will be sent."
-          },
-          {
-            title: "Optimize Settings",
-            description: "Adjust settings like intensity, thread concurrency, and power limits to balance performance and energy consumption."
-          },
-          {
-            title: "Set Up Monitoring",
-            description: "Configure temperature and performance monitoring to prevent hardware damage."
-          }
-        ]
-      },
-      {
-        type: "heading",
-        content: "Monitor and Maintain Your Operation"
-      },
-      {
-        type: "paragraph",
-        content: "Mining is not a set-and-forget operation. Regular monitoring and maintenance are essential for optimal performance and longevity of your mining equipment."
-      },
-      {
-        type: "list",
-        items: [
-          "Monitor temperatures to prevent overheating",
-          "Clean hardware regularly to remove dust buildup",
-          "Update mining software to the latest version",
-          "Track profitability against electricity costs",
-          "Stay informed about network changes and protocol updates"
-        ]
-      },
-      {
-        type: "paragraph",
-        content: "At OpenFund, we provide tools to help miners track their earnings and optimize their operations. Our platform allows you to easily convert your mined cryptocurrencies into various other assets, including stocks and commodities, creating a diversified portfolio from your mining rewards."
-      }
-    ]
-  },
-  {
-    id: "best-ethereum-layer-2-solutions",
-    title: "Best Ethereum Layer 2 Solutions to Watch in 2025",
-    excerpt: "Explore the top Layer 2 scaling solutions for Ethereum that are revolutionizing transaction speeds and costs while maintaining security and decentralization.",
-    date: "Q1 2025",
-    imageUrl: "https://images.unsplash.com/photo-1639762681057-408e52192e55?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=1200",
-    category: "technology",
-    content: [
-      {
-        type: "paragraph",
-        content: "Ethereum's scalability challenges have led to the development of Layer 2 solutions that enhance transaction speeds and reduce costs. In 2025, several of these solutions have emerged as leaders in the space, each offering unique approaches to scaling the Ethereum network without compromising its security or decentralization."
-      },
-      {
-        type: "heading",
-        content: "What are Layer 2 Solutions?"
-      },
-      {
-        type: "paragraph",
-        content: "Layer 2 refers to a secondary framework or protocol built on top of an existing blockchain (Layer 1). These solutions handle transactions off the main chain, bundling them together before submitting to the Ethereum mainnet, resulting in faster and cheaper transactions."
-      },
-      {
-        type: "image",
-        url: "https://images.unsplash.com/photo-1639322537209-90c0b59be776?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=1200",
-        caption: "Layer 2 solutions process transactions off the main chain to increase Ethereum's scalability"
-      },
-      {
-        type: "heading",
-        content: "Arbitrum"
-      },
-      {
-        type: "paragraph",
-        content: "Arbitrum has established itself as one of the leading Layer 2 solutions, utilizing Optimistic Rollups to significantly increase Ethereum's transaction throughput while inheriting its security guarantees."
-      },
-      {
-        type: "list",
-        items: [
-          "Processes thousands of transactions per second compared to Ethereum's ~15",
-          "Reduces gas fees by more than 90% compared to Layer 1",
-          "Supports a wide ecosystem of DeFi applications and NFT marketplaces",
-          "Uses fraud proofs to ensure transaction validity without sacrificing security"
-        ]
-      },
-      {
-        type: "heading",
-        content: "Optimism"
-      },
-      {
-        type: "paragraph",
-        content: "Optimism employs Optimistic Rollups similar to Arbitrum but with its own unique implementation. It aims to create a 'Superchain' that connects multiple Layer 2 networks into a cohesive ecosystem."
-      },
-      {
-        type: "image",
-        url: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=1200",
-        caption: "Optimism's vision includes connecting multiple Layer 2 networks into a unified ecosystem"
-      },
-      {
-        type: "list",
-        items: [
-          "Focuses on EVM equivalence for seamless developer experience",
-          "Implements retroactive public goods funding to support ecosystem development",
-          "Features a 7-day challenge period for security (compared to Arbitrum's 7-day period)",
-          "Pioneering shared sequencing with the OP Stack for improved interoperability"
-        ]
-      },
-      {
-        type: "heading",
-        content: "zkSync"
-      },
-      {
-        type: "paragraph",
-        content: "zkSync leverages Zero-Knowledge Rollups (ZK-Rollups) to achieve scalability with enhanced security properties compared to Optimistic Rollups, as it mathematically proves the validity of transactions."
-      },
-      {
-        type: "list",
-        items: [
-          "Provides faster finality than Optimistic Rollups with no challenge period",
-          "Supports native account abstraction for improved user experience",
-          "Features zkEVM for Ethereum-compatible smart contracts",
-          "Offers lower costs and higher throughput than Ethereum mainnet"
-        ]
-      },
-      {
-        type: "heading",
-        content: "Polygon (MATIC)"
-      },
-      {
-        type: "paragraph",
-        content: "Polygon has evolved from a simple sidechain to a comprehensive suite of scaling solutions, including Polygon PoS, Polygon zkEVM, and Polygon Supernets."
-      },
-      {
-        type: "image",
-        url: "https://images.unsplash.com/photo-1622630998477-20aa696ecb05?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=1200",
-        caption: "Polygon offers a suite of scaling solutions for different use cases and requirements"
-      },
-      {
-        type: "list",
-        items: [
-          "Polygon PoS provides high throughput with Proof-of-Stake security",
-          "Polygon zkEVM combines the security of ZK proofs with EVM compatibility",
-          "Polygon Supernets enable custom blockchain networks for specific applications",
-          "Extensive ecosystem with thousands of dApps and strong enterprise adoption"
-        ]
-      },
-      {
-        type: "heading",
-        content: "StarkNet"
-      },
-      {
-        type: "paragraph",
-        content: "StarkNet is a permissionless ZK-Rollup that uses STARK proofs to achieve scalability while maintaining strong security guarantees. It's designed to support general-purpose computation and complex smart contracts."
-      },
-      {
-        type: "list",
-        items: [
-          "Uses Cairo programming language for efficient STARK proof generation",
-          "Capable of handling thousands of transactions per second",
-          "Provides stronger cryptographic security than Optimistic Rollups",
-          "Supports composability between different applications on the platform"
-        ]
-      },
-      {
-        type: "steps",
-        title: "Comparing Layer 2 Solutions",
-        steps: [
-          {
-            title: "Transaction Speed & Cost",
-            description: "All Layer 2 solutions offer significant improvements over Ethereum mainnet, with ZK-Rollups like zkSync and StarkNet generally providing faster finality than Optimistic solutions."
-          },
-          {
-            title: "Security Model",
-            description: "ZK-Rollups use mathematical proofs for security, while Optimistic Rollups rely on fraud proofs with challenge periods. Both inherit security from Ethereum."
-          },
-          {
-            title: "Developer Experience",
-            description: "Optimistic Rollups like Arbitrum and Optimism offer better compatibility with existing Ethereum tools and code, while ZK-Rollups are catching up with solutions like zkEVM."
-          },
-          {
-            title: "Ecosystem Maturity",
-            description: "Arbitrum and Optimism currently have the largest ecosystems, with Polygon close behind. zkSync and StarkNet are growing rapidly but still developing their ecosystems."
-          }
-        ]
-      },
-      {
-        type: "paragraph",
-        content: "At OpenFund, we're integrating support for multiple Layer 2 solutions to provide our users with the most cost-effective and efficient trading experience. Whether you're trading cryptocurrencies, stocks, or commodities on our platform, you can benefit from the scalability and reduced costs that these Layer 2 solutions provide."
-      }
-    ]
-  },
-  {
-    id: "how-to-stake-cardano",
-    title: "How to Stake Cardano for Passive Income",
-    excerpt: "Discover the step-by-step process to stake your Cardano (ADA) tokens and earn passive income while supporting the network's security and decentralization.",
-    date: "Q1 2025",
-    imageUrl: "https://images.unsplash.com/photo-1621416894569-0f39ed31d247?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=1200",
+    imageUrl: "https://images.unsplash.com/photo-1605792657660-596af9009e82?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=1200",
     category: "investments",
     content: [
       {
         type: "paragraph",
-        content: "Staking Cardano (ADA) allows holders to earn passive income by participating in the network's proof-of-stake consensus mechanism. With the introduction of financial products like the Cardano Staking Exchange-Traded Product (ETP), staking has become more accessible and rewarding for investors of all sizes."
+        content: "Yield farming has emerged as one of the most popular ways to earn passive income in the decentralized finance (DeFi) ecosystem. This guide explains how yield farming works and how you can get started even as a beginner."
       },
       {
         type: "heading",
-        content: "Understanding Cardano Staking"
+        content: "What is DeFi Yield Farming?"
       },
       {
         type: "paragraph",
-        content: "Cardano uses a unique proof-of-stake protocol called Ouroboros, which allows ADA holders to delegate their tokens to stake pools. These pools participate in block production, and rewards are distributed proportionally to all delegators. Unlike some other staking mechanisms, your ADA tokens remain in your wallet and are never locked or at risk when staking."
+        content: "Yield farming, also known as liquidity mining, involves providing cryptocurrency to decentralized protocols in exchange for rewards. These rewards typically come in the form of transaction fees, interest, or additional tokens."
       },
       {
         type: "image",
-        url: "https://images.unsplash.com/photo-1621504450181-5d356f61d307?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=1200",
-        caption: "Cardano's Ouroboros protocol enables secure and energy-efficient staking"
+        url: "https://images.unsplash.com/photo-1620321023374-d1a68fbc720d?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=1200",
+        caption: "DeFi applications allow cryptocurrency holders to earn yields on their digital assets"
       },
       {
         type: "heading",
-        content: "Set Up a Cardano-Compatible Wallet"
-      },
-      {
-        type: "paragraph",
-        content: "The first step in staking Cardano is to set up a proper wallet that supports ADA delegation. There are several excellent options available, each with its own advantages."
+        content: "How Yield Farming Works"
       },
       {
         type: "steps",
-        title: "Setting Up Your Cardano Wallet",
+        title: "Basic Yield Farming Process",
         steps: [
           {
-            title: "Choose a Wallet",
-            description: "Select between Daedalus (full node wallet), Yoroi (light wallet), or other supported wallets like Eternl, Nami, or Flint.",
-            imageUrl: "https://images.unsplash.com/photo-1587033311577-5fa286dd6c8e?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=1200"
-          },
-          {
-            title: "Download and Install",
-            description: "Download the wallet from the official website or app store to ensure you're using a legitimate version.",
-            imageUrl: "https://images.unsplash.com/photo-1577563908411-5077b6dc7624?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=1200"
-          },
-          {
-            title: "Create a New Wallet",
-            description: "Follow the wallet's instructions to create a new wallet, making sure to securely store your recovery phrase offline.",
-            imageUrl: "https://images.unsplash.com/photo-1593510987185-1ec2256148f3?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=1200"
-          },
-          {
-            title: "Transfer ADA to Your Wallet",
-            description: "Purchase ADA on an exchange and withdraw it to your wallet address, or transfer from another wallet you own."
-          }
-        ]
-      },
-      {
-        type: "heading",
-        content: "Choose a Staking Pool"
-      },
-      {
-        type: "paragraph",
-        content: "Selecting the right staking pool is crucial for maximizing your rewards. There are thousands of pools to choose from, but several factors should guide your decision."
-      },
-      {
-        type: "list",
-        items: [
-          "Pool Performance: Look for pools with a strong track record of producing blocks",
-          "Fees: Compare the margin fee percentage charged by pool operators",
-          "Saturation: Avoid over-saturated pools as they provide diminished returns",
-          "Reliability: Choose pools with good uptime and proper server infrastructure",
-          "Mission and Values: Some pools donate portions of their margins to charitable causes"
-        ]
-      },
-      {
-        type: "image",
-        url: "https://images.unsplash.com/photo-1621451632486-c1c900eee268?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=1200",
-        caption: "Choosing the right staking pool affects your overall returns and network participation"
-      },
-      {
-        type: "heading",
-        content: "Delegate Your ADA"
-      },
-      {
-        type: "paragraph",
-        content: "Once you've selected a pool, you can delegate your ADA tokens. This process varies slightly depending on which wallet you're using, but the general steps remain the same."
-      },
-      {
-        type: "steps",
-        title: "Delegating Your ADA Tokens",
-        steps: [
-          {
-            title: "Access the Delegation Center",
-            description: "Within your wallet, navigate to the delegation or staking section.",
-            imageUrl: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=1200"
-          },
-          {
-            title: "Search for Your Chosen Pool",
-            description: "Enter the pool's ticker symbol or ID in the search function.",
-            imageUrl: "https://images.unsplash.com/photo-1646318554883-179b7a18d7a3?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=1200"
-          },
-          {
-            title: "Confirm and Pay the Delegation Fee",
-            description: "Confirm your choice and pay the one-time delegation deposit fee (2 ADA) plus a small transaction fee.",
-            imageUrl: "https://images.unsplash.com/photo-1635840420799-f75477b0b977?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=1200"
-          },
-          {
-            title: "Wait for Activation",
-            description: "Your delegation becomes active after 2 epochs (about 10 days), after which you'll begin earning rewards."
-          }
-        ]
-      },
-      {
-        type: "heading",
-        content: "Earn and Track Rewards"
-      },
-      {
-        type: "paragraph",
-        content: "Staking rewards are distributed at the end of each epoch (approximately every 5 days). These rewards are automatically added to your delegated stake, creating a compounding effect that increases your returns over time."
-      },
-      {
-        type: "list",
-        items: [
-          "Rewards typically range from 4-6% APY depending on network conditions",
-          "You can claim rewards at any time, but they'll continue staking automatically if left unclaimed",
-          "Use portfolio tracking tools or your wallet's built-in features to monitor your rewards",
-          "Remember that staking rewards are usually subject to taxation in most jurisdictions"
-        ]
-      },
-      {
-        type: "paragraph",
-        content: "At OpenFund, we offer Cardano staking services that allow you to earn passive income while maintaining the liquidity of your assets. Our platform enables you to easily trade between your staked ADA and other assets like stocks or commodities, providing flexibility without sacrificing your staking rewards."
-      }
-    ]
-  }
-];
+            title: "Provide Liquidity",
+            description: "Deposit your crypto assets into a liquidity pool on platforms like Uniswap, Curve, or Aave.",
+            imageUrl: "https://
