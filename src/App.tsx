@@ -35,27 +35,75 @@ function App() {
     if (savedTheme === 'light') {
       document.documentElement.classList.add('light');
       document.documentElement.classList.remove('dark');
+      updateThemeColors(false);
     } else {
       // Set dark mode as default if no preference
       document.documentElement.classList.add('dark');
       document.documentElement.classList.remove('light');
+      updateThemeColors(true);
     }
 
     // Listen for theme changes
-    const handleStorageChange = () => {
+    const handleStorageChange = (event) => {
+      if (event.key === 'theme') {
+        const currentTheme = event.newValue;
+        if (currentTheme === 'light') {
+          document.documentElement.classList.add('light');
+          document.documentElement.classList.remove('dark');
+          updateThemeColors(false);
+        } else if (currentTheme === 'dark') {
+          document.documentElement.classList.add('dark');
+          document.documentElement.classList.remove('light');
+          updateThemeColors(true);
+        }
+      }
+    };
+    
+    // Also listen for custom theme-change event (for in-app changes)
+    const handleThemeChange = () => {
       const currentTheme = localStorage.getItem('theme');
       if (currentTheme === 'light') {
         document.documentElement.classList.add('light');
         document.documentElement.classList.remove('dark');
+        updateThemeColors(false);
       } else if (currentTheme === 'dark') {
         document.documentElement.classList.add('dark');
         document.documentElement.classList.remove('light');
+        updateThemeColors(true);
       }
     };
 
     window.addEventListener('storage', handleStorageChange);
-    return () => window.removeEventListener('storage', handleStorageChange);
+    window.addEventListener('theme-change', handleThemeChange);
+    
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+      window.removeEventListener('theme-change', handleThemeChange);
+    };
   }, []);
+  
+  // Function to update theme-related CSS variables
+  const updateThemeColors = (isDark) => {
+    if (isDark) {
+      document.documentElement.style.setProperty('--color-primary', 'var(--color-green)');
+      document.documentElement.style.setProperty('--color-primary-light', 'var(--color-green-light)');
+      document.documentElement.style.setProperty('--color-primary-dark', 'var(--color-green-dark)');
+      document.documentElement.style.setProperty('--color-text-subdued', '#888888');
+      document.documentElement.style.setProperty('--color-border', '#333333');
+      document.documentElement.style.setProperty('--logo-color', '#00FF00');
+      document.documentElement.style.setProperty('--logo-dot-color', '#00FF00');
+      document.documentElement.style.setProperty('--glow-color', 'rgba(0, 255, 0, 0.7)');
+    } else {
+      document.documentElement.style.setProperty('--color-primary', 'var(--color-blue)');
+      document.documentElement.style.setProperty('--color-primary-light', 'var(--color-blue-light)');
+      document.documentElement.style.setProperty('--color-primary-dark', 'var(--color-blue-dark)');
+      document.documentElement.style.setProperty('--color-text-subdued', '#555555');
+      document.documentElement.style.setProperty('--color-border', '#e5e5e5');
+      document.documentElement.style.setProperty('--logo-color', '#0EA5E9');
+      document.documentElement.style.setProperty('--logo-dot-color', '#0EA5E9');
+      document.documentElement.style.setProperty('--glow-color', 'rgba(14, 165, 233, 0.7)');
+    }
+  };
   
   return (
     <HelmetProvider>
