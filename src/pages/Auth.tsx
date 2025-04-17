@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -174,16 +173,16 @@ const Auth = () => {
     try {
       console.log(`Initiating ${provider} OAuth login...`);
       
-      // The specific redirect URL for Twitter needs to match exactly what's configured
-      // in the Twitter Developer Portal
-      const redirectUrl = `${window.location.origin}/account`;
-      console.log(`Using redirect URL: ${redirectUrl}`);
+      const redirectUrl = provider === 'twitter' 
+        ? `https://${window.location.host}/auth/v1/callback` 
+        : `${window.location.origin}/account`;
+        
+      console.log(`Using ${provider} redirect URL: ${redirectUrl}`);
       
       const { error } = await supabase.auth.signInWithOAuth({
         provider,
         options: {
           redirectTo: redirectUrl,
-          // Note: Twitter doesn't use the same queryParams as Google
           queryParams: provider === 'google' ? {
             access_type: 'offline',
             prompt: 'consent',
