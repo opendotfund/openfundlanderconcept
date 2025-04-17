@@ -1,4 +1,3 @@
-
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Toaster } from "@/components/ui/toaster";
 import { useEffect } from 'react';
@@ -21,6 +20,7 @@ import Contact from './pages/Contact';
 import Legal from './pages/Legal';
 import AboutUs from './pages/AboutUs';
 import Blog from './pages/Blog';
+import ApiDocs from './pages/ApiDocs';
 
 import './App.css';
 
@@ -128,6 +128,7 @@ function App() {
             <Route path="/legal" element={<Legal />} />
             <Route path="/about-us" element={<AboutUs />} />
             <Route path="/blog" element={<Blog />} />
+            <Route path="/api" element={<ApiDocs />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </div>

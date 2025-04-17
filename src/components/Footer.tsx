@@ -68,7 +68,7 @@ const Footer = () => {
             <ul className="space-y-3">
               <li><a href="https://openfund.gitbook.io/openfund-docs" target="_blank" rel="noopener noreferrer" className="text-gray-700 dark:text-gray-400 hover:text-openfund-blue dark:hover:text-openfund-green transition-colors duration-300">Documentation</a></li>
               <li><Link to="/contact" className="text-gray-700 dark:text-gray-400 hover:text-openfund-blue dark:hover:text-openfund-green transition-colors duration-300">Help Center</Link></li>
-              <li><a href="#" className="text-gray-700 dark:text-gray-400 hover:text-openfund-blue dark:hover:text-openfund-green transition-colors duration-300">API</a></li>
+              <li><Link to="/api" className="text-gray-700 dark:text-gray-400 hover:text-openfund-blue dark:hover:text-openfund-green transition-colors duration-300">API</Link></li>
               <li><a href="https://t.me/opendotfund" target="_blank" rel="noopener noreferrer" className="text-gray-700 dark:text-gray-400 hover:text-openfund-blue dark:hover:text-openfund-green transition-colors duration-300">Community</a></li>
               <li><a href="https://sol.openfund.online" target="_blank" rel="noopener noreferrer" className="text-gray-700 dark:text-gray-400 hover:text-openfund-blue dark:hover:text-openfund-green transition-colors duration-300">Issuance Ledger</a></li>
               <li><a href="#" className="text-gray-700 dark:text-gray-400 hover:text-openfund-blue dark:hover:text-openfund-green transition-colors duration-300">Status <span className="testnet-badge">Testnet</span></a></li>
