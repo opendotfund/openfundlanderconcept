@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -32,6 +31,7 @@ const Auth = () => {
   const { toast } = useToast();
   const turnstileContainerRef = useRef<HTMLDivElement>(null);
   const turnstileInitialized = useRef(false);
+  const turnstileWidgetId = useRef<string | null>(null);
 
   useEffect(() => {
     // Only load the script once
@@ -54,6 +54,12 @@ const Auth = () => {
           document.body.removeChild(document.getElementById('turnstile-script')!);
         }
         delete window.onloadTurnstileCallback;
+        
+        // Ensure we clean up the widget if it exists
+        if (turnstileWidgetId.current && window.turnstile) {
+          window.turnstile.remove(turnstileWidgetId.current);
+          turnstileWidgetId.current = null;
+        }
       };
     }
   }, []);
@@ -68,8 +74,14 @@ const Auth = () => {
       // Clear any existing content in the container
       turnstileContainerRef.current.innerHTML = '';
       
+      // Remove any existing widget
+      if (turnstileWidgetId.current) {
+        window.turnstile.remove(turnstileWidgetId.current);
+        turnstileWidgetId.current = null;
+      }
+      
       turnstileInitialized.current = true;
-      window.turnstile.render(turnstileContainerRef.current, {
+      turnstileWidgetId.current = window.turnstile.render(turnstileContainerRef.current, {
         sitekey: '0x4AAAAAABNqU1wLDs8CpOQt',
         callback: function(token: string) {
           setToken(token);
@@ -159,8 +171,8 @@ const Auth = () => {
       setIsLoading(false);
       // Reset turnstile
       turnstileInitialized.current = false;
-      if (window.turnstile) {
-        window.turnstile.reset();
+      if (window.turnstile && turnstileWidgetId.current) {
+        window.turnstile.reset(turnstileWidgetId.current);
       }
       setToken(null);
       setTimeout(() => renderTurnstile(), 100);
@@ -170,10 +182,17 @@ const Auth = () => {
   const handleOAuthSignIn = async (provider: 'google' | 'twitter') => {
     setIsLoading(true);
     try {
+      // Get the current origin for dynamic redirect
+      const origin = window.location.origin;
+      
       const { error } = await supabase.auth.signInWithOAuth({
         provider,
         options: {
-          redirectTo: `${window.location.origin}/account`
+          redirectTo: `${origin}/account`,
+          queryParams: provider === 'google' ? {
+            access_type: 'offline',
+            prompt: 'consent',
+          } : undefined,
         }
       });
       
