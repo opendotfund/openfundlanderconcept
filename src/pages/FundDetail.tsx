@@ -174,15 +174,15 @@ const FundDetail = () => {
                   />
                 </div>
               </CardHeader>
-              <CardContent className="w-full overflow-hidden">
-                <div className="h-[350px] w-full">
+              <CardContent className="w-full overflow-hidden p-4">
+                <div className="h-[350px] w-full rounded-lg overflow-hidden">
                   <AssetChart 
                     asset={fund.name.toLowerCase().replace(' ', '-')} 
                     timeframe={timeframe}
                     isPortfolio={true}
                     portfolioName={fund.name}
                     portfolioData={chartData}
-                    className="w-full h-full"
+                    className="w-full h-full p-2"
                   />
                 </div>
               </CardContent>

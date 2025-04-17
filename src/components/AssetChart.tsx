@@ -332,11 +332,11 @@ export const AssetChart = ({ asset = 'bitcoin', timeframe, isPortfolio = false, 
   return (
     <div className={`w-full h-full ${className || ''}`}>
       {chartData.length > 0 && (
-        <div className={`flex ${isMobile ? 'flex-col gap-1' : 'items-center justify-between'} mb-2`}>
+        <div className={`flex ${isMobile ? 'flex-col gap-1' : 'items-center justify-between'} mb-2 px-2`}>
           <div className={`${isMobile ? 'text-lg' : 'text-xl'} font-medium`}>
             {displayName}
           </div>
-          <div className="flex items-center gap-2 ml-auto pr-4">
+          <div className="flex items-center gap-2 ml-auto pr-2">
             <span className={`${isMobile ? 'text-xl' : 'text-2xl'} font-bold`}>
               ${chartData[chartData.length - 1].value.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}
             </span>
@@ -347,7 +347,7 @@ export const AssetChart = ({ asset = 'bitcoin', timeframe, isPortfolio = false, 
         </div>
       )}
       
-      <div className="w-full h-[calc(100%-24px)]">
+      <div className="w-full h-[calc(100%-40px)] p-1">
         <ChartContainer
           config={{
             value: {
