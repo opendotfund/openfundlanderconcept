@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { useSearchParams, Link, useLocation } from 'react-router-dom';
 import { 
@@ -28,7 +27,6 @@ import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useIsMobile } from '@/hooks/use-mobile';
-import { useLocation } from 'react-router-dom';
 
 // Type definition for asset type
 type AssetType = "crypto" | "stocks" | "commodities";
