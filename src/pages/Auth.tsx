@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -138,7 +139,15 @@ const Auth = () => {
         }
       });
       
-      if (error) throw error;
+      if (error) {
+        console.error(`${provider.charAt(0).toUpperCase() + provider.slice(1)} authentication error:`, error);
+        toast({
+          title: "Authentication Error",
+          description: `${error.message}. Please make sure ${provider} authentication is enabled in your Supabase project.`,
+          variant: "destructive",
+        });
+        setIsLoading(false);
+      }
       
     } catch (error: any) {
       console.error(`${provider.charAt(0).toUpperCase() + provider.slice(1)} authentication error:`, error);
