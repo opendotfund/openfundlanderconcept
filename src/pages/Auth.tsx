@@ -182,12 +182,10 @@ const Auth = () => {
   const handleOAuthSignIn = async (provider: 'google' | 'twitter') => {
     setIsLoading(true);
     try {
-      const origin = window.location.origin;
-      
       const { error } = await supabase.auth.signInWithOAuth({
         provider,
         options: {
-          redirectTo: `${origin}/account`,
+          redirectTo: 'https://wtmolxwkfzyeixducsdy.supabase.co/auth/v1/callback',
           queryParams: provider === 'google' ? {
             access_type: 'offline',
             prompt: 'consent',
