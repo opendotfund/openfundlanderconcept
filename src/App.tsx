@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Toaster } from "@/components/ui/toaster";
 import { useEffect } from 'react';
 import { HelmetProvider } from 'react-helmet-async';
+import MobileBanner from './components/MobileBanner';
 
 import Index from './pages/Index';
 import Account from './pages/Account';
@@ -109,6 +110,7 @@ function App() {
     <HelmetProvider>
       <Router>
         <div className="app">
+          <MobileBanner />
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/account" element={<Account />} />
