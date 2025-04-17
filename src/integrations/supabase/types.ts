@@ -9,7 +9,111 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      [_ in never]: never
+      api_access_requests: {
+        Row: {
+          created_at: string
+          email: string
+          id: string
+          status: string
+          use_case: string
+          wallet_address: string | null
+          wallet_name: string | null
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          id?: string
+          status?: string
+          use_case: string
+          wallet_address?: string | null
+          wallet_name?: string | null
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          id?: string
+          status?: string
+          use_case?: string
+          wallet_address?: string | null
+          wallet_name?: string | null
+        }
+        Relationships: []
+      }
+      fund_submissions: {
+        Row: {
+          created_at: string
+          description: string
+          fund_name: string
+          id: string
+          management_fee: number
+          min_investment: number
+          performance_fee: number
+          strategy: string
+          target_amount: number
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          description: string
+          fund_name: string
+          id?: string
+          management_fee: number
+          min_investment: number
+          performance_fee: number
+          strategy: string
+          target_amount: number
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          description?: string
+          fund_name?: string
+          id?: string
+          management_fee?: number
+          min_investment?: number
+          performance_fee?: number
+          strategy?: string
+          target_amount?: number
+          user_id?: string | null
+        }
+        Relationships: []
+      }
+      job_applications: {
+        Row: {
+          cover_letter: string
+          created_at: string
+          email: string
+          full_name: string
+          id: string
+          position_id: string
+          position_title: string
+          resume_url: string | null
+          user_id: string | null
+        }
+        Insert: {
+          cover_letter: string
+          created_at?: string
+          email: string
+          full_name: string
+          id?: string
+          position_id: string
+          position_title: string
+          resume_url?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          cover_letter?: string
+          created_at?: string
+          email?: string
+          full_name?: string
+          id?: string
+          position_id?: string
+          position_title?: string
+          resume_url?: string | null
+          user_id?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never

@@ -1,5 +1,4 @@
-
-import React, { useState } from 'react';
+import React from 'react';
 import { 
   Form,
   FormControl,
@@ -22,6 +21,8 @@ import {
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/hooks/use-toast";
 
 const fundFormSchema = z.object({
   fundName: z.string().min(3, { message: "Fund name must be at least 3 characters" }),
@@ -34,6 +35,7 @@ const fundFormSchema = z.object({
 });
 
 export const FundForm = () => {
+  const { toast } = useToast();
   const form = useForm<z.infer<typeof fundFormSchema>>({
     resolver: zodResolver(fundFormSchema),
     defaultValues: {
@@ -47,10 +49,35 @@ export const FundForm = () => {
     },
   });
 
-  const onSubmit = (values: z.infer<typeof fundFormSchema>) => {
-    console.log(values);
-    // In a real app, this would submit to an API
-    alert("Fund creation initiated! This would connect to your wallet in a real app.");
+  const onSubmit = async (values: z.infer<typeof fundFormSchema>) => {
+    try {
+      const { error } = await supabase
+        .from('fund_submissions')
+        .insert([{
+          fund_name: values.fundName,
+          description: values.description,
+          strategy: values.strategy,
+          target_amount: parseFloat(values.target),
+          min_investment: parseFloat(values.minInvestment),
+          management_fee: parseFloat(values.managementFee),
+          performance_fee: parseFloat(values.performanceFee)
+        }]);
+
+      if (error) throw error;
+
+      toast({
+        title: "Success",
+        description: "Fund creation request submitted successfully.",
+      });
+      
+      form.reset();
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to submit fund creation request. Please try again.",
+        variant: "destructive",
+      });
+    }
   };
 
   return (

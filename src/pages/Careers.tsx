@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
@@ -9,6 +8,8 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { toast } from 'sonner';
 import { Briefcase, Users, Zap, DollarSign } from 'lucide-react';
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/hooks/use-toast";
 
 type JobPosition = {
   id: string;
@@ -20,6 +21,7 @@ type JobPosition = {
 }
 
 const Careers = () => {
+  const { toast } = useToast();
   const [selectedJob, setSelectedJob] = useState<JobPosition | null>(null);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -52,19 +54,48 @@ const Careers = () => {
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!name || !email || !resume || !coverLetter) {
-      toast.error('Please fill in all required fields');
+    if (!name || !email || !coverLetter || !selectedJob) {
+      toast({
+        title: "Error",
+        description: "Please fill in all required fields",
+        variant: "destructive"
+      });
       return;
     }
     
-    toast.success('Application submitted successfully!');
-    setName('');
-    setEmail('');
-    setResume(null);
-    setCoverLetter('');
-    setSelectedJob(null);
+    try {
+      const { error } = await supabase
+        .from('job_applications')
+        .insert([{
+          position_id: selectedJob.id,
+          position_title: selectedJob.title,
+          full_name: name,
+          email: email,
+          cover_letter: coverLetter,
+          resume_url: null // Would need to implement file upload to storage
+        }]);
+
+      if (error) throw error;
+
+      toast({
+        title: "Success",
+        description: "Application submitted successfully!",
+      });
+      
+      setName('');
+      setEmail('');
+      setResume(null);
+      setCoverLetter('');
+      setSelectedJob(null);
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to submit application. Please try again.",
+        variant: "destructive",
+      });
+    }
   };
 
   return (

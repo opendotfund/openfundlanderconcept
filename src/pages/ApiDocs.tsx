@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -10,6 +9,8 @@ import { useForm } from "react-hook-form";
 import * as z from "zod";
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/hooks/use-toast";
 
 const formSchema = z.object({
   walletName: z.string().min(2, {
@@ -30,6 +31,7 @@ const whitelistSchema = z.object({
 });
 
 const ApiDocs = () => {
+  const { toast } = useToast();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
   });
@@ -38,12 +40,56 @@ const ApiDocs = () => {
     resolver: zodResolver(whitelistSchema),
   });
 
-  const onSubmit = (values: z.infer<typeof formSchema>) => {
-    console.log(values);
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    try {
+      const { error } = await supabase
+        .from('api_access_requests')
+        .insert([{
+          wallet_name: values.walletName,
+          wallet_address: values.walletAddress
+        }]);
+
+      if (error) throw error;
+
+      toast({
+        title: "Success",
+        description: "API wallet authorized successfully.",
+      });
+      
+      form.reset();
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to authorize API wallet. Please try again.",
+        variant: "destructive",
+      });
+    }
   };
 
-  const onWhitelistSubmit = (values: z.infer<typeof whitelistSchema>) => {
-    console.log(values);
+  const onWhitelistSubmit = async (values: z.infer<typeof whitelistSchema>) => {
+    try {
+      const { error } = await supabase
+        .from('api_access_requests')
+        .insert([{
+          email: values.email,
+          use_case: values.useCase
+        }]);
+
+      if (error) throw error;
+
+      toast({
+        title: "Success",
+        description: "API access request submitted successfully.",
+      });
+      
+      whitelistForm.reset();
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to submit API access request. Please try again.",
+        variant: "destructive",
+      });
+    }
   };
 
   return (
