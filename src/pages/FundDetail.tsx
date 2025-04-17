@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { 
@@ -175,14 +174,15 @@ const FundDetail = () => {
                   />
                 </div>
               </CardHeader>
-              <CardContent>
-                <div className="h-[350px]">
+              <CardContent className="w-full overflow-hidden">
+                <div className="h-[350px] w-full">
                   <AssetChart 
                     asset={fund.name.toLowerCase().replace(' ', '-')} 
                     timeframe={timeframe}
                     isPortfolio={true}
                     portfolioName={fund.name}
                     portfolioData={chartData}
+                    className="w-full h-full"
                   />
                 </div>
               </CardContent>
