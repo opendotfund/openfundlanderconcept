@@ -92,7 +92,7 @@ const Footer = () => {
         <div className={`flex ${isMobile ? 'flex-col items-center space-x-0 space-y-2' : 'space-x-6'} text-sm`}>
           <Link to="/legal?tab=privacy" className="text-gray-700 dark:text-gray-400 hover:text-openfund-blue dark:hover:text-openfund-green transition-colors duration-300">Privacy Policy</Link>
           <Link to="/legal?tab=terms" className="text-gray-700 dark:text-gray-400 hover:text-openfund-blue dark:hover:text-openfund-green transition-colors duration-300 md:ml-4">Terms of Service</Link>
-          <a href="#" className="text-gray-700 dark:text-gray-400 hover:text-openfund-blue dark:hover:text-openfund-green transition-colors duration-300 md:ml-4">Legal</a>
+          <Link to="/legal" className="text-gray-700 dark:text-gray-400 hover:text-openfund-blue dark:hover:text-openfund-green transition-colors duration-300 md:ml-4">Legal</Link>
         </div>
       </div>
     </footer>
