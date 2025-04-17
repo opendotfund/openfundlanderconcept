@@ -1,4 +1,19 @@
 
 <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <circle cx="16" cy="16" r="15" fill="#10b981" filter="drop-shadow(0 0 4px #10b981)"/>
+  <defs>
+    <filter id="glow">
+      <feGaussianBlur class="blur" stdDeviation="4" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  <circle 
+    cx="16" 
+    cy="16" 
+    r="12" 
+    fill="#00FF00" 
+    filter="url(#glow)"
+  />
 </svg>

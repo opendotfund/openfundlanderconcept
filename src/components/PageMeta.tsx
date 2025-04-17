@@ -21,6 +21,10 @@ const PageMeta: React.FC<PageMetaProps> = ({
       <meta property="og:title" content={title} />
       <meta property="og:description" content={description} />
       {canonicalUrl && <meta property="og:url" content={canonicalUrl} />}
+      
+      <link rel="icon" href="/logo-icon.svg" type="image/svg+xml" />
+      <link rel="apple-touch-icon" href="/logo-icon.svg" />
+      <link rel="shortcut icon" href="/logo-icon.svg" type="image/svg+xml" />
     </Helmet>
   );
 };
