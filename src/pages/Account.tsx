@@ -37,6 +37,16 @@ import { useToast } from '@/hooks/use-toast';
 import { useAuth } from '@/components/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
 
+type ProfileType = {
+  id: string;
+  full_name?: string | null;
+  phone_number?: string | null;
+  preferred_language?: string | null;
+  email?: string | null;
+  created_at?: string | null;
+  updated_at?: string | null;
+}
+
 const portfolioData = {
   totalValue: 248536.42,
   dailyChange: 1243.21,
@@ -159,19 +169,29 @@ const Account = () => {
       }));
       
       const fetchProfile = async () => {
-        const { data, error } = await supabase
-          .from('profiles')
-          .select('full_name, phone_number, preferred_language')
-          .eq('id', user.id)
-          .single();
-        
-        if (data && !error) {
-          setFormData(prev => ({
-            ...prev,
-            name: data.full_name || '',
-            phone: data.phone_number || '',
-            language: data.preferred_language || 'English'
-          }));
+        try {
+          const { data, error } = await supabase
+            .from('profiles')
+            .select('*')
+            .eq('id', user.id)
+            .single();
+          
+          if (error) {
+            console.error('Error fetching profile:', error.message);
+            return;
+          }
+          
+          if (data) {
+            const profile = data as unknown as ProfileType;
+            setFormData(prev => ({
+              ...prev,
+              name: profile.full_name || '',
+              phone: profile.phone_number || '+1 555-123-4567',
+              language: profile.preferred_language || 'English'
+            }));
+          }
+        } catch (error) {
+          console.error('Error in profile fetch:', error);
         }
       };
       
@@ -222,25 +242,33 @@ const Account = () => {
     
     if (!user) return;
 
-    const { error } = await supabase
-      .from('profiles')
-      .update({
-        full_name: formData.name,
-        phone_number: formData.phone,
-        preferred_language: formData.language
-      })
-      .eq('id', user.id);
+    try {
+      const { error } = await supabase
+        .from('profiles')
+        .update({
+          full_name: formData.name,
+          phone_number: formData.phone,
+          preferred_language: formData.language
+        } as any)
+        .eq('id', user.id);
 
-    if (error) {
+      if (error) {
+        toast({
+          variant: "destructive",
+          title: "Error updating profile",
+          description: error.message,
+        });
+      } else {
+        toast({
+          title: "Profile updated!",
+          description: "Your profile information has been saved successfully.",
+        });
+      }
+    } catch (error: any) {
       toast({
         variant: "destructive",
         title: "Error updating profile",
-        description: error.message,
-      });
-    } else {
-      toast({
-        title: "Profile updated!",
-        description: "Your profile information has been saved successfully.",
+        description: error.message || "An unknown error occurred",
       });
     }
   };
