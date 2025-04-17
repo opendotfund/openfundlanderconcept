@@ -144,11 +144,20 @@ const Account = () => {
   const referralCode = 'OF' + Math.random().toString(36).substring(2, 8).toUpperCase();
   const [formData, setFormData] = useState({
     name: portfolioData.user.name,
-    email: portfolioData.user.email,
+    email: '',
     phone: '+1 555-123-4567',
     language: 'English',
     timezone: 'GMT-4 (Eastern Time)'
   });
+
+  useEffect(() => {
+    if (user?.email) {
+      setFormData(prev => ({
+        ...prev,
+        email: user.email
+      }));
+    }
+  }, [user]);
 
   useEffect(() => {
     if (tabParam === 'portfolio' || tabParam === 'profile' || 
@@ -346,8 +355,8 @@ const Account = () => {
                               name="email"
                               type="email"
                               value={formData.email}
-                              onChange={handleProfileFormChange}
-                              className="pl-10"
+                              readOnly
+                              className="pl-10 bg-secondary/40"
                             />
                             <Mail className="absolute left-3 top-2.5 h-5 w-5 text-muted-foreground" />
                           </div>
