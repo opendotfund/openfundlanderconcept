@@ -326,17 +326,17 @@ export const AssetChart = ({ asset = 'bitcoin', timeframe, isPortfolio = false, 
     : (isPositive ? "#00FF00" : "#FF4545");
   
   const margins = isMobile 
-    ? { top: 5, right: 5, left: 20, bottom: 0 }
-    : { top: 10, right: 10, left: 50, bottom: 35 };
+    ? { top: 10, right: 10, left: 20, bottom: 10 }
+    : { top: 20, right: 20, left: 50, bottom: 20 };
 
   return (
     <div className={`w-full h-full ${className || ''}`}>
       {chartData.length > 0 && (
-        <div className={`flex ${isMobile ? 'flex-col gap-1' : 'items-center justify-between'} mb-2 px-2`}>
+        <div className={`flex ${isMobile ? 'flex-col gap-1' : 'items-center justify-between'} mb-4 px-4`}>
           <div className={`${isMobile ? 'text-lg' : 'text-xl'} font-medium`}>
             {displayName}
           </div>
-          <div className="flex items-center gap-2 ml-auto pr-2">
+          <div className="flex items-center gap-2 ml-auto">
             <span className={`${isMobile ? 'text-xl' : 'text-2xl'} font-bold`}>
               ${chartData[chartData.length - 1].value.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}
             </span>
@@ -347,7 +347,7 @@ export const AssetChart = ({ asset = 'bitcoin', timeframe, isPortfolio = false, 
         </div>
       )}
       
-      <div className="w-full h-[calc(100%-40px)] p-1">
+      <div className="w-full h-[calc(100%-60px)] pb-4">
         <ChartContainer
           config={{
             value: {
@@ -375,16 +375,16 @@ export const AssetChart = ({ asset = 'bitcoin', timeframe, isPortfolio = false, 
                 dataKey="name"
                 tickLine={false}
                 axisLine={true}
-                dy={isMobile ? 5 : 15}
+                dy={isMobile ? 5 : 10}
                 tick={{ 
                   fill: isLightMode ? '#666' : '#888', 
                   fontSize: isMobile ? 9 : 11
                 }}
-                height={isMobile ? 20 : 45}
-                padding={{ left: 5, right: 5 }}
+                height={isMobile ? 20 : 40}
+                padding={{ left: 10, right: 10 }}
                 interval={timeframe === '30d' || timeframe === '90d' || timeframe === '1y' ? "preserveEnd" : 0}
                 tickFormatter={(value) => value || ''}
-                tickMargin={isMobile ? 0 : 5}
+                tickMargin={isMobile ? 5 : 10}
                 minTickGap={isMobile ? 30 : 50}
                 allowDataOverflow={false}
               />

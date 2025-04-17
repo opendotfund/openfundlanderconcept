@@ -165,7 +165,7 @@ const FundDetail = () => {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <div className="lg:col-span-2">
             <Card className="mb-6">
-              <CardHeader>
+              <CardHeader className="pb-0">
                 <div className="flex flex-col space-y-2">
                   <CardTitle>Performance History</CardTitle>
                   <TimeframeSelector 
@@ -174,15 +174,15 @@ const FundDetail = () => {
                   />
                 </div>
               </CardHeader>
-              <CardContent className="w-full overflow-hidden p-4">
-                <div className="h-[350px] w-full rounded-lg overflow-hidden">
+              <CardContent className="p-6">
+                <div className="h-[380px] w-full rounded-lg overflow-hidden border border-border/50 bg-card/50">
                   <AssetChart 
                     asset={fund.name.toLowerCase().replace(' ', '-')} 
                     timeframe={timeframe}
                     isPortfolio={true}
                     portfolioName={fund.name}
                     portfolioData={chartData}
-                    className="w-full h-full p-2"
+                    className="w-full h-full p-4"
                   />
                 </div>
               </CardContent>
