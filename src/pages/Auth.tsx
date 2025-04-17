@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -173,16 +174,17 @@ const Auth = () => {
     try {
       console.log(`Initiating ${provider} OAuth login...`);
       
-      const redirectUrl = provider === 'twitter' 
-        ? `https://${window.location.host}/auth/v1/callback` 
+      // For Twitter, we need to use the exact callback URL configured in Supabase
+      const callbackUrl = provider === 'twitter' 
+        ? `${window.location.origin}/auth/callback` 
         : `${window.location.origin}/account`;
-        
-      console.log(`Using ${provider} redirect URL: ${redirectUrl}`);
+      
+      console.log(`Using ${provider} callback URL: ${callbackUrl}`);
       
       const { error } = await supabase.auth.signInWithOAuth({
         provider,
         options: {
-          redirectTo: redirectUrl,
+          redirectTo: callbackUrl,
           queryParams: provider === 'google' ? {
             access_type: 'offline',
             prompt: 'consent',
@@ -198,6 +200,8 @@ const Auth = () => {
           variant: "destructive",
         });
         setIsLoading(false);
+      } else {
+        console.log(`${provider} OAuth initiated successfully, redirecting...`);
       }
       
     } catch (error: any) {
