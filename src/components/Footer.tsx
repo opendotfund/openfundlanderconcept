@@ -40,8 +40,8 @@ const Footer = () => {
           <div>
             <h3 className="text-lg font-bold mb-4 text-gray-900 dark:text-white transition-colors duration-300">Products</h3>
             <ul className="space-y-3">
-              <li><Link to="/trade?type=commodities" className="text-gray-700 dark:text-gray-400 hover:text-openfund-blue dark:hover:text-openfund-green transition-colors duration-300">Commodities</Link></li>
-              <li><Link to="/trade?type=stocks" className="text-gray-700 dark:text-gray-400 hover:text-openfund-blue dark:hover:text-openfund-green transition-colors duration-300">Stocks</Link></li>
+              <li><Link to="/trade?type=commodities&asset=gold" className="text-gray-700 dark:text-gray-400 hover:text-openfund-blue dark:hover:text-openfund-green transition-colors duration-300">Commodities</Link></li>
+              <li><Link to="/trade?type=stocks&asset=apple" className="text-gray-700 dark:text-gray-400 hover:text-openfund-blue dark:hover:text-openfund-green transition-colors duration-300">Stocks</Link></li>
               <li><Link to="/trade?type=crypto" className="text-gray-700 dark:text-gray-400 hover:text-openfund-blue dark:hover:text-openfund-green transition-colors duration-300">Cryptocurrencies</Link></li>
               <li><Link to="/fund-manager" className="text-gray-700 dark:text-gray-400 hover:text-openfund-blue dark:hover:text-openfund-green transition-colors duration-300">Fund Management</Link></li>
               <li><Link to="/coming-soon" className="text-gray-700 dark:text-gray-400 hover:text-openfund-blue dark:hover:text-openfund-green transition-colors duration-300">Tokenization</Link></li>

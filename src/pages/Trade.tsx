@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { AssetChart } from '@/components/AssetChart';
 import Navbar from '@/components/Navbar';
@@ -24,13 +23,24 @@ const Trade = () => {
   const location = useLocation();
 
   useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const assetParam = params.get('asset');
+    const typeParam = params.get('type') as 'crypto' | 'stocks' | 'commodities';
+    
+    if (assetParam) {
+      setSelectedAsset(assetParam);
+    }
+    
+    if (typeParam === 'crypto' || typeParam === 'stocks' || typeParam === 'commodities') {
+      setAssetType(typeParam);
+    }
+
     window.scrollTo(0, 0);
   }, [location]);
 
   const handleAssetTypeChange = (value: string) => {
     if (value === 'crypto' || value === 'stocks' || value === 'commodities') {
       setAssetType(value);
-      // Removed the window.scrollTo(0, 0) that was causing the scroll to top behavior
     }
   };
 
@@ -40,13 +50,12 @@ const Trade = () => {
 
   const handleAssetSelect = (asset: string) => {
     setSelectedAsset(asset);
-    // Removed the window.scrollTo(0, 0) that was causing the scroll to top behavior
   };
 
   return (
     <div className="min-h-screen bg-background text-foreground">
       <Navbar />
-      <div className="container mx-auto px-3 md:px-4 py-4 md:py-8">
+      <div className="container mx-auto px-3 md:px-4 py-4 md:py-6">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-6">
           <div className="lg:col-span-2">
             <div className="bg-card border border-border p-3 md:p-4 rounded-lg mb-8">
