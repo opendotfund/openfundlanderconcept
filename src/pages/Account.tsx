@@ -34,6 +34,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { KYCForm } from '@/components/KYCForm';
 import { useToast } from '@/hooks/use-toast';
+import { useAuth } from '@/components/AuthContext';
 
 const portfolioData = {
   totalValue: 248536.42,
@@ -121,6 +122,7 @@ const Account = () => {
   const [activeTab, setActiveTab] = useState('profile');
   const { toast } = useToast();
   const [isDark, setIsDark] = useState(true);
+  const { user } = useAuth();
 
   useEffect(() => {
     const checkTheme = () => {
@@ -192,6 +194,38 @@ const Account = () => {
       description: "Your profile information has been saved successfully.",
     });
   };
+
+  if (!user) {
+    return (
+      <div className="min-h-screen bg-background text-foreground transition-colors duration-300">
+        <Navbar />
+        <main className="container mx-auto px-4 py-16">
+          <div className="max-w-md mx-auto text-center">
+            <h1 className="text-3xl font-bold mb-4">Sign in to access your account</h1>
+            <p className="text-muted-foreground mb-8">
+              Create an account or sign in to view your portfolio, manage your assets, and more.
+            </p>
+            <div className="space-y-4">
+              <Button 
+                className="w-full" 
+                onClick={() => navigate('/auth')}
+              >
+                Sign Up
+              </Button>
+              <Button 
+                variant="outline" 
+                className="w-full"
+                onClick={() => navigate('/auth')}
+              >
+                Login
+              </Button>
+            </div>
+          </div>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-background text-foreground transition-colors duration-300">

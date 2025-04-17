@@ -1,9 +1,10 @@
-
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Toaster } from "@/components/ui/toaster";
 import { useEffect } from 'react';
 import { HelmetProvider, Helmet } from 'react-helmet-async';
 import MobileBanner from './components/MobileBanner';
+import Auth from './components/Auth';
+import { AuthProvider } from './components/AuthContext';
 
 import Index from './pages/Index';
 import Account from './pages/Account';
@@ -109,47 +110,50 @@ function App() {
   
   return (
     <HelmetProvider>
-      <Router>
-        <div className="app">
-          {/* Default metadata for all pages */}
-          <Helmet>
-            <link rel="icon" href="/logo-icon.svg" type="image/svg+xml" />
-            <link rel="shortcut icon" href="/logo-icon.svg" type="image/svg+xml" />
-            <link rel="apple-touch-icon" href="/logo-icon.svg" />
-            <meta name="description" content="Trade stocks, crypto, commodities and more on a single platform with OpenFund. Create or join community-managed funds with transparent performance." />
-            <meta property="og:type" content="website" />
-            <meta property="og:image" content="/public/lovable-uploads/50405614-41eb-47b2-9f32-01941e61ad01.png" />
-            <meta property="og:site_name" content="OpenFund" />
-            <meta name="twitter:card" content="summary_large_image" />
-            <meta name="twitter:site" content="@openfund" />
-            <meta name="twitter:image" content="/public/lovable-uploads/50405614-41eb-47b2-9f32-01941e61ad01.png" />
-            <meta name="twitter:image:alt" content="OpenFund - Modern Investment Platform" />
-          </Helmet>
-          
-          <MobileBanner />
-          <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/account" element={<Account />} />
-            <Route path="/assets" element={<Assets />} />
-            <Route path="/my-assets" element={<MyAssets />} />
-            <Route path="/trade" element={<Trade />} />
-            <Route path="/explore" element={<ExploreFunds />} />
-            <Route path="/explore-funds" element={<ExploreFunds />} />
-            <Route path="/fund" element={<Fund />} />
-            <Route path="/fund-detail/:type/:fundId" element={<FundDetail />} />
-            <Route path="/fund-manager" element={<FundManager />} />
-            <Route path="/coming-soon" element={<ComingSoon />} />
-            <Route path="/careers" element={<Careers />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/legal" element={<Legal />} />
-            <Route path="/about-us" element={<AboutUs />} />
-            <Route path="/blog" element={<Blog />} />
-            <Route path="/api" element={<ApiDocs />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </div>
-        <Toaster />
-      </Router>
+      <AuthProvider>
+        <Router>
+          <div className="app">
+            {/* Default metadata for all pages */}
+            <Helmet>
+              <link rel="icon" href="/logo-icon.svg" type="image/svg+xml" />
+              <link rel="shortcut icon" href="/logo-icon.svg" type="image/svg+xml" />
+              <link rel="apple-touch-icon" href="/logo-icon.svg" />
+              <meta name="description" content="Trade stocks, crypto, commodities and more on a single platform with OpenFund. Create or join community-managed funds with transparent performance." />
+              <meta property="og:type" content="website" />
+              <meta property="og:image" content="/public/lovable-uploads/50405614-41eb-47b2-9f32-01941e61ad01.png" />
+              <meta property="og:site_name" content="OpenFund" />
+              <meta name="twitter:card" content="summary_large_image" />
+              <meta name="twitter:site" content="@openfund" />
+              <meta name="twitter:image" content="/public/lovable-uploads/50405614-41eb-47b2-9f32-01941e61ad01.png" />
+              <meta name="twitter:image:alt" content="OpenFund - Modern Investment Platform" />
+            </Helmet>
+            
+            <MobileBanner />
+            <Routes>
+              <Route path="/" element={<Index />} />
+              <Route path="/account" element={<Account />} />
+              <Route path="/assets" element={<Assets />} />
+              <Route path="/my-assets" element={<MyAssets />} />
+              <Route path="/trade" element={<Trade />} />
+              <Route path="/explore" element={<ExploreFunds />} />
+              <Route path="/explore-funds" element={<ExploreFunds />} />
+              <Route path="/fund" element={<Fund />} />
+              <Route path="/fund-detail/:type/:fundId" element={<FundDetail />} />
+              <Route path="/fund-manager" element={<FundManager />} />
+              <Route path="/coming-soon" element={<ComingSoon />} />
+              <Route path="/careers" element={<Careers />} />
+              <Route path="/contact" element={<Contact />} />
+              <Route path="/legal" element={<Legal />} />
+              <Route path="/about-us" element={<AboutUs />} />
+              <Route path="/blog" element={<Blog />} />
+              <Route path="/api" element={<ApiDocs />} />
+              <Route path="/auth" element={<Auth />} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </div>
+          <Toaster />
+        </Router>
+      </AuthProvider>
     </HelmetProvider>
   );
 }
