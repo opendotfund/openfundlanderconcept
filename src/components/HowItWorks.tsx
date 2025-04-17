@@ -2,6 +2,13 @@ import React from 'react';
 import { Wallet, ShieldCheck, BarChart2, ArrowUpCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+
 const HowItWorks = () => {
   const steps = [{
     icon: <Wallet className="w-10 h-10 text-primary transition-colors duration-300" />,
@@ -91,7 +98,16 @@ const HowItWorks = () => {
                   <div className="rounded-full bg-primary/20 p-1 mt-1 transition-colors duration-300">
                     <div className="w-2 h-2 bg-primary rounded-full transition-colors duration-300"></div>
                   </div>
-                  <span className="text-muted-foreground transition-colors duration-300">Create your own managed funds*.</span>
+                  <TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger className="text-left">
+                        <span className="text-muted-foreground transition-colors duration-300">Create your own managed funds*</span>
+                      </TooltipTrigger>
+                      <TooltipContent className="max-w-xs">
+                        <p>KYC is only required to create certain types of stock and commodity funds, not DeFi funds.</p>
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
                 </li>
                 <li className="flex items-start gap-2 w-full max-w-md">
                   <div className="rounded-full bg-primary/20 p-1 mt-1 transition-colors duration-300">
@@ -111,4 +127,5 @@ const HowItWorks = () => {
       </div>
     </section>;
 };
+
 export default HowItWorks;
