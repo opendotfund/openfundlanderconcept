@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Logo from './Logo';
 import { Button } from '@/components/ui/button';
-import { Twitter, Github, Linkedin, Youtube, FileText } from 'lucide-react';
+import { Twitter, Github, Linkedin, FileText } from 'lucide-react';
 
 const Footer = () => {
   return (
@@ -33,9 +33,6 @@ const Footer = () => {
                 className="text-gray-700 dark:text-gray-400 hover:text-openfund-blue dark:hover:text-openfund-green transition-colors duration-300"
               >
                 <Linkedin className="h-5 w-5" />
-              </a>
-              <a href="#" className="text-gray-700 dark:text-gray-400 hover:text-openfund-blue dark:hover:text-openfund-green transition-colors duration-300">
-                <Youtube className="h-5 w-5" />
               </a>
             </div>
           </div>
