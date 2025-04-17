@@ -64,7 +64,7 @@ const Navbar = () => {
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center">
             <Link to="/" className="flex-shrink-0">
-              <Logo />
+              <Logo size="sm" />
             </Link>
           </div>
           
@@ -150,31 +150,37 @@ const Navbar = () => {
             </div>
           </div>
           
-          <div className="md:hidden flex items-center space-x-4">
-            <ThemeToggle />
-            {!user && (
-              <Button 
-                variant="ghost" 
-                size="sm"
-                onClick={() => {
-                  navigate('/auth');
-                  setIsMenuOpen(false);
-                }}
-              >
-                Login
-              </Button>
-            )}
-            <button
-              type="button"
-              className="text-gray-400 hover:text-foreground p-2"
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-            >
-              {isMenuOpen ? (
-                <X className="h-6 w-6" aria-hidden="true" />
-              ) : (
-                <Menu className="h-6 w-6" aria-hidden="true" />
+          <div className="md:hidden flex items-center justify-between w-full">
+            <Link to="/" className="flex-shrink-0">
+              <Logo size="sm" />
+            </Link>
+            
+            <div className="flex items-center justify-center space-x-4">
+              <ThemeToggle />
+              {!user && (
+                <Button 
+                  variant="ghost" 
+                  size="sm"
+                  onClick={() => {
+                    navigate('/auth');
+                    setIsMenuOpen(false);
+                  }}
+                >
+                  Login
+                </Button>
               )}
-            </button>
+              <button
+                type="button"
+                className="text-gray-400 hover:text-foreground p-2"
+                onClick={() => setIsMenuOpen(!isMenuOpen)}
+              >
+                {isMenuOpen ? (
+                  <X className="h-6 w-6" aria-hidden="true" />
+                ) : (
+                  <Menu className="h-6 w-6" aria-hidden="true" />
+                )}
+              </button>
+            </div>
           </div>
         </div>
       </div>
