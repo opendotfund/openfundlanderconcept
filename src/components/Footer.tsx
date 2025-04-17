@@ -1,9 +1,8 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Logo from './Logo';
 import { Button } from '@/components/ui/button';
-import { Twitter, Github, Linkedin, Youtube } from 'lucide-react';
+import { Twitter, Github, Linkedin, Youtube, FileText } from 'lucide-react';
 
 const Footer = () => {
   return (
@@ -68,9 +67,13 @@ const Footer = () => {
             <h3 className="text-lg font-bold mb-4 text-gray-900 dark:text-white transition-colors duration-300">Resources</h3>
             <ul className="space-y-3">
               <li><a href="https://openfund.gitbook.io/openfund-docs" target="_blank" rel="noopener noreferrer" className="text-gray-700 dark:text-gray-400 hover:text-openfund-blue dark:hover:text-openfund-green transition-colors duration-300">Documentation</a></li>
-              <li><Link to="/contact" className="text-gray-700 dark:text-gray-400 hover:text-openfund-blue dark:hover:text-openfund-green transition-colors duration-300">Help Center</Link></li>
+              <li><Link to="/contact" className="text-gray-700 dark:text-gray-400 hover:text-openfund-blue dark:hover:text-openfund-green transition-colors duration-300">Help Center</a></li>
               <li><a href="#" className="text-gray-700 dark:text-gray-400 hover:text-openfund-blue dark:hover:text-openfund-green transition-colors duration-300">API</a></li>
               <li><a href="#" className="text-gray-700 dark:text-gray-400 hover:text-openfund-blue dark:hover:text-openfund-green transition-colors duration-300">Community</a></li>
+              <li><a href="https://sol.openfund.online" target="_blank" rel="noopener noreferrer" className="text-gray-700 dark:text-gray-400 hover:text-openfund-blue dark:hover:text-openfund-green transition-colors duration-300 flex items-center">
+                <FileText className="mr-2 h-4 w-4" />
+                Issuance Ledger
+              </a></li>
               <li><a href="#" className="text-gray-700 dark:text-gray-400 hover:text-openfund-blue dark:hover:text-openfund-green transition-colors duration-300">Status <span className="testnet-badge">Testnet</span></a></li>
             </ul>
           </div>
