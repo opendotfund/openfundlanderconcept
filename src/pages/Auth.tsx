@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -10,23 +10,72 @@ import { Helmet } from 'react-helmet-async';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 
+declare global {
+  interface Window {
+    turnstile: any;
+    onloadTurnstileCallback: () => void;
+  }
+}
+
 const Auth = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isLogin, setIsLogin] = useState(true);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [token, setToken] = useState<string | null>(null);
   const navigate = useNavigate();
   const { toast } = useToast();
 
+  useEffect(() => {
+    // Initialize Turnstile
+    const script = document.createElement('script');
+    script.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?onload=onloadTurnstileCallback';
+    script.async = true;
+    script.defer = true;
+
+    // Define the callback
+    window.onloadTurnstileCallback = () => {
+      window.turnstile.render('#turnstile-container', {
+        sitekey: '0x4AAAAAABNqU1wLDs8CpOQt',
+        callback: function(token: string) {
+          setToken(token);
+        },
+      });
+    };
+
+    document.body.appendChild(script);
+
+    return () => {
+      document.body.removeChild(script);
+      delete window.onloadTurnstileCallback;
+    };
+  }, []);
+
   const handleAuth = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    if (!token) {
+      toast({
+        title: "Error",
+        description: "Please complete the CAPTCHA verification",
+        variant: "destructive",
+      });
+      return;
+    }
+
     setIsLoading(true);
 
     try {
+      const options = {
+        emailRedirectTo: window.location.origin,
+        captchaToken: token,
+      };
+
       if (isLogin) {
         const { error } = await supabase.auth.signInWithPassword({
           email,
           password,
+          options,
         });
         if (error) throw error;
         navigate('/account');
@@ -34,6 +83,7 @@ const Auth = () => {
         const { error } = await supabase.auth.signUp({
           email,
           password,
+          options,
         });
         if (error) throw error;
         toast({
@@ -49,6 +99,9 @@ const Auth = () => {
       });
     } finally {
       setIsLoading(false);
+      // Reset the CAPTCHA after submission
+      window.turnstile.reset();
+      setToken(null);
     }
   };
 
@@ -99,8 +152,11 @@ const Auth = () => {
                   required
                 />
               </div>
+
+              {/* Turnstile CAPTCHA container */}
+              <div id="turnstile-container" className="flex justify-center"></div>
               
-              <Button type="submit" className="w-full" disabled={isLoading}>
+              <Button type="submit" className="w-full" disabled={isLoading || !token}>
                 {isLoading ? 'Loading...' : isLogin ? 'Login' : 'Create account'}
               </Button>
               
