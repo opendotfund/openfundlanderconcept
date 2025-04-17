@@ -37,7 +37,7 @@ const Index = () => {
                 <h3 className="text-xl font-bold mb-3">Pooled Capital</h3>
                 <p className="text-muted-foreground mb-4">Raise funds from hundreds of investors to execute your trading strategy at scale.</p>
                 <div className="flex justify-between items-center pt-3 border-t border-border">
-                  <span className="text-sm text-muted-foreground">Active funds</span>
+                  <span className="text-sm text-muted-foreground">Committed Funds</span>
                   <span className="text-primary font-bold">324</span>
                 </div>
               </div>
@@ -50,7 +50,7 @@ const Index = () => {
                 <p className="text-muted-foreground mb-4">Build a verifiable on-chain performance history to attract more investors.</p>
                 <div className="flex justify-between items-center pt-3 border-t border-border">
                   <span className="text-sm text-muted-foreground">Average ROI</span>
-                  <span className="text-primary font-bold">+32.7%</span>
+                  <span className="text-primary font-bold">+17.7%</span>
                 </div>
               </div>
               
@@ -61,8 +61,8 @@ const Index = () => {
                 <h3 className="text-xl font-bold mb-3">Smart Contracts</h3>
                 <p className="text-muted-foreground mb-4">Secure, transparent fund management with automated performance fees.</p>
                 <div className="flex justify-between items-center pt-3 border-t border-border">
-                  <span className="text-sm text-muted-foreground">Total locked value</span>
-                  <span className="text-primary font-bold">$43.2M</span>
+                  <span className="text-sm text-muted-foreground">Committed Total Value Locked</span>
+                  <span className="text-primary font-bold">$3.29M</span>
                 </div>
               </div>
             </div>
@@ -212,8 +212,8 @@ const Index = () => {
                   <div className="relative z-10 bg-background p-6 rounded-lg border border-border">
                     <div className="grid grid-cols-2 gap-4">
                       <div className="bg-card p-4 rounded-md flex flex-col items-center justify-center text-center">
-                        <div className="text-2xl font-bold text-primary mb-1">$5M+</div>
-                        <p className="text-sm text-muted-foreground">Assets Tokenized</p>
+                        <div className="text-2xl font-bold text-primary mb-1">$3M+</div>
+                        <p className="text-sm text-muted-foreground">Committed Assets</p>
                       </div>
                       <div className="bg-card p-4 rounded-md flex flex-col items-center justify-center text-center">
                         <div className="text-2xl font-bold text-primary mb-1">10k+</div>
