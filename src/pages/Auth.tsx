@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -30,31 +30,66 @@ const Auth = () => {
   const [isSendingMagicLink, setIsSendingMagicLink] = useState(false);
   const navigate = useNavigate();
   const { toast } = useToast();
+  const turnstileContainerRef = useRef<HTMLDivElement>(null);
+  const turnstileInitialized = useRef(false);
 
   useEffect(() => {
-    const script = document.createElement('script');
-    script.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?onload=onloadTurnstileCallback';
-    script.async = true;
-    script.defer = true;
+    // Only load the script once
+    if (!document.getElementById('turnstile-script')) {
+      const script = document.createElement('script');
+      script.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?onload=onloadTurnstileCallback';
+      script.id = 'turnstile-script';
+      script.async = true;
+      script.defer = true;
 
-    window.onloadTurnstileCallback = () => {
-      if (document.getElementById('turnstile-container')) {
-        window.turnstile.render('#turnstile-container', {
-          sitekey: '0x4AAAAAABNqU1wLDs8CpOQt',
-          callback: function(token: string) {
-            setToken(token);
-          },
-        });
-      }
-    };
+      window.onloadTurnstileCallback = () => {
+        renderTurnstile();
+      };
 
-    document.body.appendChild(script);
+      document.body.appendChild(script);
 
-    return () => {
-      document.body.removeChild(script);
-      delete window.onloadTurnstileCallback;
-    };
+      return () => {
+        // Clean up script on unmount
+        if (document.getElementById('turnstile-script')) {
+          document.body.removeChild(document.getElementById('turnstile-script')!);
+        }
+        delete window.onloadTurnstileCallback;
+      };
+    }
   }, []);
+
+  // Function to render Turnstile
+  const renderTurnstile = () => {
+    if (
+      window.turnstile && 
+      turnstileContainerRef.current && 
+      !turnstileInitialized.current
+    ) {
+      // Clear any existing content in the container
+      turnstileContainerRef.current.innerHTML = '';
+      
+      turnstileInitialized.current = true;
+      window.turnstile.render(turnstileContainerRef.current, {
+        sitekey: '0x4AAAAAABNqU1wLDs8CpOQt',
+        callback: function(token: string) {
+          setToken(token);
+        },
+      });
+    }
+  };
+
+  // Re-render Turnstile when tab changes
+  useEffect(() => {
+    // Reset initialization flag when tab changes
+    turnstileInitialized.current = false;
+    
+    // Small delay to ensure DOM is updated
+    setTimeout(() => {
+      if (window.turnstile) {
+        renderTurnstile();
+      }
+    }, 100);
+  }, [activeTab]);
 
   const handleEmailAuth = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -72,7 +107,7 @@ const Auth = () => {
 
     try {
       const options = {
-        emailRedirectTo: window.location.origin,
+        emailRedirectTo: `${window.location.origin}/account`,
         captchaToken: token,
         data: {
           turnstileToken: token
@@ -122,10 +157,13 @@ const Auth = () => {
       });
     } finally {
       setIsLoading(false);
+      // Reset turnstile
+      turnstileInitialized.current = false;
       if (window.turnstile) {
         window.turnstile.reset();
       }
       setToken(null);
+      setTimeout(() => renderTurnstile(), 100);
     }
   };
 
@@ -265,7 +303,9 @@ const Auth = () => {
                     />
                   </div>
 
-                  <div id="turnstile-container" className="flex justify-center"></div>
+                  <div className="flex justify-center">
+                    <div ref={turnstileContainerRef} id="turnstile-container"></div>
+                  </div>
                   
                   <Button type="submit" className="w-full" disabled={isLoading || !token}>
                     {isLoading ? 'Logging in...' : 'Login'}
@@ -379,7 +419,9 @@ const Auth = () => {
                     </p>
                   </div>
 
-                  <div id="turnstile-container" className="flex justify-center"></div>
+                  <div className="flex justify-center">
+                    <div ref={turnstileContainerRef} id="turnstile-container"></div>
+                  </div>
                   
                   <Button type="submit" className="w-full" disabled={isLoading || !token}>
                     {isLoading ? 'Creating account...' : 'Create account'}
