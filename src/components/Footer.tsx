@@ -68,20 +68,27 @@ const Footer = () => {
               <li><Link to="/api" className="text-gray-700 dark:text-gray-400 hover:text-openfund-blue dark:hover:text-openfund-green transition-colors duration-300">API</Link></li>
               <li><a href="https://t.me/opendotfund" target="_blank" rel="noopener noreferrer" className="text-gray-700 dark:text-gray-400 hover:text-openfund-blue dark:hover:text-openfund-green transition-colors duration-300">Community</a></li>
               <li><a href="https://sol.openfund.online" target="_blank" rel="noopener noreferrer" className="text-gray-700 dark:text-gray-400 hover:text-openfund-blue dark:hover:text-openfund-green transition-colors duration-300">Issuance Ledger</a></li>
-              <li><a href="#" className="text-gray-700 dark:text-gray-400 hover:text-openfund-blue dark:hover:text-openfund-green transition-colors duration-300">Status <span className="testnet-badge">Testnet</span></a></li>
+              <li><a 
+                  href="https://sol.openfund.online" 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="text-gray-700 dark:text-gray-400 hover:text-openfund-blue dark:hover:text-openfund-green transition-colors duration-300"
+                >
+                  Status <span className="testnet-badge">Testnet</span>
+                </a></li>
             </ul>
           </div>
         </div>
-        
-        <div className="pt-8 mt-8 border-t border-gray-200 dark:border-openfund-gray-light flex flex-col md:flex-row justify-between items-center transition-colors duration-300">
-          <div className="mb-4 md:mb-0 text-gray-700 dark:text-gray-400 text-sm transition-colors duration-300">
-            &copy; {new Date().getFullYear()} OpenFund. All rights reserved.
-          </div>
-          <div className="flex space-x-6 text-sm">
-            <Link to="/legal?tab=privacy" className="text-gray-700 dark:text-gray-400 hover:text-openfund-blue dark:hover:text-openfund-green transition-colors duration-300">Privacy Policy</Link>
-            <Link to="/legal?tab=terms" className="text-gray-700 dark:text-gray-400 hover:text-openfund-blue dark:hover:text-openfund-green transition-colors duration-300">Terms of Service</Link>
-            <a href="#" className="text-gray-700 dark:text-gray-400 hover:text-openfund-blue dark:hover:text-openfund-green transition-colors duration-300">Legal</a>
-          </div>
+      </div>
+      
+      <div className="pt-8 mt-8 border-t border-gray-200 dark:border-openfund-gray-light flex flex-col md:flex-row justify-between items-center transition-colors duration-300">
+        <div className="mb-4 md:mb-0 text-gray-700 dark:text-gray-400 text-sm transition-colors duration-300">
+          &copy; {new Date().getFullYear()} OpenFund. All rights reserved.
+        </div>
+        <div className="flex space-x-6 text-sm">
+          <Link to="/legal?tab=privacy" className="text-gray-700 dark:text-gray-400 hover:text-openfund-blue dark:hover:text-openfund-green transition-colors duration-300">Privacy Policy</Link>
+          <Link to="/legal?tab=terms" className="text-gray-700 dark:text-gray-400 hover:text-openfund-blue dark:hover:text-openfund-green transition-colors duration-300">Terms of Service</Link>
+          <a href="#" className="text-gray-700 dark:text-gray-400 hover:text-openfund-blue dark:hover:text-openfund-green transition-colors duration-300">Legal</a>
         </div>
       </div>
     </footer>
