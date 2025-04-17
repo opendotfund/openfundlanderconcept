@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Logo from './Logo';
@@ -70,11 +69,8 @@ const Footer = () => {
               <li><a href="https://openfund.gitbook.io/openfund-docs" target="_blank" rel="noopener noreferrer" className="text-gray-700 dark:text-gray-400 hover:text-openfund-blue dark:hover:text-openfund-green transition-colors duration-300">Documentation</a></li>
               <li><Link to="/contact" className="text-gray-700 dark:text-gray-400 hover:text-openfund-blue dark:hover:text-openfund-green transition-colors duration-300">Help Center</Link></li>
               <li><a href="#" className="text-gray-700 dark:text-gray-400 hover:text-openfund-blue dark:hover:text-openfund-green transition-colors duration-300">API</a></li>
-              <li><a href="#" className="text-gray-700 dark:text-gray-400 hover:text-openfund-blue dark:hover:text-openfund-green transition-colors duration-300">Community</a></li>
-              <li><a href="https://sol.openfund.online" target="_blank" rel="noopener noreferrer" className="text-gray-700 dark:text-gray-400 hover:text-openfund-blue dark:hover:text-openfund-green transition-colors duration-300 flex items-center">
-                <FileText className="mr-2 h-4 w-4" />
-                Issuance Ledger
-              </a></li>
+              <li><a href="https://t.me/opendotfund" target="_blank" rel="noopener noreferrer" className="text-gray-700 dark:text-gray-400 hover:text-openfund-blue dark:hover:text-openfund-green transition-colors duration-300">Community</a></li>
+              <li><a href="https://sol.openfund.online" target="_blank" rel="noopener noreferrer" className="text-gray-700 dark:text-gray-400 hover:text-openfund-blue dark:hover:text-openfund-green transition-colors duration-300">Issuance Ledger</a></li>
               <li><a href="#" className="text-gray-700 dark:text-gray-400 hover:text-openfund-blue dark:hover:text-openfund-green transition-colors duration-300">Status <span className="testnet-badge">Testnet</span></a></li>
             </ul>
           </div>
