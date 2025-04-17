@@ -1,5 +1,4 @@
-
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -13,24 +12,73 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { Mail, Twitter } from 'lucide-react';
 
+declare global {
+  interface Window {
+    turnstile: any;
+    onloadTurnstileCallback: () => void;
+  }
+}
+
 const Auth = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [activeTab, setActiveTab] = useState<'login' | 'signup'>('login');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [token, setToken] = useState<string | null>(null);
   const [magicLinkEmail, setMagicLinkEmail] = useState('');
   const [isSendingMagicLink, setIsSendingMagicLink] = useState(false);
   const navigate = useNavigate();
   const { toast } = useToast();
 
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?onload=onloadTurnstileCallback';
+    script.async = true;
+    script.defer = true;
+
+    window.onloadTurnstileCallback = () => {
+      if (document.getElementById('turnstile-container')) {
+        window.turnstile.render('#turnstile-container', {
+          sitekey: '0x4AAAAAABNqU1wLDs8CpOQt',
+          callback: function(token: string) {
+            setToken(token);
+          },
+        });
+      }
+    };
+
+    document.body.appendChild(script);
+
+    return () => {
+      document.body.removeChild(script);
+      delete window.onloadTurnstileCallback;
+    };
+  }, []);
+
   const handleEmailAuth = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    if (!token) {
+      toast({
+        title: "Error",
+        description: "Please complete the CAPTCHA verification",
+        variant: "destructive",
+      });
+      return;
+    }
+
     setIsLoading(true);
 
     try {
       const options = {
         emailRedirectTo: window.location.origin,
+        captchaToken: token,
+        data: {
+          turnstileToken: token
+        }
       };
+
+      console.log("Authenticating with token:", token);
 
       if (activeTab === 'login') {
         const { error, data } = await supabase.auth.signInWithPassword({
@@ -73,6 +121,10 @@ const Auth = () => {
       });
     } finally {
       setIsLoading(false);
+      if (window.turnstile) {
+        window.turnstile.reset();
+      }
+      setToken(null);
     }
   };
 
@@ -203,8 +255,10 @@ const Auth = () => {
                       autoComplete="current-password"
                     />
                   </div>
+
+                  <div id="turnstile-container" className="flex justify-center"></div>
                   
-                  <Button type="submit" className="w-full" disabled={isLoading}>
+                  <Button type="submit" className="w-full" disabled={isLoading || !token}>
                     {isLoading ? 'Logging in...' : 'Login'}
                   </Button>
                 </form>
@@ -315,8 +369,10 @@ const Auth = () => {
                       Password must be at least 8 characters long
                     </p>
                   </div>
+
+                  <div id="turnstile-container" className="flex justify-center"></div>
                   
-                  <Button type="submit" className="w-full" disabled={isLoading}>
+                  <Button type="submit" className="w-full" disabled={isLoading || !token}>
                     {isLoading ? 'Creating account...' : 'Create account'}
                   </Button>
                 </form>
