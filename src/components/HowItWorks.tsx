@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Wallet, ShieldCheck, BarChart2, ArrowUpCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -43,12 +42,10 @@ const HowItWorks = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {steps.map((step, index) => (
             <div key={index} className="relative">
-              {/* Step number */}
               <div className="absolute -top-4 -left-4 w-8 h-8 rounded-full bg-primary flex items-center justify-center text-primary-foreground font-bold transition-colors duration-300">
                 {index + 1}
               </div>
               
-              {/* Connector line */}
               {index < steps.length - 1 && (
                 <div className="hidden lg:block absolute top-10 left-full w-full h-0.5 bg-primary/30 -z-10 transition-colors duration-300"></div>
               )}
@@ -66,20 +63,20 @@ const HowItWorks = () => {
           <div className="grid md:grid-cols-2 gap-8">
             <div>
               <h3 className="text-2xl font-bold mb-4 transition-colors duration-300">Decentralized Access</h3>
-              <ul className="space-y-3">
-                <li className="flex items-start gap-2">
+              <ul className="space-y-3 flex flex-col items-center">
+                <li className="flex items-start gap-2 w-full max-w-md">
                   <div className="rounded-full bg-primary/20 p-1 mt-1 transition-colors duration-300">
                     <div className="w-2 h-2 bg-primary rounded-full transition-colors duration-300"></div>
                   </div>
                   <span className="text-muted-foreground transition-colors duration-300">Instant access to DeFi funds with wallet connection.</span>
                 </li>
-                <li className="flex items-start gap-2">
+                <li className="flex items-start gap-2 w-full max-w-md">
                   <div className="rounded-full bg-primary/20 p-1 mt-1 transition-colors duration-300">
                     <div className="w-2 h-2 bg-primary rounded-full transition-colors duration-300"></div>
                   </div>
                   <span className="text-muted-foreground transition-colors duration-300">Trade tokenized stocks and commodities.</span>
                 </li>
-                <li className="flex items-start gap-2">
+                <li className="flex items-start gap-2 w-full max-w-md">
                   <div className="rounded-full bg-primary/20 p-1 mt-1 transition-colors duration-300">
                     <div className="w-2 h-2 bg-primary rounded-full transition-colors duration-300"></div>
                   </div>
@@ -88,7 +85,7 @@ const HowItWorks = () => {
               </ul>
               <Button 
                 variant="outline" 
-                className="border-primary text-primary hover:bg-primary/10 mt-6 transition-colors duration-300"
+                className="border-primary text-primary hover:bg-primary/10 mt-6 transition-colors duration-300 block mx-auto"
                 asChild
               >
                 <Link to="/trade">
@@ -99,20 +96,20 @@ const HowItWorks = () => {
             
             <div>
               <h3 className="text-2xl font-bold mb-4 transition-colors duration-300">KYC Verified Benefits</h3>
-              <ul className="space-y-3">
-                <li className="flex items-start gap-2">
+              <ul className="space-y-3 flex flex-col items-center">
+                <li className="flex items-start gap-2 w-full max-w-md">
                   <div className="rounded-full bg-primary/20 p-1 mt-1 transition-colors duration-300">
                     <div className="w-2 h-2 bg-primary rounded-full transition-colors duration-300"></div>
                   </div>
                   <span className="text-muted-foreground transition-colors duration-300">Access to TradFi and partner funds.</span>
                 </li>
-                <li className="flex items-start gap-2">
+                <li className="flex items-start gap-2 w-full max-w-md">
                   <div className="rounded-full bg-primary/20 p-1 mt-1 transition-colors duration-300">
                     <div className="w-2 h-2 bg-primary rounded-full transition-colors duration-300"></div>
                   </div>
                   <span className="text-muted-foreground transition-colors duration-300">Create your own managed funds.</span>
                 </li>
-                <li className="flex items-start gap-2">
+                <li className="flex items-start gap-2 w-full max-w-md">
                   <div className="rounded-full bg-primary/20 p-1 mt-1 transition-colors duration-300">
                     <div className="w-2 h-2 bg-primary rounded-full transition-colors duration-300"></div>
                   </div>
@@ -120,7 +117,7 @@ const HowItWorks = () => {
                 </li>
               </ul>
               <Button 
-                className="bg-primary hover:bg-primary/90 text-primary-foreground mt-6 transition-colors duration-300"
+                className="bg-primary hover:bg-primary/90 text-primary-foreground mt-6 transition-colors duration-300 block mx-auto"
                 asChild
               >
                 <Link to="/account">
