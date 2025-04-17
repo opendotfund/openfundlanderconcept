@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+
+import React, { useState, useEffect } from 'react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
@@ -8,16 +9,27 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { MailIcon, MapPin, Send } from 'lucide-react';
 import { useToast } from "@/hooks/use-toast";
+import { useAuth } from '@/components/AuthContext';
+import { supabase } from '@/integrations/supabase/client';
 
 const Contact = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [subject, setSubject] = useState('');
   const [message, setMessage] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
   
   const { toast } = useToast();
+  const { user } = useAuth();
   
-  const handleSubmit = (e: React.FormEvent) => {
+  // Pre-fill user information if logged in
+  useEffect(() => {
+    if (user?.email) {
+      setEmail(user.email);
+    }
+  }, [user]);
+  
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
     if (!name || !email || !message) {
@@ -28,18 +40,42 @@ const Contact = () => {
       });
       return;
     }
+
+    setIsSubmitting(true);
     
-    // In a real application, this would send an email to help@openfund.online
-    toast({
-      title: "Message sent!",
-      description: "Thank you for contacting us. We'll get back to you shortly.",
-    });
-    
-    // Reset form fields
-    setName('');
-    setEmail('');
-    setSubject('');
-    setMessage('');
+    try {
+      const { error } = await supabase
+        .from('contact_submissions')
+        .insert({
+          user_id: user?.id,
+          name,
+          email,
+          subject,
+          message
+        });
+
+      if (error) throw error;
+      
+      toast({
+        title: "Message sent!",
+        description: "Thank you for contacting us. We'll get back to you shortly.",
+      });
+      
+      // Reset form fields
+      setName('');
+      setEmail('');
+      setSubject('');
+      setMessage('');
+      
+    } catch (error: any) {
+      toast({
+        title: "Error",
+        description: error.message || "Failed to send message. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
   
   return (
