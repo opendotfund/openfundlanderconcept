@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -19,6 +20,12 @@ const formSchema = z.object({
   walletAddress: z.string().min(32, {
     message: "Please enter a valid wallet address.",
   }),
+  email: z.string().email({
+    message: "Please enter a valid email address.",
+  }),
+  useCase: z.string().min(2, {
+    message: "Please provide a use case.",
+  }),
 });
 
 const whitelistSchema = z.object({
@@ -34,6 +41,12 @@ const ApiDocs = () => {
   const { toast } = useToast();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
+    defaultValues: {
+      email: "",
+      useCase: "",
+      walletName: "",
+      walletAddress: "",
+    }
   });
 
   const whitelistForm = useForm<z.infer<typeof whitelistSchema>>({
@@ -44,10 +57,12 @@ const ApiDocs = () => {
     try {
       const { error } = await supabase
         .from('api_access_requests')
-        .insert([{
+        .insert({
+          email: values.email,
+          use_case: values.useCase,
           wallet_name: values.walletName,
           wallet_address: values.walletAddress
-        }]);
+        });
 
       if (error) throw error;
 
@@ -70,10 +85,10 @@ const ApiDocs = () => {
     try {
       const { error } = await supabase
         .from('api_access_requests')
-        .insert([{
+        .insert({
           email: values.email,
           use_case: values.useCase
-        }]);
+        });
 
       if (error) throw error;
 
@@ -133,6 +148,36 @@ const ApiDocs = () => {
                           <FormLabel>API Wallet Address</FormLabel>
                           <FormControl>
                             <Input placeholder="Enter wallet address" {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name="email"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Email Address</FormLabel>
+                          <FormControl>
+                            <Input type="email" placeholder="Enter your email" {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name="useCase"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Use Case</FormLabel>
+                          <FormControl>
+                            <Textarea 
+                              placeholder="Please describe how you plan to use this API wallet"
+                              className="min-h-[80px]"
+                              {...field}
+                            />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
