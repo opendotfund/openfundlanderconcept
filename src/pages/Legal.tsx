@@ -86,7 +86,37 @@ const Legal = () => {
                     </section>
                     
                     <section>
-                      <h3 className="text-xl font-semibold mb-2">5. Security</h3>
+                      <h3 className="text-xl font-semibold mb-2">5. AML/CFT Compliance and Data Collection</h3>
+                      <p className="mb-2">
+                        As a regulated Virtual Asset Service Provider (VASP) under Gibraltar's DLT framework, OpenFund is committed to 
+                        maintaining the highest standards of Anti-Money Laundering (AML) and Counter-Terrorist Financing (CFT) compliance. 
+                        We collect and process the following information as part of our regulatory obligations:
+                      </p>
+                      <ul className="list-disc pl-6 space-y-2 mb-4">
+                        <li>
+                          <strong>Identity Verification Data:</strong> As part of our Know Your Customer (KYC) process, we collect 
+                          and verify government-issued identification documents, proof of address, and Taxpayer Identification Numbers 
+                          (TINs) or equivalents.
+                        </li>
+                        <li>
+                          <strong>Transaction Monitoring Information:</strong> We collect and analyze transaction patterns, source 
+                          of funds information, and other relevant data to fulfill our suspicious transaction reporting obligations 
+                          under the Proceeds of Crime Act 2015 (POCA).
+                        </li>
+                        <li>
+                          <strong>Travel Rule Data:</strong> For transactions valued at €1,000 or more, we collect and share required 
+                          personally identifiable information (PII) with other VASPs, including names, wallet addresses, and transaction 
+                          references.
+                        </li>
+                      </ul>
+                      <p>
+                        All data collected for AML/CFT purposes is processed in accordance with applicable data protection laws and 
+                        our regulatory obligations under GFSC supervision.
+                      </p>
+                    </section>
+                    
+                    <section>
+                      <h3 className="text-xl font-semibold mb-2">6. Security</h3>
                       <p>
                         We implement appropriate security measures to protect your personal information against unauthorized 
                         access, alteration, disclosure, or destruction. However, no method of transmission over the Internet 
@@ -95,7 +125,7 @@ const Legal = () => {
                     </section>
                     
                     <section>
-                      <h3 className="text-xl font-semibold mb-2">6. Your Rights</h3>
+                      <h3 className="text-xl font-semibold mb-2">7. Your Rights</h3>
                       <p className="mb-2">Depending on your location, you may have the right to:</p>
                       <ul className="list-disc pl-6 space-y-1">
                         <li>Access your personal information</li>
@@ -108,7 +138,7 @@ const Legal = () => {
                     </section>
                     
                     <section>
-                      <h3 className="text-xl font-semibold mb-2">7. International Transfers</h3>
+                      <h3 className="text-xl font-semibold mb-2">8. International Transfers</h3>
                       <p>
                         Your information may be transferred and processed in countries outside of your home country. 
                         We ensure adequate safeguards are in place to protect your information when transferred internationally.
@@ -116,7 +146,7 @@ const Legal = () => {
                     </section>
                     
                     <section>
-                      <h3 className="text-xl font-semibold mb-2">8. Changes to this Privacy Policy</h3>
+                      <h3 className="text-xl font-semibold mb-2">9. Changes to this Privacy Policy</h3>
                       <p>
                         We may update this Privacy Policy from time to time. The updated version will be indicated by an 
                         updated "Last Updated" date. We encourage you to review this Privacy Policy periodically.
@@ -124,7 +154,7 @@ const Legal = () => {
                     </section>
                     
                     <section>
-                      <h3 className="text-xl font-semibold mb-2">9. Contact Us</h3>
+                      <h3 className="text-xl font-semibold mb-2">10. Contact Us</h3>
                       <p>
                         If you have any questions about this Privacy Policy, please contact us at:
                       </p>
@@ -289,7 +319,52 @@ const Legal = () => {
                     </section>
                     
                     <section>
-                      <h3 className="text-xl font-semibold mb-2">11. Limitation of Liability</h3>
+                      <h3 className="text-xl font-semibold mb-2">11. Regulatory Compliance and Reporting Requirements</h3>
+                      <p className="mb-4">
+                        OpenFund operates under a DLT Provider License issued by the Gibraltar Financial Services Commission (GFSC) 
+                        and maintains strict compliance with all applicable regulations, including:
+                      </p>
+
+                      <h4 className="text-lg font-semibold mb-2">1. Customer Due Diligence (CDD)</h4>
+                      <ul className="list-disc pl-6 space-y-2 mb-4">
+                        <li>Users must complete our comprehensive KYC process before accessing trading services.</li>
+                        <li>Required documentation includes government-issued ID, proof of address, and TIN/SSN/EIN.</li>
+                        <li>Enhanced due diligence may be required for high-risk customers or transactions.</li>
+                      </ul>
+
+                      <h4 className="text-lg font-semibold mb-2">2. Transaction Monitoring and Reporting</h4>
+                      <ul className="list-disc pl-6 space-y-2 mb-4">
+                        <li>All transactions are monitored for suspicious activity.</li>
+                        <li>Suspicious Transaction Reports (STRs) are filed with the Gibraltar Financial Intelligence Unit (GFIU) 
+                          when required under POCA.</li>
+                        <li>Users agree to cooperate with any investigations or information requests related to AML/CFT compliance.</li>
+                      </ul>
+
+                      <h4 className="text-lg font-semibold mb-2">3. Travel Rule Compliance</h4>
+                      <p className="mb-2">For transactions valued at €1,000 or more, we are required to:</p>
+                      <ul className="list-disc pl-6 space-y-2 mb-4">
+                        <li>Collect and transmit originator and beneficiary information.</li>
+                        <li>Verify wallet ownership and transaction details.</li>
+                        <li>For transactions involving non-custodial wallets, collect additional PII including date and place of birth.</li>
+                      </ul>
+
+                      <h4 className="text-lg font-semibold mb-2">4. Compliance Structure</h4>
+                      <ul className="list-disc pl-6 space-y-2 mb-4">
+                        <li>Our dedicated Money Laundering Reporting Officer (MLRO) oversees all AML/CFT compliance activities.</li>
+                        <li>Regular reports are submitted to the GFSC as required by our DLT license.</li>
+                        <li>Our AML/CFT policies and procedures are regularly reviewed and updated to maintain compliance with 
+                          evolving regulations.</li>
+                      </ul>
+
+                      <p className="mb-4">
+                        Users acknowledge that failure to comply with our AML/CFT requirements may result in account restrictions, 
+                        suspension, or termination. OpenFund reserves the right to refuse service to any user who does not meet 
+                        our compliance standards or poses a risk to our regulatory obligations.
+                      </p>
+                    </section>
+                    
+                    <section>
+                      <h3 className="text-xl font-semibold mb-2">12. Limitation of Liability</h3>
                       <p>
                         To the maximum extent permitted by law, OpenFund, its affiliates, officers, directors, employees, 
                         and agents shall not be liable for any indirect, incidental, special, consequential, or punitive 
@@ -299,7 +374,7 @@ const Legal = () => {
                     </section>
                     
                     <section>
-                      <h3 className="text-xl font-semibold mb-2">12. Termination</h3>
+                      <h3 className="text-xl font-semibold mb-2">13. Termination</h3>
                       <p>
                         We may terminate or suspend your account and access to our services immediately, without prior notice 
                         or liability, for any reason, including breach of these Terms. Upon termination, your right to use 
@@ -308,7 +383,7 @@ const Legal = () => {
                     </section>
                     
                     <section>
-                      <h3 className="text-xl font-semibold mb-2">13. Governing Law and Jurisdiction</h3>
+                      <h3 className="text-xl font-semibold mb-2">14. Governing Law and Jurisdiction</h3>
                       <p>
                         These Terms shall be governed by and construed in accordance with the laws of Gibraltar, without 
                         regard to its conflict of law provisions. Any dispute arising from these Terms shall be resolved 
@@ -317,7 +392,7 @@ const Legal = () => {
                     </section>
                     
                     <section>
-                      <h3 className="text-xl font-semibold mb-2">14. Changes to Terms</h3>
+                      <h3 className="text-xl font-semibold mb-2">15. Changes to Terms</h3>
                       <p>
                         We reserve the right to modify or replace these Terms at any time. If a revision is material, 
                         we will provide at least 30 days' notice prior to any new terms taking effect. What constitutes 
@@ -326,7 +401,7 @@ const Legal = () => {
                     </section>
                     
                     <section>
-                      <h3 className="text-xl font-semibold mb-2">15. Contact Us</h3>
+                      <h3 className="text-xl font-semibold mb-2">16. Contact Us</h3>
                       <p>
                         If you have any questions about these Terms, please contact us at:
                       </p>
