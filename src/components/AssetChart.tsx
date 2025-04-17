@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import {
   Area,
@@ -30,6 +29,7 @@ interface AssetChartProps {
   isPortfolio?: boolean;
   portfolioName?: string;
   portfolioData?: ChartDataPoint[];
+  className?: string;
 }
 
 const fetchPriceData = async (asset: string, timeframe: string, isPortfolio: boolean = false, portfolioName: string = '', portfolioData?: ChartDataPoint[]): Promise<PriceData[]> => {
@@ -272,7 +272,7 @@ const fetchPriceData = async (asset: string, timeframe: string, isPortfolio: boo
   }
 };
 
-export const AssetChart = ({ asset = 'bitcoin', timeframe, isPortfolio = false, portfolioName = '', portfolioData }: AssetChartProps) => {
+export const AssetChart = ({ asset = 'bitcoin', timeframe, isPortfolio = false, portfolioName = '', portfolioData, className }: AssetChartProps) => {
   const [chartData, setChartData] = useState<PriceData[]>([]);
   const [isLightMode, setIsLightMode] = useState<boolean>(false);
   const isMobile = useIsMobile();
@@ -326,11 +326,11 @@ export const AssetChart = ({ asset = 'bitcoin', timeframe, isPortfolio = false, 
     : (isPositive ? "#00FF00" : "#FF4545");
   
   const margins = isMobile 
-    ? { top: 5, right: 5, left: 20, bottom: 0 } // Changed bottom margin to 0 for mobile
+    ? { top: 5, right: 5, left: 20, bottom: 0 }
     : { top: 10, right: 10, left: 50, bottom: 35 };
 
   return (
-    <div className="w-full h-full">
+    <div className={`w-full h-full ${className || ''}`}>
       {chartData.length > 0 && (
         <div className={`flex ${isMobile ? 'flex-col gap-1' : 'items-center justify-between'} mb-2`}>
           <div className={`${isMobile ? 'text-lg' : 'text-xl'} font-medium`}>
@@ -380,11 +380,11 @@ export const AssetChart = ({ asset = 'bitcoin', timeframe, isPortfolio = false, 
                   fill: isLightMode ? '#666' : '#888', 
                   fontSize: isMobile ? 9 : 11
                 }}
-                height={isMobile ? 20 : 45} // Reduced height on mobile
+                height={isMobile ? 20 : 45}
                 padding={{ left: 5, right: 5 }}
                 interval={timeframe === '30d' || timeframe === '90d' || timeframe === '1y' ? "preserveEnd" : 0}
                 tickFormatter={(value) => value || ''}
-                tickMargin={isMobile ? 0 : 5} // Reduced tickMargin on mobile
+                tickMargin={isMobile ? 0 : 5}
                 minTickGap={isMobile ? 30 : 50}
                 allowDataOverflow={false}
               />
