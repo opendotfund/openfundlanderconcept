@@ -258,10 +258,10 @@ const FundDetail = () => {
                 
                 <TabsContent value="strategy" className="mt-0">
                   <Card className="bg-card border-card">
-                    <CardHeader>
+                    <CardHeader className="text-center">
                       <CardTitle>Investment Strategy</CardTitle>
                     </CardHeader>
-                    <CardContent>
+                    <CardContent className="text-center">
                       <p className="text-gray-200 mb-6">
                         {fund.fundStrategy || 
                           `${fund.name} employs a ${fund.focus.toLowerCase()} approach, focusing on ${
@@ -274,7 +274,7 @@ const FundDetail = () => {
                       </p>
                       
                       {isDefiFund && (
-                        <div className="bg-card p-4 rounded-lg mb-6 border border-card">
+                        <div className="bg-card p-4 rounded-lg mb-6 border border-card max-w-2xl mx-auto">
                           <h3 className="font-medium mb-3 text-lg">Action Plan Summary</h3>
                           <ul className="space-y-3">
                             <li className="flex items-start">
@@ -317,7 +317,7 @@ const FundDetail = () => {
                       )}
                       
                       {fund.benchmarkIndex && (
-                        <div className="mb-6">
+                        <div className="mb-6 max-w-lg mx-auto">
                           <div className="flex justify-between mb-2">
                             <span className="text-gray-400">Benchmark</span>
                             <span className="font-medium">{fund.benchmarkIndex}</span>
@@ -340,7 +340,7 @@ const FundDetail = () => {
                         </div>
                       )}
                       
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-4 mb-6">
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-4 mb-6 max-w-2xl mx-auto">
                         <div className="flex justify-between">
                           <span className="text-gray-400">Management Style</span>
                           <span className="font-medium">Active</span>
@@ -355,7 +355,7 @@ const FundDetail = () => {
                       </div>
                       
                       <h3 className="text-lg font-medium mb-3">Key Metrics</h3>
-                      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6 max-w-3xl mx-auto">
                         <div className="bg-card p-4 rounded-lg">
                           <div className="flex items-center mb-1">
                             <TrendingUp size={18} className="mr-2 text-openfund-green" />
