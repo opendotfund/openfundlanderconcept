@@ -182,7 +182,6 @@ const Auth = () => {
   const handleOAuthSignIn = async (provider: 'google' | 'twitter') => {
     setIsLoading(true);
     try {
-      // Get the current origin for dynamic redirect
       const origin = window.location.origin;
       
       const { error } = await supabase.auth.signInWithOAuth({
