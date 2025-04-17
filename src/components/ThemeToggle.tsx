@@ -3,8 +3,9 @@ import React, { useEffect, useState, useRef } from 'react';
 import { Sun, Moon } from 'lucide-react';
 import { Toggle } from "@/components/ui/toggle";
 import { toast } from "sonner";
+import { cn } from "@/lib/utils";
 
-const ThemeToggle = () => {
+const ThemeToggle = ({ className }: { className?: string }) => {
   const [isDarkMode, setIsDarkMode] = useState(true);
   const [isFirstVisit, setIsFirstVisit] = useState(false);
   const [isTransitioning, setIsTransitioning] = useState(false);
@@ -84,7 +85,11 @@ const ThemeToggle = () => {
         pressed={isDarkMode} 
         onPressedChange={toggleTheme} 
         aria-label="Toggle theme"
-        className={`rounded-full w-10 h-10 p-2.5 relative z-[100] ${isFirstVisit ? 'theme-toggle-highlight' : ''}`}
+        className={cn(
+          "rounded-full w-10 h-10 p-2.5 relative z-[100]", 
+          { 'theme-toggle-highlight': isFirstVisit },
+          className
+        )}
         ref={toggleRef}
       >
         {isDarkMode ? (

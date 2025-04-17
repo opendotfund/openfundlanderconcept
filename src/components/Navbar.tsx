@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Logo from './Logo';
@@ -151,7 +152,7 @@ const Navbar = () => {
           </div>
           
           <div className="md:hidden flex items-center space-x-4">
-            <ThemeToggle />
+            <ThemeToggle className="w-8 h-8 p-1.5" /> {/* Smaller size for mobile */}
             {!user && (
               <Button 
                 variant="ghost" 
