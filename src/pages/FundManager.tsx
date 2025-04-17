@@ -183,7 +183,7 @@ const FundManager = () => {
                 />
               </CardHeader>
               <CardContent>
-                <div className="h-[380px]">
+                <div className="h-[380px] mb-4">
                   <AssetChart 
                     timeframe={timeframe}
                     isPortfolio={true}
