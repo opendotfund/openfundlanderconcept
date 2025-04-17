@@ -141,7 +141,7 @@ const Auth = () => {
       if (error) throw error;
       
     } catch (error: any) {
-      console.error("OAuth authentication error:", error);
+      console.error(`${provider.charAt(0).toUpperCase() + provider.slice(1)} authentication error:`, error);
       toast({
         title: "Error",
         description: error.message,
