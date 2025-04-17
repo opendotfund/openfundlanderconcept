@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Navbar from '@/components/Navbar';
@@ -8,13 +7,8 @@ import { Input } from '@/components/ui/input';
 import { Hexagon, Clock, Bell, ArrowRight } from 'lucide-react';
 
 const ComingSoon = () => {
-  const [email, setEmail] = React.useState('');
-  
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // This would normally send the email to a server
-    alert('Thank you! We\'ll notify you when tokenization launches.');
-    setEmail('');
+  const handleJoinWaitlist = () => {
+    window.open('https://sol.openfund.online', '_blank', 'noopener,noreferrer');
   };
   
   return (
@@ -66,19 +60,14 @@ const ComingSoon = () => {
           
           <div className="bg-card p-8 rounded-lg shadow">
             <h2 className="text-2xl font-bold mb-4">Be First to Know When We Launch</h2>
-            <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
-              <Input
-                type="email"
-                placeholder="Enter your email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="flex-grow"
-                required
-              />
-              <Button type="submit" className="whitespace-nowrap">
+            <div className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
+              <Button 
+                onClick={handleJoinWaitlist} 
+                className="whitespace-nowrap w-full"
+              >
                 Join Waitlist <ArrowRight size={16} className="ml-2" />
               </Button>
-            </form>
+            </div>
           </div>
           
           <div className="mt-12">
