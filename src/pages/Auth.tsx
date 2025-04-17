@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -11,7 +10,7 @@ import { useToast } from '@/hooks/use-toast';
 import { Helmet } from 'react-helmet-async';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
-import { Github, Mail } from 'lucide-react';
+import { Mail, Twitter } from 'lucide-react';
 
 declare global {
   interface Window {
@@ -32,13 +31,11 @@ const Auth = () => {
   const { toast } = useToast();
 
   useEffect(() => {
-    // Initialize Turnstile
     const script = document.createElement('script');
     script.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?onload=onloadTurnstileCallback';
     script.async = true;
     script.defer = true;
 
-    // Define the callback
     window.onloadTurnstileCallback = () => {
       if (document.getElementById('turnstile-container')) {
         window.turnstile.render('#turnstile-container', {
@@ -73,7 +70,6 @@ const Auth = () => {
     setIsLoading(true);
 
     try {
-      // Correctly format the captcha token for Supabase
       const options = {
         emailRedirectTo: window.location.origin,
         captchaToken: token,
@@ -125,7 +121,6 @@ const Auth = () => {
       });
     } finally {
       setIsLoading(false);
-      // Reset the CAPTCHA after submission
       if (window.turnstile) {
         window.turnstile.reset();
       }
@@ -133,7 +128,7 @@ const Auth = () => {
     }
   };
 
-  const handleOAuthSignIn = async (provider: 'google' | 'github') => {
+  const handleOAuthSignIn = async (provider: 'google' | 'twitter') => {
     setIsLoading(true);
     try {
       const { error } = await supabase.auth.signInWithOAuth({
@@ -261,7 +256,6 @@ const Auth = () => {
                     />
                   </div>
 
-                  {/* Turnstile CAPTCHA container */}
                   <div id="turnstile-container" className="flex justify-center"></div>
                   
                   <Button type="submit" className="w-full" disabled={isLoading || !token}>
@@ -293,11 +287,11 @@ const Auth = () => {
                   </Button>
                   <Button 
                     variant="outline" 
-                    onClick={() => handleOAuthSignIn('github')} 
+                    onClick={() => handleOAuthSignIn('twitter')} 
                     disabled={isLoading}
                   >
-                    <Github className="w-4 h-4 mr-2" />
-                    GitHub
+                    <Twitter className="w-4 h-4 mr-2" />
+                    Twitter
                   </Button>
                 </div>
 
@@ -376,7 +370,6 @@ const Auth = () => {
                     </p>
                   </div>
 
-                  {/* Turnstile CAPTCHA container */}
                   <div id="turnstile-container" className="flex justify-center"></div>
                   
                   <Button type="submit" className="w-full" disabled={isLoading || !token}>
@@ -408,11 +401,11 @@ const Auth = () => {
                   </Button>
                   <Button 
                     variant="outline" 
-                    onClick={() => handleOAuthSignIn('github')} 
+                    onClick={() => handleOAuthSignIn('twitter')} 
                     disabled={isLoading}
                   >
-                    <Github className="w-4 h-4 mr-2" />
-                    GitHub
+                    <Twitter className="w-4 h-4 mr-2" />
+                    Twitter
                   </Button>
                 </div>
                 
