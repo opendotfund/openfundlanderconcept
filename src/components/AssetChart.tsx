@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from 'react';
 import {
   Area,
@@ -325,14 +326,15 @@ export const AssetChart = ({ asset = 'bitcoin', timeframe, isPortfolio = false, 
     ? (isPositive ? "#0EA5E9" : "#FF4545")
     : (isPositive ? "#00FF00" : "#FF4545");
   
+  // Adjust margins to ensure X-axis labels have enough space
   const margins = isMobile 
-    ? { top: 10, right: 10, left: 20, bottom: 10 }
-    : { top: 20, right: 20, left: 50, bottom: 20 };
+    ? { top: 10, right: 10, left: 30, bottom: 30 }  // Increased bottom margin
+    : { top: 20, right: 20, left: 50, bottom: 40 }; // Increased bottom margin
 
   return (
     <div className={`w-full h-full ${className || ''}`}>
       {chartData.length > 0 && (
-        <div className={`flex ${isMobile ? 'flex-col gap-1' : 'items-center justify-between'} mb-4 px-4`}>
+        <div className={`flex ${isMobile ? 'flex-col gap-1' : 'items-center justify-between'} mb-3 px-4`}>
           <div className={`${isMobile ? 'text-lg' : 'text-xl'} font-medium`}>
             {displayName}
           </div>
@@ -347,7 +349,8 @@ export const AssetChart = ({ asset = 'bitcoin', timeframe, isPortfolio = false, 
         </div>
       )}
       
-      <div className="w-full h-[calc(100%-60px)] pb-4">
+      {/* Adjusted height to leave room for X-axis labels */}
+      <div className="w-full h-[calc(100%-70px)]">
         <ChartContainer
           config={{
             value: {
@@ -375,16 +378,16 @@ export const AssetChart = ({ asset = 'bitcoin', timeframe, isPortfolio = false, 
                 dataKey="name"
                 tickLine={false}
                 axisLine={true}
-                dy={isMobile ? 5 : 10}
+                dy={isMobile ? 10 : 15} // Increased vertical offset for labels
                 tick={{ 
                   fill: isLightMode ? '#666' : '#888', 
-                  fontSize: isMobile ? 9 : 11
+                  fontSize: isMobile ? 10 : 12  // Slightly larger font size
                 }}
-                height={isMobile ? 20 : 40}
+                height={isMobile ? 35 : 50}  // Increased height for X-axis area
                 padding={{ left: 10, right: 10 }}
                 interval={timeframe === '30d' || timeframe === '90d' || timeframe === '1y' ? "preserveEnd" : 0}
                 tickFormatter={(value) => value || ''}
-                tickMargin={isMobile ? 5 : 10}
+                tickMargin={isMobile ? 10 : 15}  // Increased margin below the ticks
                 minTickGap={isMobile ? 30 : 50}
                 allowDataOverflow={false}
               />
