@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
@@ -7,8 +6,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-import { toast } from 'sonner';
 import { MailIcon, MapPin, Send } from 'lucide-react';
+import { useToast } from "@/hooks/use-toast";
 
 const Contact = () => {
   const [name, setName] = useState('');
@@ -16,16 +15,25 @@ const Contact = () => {
   const [subject, setSubject] = useState('');
   const [message, setMessage] = useState('');
   
+  const { toast } = useToast();
+  
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
     if (!name || !email || !message) {
-      toast.error('Please fill in all required fields');
+      toast({
+        title: "Error",
+        description: "Please fill in all required fields",
+        variant: "destructive",
+      });
       return;
     }
     
     // In a real application, this would send an email to help@openfund.online
-    toast.success('Your message has been sent! We\'ll get back to you shortly.');
+    toast({
+      title: "Message sent!",
+      description: "Thank you for contacting us. We'll get back to you shortly.",
+    });
     
     // Reset form fields
     setName('');

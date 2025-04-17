@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -68,7 +67,7 @@ const ApiDocs = () => {
 
       toast({
         title: "Success",
-        description: "API wallet authorized successfully.",
+        description: "Your API wallet has been authorized successfully. We'll send you the access credentials shortly.",
       });
       
       form.reset();
@@ -93,8 +92,8 @@ const ApiDocs = () => {
       if (error) throw error;
 
       toast({
-        title: "Success",
-        description: "API access request submitted successfully.",
+        title: "Request submitted",
+        description: "Your API access request has been received. We'll review it and get back to you soon.",
       });
       
       whitelistForm.reset();

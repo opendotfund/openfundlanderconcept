@@ -80,8 +80,8 @@ const Careers = () => {
       if (error) throw error;
 
       toast({
-        title: "Success",
-        description: "Application submitted successfully!",
+        title: "Application submitted!",
+        description: "Thank you for applying. We'll review your application and contact you soon.",
       });
       
       setName('');
