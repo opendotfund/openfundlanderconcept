@@ -180,15 +180,6 @@ const Navbar = () => {
                 My Account
               </div>
             </div>
-            <div 
-              className="block px-3 py-2 rounded-md text-base font-medium text-muted-foreground hover:text-foreground cursor-pointer"
-              onClick={() => navigateToAccount('kyc')}
-            >
-              <div className="flex items-center">
-                <CheckCircle className="h-5 w-5 mr-2" />
-                Complete KYC
-              </div>
-            </div>
             <div className="mt-4">
               <Button 
                 variant="outline" 
