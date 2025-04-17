@@ -34,7 +34,6 @@ const Auth = () => {
   const turnstileWidgetId = useRef<string | null>(null);
 
   useEffect(() => {
-    // Only load the script once
     if (!document.getElementById('turnstile-script')) {
       const script = document.createElement('script');
       script.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?onload=onloadTurnstileCallback';
@@ -49,13 +48,11 @@ const Auth = () => {
       document.body.appendChild(script);
 
       return () => {
-        // Clean up script on unmount
         if (document.getElementById('turnstile-script')) {
           document.body.removeChild(document.getElementById('turnstile-script')!);
         }
         delete window.onloadTurnstileCallback;
         
-        // Ensure we clean up the widget if it exists
         if (turnstileWidgetId.current && window.turnstile) {
           window.turnstile.remove(turnstileWidgetId.current);
           turnstileWidgetId.current = null;
@@ -64,17 +61,14 @@ const Auth = () => {
     }
   }, []);
 
-  // Function to render Turnstile
   const renderTurnstile = () => {
     if (
       window.turnstile && 
       turnstileContainerRef.current && 
       !turnstileInitialized.current
     ) {
-      // Clear any existing content in the container
       turnstileContainerRef.current.innerHTML = '';
       
-      // Remove any existing widget
       if (turnstileWidgetId.current) {
         window.turnstile.remove(turnstileWidgetId.current);
         turnstileWidgetId.current = null;
@@ -90,12 +84,8 @@ const Auth = () => {
     }
   };
 
-  // Re-render Turnstile when tab changes
   useEffect(() => {
-    // Reset initialization flag when tab changes
     turnstileInitialized.current = false;
-    
-    // Small delay to ensure DOM is updated
     setTimeout(() => {
       if (window.turnstile) {
         renderTurnstile();
@@ -169,7 +159,6 @@ const Auth = () => {
       });
     } finally {
       setIsLoading(false);
-      // Reset turnstile
       turnstileInitialized.current = false;
       if (window.turnstile && turnstileWidgetId.current) {
         window.turnstile.reset(turnstileWidgetId.current);
@@ -182,10 +171,11 @@ const Auth = () => {
   const handleOAuthSignIn = async (provider: 'google' | 'twitter') => {
     setIsLoading(true);
     try {
+      console.log(`Initiating ${provider} OAuth login...`);
       const { error } = await supabase.auth.signInWithOAuth({
         provider,
         options: {
-          redirectTo: 'https://wtmolxwkfzyeixducsdy.supabase.co/auth/v1/callback',
+          redirectTo: `${window.location.origin}/account`,
           queryParams: provider === 'google' ? {
             access_type: 'offline',
             prompt: 'consent',
