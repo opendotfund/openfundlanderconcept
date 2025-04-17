@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
-import { useSearchParams, Link } from 'react-router-dom';
+import { useSearchParams, Link, useLocation } from 'react-router-dom';
 import { 
   Search,
   Filter, 
@@ -11,6 +11,7 @@ import {
 } from 'lucide-react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
+import PageMeta from '@/components/PageMeta';
 import { AssetChart } from '@/components/AssetChart';
 import { AssetList } from '@/components/AssetList';
 import { SwapWidget } from '@/components/SwapWidget';
@@ -175,6 +176,11 @@ const Assets = () => {
 
   return (
     <div className="min-h-screen bg-openfund-gray-dark text-white flex flex-col">
+      <PageMeta 
+        title="Assets - OpenFund"
+        description="Browse and analyze crypto, stocks, and commodities on OpenFund. Get real-time price data, charts, and market insights."
+        canonicalUrl="https://openfund.io/assets" 
+      />
       <Navbar />
 
       <main className="flex-grow container mx-auto px-3 md:px-4 py-4 md:py-8">

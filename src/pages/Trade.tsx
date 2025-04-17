@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import { useSearchParams, useLocation } from 'react-router-dom';
 import { AssetChart } from '@/components/AssetChart';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
+import PageMeta from '@/components/PageMeta';
 import { TimeframeSelector } from '@/components/TimeframeSelector';
 import { SwapWidget } from '@/components/SwapWidget';
 import { AssetList } from '@/components/AssetList';
@@ -11,7 +13,6 @@ import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
 import { useIsMobile } from '@/hooks/use-mobile';
 import { Toaster } from "@/components/ui/toaster";
-import { useLocation } from 'react-router-dom';
 import { AssetSearch } from '@/components/AssetSearch';
 
 const Trade = () => {
@@ -53,7 +54,12 @@ const Trade = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div className="min-h-screen bg-openfund-gray-dark text-white flex flex-col">
+      <PageMeta 
+        title="Trade - OpenFund"
+        description="Trade cryptocurrencies, stocks, commodities and more on OpenFund. Access global markets with transparent fees and live charts."
+        canonicalUrl="https://openfund.io/trade" 
+      />
       <Navbar />
       <div className="container mx-auto px-3 md:px-4 py-4 md:py-6">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-6">

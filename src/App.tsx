@@ -1,7 +1,8 @@
+
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Toaster } from "@/components/ui/toaster";
 import { useEffect } from 'react';
-import { HelmetProvider } from 'react-helmet-async';
+import { HelmetProvider, Helmet } from 'react-helmet-async';
 import MobileBanner from './components/MobileBanner';
 
 import Index from './pages/Index';
@@ -110,6 +111,21 @@ function App() {
     <HelmetProvider>
       <Router>
         <div className="app">
+          {/* Default metadata for all pages */}
+          <Helmet>
+            <link rel="icon" href="/logo-icon.svg" type="image/svg+xml" />
+            <link rel="shortcut icon" href="/logo-icon.svg" type="image/svg+xml" />
+            <link rel="apple-touch-icon" href="/logo-icon.svg" />
+            <meta name="description" content="Trade stocks, crypto, commodities and more on a single platform with OpenFund. Create or join community-managed funds with transparent performance." />
+            <meta property="og:type" content="website" />
+            <meta property="og:image" content="/public/lovable-uploads/50405614-41eb-47b2-9f32-01941e61ad01.png" />
+            <meta property="og:site_name" content="OpenFund" />
+            <meta name="twitter:card" content="summary_large_image" />
+            <meta name="twitter:site" content="@openfund" />
+            <meta name="twitter:image" content="/public/lovable-uploads/50405614-41eb-47b2-9f32-01941e61ad01.png" />
+            <meta name="twitter:image:alt" content="OpenFund - Modern Investment Platform" />
+          </Helmet>
+          
           <MobileBanner />
           <Routes>
             <Route path="/" element={<Index />} />
