@@ -66,32 +66,51 @@ const Auth = () => {
     setIsLoading(true);
 
     try {
+      // Correctly format the captcha token for Supabase
       const options = {
         emailRedirectTo: window.location.origin,
         captchaToken: token,
+        data: {
+          turnstileToken: token
+        }
       };
 
+      console.log("Authenticating with token:", token);
+
       if (isLogin) {
-        const { error } = await supabase.auth.signInWithPassword({
+        const { error, data } = await supabase.auth.signInWithPassword({
           email,
           password,
-          options,
+          options
         });
+        
+        console.log("Login response:", error ? "Error" : "Success", error || data);
+        
         if (error) throw error;
+        
+        toast({
+          title: "Success!",
+          description: "You have been logged in successfully.",
+        });
         navigate('/account');
       } else {
-        const { error } = await supabase.auth.signUp({
+        const { error, data } = await supabase.auth.signUp({
           email,
           password,
-          options,
+          options
         });
+        
+        console.log("Signup response:", error ? "Error" : "Success", error || data);
+        
         if (error) throw error;
+        
         toast({
           title: "Success!",
           description: "Please check your email to verify your account.",
         });
       }
     } catch (error: any) {
+      console.error("Authentication error:", error);
       toast({
         title: "Error",
         description: error.message,
@@ -100,7 +119,9 @@ const Auth = () => {
     } finally {
       setIsLoading(false);
       // Reset the CAPTCHA after submission
-      window.turnstile.reset();
+      if (window.turnstile) {
+        window.turnstile.reset();
+      }
       setToken(null);
     }
   };
