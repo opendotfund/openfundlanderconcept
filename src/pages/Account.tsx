@@ -35,6 +35,7 @@ import { Label } from '@/components/ui/label';
 import { KYCForm } from '@/components/KYCForm';
 import { useToast } from '@/hooks/use-toast';
 import { useAuth } from '@/components/AuthContext';
+import { supabase } from '@/integrations/supabase/client';
 
 const portfolioData = {
   totalValue: 248536.42,
@@ -143,7 +144,7 @@ const Account = () => {
 
   const referralCode = 'OF' + Math.random().toString(36).substring(2, 8).toUpperCase();
   const [formData, setFormData] = useState({
-    name: portfolioData.user.name,
+    name: '',
     email: '',
     phone: '+1 555-123-4567',
     language: 'English',
@@ -156,6 +157,25 @@ const Account = () => {
         ...prev,
         email: user.email
       }));
+      
+      const fetchProfile = async () => {
+        const { data, error } = await supabase
+          .from('profiles')
+          .select('full_name, phone_number, preferred_language')
+          .eq('id', user.id)
+          .single();
+        
+        if (data && !error) {
+          setFormData(prev => ({
+            ...prev,
+            name: data.full_name || '',
+            phone: data.phone_number || '',
+            language: data.preferred_language || 'English'
+          }));
+        }
+      };
+      
+      fetchProfile();
     }
   }, [user]);
 
@@ -197,12 +217,32 @@ const Account = () => {
     }));
   };
 
-  const handleProfileSubmit = (e: React.FormEvent) => {
+  const handleProfileSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    toast({
-      title: "Profile updated!",
-      description: "Your profile information has been saved successfully.",
-    });
+    
+    if (!user) return;
+
+    const { error } = await supabase
+      .from('profiles')
+      .update({
+        full_name: formData.name,
+        phone_number: formData.phone,
+        preferred_language: formData.language
+      })
+      .eq('id', user.id);
+
+    if (error) {
+      toast({
+        variant: "destructive",
+        title: "Error updating profile",
+        description: error.message,
+      });
+    } else {
+      toast({
+        title: "Profile updated!",
+        description: "Your profile information has been saved successfully.",
+      });
+    }
   };
 
   if (!user) {
