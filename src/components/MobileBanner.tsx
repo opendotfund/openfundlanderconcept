@@ -27,11 +27,11 @@ const MobileBanner = () => {
     <AnimatePresence>
       {isVisible && (
         <motion.div
-          initial={{ opacity: 0, y: -50 }}
+          initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -50 }}
+          exit={{ opacity: 0, y: 50 }}
           transition={{ duration: 0.3 }}
-          className="fixed top-0 left-0 right-0 z-50 px-4 pt-2"
+          className="fixed bottom-0 left-0 right-0 z-50 px-4 pb-2"
         >
           <Alert className="bg-primary/10 border border-primary">
             <AlertCircle className="h-4 w-4 text-primary" />
