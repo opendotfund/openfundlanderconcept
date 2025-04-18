@@ -83,7 +83,7 @@ const Trade = () => {
                   />
                 </div>
               </div>
-              <div className="w-full flex justify-center items-center h-[350px] md:h-[450px]">
+              <div className={`w-full flex justify-center items-center ${isMobile ? 'h-[300px] -ml-2' : 'h-[450px]'}`}>
                 <AssetChart asset={selectedAsset} timeframe={timeframe} />
               </div>
             </div>
