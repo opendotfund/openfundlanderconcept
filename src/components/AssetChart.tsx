@@ -319,7 +319,7 @@ const fetchPriceData = async (asset: string, timeframe: string, isPortfolio: boo
   }
 };
 
-export default function AssetChart({ asset = 'bitcoin', timeframe, isPortfolio = false, portfolioName = '', portfolioData, className, onTimeframeChange }: AssetChartProps) {
+export function AssetChart({ asset = 'bitcoin', timeframe, isPortfolio = false, portfolioName = '', portfolioData, className, onTimeframeChange }: AssetChartProps) {
   const [chartData, setChartData] = useState<PriceData[]>([]);
   const [isLightMode, setIsLightMode] = useState<boolean>(false);
   const isMobile = useIsMobile();
