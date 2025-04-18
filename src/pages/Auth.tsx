@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -8,7 +7,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Separator } from '@/components/ui/separator';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
-import { Helmet } from 'react-helmet-async';
+import { SEO } from '@/components/SEO';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { Mail, Twitter } from 'lucide-react';
@@ -253,244 +252,247 @@ const Auth = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
-      <Helmet>
-        <title>{activeTab === 'login' ? 'Login' : 'Sign Up'} | OpenFund</title>
-      </Helmet>
-      
-      <Navbar />
-      
-      <main className="container mx-auto px-4 py-10">
-        <Card className="max-w-md mx-auto shadow-lg">
-          <CardHeader className="space-y-1">
-            <CardTitle className="text-2xl font-bold text-center">
-              Welcome to OpenFund
-            </CardTitle>
-            <CardDescription className="text-center">
-              {activeTab === 'login'
-                ? 'Login to your account to access your portfolio'
-                : 'Create an account to start investing'}
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as 'login' | 'signup')} className="w-full">
-              <TabsList className="grid w-full grid-cols-2 mb-4">
-                <TabsTrigger value="login">Login</TabsTrigger>
-                <TabsTrigger value="signup">Sign up</TabsTrigger>
-              </TabsList>
+    <>
+      <SEO 
+        title={`${activeTab === 'login' ? 'Login' : 'Sign Up'} | OpenFund`}
+        description="Access your OpenFund account. Trade stocks, crypto, and more with our secure platform."
+        keywords="OpenFund login, crypto trading account, investment platform access"
+      />
+      <div className="min-h-screen flex flex-col">
+        <Navbar />
+        
+        <main className="container mx-auto px-4 py-10">
+          <Card className="max-w-md mx-auto shadow-lg">
+            <CardHeader className="space-y-1">
+              <CardTitle className="text-2xl font-bold text-center">
+                Welcome to OpenFund
+              </CardTitle>
+              <CardDescription className="text-center">
+                {activeTab === 'login'
+                  ? 'Login to your account to access your portfolio'
+                  : 'Create an account to start investing'}
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as 'login' | 'signup')} className="w-full">
+                <TabsList className="grid w-full grid-cols-2 mb-4">
+                  <TabsTrigger value="login">Login</TabsTrigger>
+                  <TabsTrigger value="signup">Sign up</TabsTrigger>
+                </TabsList>
 
-              <TabsContent value="login" className="space-y-4">
-                <form onSubmit={handleEmailAuth} className="space-y-4">
-                  <div className="space-y-2">
-                    <label htmlFor="email-login" className="text-sm font-medium">
-                      Email
-                    </label>
-                    <Input
-                      id="email-login"
-                      type="email"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      placeholder="name@example.com"
-                      required
-                      autoComplete="email"
-                    />
-                  </div>
-                  
-                  <div className="space-y-2">
-                    <div className="flex items-center justify-between">
-                      <label htmlFor="password-login" className="text-sm font-medium">
-                        Password
+                <TabsContent value="login" className="space-y-4">
+                  <form onSubmit={handleEmailAuth} className="space-y-4">
+                    <div className="space-y-2">
+                      <label htmlFor="email-login" className="text-sm font-medium">
+                        Email
                       </label>
-                      <button
-                        type="button"
-                        onClick={() => navigate('/reset-password')}
-                        className="text-sm text-primary hover:underline"
-                      >
-                        Forgot password?
-                      </button>
+                      <Input
+                        id="email-login"
+                        type="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        placeholder="name@example.com"
+                        required
+                        autoComplete="email"
+                      />
                     </div>
-                    <Input
-                      id="password-login"
-                      type="password"
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
-                      placeholder="••••••••"
-                      required
-                      autoComplete="current-password"
-                    />
-                  </div>
+                    
+                    <div className="space-y-2">
+                      <div className="flex items-center justify-between">
+                        <label htmlFor="password-login" className="text-sm font-medium">
+                          Password
+                        </label>
+                        <button
+                          type="button"
+                          onClick={() => navigate('/reset-password')}
+                          className="text-sm text-primary hover:underline"
+                        >
+                          Forgot password?
+                        </button>
+                      </div>
+                      <Input
+                        id="password-login"
+                        type="password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        placeholder="••••••••"
+                        required
+                        autoComplete="current-password"
+                      />
+                    </div>
 
-                  <div className="flex justify-center">
-                    <div ref={turnstileContainerRef} id="turnstile-container"></div>
-                  </div>
-                  
-                  <Button type="submit" className="w-full" disabled={isLoading || !token}>
-                    {isLoading ? 'Logging in...' : 'Login'}
-                  </Button>
-                </form>
+                    <div className="flex justify-center">
+                      <div ref={turnstileContainerRef} id="turnstile-container"></div>
+                    </div>
+                    
+                    <Button type="submit" className="w-full" disabled={isLoading || !token}>
+                      {isLoading ? 'Logging in...' : 'Login'}
+                    </Button>
+                  </form>
 
-                <div className="relative my-4">
-                  <div className="absolute inset-0 flex items-center">
-                    <Separator className="w-full" />
-                  </div>
-                  <div className="relative flex justify-center">
-                    <span className="bg-background px-2 text-muted-foreground text-sm">
-                      Or continue with
-                    </span>
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-2 gap-4">
-                  <Button 
-                    variant="outline" 
-                    onClick={() => handleOAuthSignIn('google')} 
-                    disabled={isLoading}
-                  >
-                    <svg className="w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 488 512">
-                      <path d="M488 261.8C488 403.3 391.1 504 248 504 110.8 504 0 393.2 0 256S110.8 8 248 8c66.8 0 123 24.5 166.3 64.9l-67.5 64.9C258.5 52.6 94.3 116.6 94.3 256c0 86.5 69.1 156.6 153.7 156.6 98.2 0 135-70.4 140.8-106.9H248v-85.3h236.1c2.3 12.7 3.9 24.9 3.9 41.4z"/>
-                    </svg>
-                    Google
-                  </Button>
-                  <Button 
-                    variant="outline" 
-                    onClick={() => handleOAuthSignIn('twitter')} 
-                    disabled={isLoading}
-                  >
-                    <Twitter className="w-4 h-4 mr-2" />
-                    Twitter
-                  </Button>
-                </div>
-
-                <div className="mt-6">
-                  <div className="relative mb-4">
+                  <div className="relative my-4">
                     <div className="absolute inset-0 flex items-center">
                       <Separator className="w-full" />
                     </div>
                     <div className="relative flex justify-center">
                       <span className="bg-background px-2 text-muted-foreground text-sm">
-                        Or with magic link
+                        Or continue with
                       </span>
                     </div>
                   </div>
-                  
-                  <form onSubmit={handleMagicLinkSignIn} className="space-y-4">
+
+                  <div className="grid grid-cols-2 gap-4">
+                    <Button 
+                      variant="outline" 
+                      onClick={() => handleOAuthSignIn('google')} 
+                      disabled={isLoading}
+                    >
+                      <svg className="w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 488 512">
+                        <path d="M488 261.8C488 403.3 391.1 504 248 504 110.8 504 0 393.2 0 256S110.8 8 248 8c66.8 0 123 24.5 166.3 64.9l-67.5 64.9C258.5 52.6 94.3 116.6 94.3 256c0 86.5 69.1 156.6 153.7 156.6 98.2 0 135-70.4 140.8-106.9H248v-85.3h236.1c2.3 12.7 3.9 24.9 3.9 41.4z"/>
+                      </svg>
+                      Google
+                    </Button>
+                    <Button 
+                      variant="outline" 
+                      onClick={() => handleOAuthSignIn('twitter')} 
+                      disabled={isLoading}
+                    >
+                      <Twitter className="w-4 h-4 mr-2" />
+                      Twitter
+                    </Button>
+                  </div>
+
+                  <div className="mt-6">
+                    <div className="relative mb-4">
+                      <div className="absolute inset-0 flex items-center">
+                        <Separator className="w-full" />
+                      </div>
+                      <div className="relative flex justify-center">
+                        <span className="bg-background px-2 text-muted-foreground text-sm">
+                          Or with magic link
+                        </span>
+                      </div>
+                    </div>
+                    
+                    <form onSubmit={handleMagicLinkSignIn} className="space-y-4">
+                      <div className="space-y-2">
+                        <label htmlFor="magic-link-email" className="text-sm font-medium">
+                          Email
+                        </label>
+                        <Input
+                          id="magic-link-email"
+                          type="email"
+                          value={magicLinkEmail}
+                          onChange={(e) => setMagicLinkEmail(e.target.value)}
+                          placeholder="name@example.com"
+                          required
+                        />
+                      </div>
+                      
+                      <Button 
+                        type="submit" 
+                        variant="outline"
+                        className="w-full"
+                        disabled={isSendingMagicLink}
+                      >
+                        <Mail className="w-4 h-4 mr-2" />
+                        {isSendingMagicLink ? 'Sending...' : 'Send Magic Link'}
+                      </Button>
+                    </form>
+                  </div>
+                </TabsContent>
+
+                <TabsContent value="signup" className="space-y-4">
+                  <form onSubmit={handleEmailAuth} className="space-y-4">
                     <div className="space-y-2">
-                      <label htmlFor="magic-link-email" className="text-sm font-medium">
+                      <label htmlFor="email-signup" className="text-sm font-medium">
                         Email
                       </label>
                       <Input
-                        id="magic-link-email"
+                        id="email-signup"
                         type="email"
-                        value={magicLinkEmail}
-                        onChange={(e) => setMagicLinkEmail(e.target.value)}
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
                         placeholder="name@example.com"
                         required
+                        autoComplete="email"
                       />
                     </div>
                     
-                    <Button 
-                      type="submit" 
-                      variant="outline"
-                      className="w-full"
-                      disabled={isSendingMagicLink}
-                    >
-                      <Mail className="w-4 h-4 mr-2" />
-                      {isSendingMagicLink ? 'Sending...' : 'Send Magic Link'}
+                    <div className="space-y-2">
+                      <label htmlFor="password-signup" className="text-sm font-medium">
+                        Password
+                      </label>
+                      <Input
+                        id="password-signup"
+                        type="password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        placeholder="••••••••"
+                        required
+                        autoComplete="new-password"
+                      />
+                      <p className="text-xs text-muted-foreground">
+                        Password must be at least 8 characters long
+                      </p>
+                    </div>
+
+                    <div className="flex justify-center">
+                      <div ref={turnstileContainerRef} id="turnstile-container"></div>
+                    </div>
+                    
+                    <Button type="submit" className="w-full" disabled={isLoading || !token}>
+                      {isLoading ? 'Creating account...' : 'Create account'}
                     </Button>
                   </form>
-                </div>
-              </TabsContent>
 
-              <TabsContent value="signup" className="space-y-4">
-                <form onSubmit={handleEmailAuth} className="space-y-4">
-                  <div className="space-y-2">
-                    <label htmlFor="email-signup" className="text-sm font-medium">
-                      Email
-                    </label>
-                    <Input
-                      id="email-signup"
-                      type="email"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      placeholder="name@example.com"
-                      required
-                      autoComplete="email"
-                    />
+                  <div className="relative my-4">
+                    <div className="absolute inset-0 flex items-center">
+                      <Separator className="w-full" />
+                    </div>
+                    <div className="relative flex justify-center">
+                      <span className="bg-background px-2 text-muted-foreground text-sm">
+                        Or continue with
+                      </span>
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-4">
+                    <Button 
+                      variant="outline" 
+                      onClick={() => handleOAuthSignIn('google')} 
+                      disabled={isLoading}
+                    >
+                      <svg className="w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 488 512">
+                        <path d="M488 261.8C488 403.3 391.1 504 248 504 110.8 504 0 393.2 0 256S110.8 8 248 8c66.8 0 123 24.5 166.3 64.9l-67.5 64.9C258.5 52.6 94.3 116.6 94.3 256c0 86.5 69.1 156.6 153.7 156.6 98.2 0 135-70.4 140.8-106.9H248v-85.3h236.1c2.3 12.7 3.9 24.9 3.9 41.4z"/>
+                      </svg>
+                      Google
+                    </Button>
+                    <Button 
+                      variant="outline" 
+                      onClick={() => handleOAuthSignIn('twitter')} 
+                      disabled={isLoading}
+                    >
+                      <Twitter className="w-4 h-4 mr-2" />
+                      Twitter
+                    </Button>
                   </div>
                   
-                  <div className="space-y-2">
-                    <label htmlFor="password-signup" className="text-sm font-medium">
-                      Password
-                    </label>
-                    <Input
-                      id="password-signup"
-                      type="password"
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
-                      placeholder="••••••••"
-                      required
-                      autoComplete="new-password"
-                    />
-                    <p className="text-xs text-muted-foreground">
-                      Password must be at least 8 characters long
-                    </p>
-                  </div>
-
-                  <div className="flex justify-center">
-                    <div ref={turnstileContainerRef} id="turnstile-container"></div>
-                  </div>
-                  
-                  <Button type="submit" className="w-full" disabled={isLoading || !token}>
-                    {isLoading ? 'Creating account...' : 'Create account'}
-                  </Button>
-                </form>
-
-                <div className="relative my-4">
-                  <div className="absolute inset-0 flex items-center">
-                    <Separator className="w-full" />
-                  </div>
-                  <div className="relative flex justify-center">
-                    <span className="bg-background px-2 text-muted-foreground text-sm">
-                      Or continue with
-                    </span>
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-2 gap-4">
-                  <Button 
-                    variant="outline" 
-                    onClick={() => handleOAuthSignIn('google')} 
-                    disabled={isLoading}
-                  >
-                    <svg className="w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 488 512">
-                      <path d="M488 261.8C488 403.3 391.1 504 248 504 110.8 504 0 393.2 0 256S110.8 8 248 8c66.8 0 123 24.5 166.3 64.9l-67.5 64.9C258.5 52.6 94.3 116.6 94.3 256c0 86.5 69.1 156.6 153.7 156.6 98.2 0 135-70.4 140.8-106.9H248v-85.3h236.1c2.3 12.7 3.9 24.9 3.9 41.4z"/>
-                    </svg>
-                    Google
-                  </Button>
-                  <Button 
-                    variant="outline" 
-                    onClick={() => handleOAuthSignIn('twitter')} 
-                    disabled={isLoading}
-                  >
-                    <Twitter className="w-4 h-4 mr-2" />
-                    Twitter
-                  </Button>
-                </div>
-                
-                <p className="text-sm text-center text-muted-foreground mt-4">
-                  By creating an account, you agree to our
-                  <a href="/legal" className="text-primary hover:underline"> Terms of Service</a>
-                  {' '}and{' '}
-                  <a href="/legal" className="text-primary hover:underline">Privacy Policy</a>
-                </p>
-              </TabsContent>
-            </Tabs>
-          </CardContent>
-        </Card>
-      </main>
-      
-      <Footer />
-    </div>
+                  <p className="text-sm text-center text-muted-foreground mt-4">
+                    By creating an account, you agree to our
+                    <a href="/legal" className="text-primary hover:underline"> Terms of Service</a>
+                    {' '}and{' '}
+                    <a href="/legal" className="text-primary hover:underline">Privacy Policy</a>
+                  </p>
+                </TabsContent>
+              </Tabs>
+            </CardContent>
+          </Card>
+        </main>
+        
+        <Footer />
+      </div>
+    </>
   );
 };
 

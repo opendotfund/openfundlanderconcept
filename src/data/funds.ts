@@ -1,4 +1,3 @@
-
 // Fund data shared across the application
 
 export type Fund = {
@@ -428,6 +427,54 @@ export const cryptoFunds: Fund[] = [
       { name: 'Other Layer 1', value: 25, color: '#e84142' },
       { name: 'DeFi', value: 15, color: '#8247e5' }
     ]
+  },
+  {
+    id: 5,
+    name: 'a16z Crypto Fund',
+    manager: 'Andreessen Horowitz',
+    aum: '$3.1B',
+    returns: '121.5%',
+    minInvestment: '$1,000,000',
+    minInvestmentValue: 1000000,
+    year: '2018',
+    yearValue: 2018,
+    description: 'Venture capital fund focused on crypto and Web3 investments from early-stage protocols to later-stage networks.',
+    type: 'Crypto Fund',
+    focus: 'Web3 & Blockchain',
+    riskLevel: 'High',
+    performance: '121.5%',
+    volatility: '45.2%',
+    managementFee: '2.5%',
+    performanceFee: '25%',
+    lockupPeriod: '5 years',
+    redemptionFrequency: 'Quarterly',
+    redemptionNotice: '90 days',
+    nextWithdrawalWindow: 'Q2 2024',
+    timeUntilWithdrawal: '45 days',
+    assetTypes: ['Crypto', 'Web3', 'Blockchain'],
+    benchmarkIndex: 'Crypto VC Index',
+    benchmarkPerformance: '+85.2%',
+    fundStrategy: 'Focus on early-stage Web3 protocols and infrastructure with strong network effects and developer communities.',
+    aumValue: 3100000000,
+    returnsValue: 121.5,
+    performanceValue: 121.5,
+    volatilityValue: 45.2,
+    holdingsBreakdown: [
+      { name: 'Infrastructure', value: 35, color: '#4f46e5' },
+      { name: 'DeFi', value: 25, color: '#8247e5' },
+      { name: 'Gaming', value: 20, color: '#e11d48' },
+      { name: 'Social', value: 15, color: '#0ea5e9' },
+      { name: 'Other', value: 5, color: '#64748b' }
+    ],
+    topHoldings: [
+      'Uniswap',
+      'Solana',
+      'Aptos',
+      'Optimism',
+      'Yuga Labs'
+    ],
+    investors: 125,
+    inceptionDate: '2018-06-01'
   }
 ];
 

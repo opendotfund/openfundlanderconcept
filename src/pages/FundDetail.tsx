@@ -34,15 +34,19 @@ import { traditionalFunds, cryptoFunds, openfundFunds, getAllFunds, Fund as Fund
 const generateHistoricalData = (baseValue: number, volatility: number, uptrend: boolean) => {
   const data = [];
   let currentValue = baseValue;
+  const dataPoints = 90; // 90 days of data
   
-  for (let i = 0; i < 12; i++) { // 12 months of data
+  for (let i = 0; i < dataPoints; i++) {
     const change = (Math.random() * volatility * 0.01) * (uptrend ? 1.2 : 0.8);
     currentValue = uptrend ? 
       currentValue * (1 + change) : 
       Math.max(currentValue * (1 - change), baseValue * 0.5);
     
+    const date = new Date();
+    date.setDate(date.getDate() - (dataPoints - i));
+    
     data.push({
-      month: new Date(2024, i, 1).toLocaleString('default', { month: 'short' }),
+      date: date.toISOString().split('T')[0],
       value: parseFloat(currentValue.toFixed(2))
     });
   }
@@ -77,18 +81,17 @@ const FundDetail = () => {
 
   useEffect(() => {
     if (fundId) {
-      const numericId = parseInt(fundId);
       let foundFund = null;
       
       if (type === 'traditional') {
-        foundFund = traditionalFunds.find(f => f.id === numericId);
+        foundFund = traditionalFunds.find(f => f.id.toString() === fundId || f.id === parseInt(fundId));
       } else if (type === 'crypto') {
-        foundFund = cryptoFunds.find(f => f.id === numericId);
+        foundFund = cryptoFunds.find(f => f.id.toString() === fundId || f.id === parseInt(fundId));
       } else if (type === 'openfund') {
-        foundFund = openfundFunds.find(f => f.id === numericId);
+        foundFund = openfundFunds.find(f => f.id.toString() === fundId || f.id === parseInt(fundId));
       } else {
         // If no specific type is provided, search through all funds
-        foundFund = getAllFunds().find(f => f.id === numericId);
+        foundFund = getAllFunds().find(f => f.id.toString() === fundId || f.id === parseInt(fundId));
       }
       
       setFund(foundFund || null);
@@ -120,6 +123,71 @@ const FundDetail = () => {
       date: new Date().toISOString().split('T')[0],
       value: item.value
     })) : [];
+
+  // Generate historical data based on fund's actual performance
+  const generateHistoricalData = (baseValue: number, volatility: number, uptrend: boolean) => {
+    const data = [];
+    let currentValue = baseValue;
+    const dataPoints = 90; // 90 days of data
+    
+    // Calculate the target end value based on the fund's returns
+    const targetEndValue = baseValue * (1 + (fund.returnsValue / 100));
+    
+    for (let i = 0; i < dataPoints; i++) {
+      // Calculate the expected value at this point in time
+      const expectedValue = baseValue + ((targetEndValue - baseValue) * (i / dataPoints));
+      
+      // Add some volatility around the expected value
+      const change = (Math.random() * volatility * 0.01) * (uptrend ? 1.2 : 0.8);
+      currentValue = uptrend ? 
+        currentValue * (1 + change) : 
+        Math.max(currentValue * (1 - change), expectedValue * 0.7);
+      
+      // Ensure we're trending towards the target end value
+      const adjustment = (expectedValue - currentValue) * 0.1;
+      currentValue += adjustment;
+      
+      const date = new Date();
+      date.setDate(date.getDate() - (dataPoints - i));
+      
+      data.push({
+        date: date.toISOString().split('T')[0],
+        value: parseFloat(currentValue.toFixed(2))
+      });
+    }
+    
+    return data;
+  };
+
+  // Get the base value from the fund's name
+  const getBaseValue = (fundName: string) => {
+    const normalizedName = fundName.toLowerCase().replace(/\s+/g, '-');
+    const baseValues: Record<string, number> = {
+      'berkshire-hathaway': 700000.00,
+      'renaissance-technologies': 130000.00,
+      'bridgewater-associates': 235000.00,
+      'blackrock-global-allocation': 50000.00,
+      'vanguard-500-index': 800000.00,
+      'grayscale-bitcoin-trust': 30300.00,
+      'pantera-bitcoin-fund': 5100.00,
+      'galaxy-digital-holdings': 2500.00,
+      'bitwise-10-crypto-index': 1200.00,
+      'a16z-crypto-fund': 3100.00,
+      'alpha-seekers-1': 342000.00,
+      'alpha-seekers-2': 367000.00,
+      'alpha-seekers-3': 392000.00,
+      'alpha-seekers-4': 417000.00,
+      'alpha-seekers-5': 442000.00
+    };
+    
+    return baseValues[normalizedName] || 100000;
+  };
+
+  const historicalData = generateHistoricalData(
+    getBaseValue(fund.name),
+    fund.volatilityValue || 0.2,
+    fund.returnsValue > 0
+  );
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -177,11 +245,9 @@ const FundDetail = () => {
               <CardContent className="p-4">
                 <div className="h-[400px] w-full rounded-lg overflow-hidden border border-border/50 bg-card/50 p-2">
                   <AssetChart 
-                    asset={fund.name.toLowerCase().replace(' ', '-')} 
+                    asset={fund.name.toLowerCase().replace(' ', '-')}
                     timeframe={timeframe}
-                    isPortfolio={true}
-                    portfolioName={fund.name}
-                    portfolioData={chartData}
+                    isPortfolio={false}
                     className="w-full h-full"
                   />
                 </div>
@@ -421,7 +487,46 @@ const FundDetail = () => {
                           )}
                         </div>
                       ) : (
-                        <p className="text-gray-400">Detailed holdings information is not available for this fund.</p>
+                        <div className="space-y-6">
+                          <div className="flex items-center justify-center h-[300px] bg-card/50 rounded-lg border border-border/50">
+                            <div className="text-center">
+                              <AlertTriangle className="w-12 h-12 text-amber-500 mx-auto mb-4" />
+                              <h3 className="text-lg font-medium mb-2">Holdings Information Redacted</h3>
+                              <p className="text-muted-foreground">
+                                Detailed holdings information is not publicly available for this fund.
+                              </p>
+                            </div>
+                          </div>
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div className="bg-card/50 p-4 rounded-lg border border-border/50">
+                              <h4 className="font-medium mb-2">Top Holdings</h4>
+                              <div className="space-y-2">
+                                {[1, 2, 3, 4, 5].map((i) => (
+                                  <div key={i} className="flex items-center justify-between">
+                                    <div className="flex items-center">
+                                      <div className="w-8 h-8 bg-card rounded-full flex items-center justify-center mr-2">
+                                        <span className="text-muted-foreground">?</span>
+                                      </div>
+                                      <span className="text-muted-foreground">Redacted</span>
+                                    </div>
+                                    <span className="text-muted-foreground">XX.X%</span>
+                                  </div>
+                                ))}
+                              </div>
+                            </div>
+                            <div className="bg-card/50 p-4 rounded-lg border border-border/50">
+                              <h4 className="font-medium mb-2">Asset Allocation</h4>
+                              <div className="space-y-2">
+                                {[1, 2, 3, 4].map((i) => (
+                                  <div key={i} className="flex items-center justify-between">
+                                    <span className="text-muted-foreground">Redacted Category</span>
+                                    <span className="text-muted-foreground">XX.X%</span>
+                                  </div>
+                                ))}
+                              </div>
+                            </div>
+                          </div>
+                        </div>
                       )}
                     </CardContent>
                   </Card>
@@ -575,7 +680,7 @@ const FundDetail = () => {
                       )}
                     </>
                   ) : (
-                    <Button className="w-full fund-detail-request-button">
+                    <Button className="w-full fund-detail-request-button" onClick={() => navigate('/account?tab=kyc')}>
                       Request Investment
                     </Button>
                   )}

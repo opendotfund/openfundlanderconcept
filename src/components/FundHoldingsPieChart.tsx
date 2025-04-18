@@ -1,4 +1,3 @@
-
 import React, { useMemo } from 'react';
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend } from 'recharts';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -83,23 +82,24 @@ export const FundHoldingsPieChart: React.FC<FundHoldingsPieChartProps> = ({
   const chartHeight = isMobile ? "200px" : (isDeFiFund ? "380px" : "280px");
   const outerRadius = isMobile ? (isDeFiFund ? 70 : 60) : (isDeFiFund ? 120 : 90);
   const legendVerticalAlign = isMobile ? "bottom" : "bottom";
+  const legendHeight = isMobile ? 60 : 80;
 
   return (
     <Card className={cn("bg-card border-card", className, {
       "col-span-full": isDeFiFund
     })}>
       <CardHeader className={cn(isMobile ? "p-3 pb-1" : "")}>
-        <CardTitle>{title}</CardTitle>
+        <CardTitle className={cn(isMobile ? "text-base" : "")}>{title}</CardTitle>
       </CardHeader>
       <CardContent className={cn(isMobile ? "p-2 pt-0" : "")}>
         <div className="w-full" style={{ height: chartHeight }}>
           <ChartContainer config={config} className="h-full w-full">
             <ResponsiveContainer width="100%" height="100%">
-              <PieChart margin={isMobile ? { top: 0, right: 0, bottom: 25, left: 0 } : { top: 5, right: 10, left: 10, bottom: 25 }}>
+              <PieChart margin={isMobile ? { top: 0, right: 0, bottom: legendHeight, left: 0 } : { top: 5, right: 10, left: 10, bottom: 25 }}>
                 <Pie
                   data={enhancedHoldings}
                   cx="50%"
-                  cy="45%"
+                  cy={isMobile ? "40%" : "45%"}
                   labelLine={false}
                   outerRadius={outerRadius}
                   fill="#8884d8"
@@ -128,20 +128,25 @@ export const FundHoldingsPieChart: React.FC<FundHoldingsPieChartProps> = ({
                     />
                   )}
                 />
-                <Legend 
-                  layout="horizontal" 
+                <Legend
                   verticalAlign={legendVerticalAlign}
-                  align="center"
-                  wrapperStyle={isMobile ? 
-                    { fontSize: "10px", marginTop: "10px", width: "100%" } : 
-                    { marginTop: "15px" }
-                  }
-                  iconSize={isMobile ? 8 : 10}
-                  formatter={(value) => {
-                    const displayValue = isMobile && value.length > 10 ? 
-                      `${value.substring(0, 8)}...` : value;
-                    return <span className={cn("font-medium", isMobile ? "text-xs" : "text-sm")}>{displayValue}</span>;
-                  }}
+                  height={legendHeight}
+                  content={({ payload }) => (
+                    <div className={cn(
+                      "flex flex-wrap justify-center gap-2",
+                      isMobile ? "text-xs" : "text-sm"
+                    )}>
+                      {payload?.map((entry, index) => (
+                        <div key={`legend-${index}`} className="flex items-center gap-1">
+                          <div 
+                            className="w-2 h-2 rounded-full" 
+                            style={{ backgroundColor: entry.color }}
+                          />
+                          <span>{entry.value}</span>
+                        </div>
+                      ))}
+                    </div>
+                  )}
                 />
               </PieChart>
             </ResponsiveContainer>

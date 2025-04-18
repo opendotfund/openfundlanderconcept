@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import {
   Area,
@@ -42,43 +41,209 @@ const fetchPriceData = async (asset: string, timeframe: string, isPortfolio: boo
       'apple': 182.40,
       'tesla': 178.32,
       'gold': 2312.75,
-      'berkshire-hathaway': 700000.00,  // Using actual AUM value from fund data
-      'ark-innovation-etf': 16100.00,
-      'bridgewater-associates': 140000.00,
-      'renaissance-technologies': 110000.00,
-      'two-sigma-investments': 58000.00,
-      'elliott-management': 48000.00,
+      'berkshire-hathaway': 700000.00,
+      'renaissance-technologies': 130000.00,
+      'bridgewater-associates': 235000.00,
+      'blackrock-global-allocation': 50000.00,
+      'vanguard-500-index': 800000.00,
       'grayscale-bitcoin-trust': 30300.00,
-      'pantera-capital': 4700.00,
-      'polychain-capital': 1000.00,
-      '3-arrows-capital': 2800.00
+      'pantera-bitcoin-fund': 5100.00,
+      'galaxy-digital-holdings': 2500.00,
+      'bitwise-10-crypto-index': 1200.00,
+      'a16z-crypto-fund': 3100.00,
+      'alpha-seekers-1': 342000.00,
+      'alpha-seekers-2': 367000.00,
+      'alpha-seekers-3': 392000.00,
+      'alpha-seekers-4': 417000.00,
+      'alpha-seekers-5': 442000.00
     };
     
+    const getVolatilityFactor = (asset: string, timeframe: string) => {
+      const assetVolatility: Record<string, number> = {
+        'bitcoin': 0.015,
+        'ethereum': 0.018,
+        'solana': 0.022,
+        'apple': 0.008,
+        'tesla': 0.012,
+        'gold': 0.005,
+        'berkshire-hathaway': 0.004,
+        'renaissance-technologies': 0.006,
+        'bridgewater-associates': 0.005,
+        'blackrock-global-allocation': 0.004,
+        'vanguard-500-index': 0.003,
+        'grayscale-bitcoin-trust': 0.02,
+        'pantera-bitcoin-fund': 0.018,
+        'galaxy-digital-holdings': 0.025,
+        'bitwise-10-crypto-index': 0.016,
+        'a16z-crypto-fund': 0.014,
+        'alpha-seekers-1': 0.02,
+        'alpha-seekers-2': 0.022,
+        'alpha-seekers-3': 0.024,
+        'alpha-seekers-4': 0.026,
+        'alpha-seekers-5': 0.028
+      };
+
+      const baseVolatility = assetVolatility[asset] || 0.01;
+      
+      if (timeframe === '1h') return baseVolatility * 0.2;
+      if (timeframe === '24h') return baseVolatility * 0.4;
+      if (timeframe === '7d') return baseVolatility * 0.6;
+      if (timeframe === '30d') return baseVolatility * 0.8;
+      if (timeframe === '90d') return baseVolatility;
+      return baseVolatility * 1.2;
+    };
+
+    const getTrendFactor = (asset: string) => {
+      const trends: Record<string, number> = {
+        'bitcoin': 0.12,
+        'ethereum': 0.08,
+        'solana': 0.15,
+        'apple': 0.04,
+        'tesla': -0.02,
+        'gold': 0.02,
+        'berkshire-hathaway': 0.03,
+        'renaissance-technologies': 0.06,
+        'bridgewater-associates': 0.025,
+        'blackrock-global-allocation': 0.035,
+        'vanguard-500-index': 0.03,
+        'grayscale-bitcoin-trust': 0.14,
+        'pantera-bitcoin-fund': 0.11,
+        'galaxy-digital-holdings': 0.13,
+        'bitwise-10-crypto-index': 0.09,
+        'a16z-crypto-fund': 0.1,
+        'alpha-seekers-1': 0.22,
+        'alpha-seekers-2': 0.25,
+        'alpha-seekers-3': 0.28,
+        'alpha-seekers-4': 0.31,
+        'alpha-seekers-5': 0.34
+      };
+      return trends[asset] || 0;
+    };
+
+    const generateDataPoints = (baseValue: number, timeframe: string, asset: string) => {
+      const dataPoints = 
+        timeframe === '1h' ? 60 : 
+        timeframe === '24h' ? 24 : 
+        timeframe === '7d' ? 7 : 
+        timeframe === '30d' ? 30 : 
+        timeframe === '90d' ? 90 : 
+        365;
+
+      let lastValue = baseValue;
+      const trend = getTrendFactor(asset) / dataPoints;
+      const volatility = getVolatilityFactor(asset, timeframe);
+      
+      const data: PriceData[] = [];
+      const startDate = new Date();
+      startDate.setDate(startDate.getDate() - dataPoints);
+      
+      for (let i = 0; i < dataPoints; i++) {
+        const currentDate = new Date(startDate);
+        currentDate.setDate(currentDate.getDate() + i);
+        
+        const dailyCycle = Math.sin(i / 12) * 0.3;
+        const weeklyCycle = Math.sin(i / 30) * 0.2;
+        const monthlyCycle = Math.sin(i / 90) * 0.15;
+        
+        const cycleEffect = timeframe === '90d' ? monthlyCycle :
+                          (timeframe === '30d' || timeframe === '7d') ? weeklyCycle :
+                          dailyCycle;
+                          
+        const marketSentiment = Math.sin(i / (dataPoints * 0.5)) * 0.2;
+        const change = (Math.random() - 0.5 + trend + cycleEffect + marketSentiment) * volatility * lastValue;
+        
+        lastValue = Math.max(baseValue * 0.7, lastValue + change);
+        
+        let label = '';
+        if (timeframe === '90d') {
+          if (i % 15 === 0 || i === dataPoints - 1) {
+            label = currentDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+          }
+        } else if (timeframe === '30d') {
+          if (i % 7 === 0 || i === dataPoints - 1) {
+            label = currentDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+          }
+        } else if (timeframe === '7d') {
+          label = currentDate.toLocaleDateString('en-US', { weekday: 'short' });
+        } else if (timeframe === '24h') {
+          if (i % 2 === 0 || i === dataPoints - 1) {
+            label = currentDate.toLocaleTimeString('en-US', { hour: 'numeric' });
+          }
+        } else if (timeframe === '1h') {
+          if (i % 5 === 0 || i === dataPoints - 1) {
+            label = currentDate.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
+          }
+        }
+        
+        data.push({
+          name: label || currentDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
+          value: lastValue,
+          volume: Math.floor(Math.random() * lastValue * 0.05)
+        });
+      }
+      
+      return data;
+    };
+
     if (isPortfolio) {
-      if (portfolioData && portfolioData.length > 0 && timeframe === '90d') {
-        return portfolioData.map((dataPoint, index) => ({
-          name: dataPoint.date,
-          value: dataPoint.value,
-          volume: Math.floor(Math.random() * dataPoint.value * 0.05)
-        }));
+      if (portfolioData && portfolioData.length > 0) {
+        return portfolioData.map((dataPoint, index) => {
+          const date = new Date(dataPoint.date);
+          let label = '';
+          
+          if (timeframe === '90d') {
+            if (index % 15 === 0 || index === portfolioData.length - 1) {
+              label = date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+            }
+          } else if (timeframe === '30d') {
+            if (index % 7 === 0 || index === portfolioData.length - 1) {
+              label = date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+            }
+          } else if (timeframe === '7d') {
+            label = date.toLocaleDateString('en-US', { weekday: 'short' });
+          } else if (timeframe === '24h') {
+            if (index % 2 === 0 || index === portfolioData.length - 1) {
+              label = date.toLocaleTimeString('en-US', { hour: 'numeric' });
+            }
+          } else if (timeframe === '1h') {
+            if (index % 5 === 0 || index === portfolioData.length - 1) {
+              label = date.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
+            }
+          }
+          
+          return {
+            name: label || date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
+            value: dataPoint.value,
+            volume: Math.floor(Math.random() * dataPoint.value * 0.05)
+          };
+        });
       }
       
       let portfolioBaseValue = 0;
+      let portfolioVolatility = 0.02;
+      let portfolioTrend = 0.2;
       
       if (portfolioName) {
         const normalizedName = portfolioName.toLowerCase().replace(/\s+/g, '-');
         if (baseValues[normalizedName]) {
           portfolioBaseValue = baseValues[normalizedName];
+          portfolioVolatility = getVolatilityFactor(normalizedName, timeframe);
+          portfolioTrend = getTrendFactor(normalizedName);
         } else if (portfolioName.includes('Alpha Seekers')) {
-          portfolioBaseValue = 342000 + parseInt(portfolioName.split('#')[1] || '1') * 25000;
+          const fundNumber = parseInt(portfolioName.split('#')[1] || '1');
+          portfolioBaseValue = 342000 + fundNumber * 25000;
+          portfolioVolatility = 0.02 + (fundNumber * 0.002);
+          portfolioTrend = 0.22 + (fundNumber * 0.03);
         } else {
-          portfolioBaseValue = 250000; // Default fallback
+          portfolioBaseValue = 250000;
+          portfolioVolatility = 0.015;
+          portfolioTrend = 0.15;
         }
       } else {
-        portfolioBaseValue = 250000; // Default fallback
+        portfolioBaseValue = 250000;
+        portfolioVolatility = 0.015;
+        portfolioTrend = 0.15;
       }
-      
-      const endValue = portfolioBaseValue;
       
       const dataPoints = 
         timeframe === '1h' ? 60 : 
@@ -87,185 +252,65 @@ const fetchPriceData = async (asset: string, timeframe: string, isPortfolio: boo
         timeframe === '30d' ? 30 : 
         timeframe === '90d' ? 90 : 
         365;
-      
-      let lastValue = portfolioBaseValue * 0.8;
-      const targetValue = portfolioBaseValue;
-      
-      const getVolatilityFactor = () => {
-        if (timeframe === '1h') return 0.0005;
-        if (timeframe === '24h') return 0.001;
-        if (timeframe === '7d') return 0.003;
-        if (timeframe === '30d') return 0.004;
-        if (timeframe === '90d') return 0.005;
-        return 0.006;
-      };
-      
-      const volatilityFactor = getVolatilityFactor();
-      const variance = portfolioBaseValue * volatilityFactor;
-      
-      const seedValue = portfolioName ? portfolioName.length : 10;
-      
-      const getTrendFactor = () => {
-        if (timeframe === '1h') {
-          return [0.4, -0.1, 0.3, -0.1, 0.3];
-        } else if (timeframe === '24h') {
-          return [0.4, 0.3, -0.1, 0.2, -0.1, 0.2];
-        } else if (timeframe === '7d') {
-          return [0.2, 0.4, 0.3, -0.1, 0.2, -0.1, 0.3];
-        } else {
-          return [0.25, 0.2, -0.1, 0.15, -0.05, 0.2];
-        }
-      };
-      
-      const trendFactors = getTrendFactor();
-      
-      const growthNeeded = targetValue - lastValue;
-      const averageGrowthPerPoint = growthNeeded / dataPoints;
+
+      let lastValue = portfolioBaseValue;
+      const trend = portfolioTrend / dataPoints;
+      const volatility = portfolioVolatility;
       
       const data: PriceData[] = [];
+      const startDate = new Date();
+      startDate.setDate(startDate.getDate() - dataPoints);
+      
       for (let i = 0; i < dataPoints; i++) {
-        const trendIndex = i % trendFactors.length;
-        const trendFactor = trendFactors[trendIndex];
+        const currentDate = new Date(startDate);
+        currentDate.setDate(currentDate.getDate() + i);
         
-        const cycle = Math.sin(i / (dataPoints * 0.2)) * 0.1;
+        const dailyCycle = Math.sin(i / 12) * 0.3;
+        const weeklyCycle = Math.sin(i / 30) * 0.2;
+        const monthlyCycle = Math.sin(i / 90) * 0.15;
         
-        const baseChange = averageGrowthPerPoint * (1 + (Math.random() * 0.5));
+        const cycleEffect = timeframe === '90d' ? monthlyCycle :
+                          (timeframe === '30d' || timeframe === '7d') ? weeklyCycle :
+                          dailyCycle;
+                          
+        const marketSentiment = Math.sin(i / (dataPoints * 0.5)) * 0.2;
+        const change = (Math.random() - 0.5 + trend + cycleEffect + marketSentiment) * volatility * lastValue;
         
-        const change = baseChange + (Math.random() - 0.4 + trendFactor + cycle) * variance;
-        
-        const finalChange = Math.random() > 0.3 ? Math.abs(change) : -Math.abs(change) * 0.5;
-        
-        lastValue = Math.max(portfolioBaseValue * 0.7, lastValue + finalChange);
-        
-        if (i === dataPoints - 1) {
-          lastValue = endValue;
-        }
+        lastValue = Math.max(portfolioBaseValue * 0.7, lastValue + change);
         
         let label = '';
-        if (timeframe === '1h') {
-          if (i % 5 === 0 || i === dataPoints - 1) {
-            label = `${60-i}m`;
+        if (timeframe === '90d') {
+          if (i % 15 === 0 || i === dataPoints - 1) {
+            label = currentDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
           }
-        } else if (timeframe === '24h') {
-          if (i % 2 === 0 || i === dataPoints - 1) {
-            label = `${24-i}h`;
+        } else if (timeframe === '30d') {
+          if (i % 7 === 0 || i === dataPoints - 1) {
+            label = currentDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
           }
         } else if (timeframe === '7d') {
-          label = `Day ${7-i}`;
-        } else if (timeframe === '30d') {
-          const weekNum = Math.floor((30-i)/7) + 1;
-          if (i % 7 === 0 || i === dataPoints - 1) {
-            label = `W${weekNum}`;
+          label = currentDate.toLocaleDateString('en-US', { weekday: 'short' });
+        } else if (timeframe === '24h') {
+          if (i % 2 === 0 || i === dataPoints - 1) {
+            label = currentDate.toLocaleTimeString('en-US', { hour: 'numeric' });
           }
-        } else if (timeframe === '90d') {
-          const monthNum = Math.floor((90-i)/30) + 1;
-          if (i % 30 === 0 || i === dataPoints - 1) {
-            label = `M${monthNum}`;
-          }
-        } else {
-          const monthNames = ['Jan', 'Mar', 'May', 'Jul', 'Sep', 'Nov'];
-          const monthNum = Math.floor((365-i)/30) % 12;
-          if (i % 60 === 0 || i === dataPoints - 1) {
-            const idx = Math.floor(monthNum / 2);
-            if (idx < monthNames.length) {
-              label = monthNames[idx];
-            }
+        } else if (timeframe === '1h') {
+          if (i % 5 === 0 || i === dataPoints - 1) {
+            label = currentDate.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
           }
         }
         
         data.push({
-          name: label,
-          value: parseFloat(lastValue.toFixed(2)),
-          volume: Math.floor(Math.random() * portfolioBaseValue * 0.05)
+          name: label || currentDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
+          value: lastValue,
+          volume: Math.floor(Math.random() * lastValue * 0.05)
         });
       }
       
-      return data.reverse();
+      return data;
     } else {
       const normalizedAsset = asset.toLowerCase().replace(/\s+/g, '-');
       const baseValue = baseValues[normalizedAsset] || 100;
-      
-      const dataPoints = 
-        timeframe === '1h' ? 60 : 
-        timeframe === '24h' ? 24 : 
-        timeframe === '7d' ? 7 : 
-        timeframe === '30d' ? 30 : 
-        timeframe === '90d' ? 90 : 
-        365;
-      
-      let lastValue = baseValue;
-      
-      const getVolatilityFactor = () => {
-        if (timeframe === '1h') return 0.0008;
-        if (timeframe === '24h') return 0.002;
-        if (timeframe === '7d') return 0.004;
-        if (timeframe === '30d') return 0.006;
-        if (timeframe === '90d') return 0.008;
-        return 0.01;
-      };
-      
-      const volatilityFactor = getVolatilityFactor();
-      const variance = baseValue * volatilityFactor;
-      
-      const assetTrend = () => {
-        if (normalizedAsset === 'bitcoin') return 0.08;
-        if (normalizedAsset === 'ethereum') return 0.05;
-        if (normalizedAsset === 'solana') return 0.1;
-        if (normalizedAsset === 'tesla') return -0.02;
-        return 0;
-      };
-      
-      const trend = assetTrend() / dataPoints;
-      
-      const data: PriceData[] = [];
-      for (let i = 0; i < dataPoints; i++) {
-        const dailyCycle = Math.sin(i / 12) * 0.3;
-        const weeklyCycle = Math.sin(i / 30) * 0.2;
-        
-        const cycleEffect = (timeframe === '1h' || timeframe === '24h') ? dailyCycle : weeklyCycle;
-        const change = (Math.random() - 0.5 + trend + cycleEffect * volatilityFactor) * variance;
-        lastValue = Math.max(1, lastValue + change);
-        
-        let label = '';
-        if (timeframe === '1h') {
-          if (i % 5 === 0 || i === dataPoints - 1) {
-            label = `${60-i}m`;
-          }
-        } else if (timeframe === '24h') {
-          if (i % 2 === 0 || i === dataPoints - 1) {
-            label = `${24-i}h`;
-          }
-        } else if (timeframe === '7d') {
-          label = `Day ${7-i}`;
-        } else if (timeframe === '30d') {
-          const weekNum = Math.ceil((30-i)/7);
-          if (i % 7 === 0 || i === dataPoints - 1) {
-            label = `W${weekNum}`;
-          }
-        } else if (timeframe === '90d') {
-          const monthNum = Math.floor((90-i)/30) + 1;
-          if (i % 30 === 0 || i === dataPoints - 1) {
-            label = `M${monthNum}`;
-          }
-        } else {
-          const monthNames = ['Jan', 'Mar', 'May', 'Jul', 'Sep', 'Nov'];
-          const monthNum = Math.floor((365-i)/30) % 12;
-          if (i % 60 === 0 || i === dataPoints - 1) {
-            const idx = Math.floor(monthNum / 2);
-            if (idx < monthNames.length) {
-              label = monthNames[idx];
-            }
-          }
-        }
-        
-        data.push({
-          name: label,
-          value: parseFloat(lastValue.toFixed(2)),
-          volume: Math.floor(Math.random() * baseValue * 100 * (1 + Math.sin(i/10) * 0.3))
-        });
-      }
-      
-      return data.reverse();
+      return generateDataPoints(baseValue, timeframe, normalizedAsset);
     }
   } catch (error) {
     console.error("Error fetching price data:", error);
@@ -328,8 +373,8 @@ export const AssetChart = ({ asset = 'bitcoin', timeframe, isPortfolio = false, 
   
   // Adjust margins to ensure X-axis labels have enough space
   const margins = isMobile 
-    ? { top: 10, right: 10, left: 30, bottom: 30 }  // Increased bottom margin
-    : { top: 20, right: 20, left: 50, bottom: 40 }; // Increased bottom margin
+    ? { top: 10, right: 10, left: 30, bottom: 40 }  // Increased bottom margin for mobile
+    : { top: 20, right: 20, left: 50, bottom: 40 };
 
   return (
     <div className={`w-full h-full ${className || ''}`}>
@@ -349,7 +394,6 @@ export const AssetChart = ({ asset = 'bitcoin', timeframe, isPortfolio = false, 
         </div>
       )}
       
-      {/* Adjusted height to leave room for X-axis labels */}
       <div className="w-full h-[calc(100%-70px)]">
         <ChartContainer
           config={{
@@ -378,18 +422,18 @@ export const AssetChart = ({ asset = 'bitcoin', timeframe, isPortfolio = false, 
                 dataKey="name"
                 tickLine={false}
                 axisLine={true}
-                dy={isMobile ? 10 : 15} // Increased vertical offset for labels
+                dy={isMobile ? 15 : 15}
                 tick={{ 
                   fill: isLightMode ? '#666' : '#888', 
-                  fontSize: isMobile ? 10 : 12  // Slightly larger font size
+                  fontSize: isMobile ? 10 : 12
                 }}
-                height={isMobile ? 35 : 50}  // Increased height for X-axis area
+                height={isMobile ? 50 : 50}
                 padding={{ left: 10, right: 10 }}
-                interval={timeframe === '30d' || timeframe === '90d' || timeframe === '1y' ? "preserveEnd" : 0}
-                tickFormatter={(value) => value || ''}
-                tickMargin={isMobile ? 10 : 15}  // Increased margin below the ticks
-                minTickGap={isMobile ? 30 : 50}
+                interval={isMobile ? "preserveEnd" : "preserveEnd"}
+                tickMargin={isMobile ? 20 : 15}
+                minTickGap={isMobile ? 20 : 50}
                 allowDataOverflow={false}
+                angle={isMobile ? -45 : 0}  // Rotate labels on mobile for better readability
               />
               <YAxis 
                 tickLine={false}
@@ -419,13 +463,13 @@ export const AssetChart = ({ asset = 'bitcoin', timeframe, isPortfolio = false, 
                 strokeWidth={2}
                 fillOpacity={1}
                 fill="url(#colorPrice)"
-                activeDot={{ r: 6, fill: chartColor, strokeWidth: 0 }}
+                activeDot={{ r: isMobile ? 4 : 6, fill: chartColor, strokeWidth: 0 }}
               />
               <Bar 
                 dataKey="volume" 
                 fill={isLightMode ? "#D1D5DB" : "#404040"}
                 opacity={0.3}
-                barSize={isMobile ? 3 : 5}
+                barSize={isMobile ? 2 : 5}
               />
             </AreaChart>
           </ResponsiveContainer>

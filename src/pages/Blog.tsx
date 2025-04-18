@@ -1,9 +1,7 @@
-
 import React, { useState, useMemo } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
-import { Helmet } from 'react-helmet-async';
 import { blogPosts, BlogPost } from '@/data/blogPosts';
 import BlogPostCard from '@/components/blog/BlogPostCard';
 import BlogPostContent from '@/components/blog/BlogPostContent';
@@ -17,6 +15,7 @@ import {
   DropdownMenuTrigger 
 } from '@/components/ui/dropdown-menu';
 import { Badge } from '@/components/ui/badge';
+import { SEO } from '../components/SEO';
 
 type CategoryType = BlogPost['category'];
 
@@ -74,20 +73,20 @@ const Blog: React.FC = () => {
   
   return (
     <>
-      <Helmet>
-        <title>{currentPost ? `${currentPost.title} | OpenFund Blog` : 'OpenFund Blog: Cryptocurrency Guides & Exchange Tips'}</title>
-        <meta 
-          name="description" 
-          content={currentPost ? currentPost.excerpt : "OpenFund's blog with expert guides on cryptocurrency, exchanges, cold storage, and secure investing. Find answers to all your crypto questions."} 
-        />
-        <meta name="keywords" content="OpenFund, cryptocurrency blog, crypto guides, bitcoin storage, crypto exchanges, blockchain education" />
-        <link rel="canonical" href={`https://openfund.io/blog${postId ? `?post=${postId}` : ''}`} />
-      </Helmet>
+      <SEO 
+        title={currentPost ? `${currentPost.title} | OpenFund Blog` : 'OpenFund Blog: Cryptocurrency Guides & Exchange Tips'}
+        description={currentPost ? currentPost.excerpt : "OpenFund's blog with expert guides on cryptocurrency, exchanges, cold storage, and secure investing. Find answers to all your crypto questions."}
+        keywords="OpenFund, cryptocurrency blog, crypto guides, bitcoin storage, crypto exchanges, blockchain education"
+        canonicalUrl={`https://openfund.io/blog${postId ? `?post=${postId}` : ''}`}
+      />
 
       <div className="flex flex-col min-h-screen">
         <Navbar />
         
         <main className="flex-grow container mx-auto px-4 py-8">
+          <h1 className="text-4xl font-bold mb-8">
+            Latest Insights on Decentralized Funding & Web3
+          </h1>
           {currentPost ? (
             <BlogPostContent post={currentPost} />
           ) : (
