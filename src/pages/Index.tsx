@@ -8,7 +8,6 @@ import ChartPreview from '@/components/ChartPreview';
 import Footer from '@/components/Footer';
 import HowItWorks from '@/components/HowItWorks';
 import { Button } from '@/components/ui/button';
-
 const Index = () => {
   return <div className="min-h-screen bg-background text-foreground">
       <Navbar />
@@ -63,7 +62,7 @@ const Index = () => {
                 <p className="text-muted-foreground mb-4">Secure, transparent fund management with automated performance fees.</p>
                 <div className="flex justify-between items-center pt-3 border-t border-border">
                   <span className="text-sm text-muted-foreground">Committed Total Value Locked</span>
-                  <span className="text-primary font-bold">$3.29M</span>
+                  <span className="text-primary font-bold">$3.75M</span>
                 </div>
               </div>
             </div>
@@ -213,12 +212,7 @@ const Index = () => {
                   <div className="relative z-10 bg-background p-6 rounded-lg border border-border">
                     <div className="grid grid-cols-2 gap-4">
                       <div className="bg-card p-4 rounded-md flex flex-col items-center justify-center text-center relative">
-                        <a 
-                          href="https://sol.openfund.online" 
-                          target="_blank" 
-                          rel="noopener noreferrer"
-                          className="absolute top-2 right-2 text-muted-foreground hover:text-primary transition-colors"
-                        >
+                        <a href="https://sol.openfund.online" target="_blank" rel="noopener noreferrer" className="absolute top-2 right-2 text-muted-foreground hover:text-primary transition-colors">
                           <Info size={16} />
                         </a>
                         <div className="text-2xl font-bold text-primary mb-1">$3M+</div>
@@ -249,5 +243,4 @@ const Index = () => {
       <Footer />
     </div>;
 };
-
 export default Index;
