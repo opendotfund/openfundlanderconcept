@@ -30,6 +30,7 @@ interface AssetChartProps {
   portfolioName?: string;
   portfolioData?: ChartDataPoint[];
   className?: string;
+  onTimeframeChange?: (newTimeframe: string) => void;
 }
 
 const fetchPriceData = async (asset: string, timeframe: string, isPortfolio: boolean = false, portfolioName: string = '', portfolioData?: ChartDataPoint[]): Promise<PriceData[]> => {
@@ -318,7 +319,7 @@ const fetchPriceData = async (asset: string, timeframe: string, isPortfolio: boo
   }
 };
 
-export const AssetChart = ({ asset = 'bitcoin', timeframe, isPortfolio = false, portfolioName = '', portfolioData, className }: AssetChartProps) => {
+export default function AssetChart({ asset = 'bitcoin', timeframe, isPortfolio = false, portfolioName = '', portfolioData, className, onTimeframeChange }: AssetChartProps) {
   const [chartData, setChartData] = useState<PriceData[]>([]);
   const [isLightMode, setIsLightMode] = useState<boolean>(false);
   const isMobile = useIsMobile();
@@ -477,4 +478,4 @@ export const AssetChart = ({ asset = 'bitcoin', timeframe, isPortfolio = false, 
       </div>
     </div>
   );
-};
+}

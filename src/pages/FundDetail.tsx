@@ -23,7 +23,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
-import { AssetChart } from '@/components/AssetChart';
+import AssetChart from '@/components/AssetChart';
 import { TimeframeSelector } from '@/components/TimeframeSelector';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { useToast } from '@/hooks/use-toast';
@@ -243,13 +243,19 @@ const FundDetail = () => {
                 </div>
               </CardHeader>
               <CardContent className="p-4">
-                <div className="h-[400px] w-full rounded-lg overflow-hidden border border-border/50 bg-card/50 p-2">
-                  <AssetChart 
-                    asset={fund.name.toLowerCase().replace(' ', '-')}
-                    timeframe={timeframe}
-                    isPortfolio={false}
-                    className="w-full h-full"
-                  />
+                <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-2 md:p-4">
+                  <div className="flex justify-between items-center mb-2 md:mb-4">
+                    <h3 className="text-sm md:text-lg font-semibold text-gray-900 dark:text-white">Price Chart</h3>
+                  </div>
+                  <div className="relative">
+                    <div className="h-[250px] md:h-[450px] -ml-2 md:ml-0">
+                      <AssetChart
+                        asset={fund.name}
+                        timeframe={timeframe}
+                        onTimeframeChange={setTimeframe}
+                      />
+                    </div>
+                  </div>
                 </div>
               </CardContent>
             </Card>
