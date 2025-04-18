@@ -22,9 +22,9 @@ const PageMeta: React.FC<PageMetaProps> = ({
       <meta property="og:description" content={description} />
       {canonicalUrl && <meta property="og:url" content={canonicalUrl} />}
       
-      <link rel="icon" href="/logo-icon.svg" type="image/svg+xml" />
-      <link rel="apple-touch-icon" href="/logo-icon.svg" />
-      <link rel="shortcut icon" href="/logo-icon.svg" type="image/svg+xml" />
+      <link rel="icon" href="/lovable-uploads/afec2133-4a00-40c2-b95f-6ef97f2ecce5.png" type="image/png" />
+      <link rel="apple-touch-icon" href="/lovable-uploads/afec2133-4a00-40c2-b95f-6ef97f2ecce5.png" />
+      <link rel="shortcut icon" href="/lovable-uploads/afec2133-4a00-40c2-b95f-6ef97f2ecce5.png" type="image/png" />
     </Helmet>
   );
 };
