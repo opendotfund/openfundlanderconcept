@@ -372,15 +372,20 @@ export function AssetChart({ asset = 'bitcoin', timeframe, isPortfolio = false, 
     ? (isPositive ? "#0EA5E9" : "#FF4545")
     : (isPositive ? "#00FF00" : "#FF4545");
   
-  // Adjust margins to ensure X-axis labels have enough space
+  // Use neutral grey for gradient in fund detail pages
+  const gradientColor = isPortfolio 
+    ? (isLightMode ? "#E5E7EB" : "#404040")
+    : chartColor;
+  
+  // Optimized margins for better space utilization
   const margins = isMobile 
-    ? { top: 10, right: 10, left: 30, bottom: 40 }  // Increased bottom margin for mobile
-    : { top: 20, right: 20, left: 50, bottom: 40 };
+    ? { top: 5, right: 5, left: 35, bottom: isPortfolio ? 20 : 55 }
+    : { top: 10, right: 10, left: 45, bottom: isPortfolio ? 20 : 55 };
 
   return (
     <div className={`w-full h-full ${className || ''}`}>
       {chartData.length > 0 && (
-        <div className={`flex ${isMobile ? 'flex-col gap-1' : 'items-center justify-between'} mb-3 px-4`}>
+        <div className={`flex ${isMobile ? 'flex-col gap-1' : 'items-center justify-between'} mb-2 px-2`}>
           <div className={`${isMobile ? 'text-lg' : 'text-xl'} font-medium`}>
             {displayName}
           </div>
@@ -395,7 +400,7 @@ export function AssetChart({ asset = 'bitcoin', timeframe, isPortfolio = false, 
         </div>
       )}
       
-      <div className="w-full h-[calc(100%-70px)]">
+      <div className={`w-full ${isPortfolio ? 'h-[calc(100%-40px)]' : 'h-[calc(100%-50px)]'}`}>
         <ChartContainer
           config={{
             value: {
@@ -415,26 +420,26 @@ export function AssetChart({ asset = 'bitcoin', timeframe, isPortfolio = false, 
             >
               <defs>
                 <linearGradient id="colorPrice" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor={chartColor} stopOpacity={0.3} />
-                  <stop offset="95%" stopColor={chartColor} stopOpacity={0} />
+                  <stop offset="5%" stopColor={gradientColor} stopOpacity={0.2} />
+                  <stop offset="95%" stopColor={gradientColor} stopOpacity={0} />
                 </linearGradient>
               </defs>
               <XAxis 
                 dataKey="name"
                 tickLine={false}
                 axisLine={true}
-                dy={isMobile ? 15 : 15}
+                dy={10}
                 tick={{ 
                   fill: isLightMode ? '#666' : '#888', 
                   fontSize: isMobile ? 10 : 12
                 }}
-                height={isMobile ? 50 : 50}
-                padding={{ left: 10, right: 10 }}
-                interval={isMobile ? "preserveEnd" : "preserveEnd"}
-                tickMargin={isMobile ? 20 : 15}
-                minTickGap={isMobile ? 20 : 50}
+                height={35}
+                padding={{ left: 5, right: 5 }}
+                interval="preserveEnd"
+                tickMargin={5}
+                minTickGap={isMobile ? 15 : 30}
                 allowDataOverflow={false}
-                angle={isMobile ? -45 : 0}  // Rotate labels on mobile for better readability
+                angle={isMobile ? -30 : 0}
               />
               <YAxis 
                 tickLine={false}
@@ -444,8 +449,8 @@ export function AssetChart({ asset = 'bitcoin', timeframe, isPortfolio = false, 
                   fontSize: isMobile ? 10 : 12 
                 }}
                 domain={['auto', 'auto']}
-                dx={isMobile ? -5 : -10}
-                width={isMobile ? 40 : 60}
+                dx={-5}
+                width={40}
                 tickFormatter={(value) => isMobile 
                   ? value >= 1000 
                     ? `$${(value/1000).toFixed(0)}K` 
@@ -470,7 +475,7 @@ export function AssetChart({ asset = 'bitcoin', timeframe, isPortfolio = false, 
                 dataKey="volume" 
                 fill={isLightMode ? "#D1D5DB" : "#404040"}
                 opacity={0.3}
-                barSize={isMobile ? 2 : 5}
+                barSize={isMobile ? 2 : 4}
               />
             </AreaChart>
           </ResponsiveContainer>
