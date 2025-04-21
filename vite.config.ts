@@ -12,6 +12,10 @@ export default defineConfig(({ mode }) => {
     base: '/',
     define: {
       'process.env.NODE_ENV': JSON.stringify(mode),
+      'process.env': {
+        ...env,
+        PUBLIC_URL: mode === 'production' ? '' : '/'
+      }
     },
     server: {
       host: true,
