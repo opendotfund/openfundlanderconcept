@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -53,21 +53,18 @@ interface AssetCarouselProps {
 
 export const AssetCarousel = ({ onAssetChange }: AssetCarouselProps) => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [isTransitioning, setIsTransitioning] = useState(false);
-  const [direction, setDirection] = useState<'left' | 'right'>('right');
+  const [isHovered, setIsHovered] = useState(false);
+  const carouselRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const interval = setInterval(() => {
-      if (!isTransitioning) {
-        setDirection('right');
-        setIsTransitioning(true);
+      if (!isHovered) {
         setCurrentIndex((prev) => (prev + 1) % assets.length);
-        setTimeout(() => setIsTransitioning(false), 500);
       }
-    }, 4000);
+    }, 5000);
 
     return () => clearInterval(interval);
-  }, [isTransitioning]);
+  }, [isHovered]);
 
   useEffect(() => {
     if (onAssetChange) {
@@ -76,21 +73,11 @@ export const AssetCarousel = ({ onAssetChange }: AssetCarouselProps) => {
   }, [currentIndex, onAssetChange]);
 
   const handlePrev = () => {
-    if (!isTransitioning) {
-      setDirection('left');
-      setIsTransitioning(true);
-      setCurrentIndex((prev) => (prev - 1 + assets.length) % assets.length);
-      setTimeout(() => setIsTransitioning(false), 500);
-    }
+    setCurrentIndex((prev) => (prev - 1 + assets.length) % assets.length);
   };
 
   const handleNext = () => {
-    if (!isTransitioning) {
-      setDirection('right');
-      setIsTransitioning(true);
-      setCurrentIndex((prev) => (prev + 1) % assets.length);
-      setTimeout(() => setIsTransitioning(false), 500);
-    }
+    setCurrentIndex((prev) => (prev + 1) % assets.length);
   };
 
   const getAssetIndex = (offset: number) => {
@@ -98,10 +85,15 @@ export const AssetCarousel = ({ onAssetChange }: AssetCarouselProps) => {
   };
 
   return (
-    <div className="relative">
-      <div className="flex items-center justify-center gap-4">
+    <div 
+      ref={carouselRef}
+      className="relative"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      <div className="flex items-center justify-center gap-4 transition-all duration-500 ease-in-out">
         {/* Left Asset */}
-        <Card className="w-1/4 bg-card/50 border-border/50 scale-90 opacity-70">
+        <Card className="w-1/4 bg-card/50 border-border/50 scale-90 opacity-70 transition-all duration-500 ease-in-out">
           <CardContent className="p-4">
             <div className="flex items-center justify-between mb-2">
               <h3 className="text-lg font-bold">{assets[getAssetIndex(-1)].name}</h3>
@@ -119,9 +111,9 @@ export const AssetCarousel = ({ onAssetChange }: AssetCarouselProps) => {
         {/* Center Asset */}
         <Link 
           to={`/trade?asset=${encodeURIComponent(assets[currentIndex].value)}`}
-          className="w-1/2 transition-transform hover:scale-105"
+          className="w-1/2 transition-all duration-500 ease-in-out transform hover:scale-105"
         >
-          <Card className="bg-card border-2 border-primary shadow-lg scale-105 cursor-pointer hover:shadow-xl transition-all duration-300">
+          <Card className="bg-card border-2 border-primary shadow-lg scale-105 cursor-pointer hover:shadow-xl transition-all duration-500 ease-in-out">
             <CardContent className="p-6">
               <div className="flex items-center justify-between mb-4">
                 <h3 className="text-2xl font-bold">{assets[currentIndex].name}</h3>
@@ -133,15 +125,12 @@ export const AssetCarousel = ({ onAssetChange }: AssetCarouselProps) => {
                   {assets[currentIndex].change}
                 </span>
               </div>
-              <div className="mt-4 text-sm text-muted-foreground text-center">
-                Click to trade
-              </div>
             </CardContent>
           </Card>
         </Link>
 
         {/* Right Asset */}
-        <Card className="w-1/4 bg-card/50 border-border/50 scale-90 opacity-70">
+        <Card className="w-1/4 bg-card/50 border-border/50 scale-90 opacity-70 transition-all duration-500 ease-in-out">
           <CardContent className="p-4">
             <div className="flex items-center justify-between mb-2">
               <h3 className="text-lg font-bold">{assets[getAssetIndex(1)].name}</h3>
