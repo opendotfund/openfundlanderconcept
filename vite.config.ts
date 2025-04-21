@@ -22,6 +22,8 @@ export default defineConfig(({ mode }) => ({
     },
   },
   build: {
+    outDir: 'dist',
+    sourcemap: false,
     rollupOptions: {
       output: {
         manualChunks: {
@@ -70,5 +72,6 @@ export default defineConfig(({ mode }) => ({
   },
   optimizeDeps: {
     include: ['react', 'react-dom', 'react-router-dom'],
+    exclude: ['@thirdweb-dev/react', '@thirdweb-dev/sdk'],
   },
 }));
