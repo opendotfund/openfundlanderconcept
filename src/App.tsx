@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Toaster } from "@/components/ui/toaster";
 import { useEffect } from 'react';
 import { HelmetProvider } from 'react-helmet-async';
+import { ThirdwebProvider } from '@thirdweb-dev/react';
 import MobileBanner from './components/MobileBanner';
 import Auth from './components/Auth';
 import { AuthProvider } from './components/AuthContext';
@@ -111,42 +112,47 @@ function App() {
   
   return (
     <HelmetProvider>
-      <AuthProvider>
-        <Router>
-          <div className="app">
-            <SEO 
-              title="OpenFund - Modern Investment Platform"
-              description="Trade stocks, crypto, commodities and more on a single platform with OpenFund. Create or join community-managed funds with transparent performance."
-              keywords="OpenFund, crypto trading, investment platform, community funds, transparent investing"
-              canonicalUrl="https://openfund.com"
-            />
-            
-            <MobileBanner />
-            <Routes>
-              <Route path="/" element={<Index />} />
-              <Route path="/account" element={<Account />} />
-              <Route path="/assets" element={<Assets />} />
-              <Route path="/my-assets" element={<MyAssets />} />
-              <Route path="/trade" element={<Trade />} />
-              <Route path="/explore" element={<ExploreFunds />} />
-              <Route path="/explore-funds" element={<ExploreFunds />} />
-              <Route path="/fund" element={<Fund />} />
-              <Route path="/fund-detail/:type/:fundId" element={<FundDetail />} />
-              <Route path="/fund-manager" element={<FundManager />} />
-              <Route path="/coming-soon" element={<ComingSoon />} />
-              <Route path="/careers" element={<Careers />} />
-              <Route path="/contact" element={<Contact />} />
-              <Route path="/legal" element={<Legal />} />
-              <Route path="/about-us" element={<AboutUs />} />
-              <Route path="/blog" element={<Blog />} />
-              <Route path="/api" element={<ApiDocs />} />
-              <Route path="/auth" element={<Auth />} />
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </div>
-          <Toaster />
-        </Router>
-      </AuthProvider>
+      <ThirdwebProvider
+        activeChain="sepolia"
+        clientId={import.meta.env.VITE_THIRDWEB_CLIENT_ID}
+      >
+        <AuthProvider>
+          <Router>
+            <div className="app">
+              <SEO 
+                title="OpenFund - Modern Investment Platform"
+                description="Trade stocks, crypto, commodities and more on a single platform with OpenFund. Create or join community-managed funds with transparent performance."
+                keywords="OpenFund, crypto trading, investment platform, community funds, transparent investing"
+                canonicalUrl="https://openfund.com"
+              />
+              
+              <MobileBanner />
+              <Routes>
+                <Route path="/" element={<Index />} />
+                <Route path="/account" element={<Account />} />
+                <Route path="/assets" element={<Assets />} />
+                <Route path="/my-assets" element={<MyAssets />} />
+                <Route path="/trade" element={<Trade />} />
+                <Route path="/explore" element={<ExploreFunds />} />
+                <Route path="/explore-funds" element={<ExploreFunds />} />
+                <Route path="/fund" element={<Fund />} />
+                <Route path="/fund-detail/:type/:fundId" element={<FundDetail />} />
+                <Route path="/fund-manager" element={<FundManager />} />
+                <Route path="/coming-soon" element={<ComingSoon />} />
+                <Route path="/careers" element={<Careers />} />
+                <Route path="/contact" element={<Contact />} />
+                <Route path="/legal" element={<Legal />} />
+                <Route path="/about-us" element={<AboutUs />} />
+                <Route path="/blog" element={<Blog />} />
+                <Route path="/api" element={<ApiDocs />} />
+                <Route path="/auth" element={<Auth />} />
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </div>
+            <Toaster />
+          </Router>
+        </AuthProvider>
+      </ThirdwebProvider>
     </HelmetProvider>
   );
 }
