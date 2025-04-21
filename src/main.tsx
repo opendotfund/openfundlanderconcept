@@ -5,7 +5,7 @@ import { ThirdwebProvider } from '@thirdweb-dev/react'
 
 createRoot(document.getElementById("root")!).render(
   <ThirdwebProvider 
-    activeChain="solana:devnet"
+    activeChain="solana"
     clientId={import.meta.env.VITE_THIRDWEB_CLIENT_ID}
   >
     <App />
