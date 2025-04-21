@@ -113,7 +113,7 @@ function App() {
   return (
     <HelmetProvider>
       <ThirdwebProvider
-        activeChain="ethereum"
+        activeChain="sepolia"
         clientId={import.meta.env.VITE_THIRDWEB_CLIENT_ID}
       >
         <AuthProvider>
