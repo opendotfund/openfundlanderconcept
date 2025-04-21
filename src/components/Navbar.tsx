@@ -25,6 +25,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback } from './ui/avatar';
 import { useAuth } from './AuthContext';
+import { useConnect } from '@thirdweb-dev/react';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -32,6 +33,7 @@ const Navbar = () => {
   const navigate = useNavigate();
   
   const { user, signOut } = useAuth();
+  const { connect } = useConnect();
   
   const navigation = [
     { name: 'Home', href: '/' },
@@ -58,26 +60,31 @@ const Navbar = () => {
     setIsMenuOpen(false);
   };
   
+  const handleConnect = async () => {
+    try {
+      await connect();
+    } catch (error) {
+      console.error('Failed to connect wallet:', error);
+    }
+  };
+  
   return (
-    <nav className="bg-card border-b border-border">
-      <div className="container px-4 mx-auto">
-        <div className="flex items-center justify-between h-16">
-          <div className="flex items-center">
-            <Link to="/" className="flex-shrink-0">
+    <nav className="bg-background border-b border-border">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between h-16">
+          <div className="flex">
+            <div className="flex-shrink-0 flex items-center">
               <Logo />
-            </Link>
-          </div>
-          
-          <div className="hidden md:block">
-            <div className="ml-10 flex items-center space-x-4 bg-card px-6 py-2 rounded-full">
+            </div>
+            <div className="hidden md:ml-6 md:flex md:space-x-8">
               {navigation.map((item) => (
                 <Link
                   key={item.name}
                   to={item.href}
-                  className={`px-3 py-2 rounded-md text-sm font-medium ${
+                  className={`inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium ${
                     isActive(item.href)
-                      ? 'text-primary'
-                      : 'text-muted-foreground hover:text-foreground'
+                      ? 'border-primary text-foreground'
+                      : 'border-transparent text-muted-foreground hover:text-foreground hover:border-gray-300'
                   }`}
                 >
                   {item.name}
@@ -112,15 +119,11 @@ const Navbar = () => {
                     </DropdownMenuItem>
                     <DropdownMenuItem className="cursor-pointer" onClick={() => navigateToAccount('portfolio')}>
                       <Wallet className="mr-2 h-4 w-4" />
-                      <span>My Portfolio</span>
+                      <span>Portfolio</span>
                     </DropdownMenuItem>
                     <DropdownMenuItem className="cursor-pointer" onClick={() => navigateToAccount('kyc')}>
                       <CheckCircle className="mr-2 h-4 w-4" />
-                      <span>Complete KYC</span>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem className="cursor-pointer" onClick={() => navigateToAccount('settings')}>
-                      <Settings className="mr-2 h-4 w-4" />
-                      <span>Settings</span>
+                      <span>KYC</span>
                     </DropdownMenuItem>
                     <DropdownMenuItem className="cursor-pointer" onClick={() => navigateToAccount('referral')}>
                       <Star className="mr-2 h-4 w-4" />
@@ -129,114 +132,63 @@ const Navbar = () => {
                     <DropdownMenuSeparator />
                     <DropdownMenuItem className="cursor-pointer" onClick={handleSignOut}>
                       <LogOut className="mr-2 h-4 w-4" />
-                      <span>Log out</span>
+                      <span>Sign Out</span>
                     </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
               ) : (
-                <div className="flex items-center space-x-2">
-                  <Button variant="ghost" onClick={() => navigate('/auth')}>
-                    Login
-                  </Button>
-                  <Button onClick={() => navigate('/auth')} className="text-primary-foreground">
-                    Sign Up
-                  </Button>
-                </div>
+                <Button onClick={handleConnect} className="bg-primary hover:bg-primary/90">
+                  Connect Wallet
+                </Button>
               )}
-              
-              <Button variant="outline" className="border-primary text-primary">
-                Connect
-              </Button>
             </div>
           </div>
           
-          <div className="md:hidden flex items-center space-x-4">
-            <ThemeToggle className="w-8 h-8 p-1.5 ml-3" />
-            {!user && (
-              <Button 
-                variant="ghost" 
-                size="sm"
-                onClick={() => {
-                  navigate('/auth');
-                  setIsMenuOpen(false);
-                }}
-              >
-                Login
-              </Button>
-            )}
-            <button
-              type="button"
-              className="text-gray-400 hover:text-foreground p-2"
+          <div className="-mr-2 flex items-center md:hidden">
+            <Button
+              variant="ghost"
+              className="inline-flex items-center justify-center p-2 rounded-md text-muted-foreground hover:text-foreground hover:bg-secondary focus:outline-none"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
             >
+              <span className="sr-only">Open main menu</span>
               {isMenuOpen ? (
-                <X className="h-6 w-6" aria-hidden="true" />
+                <X className="block h-6 w-6" />
               ) : (
-                <Menu className="h-6 w-6" aria-hidden="true" />
+                <Menu className="block h-6 w-6" />
               )}
-            </button>
+            </Button>
           </div>
         </div>
       </div>
       
-      {isMenuOpen && (
-        <div className="md:hidden">
-          <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 rounded-2xl bg-card mt-2 mx-4">
-            {navigation.map((item) => (
-              <Link
-                key={item.name}
-                to={item.href}
-                className={`block px-3 py-2 rounded-md text-base font-medium ${
-                  isActive(item.href)
-                    ? 'text-primary'
-                    : 'text-muted-foreground hover:text-foreground'
-                }`}
-                onClick={() => setIsMenuOpen(false)}
-              >
-                {item.name}
-              </Link>
-            ))}
-            {user ? (
-              <>
-                <div 
-                  className="block px-3 py-2 rounded-md text-base font-medium text-muted-foreground hover:text-foreground cursor-pointer"
-                  onClick={() => navigateToAccount('profile')}
-                >
-                  <div className="flex items-center">
-                    <Avatar className="h-6 w-6 mr-2 bg-muted">
-                      <AvatarFallback className="bg-primary text-primary-foreground text-xs">
-                        {user.email?.substring(0, 2).toUpperCase()}
-                      </AvatarFallback>
-                    </Avatar>
-                    My Account
-                  </div>
-                </div>
-                <div 
-                  className="block px-3 py-2 rounded-md text-base font-medium text-muted-foreground hover:text-foreground cursor-pointer"
-                  onClick={handleSignOut}
-                >
-                  <div className="flex items-center">
-                    <LogOut className="h-5 w-5 mr-2" />
-                    Sign Out
-                  </div>
-                </div>
-              </>
-            ) : (
-              <div className="mt-4 px-3">
-                <Button 
-                  className="w-full mb-2"
-                  onClick={() => {
-                    navigate('/auth');
-                    setIsMenuOpen(false);
-                  }}
-                >
-                  Sign Up
-                </Button>
-              </div>
+      {/* Mobile menu */}
+      <div className={`${isMenuOpen ? 'block' : 'hidden'} md:hidden`}>
+        <div className="pt-2 pb-3 space-y-1">
+          {navigation.map((item) => (
+            <Link
+              key={item.name}
+              to={item.href}
+              className={`block pl-3 pr-4 py-2 border-l-4 text-base font-medium ${
+                isActive(item.href)
+                  ? 'border-primary text-foreground bg-primary/10'
+                  : 'border-transparent text-muted-foreground hover:text-foreground hover:bg-secondary hover:border-gray-300'
+              }`}
+            >
+              {item.name}
+            </Link>
+          ))}
+        </div>
+        <div className="pt-4 pb-3 border-t border-border">
+          <div className="flex items-center px-4">
+            <ThemeToggle />
+            {!user && (
+              <Button onClick={handleConnect} className="ml-4 bg-primary hover:bg-primary/90">
+                Connect Wallet
+              </Button>
             )}
           </div>
         </div>
-      )}
+      </div>
     </nav>
   );
 };
