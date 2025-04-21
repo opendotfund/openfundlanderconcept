@@ -8,8 +8,8 @@ import path from 'path';
 export default defineConfig(({ mode }) => ({
   server: {
     host: true,
-    port: parseInt(process.env.VITE_PORT || '3000'),
-    strictPort: false,
+    port: 3001,
+    strictPort: true,
   },
   plugins: [
     react(),
@@ -20,9 +20,6 @@ export default defineConfig(({ mode }) => ({
     alias: {
       "@": path.resolve(__dirname, "./src"),
     },
-  },
-  define: {
-    'process.env.NODE_ENV': JSON.stringify(mode),
   },
   build: {
     rollupOptions: {
