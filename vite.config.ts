@@ -6,14 +6,11 @@ import path from 'path';
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
-  base: '/',
+  base: '/preview/',
   server: {
     host: true,
-    port: parseInt(process.env.VITE_PORT || '3000'),
-    strictPort: false,
-  },
-  define: {
-    'process.env.NODE_ENV': `"${mode}"`,
+    port: 3001,
+    strictPort: true,
   },
   plugins: [
     react(),
