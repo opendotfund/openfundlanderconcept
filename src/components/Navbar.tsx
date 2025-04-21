@@ -26,334 +26,234 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback } from './ui/avatar';
 import { useAuth } from './AuthContext';
-<<<<<<< HEAD
-=======
 import { useAddress, useConnectionStatus, useDisconnect, useWallet } from '@thirdweb-dev/react';
 import WalletConnectWrapper from './WalletConnectWrapper';
 
-// Extend Window interface to include Phantom
+// Extend Window interface to include web3 wallet types
 declare global {
   interface Window {
-    phantom?: {
-      solana?: {
-        connect: () => Promise<any>;
-        isPhantom: boolean;
-      };
-    };
+    ethereum?: any;
+    solana?: any;
   }
 }
->>>>>>> feature/wallet-connection
 
 const Navbar = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
-<<<<<<< HEAD
-  
-  const { user, signOut } = useAuth();
-  
-  const navigation = [
-    { name: 'Home', href: '/' },
-    { name: 'Trade', href: '/trade' },
-    { name: 'Start a Fund', href: '/fund' },
-    { name: 'Explore Funds', href: '/explore' },
-    { name: 'My Assets', href: '/my-assets' },
-  ];
-  
-=======
-  const { user, signOut } = useAuth();
+  const { session, signOut } = useAuth();
   const address = useAddress();
   const connectionStatus = useConnectionStatus();
   const disconnect = useDisconnect();
   const wallet = useWallet();
-  const [isConnecting, setIsConnecting] = useState(false);
 
-  const truncateAddress = (addr: string | undefined) => {
-    if (!addr) return "Connect";
-    return `${addr.slice(0, 4)}...${addr.slice(-4)}`;
-  };
-
-  const handleConnect = async () => {
-    try {
-      setIsConnecting(true);
-      if (!wallet) {
-        console.error("No wallet available");
-        return;
-      }
-      await wallet.connect();
-    } catch (error) {
-      console.error("Error connecting wallet:", error);
-    } finally {
-      setIsConnecting(false);
-    }
+  const truncateAddress = (address: string | undefined) => {
+    if (!address) return '';
+    return `${address.slice(0, 4)}...${address.slice(-4)}`;
   };
 
   const handleDisconnect = async () => {
     try {
       await disconnect();
     } catch (error) {
-      console.error("Error disconnecting wallet:", error);
+      console.error('Error disconnecting wallet:', error);
     }
   };
 
->>>>>>> feature/wallet-connection
-  const isActive = (path: string) => {
-    if (path === '/' && location.pathname === '/') return true;
-    if (path !== '/' && location.pathname.startsWith(path)) return true;
-    return false;
-  };
-  
-  const navigateToAccount = (tab: string) => {
-    navigate(`/account?tab=${tab}`);
-    setIsMenuOpen(false);
-  };
-  
-  const handleSignOut = async () => {
-    await signOut();
-    navigate('/');
-    setIsMenuOpen(false);
-  };
-  
-  const navigation = [
-    { name: 'Home', href: '/' },
-    { name: 'Trade', href: '/trade' },
-    { name: 'Start a Fund', href: '/fund' },
-    { name: 'Explore Funds', href: '/explore' },
-    { name: 'My Assets', href: '/my-assets' },
-  ];
+  // Desktop Navigation
+  const DesktopNav = () => (
+    <nav className="hidden lg:flex items-center gap-8">
+      <Link to="/" className={`text-lg font-medium ${location.pathname === '/' ? 'text-primary' : 'text-muted-foreground hover:text-primary'}`}>
+        Home
+      </Link>
+      <Link to="/trade" className={`text-lg font-medium ${location.pathname === '/trade' ? 'text-primary' : 'text-muted-foreground hover:text-primary'}`}>
+        Trade
+      </Link>
+      <Link to="/funds" className={`text-lg font-medium ${location.pathname === '/funds' ? 'text-primary' : 'text-muted-foreground hover:text-primary'}`}>
+        Funds
+      </Link>
+      <Link to="/about" className={`text-lg font-medium ${location.pathname === '/about' ? 'text-primary' : 'text-muted-foreground hover:text-primary'}`}>
+        About
+      </Link>
+      
+      {connectionStatus === "connected" && address ? (
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="outline" className="min-w-[140px] font-mono">
+              {truncateAddress(address)}
+              <ChevronDown className="ml-2 h-4 w-4" />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end">
+            <DropdownMenuItem onClick={handleDisconnect}>
+              <LogOut className="mr-2 h-4 w-4" />
+              Disconnect
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      ) : (
+        <WalletConnectWrapper>
+          <Button variant="outline">
+            Connect
+          </Button>
+        </WalletConnectWrapper>
+      )}
 
-  return (
-    <nav className="bg-card border-b border-border">
-      <div className="container px-4 mx-auto">
-        <div className="flex items-center justify-between h-16">
-          <div className="flex items-center">
-            <Link to="/" className="flex-shrink-0">
-              <Logo />
-            </Link>
-          </div>
+      {session ? (
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="ghost" className="relative h-10 w-10 rounded-full">
+              <Avatar>
+                <AvatarFallback>
+                  <User className="h-5 w-5" />
+                </AvatarFallback>
+              </Avatar>
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end">
+            <DropdownMenuLabel>My Account</DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem onClick={() => navigate('/profile')}>
+              <User className="mr-2 h-4 w-4" />
+              Profile
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => navigate('/settings')}>
+              <Settings className="mr-2 h-4 w-4" />
+              Settings
+            </DropdownMenuItem>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem onClick={() => signOut()}>
+              <LogOut className="mr-2 h-4 w-4" />
+              Sign out
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      ) : (
+        <Button onClick={() => navigate('/auth')} variant="default">Sign in</Button>
+      )}
+      <ThemeToggle />
+    </nav>
+  );
+
+  // Mobile Navigation
+  const MobileNav = () => (
+    <nav className={`lg:hidden fixed inset-0 bg-background/95 backdrop-blur-sm z-50 transform ${isOpen ? 'translate-x-0' : 'translate-x-full'} transition-transform duration-300 ease-in-out`}>
+      <div className="flex flex-col h-full p-6">
+        <div className="flex justify-between items-center mb-8">
+          <Logo />
+          <Button variant="ghost" size="icon" onClick={() => setIsOpen(false)}>
+            <X className="h-6 w-6" />
+          </Button>
+        </div>
+        <div className="flex flex-col gap-6">
+          <Link 
+            to="/" 
+            className={`text-xl font-medium ${location.pathname === '/' ? 'text-primary' : 'text-muted-foreground'}`}
+            onClick={() => setIsOpen(false)}
+          >
+            Home
+          </Link>
+          <Link 
+            to="/trade" 
+            className={`text-xl font-medium ${location.pathname === '/trade' ? 'text-primary' : 'text-muted-foreground'}`}
+            onClick={() => setIsOpen(false)}
+          >
+            Trade
+          </Link>
+          <Link 
+            to="/funds" 
+            className={`text-xl font-medium ${location.pathname === '/funds' ? 'text-primary' : 'text-muted-foreground'}`}
+            onClick={() => setIsOpen(false)}
+          >
+            Funds
+          </Link>
+          <Link 
+            to="/about" 
+            className={`text-xl font-medium ${location.pathname === '/about' ? 'text-primary' : 'text-muted-foreground'}`}
+            onClick={() => setIsOpen(false)}
+          >
+            About
+          </Link>
           
-          <div className="hidden md:block">
-            <div className="ml-10 flex items-center space-x-4 bg-card px-6 py-2 rounded-full">
-              {navigation.map((item) => (
-                <Link
-                  key={item.name}
-                  to={item.href}
-                  className={`px-3 py-2 rounded-md text-sm font-medium ${
-                    isActive(item.href)
-                      ? 'text-primary'
-                      : 'text-muted-foreground hover:text-foreground'
-                  }`}
-                >
-                  {item.name}
-                </Link>
-              ))}
-            </div>
-          </div>
-          
-          <div className="hidden md:block">
-            <div className="ml-4 flex items-center md:ml-6 space-x-4">
-              <ThemeToggle />
-              
-              {user ? (
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button variant="ghost" className="flex items-center space-x-2 text-foreground hover:text-foreground">
-                      <Avatar className="h-8 w-8 bg-muted">
-                        <AvatarFallback className="bg-primary text-primary-foreground">
-                          {user.email?.substring(0, 2).toUpperCase()}
-                        </AvatarFallback>
-                      </Avatar>
-                      <span>My Account</span>
-                      <ChevronDown className="h-4 w-4" />
-                    </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end" className="w-56">
-                    <DropdownMenuLabel>My Account</DropdownMenuLabel>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuItem className="cursor-pointer" onClick={() => navigateToAccount('profile')}>
-                      <User className="mr-2 h-4 w-4" />
-                      <span>Profile</span>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem className="cursor-pointer" onClick={() => navigateToAccount('portfolio')}>
-                      <Wallet className="mr-2 h-4 w-4" />
-                      <span>My Portfolio</span>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem className="cursor-pointer" onClick={() => navigateToAccount('kyc')}>
-                      <CheckCircle className="mr-2 h-4 w-4" />
-                      <span>Complete KYC</span>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem className="cursor-pointer" onClick={() => navigateToAccount('settings')}>
-                      <Settings className="mr-2 h-4 w-4" />
-                      <span>Settings</span>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem className="cursor-pointer" onClick={() => navigateToAccount('referral')}>
-                      <Star className="mr-2 h-4 w-4" />
-                      <span>Referrals</span>
-                    </DropdownMenuItem>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuItem className="cursor-pointer" onClick={handleSignOut}>
-                      <LogOut className="mr-2 h-4 w-4" />
-                      <span>Log out</span>
-                    </DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              ) : (
-                <div className="flex items-center space-x-2">
-                  <Button variant="ghost" onClick={() => navigate('/auth')}>
-                    Login
-                  </Button>
-                  <Button onClick={() => navigate('/auth')} className="text-primary-foreground">
-                    Sign Up
-                  </Button>
-<<<<<<< HEAD
-=======
-                  <WalletConnectWrapper />
->>>>>>> feature/wallet-connection
-                </div>
-              )}
-              
-              <Button variant="outline" className="border-primary text-primary">
+          {connectionStatus === "connected" && address ? (
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline" className="w-full font-mono">
+                  {truncateAddress(address)}
+                  <ChevronDown className="ml-2 h-4 w-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent>
+                <DropdownMenuItem onClick={handleDisconnect}>
+                  <LogOut className="mr-2 h-4 w-4" />
+                  Disconnect
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          ) : (
+            <WalletConnectWrapper>
+              <Button variant="outline" className="w-full">
                 Connect
               </Button>
-            </div>
-          </div>
-          
-          <div className="md:hidden flex items-center space-x-4">
-            <ThemeToggle className="w-8 h-8 p-1.5 ml-3" />
-            {!user && (
-              <Button 
-                variant="ghost" 
-                size="sm"
-                onClick={() => {
-                  navigate('/auth');
-                  setIsMenuOpen(false);
-                }}
-              >
-                Login
-              </Button>
-            )}
-            <button
-              type="button"
-              className="text-gray-400 hover:text-foreground p-2"
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
+            </WalletConnectWrapper>
+          )}
+
+          {session ? (
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline" className="w-full">
+                  <User className="mr-2 h-4 w-4" />
+                  Account
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent>
+                <DropdownMenuItem onClick={() => { navigate('/profile'); setIsOpen(false); }}>
+                  <User className="mr-2 h-4 w-4" />
+                  Profile
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => { navigate('/settings'); setIsOpen(false); }}>
+                  <Settings className="mr-2 h-4 w-4" />
+                  Settings
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem onClick={() => { signOut(); setIsOpen(false); }}>
+                  <LogOut className="mr-2 h-4 w-4" />
+                  Sign out
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          ) : (
+            <Button 
+              onClick={() => { navigate('/auth'); setIsOpen(false); }} 
+              variant="default"
+              className="w-full"
             >
-              {isMenuOpen ? (
-                <X className="h-6 w-6" aria-hidden="true" />
-              ) : (
-                <Menu className="h-6 w-6" aria-hidden="true" />
-              )}
-            </button>
-          </div>
+              Sign in
+            </Button>
+          )}
+          <ThemeToggle />
         </div>
       </div>
-      
-      {isMenuOpen && (
-        <div className="md:hidden">
-          <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 rounded-2xl bg-card mt-2 mx-4">
-            {navigation.map((item) => (
-              <Link
-                key={item.name}
-                to={item.href}
-                className={`block px-3 py-2 rounded-md text-base font-medium ${
-                  isActive(item.href)
-                    ? 'text-primary'
-                    : 'text-muted-foreground hover:text-foreground'
-                }`}
-                onClick={() => setIsMenuOpen(false)}
-              >
-                {item.name}
-              </Link>
-            ))}
-            {user ? (
-              <div className="pt-4 pb-3 border-t border-border">
-                <div className="flex items-center px-3">
-                  <Avatar className="h-10 w-10 bg-muted">
-                    <AvatarFallback className="bg-primary text-primary-foreground">
-                      {user.email?.substring(0, 2).toUpperCase()}
-                    </AvatarFallback>
-                  </Avatar>
-                  <div className="ml-3">
-                    <div className="text-base font-medium text-foreground">My Account</div>
-                    <div className="text-sm font-medium text-muted-foreground">{user.email}</div>
-                  </div>
-                </div>
-                <div className="mt-3 space-y-1">
-                  <button
-                    onClick={() => navigateToAccount('profile')}
-                    className="block w-full text-left px-3 py-2 text-base font-medium text-muted-foreground hover:text-foreground hover:bg-muted rounded-md"
-                  >
-                    Profile
-                  </button>
-                  <button
-                    onClick={() => navigateToAccount('portfolio')}
-                    className="block w-full text-left px-3 py-2 text-base font-medium text-muted-foreground hover:text-foreground hover:bg-muted rounded-md"
-                  >
-                    My Portfolio
-                  </button>
-                  <button
-                    onClick={() => navigateToAccount('kyc')}
-                    className="block w-full text-left px-3 py-2 text-base font-medium text-muted-foreground hover:text-foreground hover:bg-muted rounded-md"
-                  >
-                    Complete KYC
-                  </button>
-                  <button
-                    onClick={() => navigateToAccount('referral')}
-                    className="block w-full text-left px-3 py-2 text-base font-medium text-muted-foreground hover:text-foreground hover:bg-muted rounded-md"
-                  >
-                    Referrals
-                  </button>
-                  <button
-                    onClick={handleSignOut}
-                    className="block w-full text-left px-3 py-2 text-base font-medium text-muted-foreground hover:text-foreground hover:bg-muted rounded-md"
-                  >
-                    Log out
-                  </button>
-                </div>
-              </div>
-            ) : (
-<<<<<<< HEAD
-              <div className="mt-4 px-3">
-                <Button 
-                  className="w-full mb-2"
-                  onClick={() => {
-                    navigate('/auth');
-                    setIsMenuOpen(false);
-                  }}
-                >
-                  Sign Up
-                </Button>
-=======
-              <div className="pt-4 pb-3 border-t border-border">
-                <div className="space-y-1">
-                  <button
-                    onClick={() => {
-                      navigate('/auth');
-                      setIsMenuOpen(false);
-                    }}
-                    className="block w-full text-left px-3 py-2 text-base font-medium text-muted-foreground hover:text-foreground hover:bg-muted rounded-md"
-                  >
-                    Login
-                  </button>
-                  <button
-                    onClick={() => {
-                      navigate('/auth');
-                      setIsMenuOpen(false);
-                    }}
-                    className="block w-full text-left px-3 py-2 text-base font-medium text-muted-foreground hover:text-foreground hover:bg-muted rounded-md"
-                  >
-                    Sign Up
-                  </button>
-                  <div className="px-3 py-2">
-                    <WalletConnectWrapper />
-                  </div>
-                </div>
->>>>>>> feature/wallet-connection
-              </div>
-            )}
-          </div>
-        </div>
-      )}
     </nav>
+  );
+
+  return (
+    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+      <div className="container flex h-16 items-center">
+        <Logo />
+        <div className="flex-1" />
+        <DesktopNav />
+        <Button
+          variant="ghost"
+          size="icon"
+          className="lg:hidden"
+          onClick={() => setIsOpen(true)}
+        >
+          <Menu className="h-6 w-6" />
+        </Button>
+        <MobileNav />
+      </div>
+    </header>
   );
 };
 

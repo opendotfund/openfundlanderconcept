@@ -23,7 +23,6 @@ const Index = () => {
         <Hero />
         <Features />
         <HowItWorks />
-        <ChartPreview />
         
         {/* Decentralized Funds Section */}
         <section className="py-20 bg-card relative overflow-hidden">
@@ -159,6 +158,23 @@ const Index = () => {
           {/* Decorative elements */}
           <div className="absolute top-1/2 left-1/4 w-64 h-64 bg-primary/10 rounded-full blur-3xl -z-0"></div>
           <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-primary/5 rounded-full blur-3xl -z-0"></div>
+        </section>
+        
+        {/* BRKA Chart Section */}
+        <section className="py-10 bg-background relative overflow-hidden">
+          <div className="container mx-auto px-4 relative z-10">
+            <div className="max-w-5xl mx-auto">
+              <div className="text-center mb-6">
+                <h2 className="text-2xl md:text-3xl font-bold mb-2">
+                  <span className="text-primary">Berkshire Hathaway</span> Performance
+                </h2>
+                <p className="text-muted-foreground">
+                  Track the performance of Berkshire Hathaway Class A shares as well as several other accredited investments.
+                </p>
+              </div>
+              <ChartPreview />
+            </div>
+          </div>
         </section>
         
         {/* Tokenization Platform Section */}
