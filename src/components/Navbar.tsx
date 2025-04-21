@@ -25,13 +25,22 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback } from './ui/avatar';
 import { useAuth } from './AuthContext';
+import { useConnect } from '@thirdweb-dev/react';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
-  
   const { user, signOut } = useAuth();
+  const { connect } = useConnect();
+  
+  const handleConnect = async () => {
+    try {
+      await connect();
+    } catch (error) {
+      console.error('Failed to connect wallet:', error);
+    }
+  };
   
   const navigation = [
     { name: 'Home', href: '/' },
@@ -87,7 +96,7 @@ const Navbar = () => {
           </div>
           
           <div className="hidden md:block">
-            <div className="ml-4 flex items-center md:ml-6 space-x-4">
+            <div className="ml-4 flex items-center space-x-4">
               <ThemeToggle />
               
               {user ? (
@@ -118,10 +127,6 @@ const Navbar = () => {
                       <CheckCircle className="mr-2 h-4 w-4" />
                       <span>Complete KYC</span>
                     </DropdownMenuItem>
-                    <DropdownMenuItem className="cursor-pointer" onClick={() => navigateToAccount('settings')}>
-                      <Settings className="mr-2 h-4 w-4" />
-                      <span>Settings</span>
-                    </DropdownMenuItem>
                     <DropdownMenuItem className="cursor-pointer" onClick={() => navigateToAccount('referral')}>
                       <Star className="mr-2 h-4 w-4" />
                       <span>Referrals</span>
@@ -141,29 +146,20 @@ const Navbar = () => {
                   <Button onClick={() => navigate('/auth')} className="text-primary-foreground">
                     Sign Up
                   </Button>
+                  <Button 
+                    variant="outline" 
+                    className="border-primary text-primary"
+                    onClick={handleConnect}
+                  >
+                    Connect
+                  </Button>
                 </div>
               )}
-              
-              <Button variant="outline" className="border-primary text-primary">
-                Connect
-              </Button>
             </div>
           </div>
           
           <div className="md:hidden flex items-center space-x-4">
             <ThemeToggle className="w-8 h-8 p-1.5 ml-3" />
-            {!user && (
-              <Button 
-                variant="ghost" 
-                size="sm"
-                onClick={() => {
-                  navigate('/auth');
-                  setIsMenuOpen(false);
-                }}
-              >
-                Login
-              </Button>
-            )}
             <button
               type="button"
               className="text-gray-400 hover:text-foreground p-2"
@@ -223,14 +219,8 @@ const Navbar = () => {
               </>
             ) : (
               <div className="mt-4 px-3">
-                <Button 
-                  className="w-full mb-2"
-                  onClick={() => {
-                    navigate('/auth');
-                    setIsMenuOpen(false);
-                  }}
-                >
-                  Sign Up
+                <Button onClick={handleConnect} className="w-full bg-primary hover:bg-primary/90">
+                  Connect
                 </Button>
               </div>
             )}
