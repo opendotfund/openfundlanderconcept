@@ -28,6 +28,7 @@ import { Avatar, AvatarFallback } from './ui/avatar';
 import { useAuth } from './AuthContext';
 import { useAddress, useConnectionStatus, useDisconnect, useWallet } from '@thirdweb-dev/react';
 import WalletConnectWrapper from './WalletConnectWrapper';
+import AccountModal from './AccountModal';
 
 // Extend Window interface to include web3 wallet types
 declare global {
@@ -39,6 +40,7 @@ declare global {
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isAccountModalOpen, setIsAccountModalOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
   const { session, signOut } = useAuth();
@@ -80,20 +82,14 @@ const Navbar = () => {
       </Link>
       
       {connectionStatus === "connected" && address ? (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="outline" className="min-w-[140px] font-mono">
-              {truncateAddress(address)}
-              <ChevronDown className="ml-2 h-4 w-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuItem onClick={handleDisconnect}>
-              <LogOut className="mr-2 h-4 w-4" />
-              Disconnect
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+        <Button 
+          variant="outline" 
+          className="min-w-[140px] font-mono"
+          onClick={() => setIsAccountModalOpen(true)}
+        >
+          {truncateAddress(address)}
+          <ChevronDown className="ml-2 h-4 w-4" />
+        </Button>
       ) : (
         <WalletConnectWrapper>
           <Button variant="outline">
@@ -186,20 +182,17 @@ const Navbar = () => {
           </Link>
           
           {connectionStatus === "connected" && address ? (
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="outline" className="w-full font-mono">
-                  {truncateAddress(address)}
-                  <ChevronDown className="ml-2 h-4 w-4" />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent>
-                <DropdownMenuItem onClick={handleDisconnect}>
-                  <LogOut className="mr-2 h-4 w-4" />
-                  Disconnect
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
+            <Button 
+              variant="outline" 
+              className="w-full font-mono"
+              onClick={() => {
+                setIsAccountModalOpen(true);
+                setIsOpen(false);
+              }}
+            >
+              {truncateAddress(address)}
+              <ChevronDown className="ml-2 h-4 w-4" />
+            </Button>
           ) : (
             <WalletConnectWrapper>
               <Button variant="outline" className="w-full">
@@ -211,35 +204,34 @@ const Navbar = () => {
           {session ? (
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="outline" className="w-full">
-                  <User className="mr-2 h-4 w-4" />
-                  Account
+                <Button variant="ghost" className="relative h-10 w-10 rounded-full">
+                  <Avatar>
+                    <AvatarFallback>
+                      <User className="h-5 w-5" />
+                    </AvatarFallback>
+                  </Avatar>
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent>
-                <DropdownMenuItem onClick={() => { navigate('/profile'); setIsOpen(false); }}>
+              <DropdownMenuContent align="end">
+                <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem onClick={() => navigate('/profile')}>
                   <User className="mr-2 h-4 w-4" />
                   Profile
                 </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => { navigate('/settings'); setIsOpen(false); }}>
+                <DropdownMenuItem onClick={() => navigate('/settings')}>
                   <Settings className="mr-2 h-4 w-4" />
                   Settings
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem onClick={() => { signOut(); setIsOpen(false); }}>
+                <DropdownMenuItem onClick={() => signOut()}>
                   <LogOut className="mr-2 h-4 w-4" />
                   Sign out
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
           ) : (
-            <Button 
-              onClick={() => { navigate('/auth'); setIsOpen(false); }} 
-              variant="default"
-              className="w-full"
-            >
-              Sign in
-            </Button>
+            <Button onClick={() => navigate('/auth')} variant="default">Sign in</Button>
           )}
           <ThemeToggle />
         </div>
@@ -263,6 +255,10 @@ const Navbar = () => {
         </Button>
         <MobileNav />
       </div>
+      <AccountModal 
+        isOpen={isAccountModalOpen} 
+        onClose={() => setIsAccountModalOpen(false)} 
+      />
     </header>
   );
 };

@@ -1,13 +1,25 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { ConnectWallet } from '@thirdweb-dev/react';
 import { useAddress } from '@thirdweb-dev/react';
 
 interface WalletConnectWrapperProps {
   className?: string;
+  onClose?: () => void;
 }
 
-const WalletConnectWrapper: React.FC<WalletConnectWrapperProps> = ({ className }) => {
+const WalletConnectWrapper: React.FC<WalletConnectWrapperProps> = ({ className, onClose }) => {
   const address = useAddress();
+
+  // Call onClose when address changes (user connects or disconnects)
+  useEffect(() => {
+    if (onClose && address) {
+      // Small delay to allow the wallet connection to complete
+      const timer = setTimeout(() => {
+        onClose();
+      }, 1000);
+      return () => clearTimeout(timer);
+    }
+  }, [address, onClose]);
 
   const truncateAddress = (addr: string | undefined) => {
     if (!addr) return "Connect";

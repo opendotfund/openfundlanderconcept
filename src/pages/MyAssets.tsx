@@ -1,10 +1,15 @@
-
 import React, { useState, useEffect } from 'react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
-import { ArrowUpRight, ArrowDownRight, Briefcase, LineChart, Bitcoin, DollarSign, BarChart4 } from 'lucide-react';
+import { ArrowUpRight, ArrowDownRight, Briefcase, LineChart, Bitcoin, DollarSign, BarChart4, User } from 'lucide-react';
+import { useAddress, useConnectionStatus } from '@thirdweb-dev/react';
+import { Button } from '@/components/ui/button';
+import { useToast } from '@/components/ui/use-toast';
+import { useAuth } from '@/components/AuthContext';
+import { useNavigate } from 'react-router-dom';
+import AccountModal from '@/components/AccountModal';
 
 // Mock data for portfolio overview
 const portfolioData = {
@@ -75,6 +80,12 @@ const AssetRow = ({ asset, type }: { asset: any, type: string }) => {
 
 const MyAssets = () => {
   const [isDark, setIsDark] = useState(true);
+  const [isAccountModalOpen, setIsAccountModalOpen] = useState(false);
+  const address = useAddress();
+  const connectionStatus = useConnectionStatus();
+  const { toast } = useToast();
+  const { user } = useAuth();
+  const navigate = useNavigate();
   
   // Check theme on mount and when it changes
   useEffect(() => {
@@ -92,6 +103,47 @@ const MyAssets = () => {
       window.removeEventListener('storage', checkTheme);
     };
   }, []);
+
+  const handleDepositClick = () => {
+    if (connectionStatus === "connected") {
+      setIsAccountModalOpen(true);
+    } else {
+      toast({
+        title: "Wallet Not Connected",
+        description: "Please connect your wallet to deposit funds.",
+        variant: "destructive",
+      });
+    }
+  };
+
+  const handleWithdrawClick = () => {
+    if (connectionStatus === "connected") {
+      setIsAccountModalOpen(true);
+    } else {
+      toast({
+        title: "Wallet Not Connected",
+        description: "Please connect your wallet to withdraw funds.",
+        variant: "destructive",
+      });
+    }
+  };
+
+  const handleMyAccountClick = () => {
+    if (user) {
+      navigate('/account');
+    } else {
+      toast({
+        title: "Account Required",
+        description: "Please sign in or create an account to access your account page.",
+        variant: "destructive",
+      });
+      navigate('/auth');
+    }
+  };
+
+  const handleTradeClick = () => {
+    navigate('/trade');
+  };
   
   return (
     <div className="min-h-screen bg-background text-foreground transition-colors duration-300">
@@ -170,18 +222,34 @@ const MyAssets = () => {
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
-                <button className="w-full bg-primary hover:bg-primary/90 text-primary-foreground py-2 rounded-md font-medium transition-colors duration-300">
+                <Button 
+                  className="w-full" 
+                  onClick={handleDepositClick}
+                >
                   Deposit Funds
-                </button>
-                <button className="w-full bg-transparent border border-border hover:bg-secondary py-2 rounded-md font-medium transition-colors duration-300">
+                </Button>
+                <Button 
+                  variant="outline" 
+                  className="w-full"
+                  onClick={handleWithdrawClick}
+                >
                   Withdraw Funds
-                </button>
-                <button className="w-full bg-transparent border border-border hover:bg-secondary py-2 rounded-md font-medium transition-colors duration-300">
+                </Button>
+                <Button 
+                  variant="outline" 
+                  className="w-full"
+                  onClick={handleTradeClick}
+                >
                   Trade Assets
-                </button>
-                <button className="w-full bg-transparent border border-border hover:bg-secondary py-2 rounded-md font-medium transition-colors duration-300">
-                  Rebalance Portfolio
-                </button>
+                </Button>
+                <Button 
+                  variant="outline" 
+                  className="w-full flex items-center gap-2"
+                  onClick={handleMyAccountClick}
+                >
+                  <User size={16} />
+                  My Account
+                </Button>
               </div>
             </CardContent>
           </Card>
@@ -271,6 +339,12 @@ const MyAssets = () => {
         </div>
       </main>
       <Footer />
+      
+      {/* Account Modal */}
+      <AccountModal 
+        isOpen={isAccountModalOpen} 
+        onClose={() => setIsAccountModalOpen(false)} 
+      />
     </div>
   );
 };
