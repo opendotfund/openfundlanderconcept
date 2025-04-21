@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
 
 const assets = [
   {
@@ -92,67 +93,69 @@ export const AssetCarousel = ({ onAssetChange }: AssetCarouselProps) => {
     }
   };
 
-  const getNextIndex = (current: number, dir: 'left' | 'right') => {
-    if (dir === 'right') {
-      return (current + 1) % assets.length;
-    } else {
-      return (current - 1 + assets.length) % assets.length;
-    }
+  const getAssetIndex = (offset: number) => {
+    return (currentIndex + offset + assets.length) % assets.length;
   };
 
   return (
     <div className="relative">
-      <Card className="bg-card border-border">
-        <CardContent className="p-6">
-          <div className="relative h-[120px] overflow-hidden">
-            {/* Current Asset */}
-            <div 
-              className={`absolute inset-0 transition-transform duration-500 ease-in-out ${
-                isTransitioning 
-                  ? direction === 'right' 
-                    ? '-translate-x-full' 
-                    : 'translate-x-full'
-                  : 'translate-x-0'
-              }`}
-            >
+      <div className="flex items-center justify-center gap-4">
+        {/* Left Asset */}
+        <Card className="w-1/4 bg-card/50 border-border/50 scale-90 opacity-70">
+          <CardContent className="p-4">
+            <div className="flex items-center justify-between mb-2">
+              <h3 className="text-lg font-bold">{assets[getAssetIndex(-1)].name}</h3>
+              <span className="text-muted-foreground text-sm">{assets[getAssetIndex(-1)].symbol}</span>
+            </div>
+            <div className="flex items-center justify-between">
+              <span className="text-xl font-bold">{assets[getAssetIndex(-1)].price}</span>
+              <span className={`text-sm font-medium ${assets[getAssetIndex(-1)].isUp ? 'text-green-500' : 'text-red-500'}`}>
+                {assets[getAssetIndex(-1)].change}
+              </span>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Center Asset */}
+        <Link 
+          to={`/trade?asset=${encodeURIComponent(assets[currentIndex].value)}`}
+          className="w-1/2 transition-transform hover:scale-105"
+        >
+          <Card className="bg-card border-2 border-primary shadow-lg scale-105 cursor-pointer hover:shadow-xl transition-all duration-300">
+            <CardContent className="p-6">
               <div className="flex items-center justify-between mb-4">
-                <h3 className="text-xl font-bold">{assets[currentIndex].name}</h3>
+                <h3 className="text-2xl font-bold">{assets[currentIndex].name}</h3>
                 <span className="text-muted-foreground">{assets[currentIndex].symbol}</span>
               </div>
               <div className="flex items-center justify-between">
-                <span className="text-2xl font-bold">{assets[currentIndex].price}</span>
-                <span className={`text-lg font-medium ${assets[currentIndex].isUp ? 'text-green-500' : 'text-red-500'}`}>
+                <span className="text-3xl font-bold">{assets[currentIndex].price}</span>
+                <span className={`text-xl font-medium ${assets[currentIndex].isUp ? 'text-green-500' : 'text-red-500'}`}>
                   {assets[currentIndex].change}
                 </span>
               </div>
-            </div>
+              <div className="mt-4 text-sm text-muted-foreground text-center">
+                Click to trade
+              </div>
+            </CardContent>
+          </Card>
+        </Link>
 
-            {/* Next Asset */}
-            <div 
-              className={`absolute inset-0 transition-transform duration-500 ease-in-out ${
-                isTransitioning 
-                  ? direction === 'right' 
-                    ? 'translate-x-0' 
-                    : '-translate-x-full'
-                  : direction === 'right'
-                    ? 'translate-x-full'
-                    : '-translate-x-full'
-              }`}
-            >
-              <div className="flex items-center justify-between mb-4">
-                <h3 className="text-xl font-bold">{assets[getNextIndex(currentIndex, direction)].name}</h3>
-                <span className="text-muted-foreground">{assets[getNextIndex(currentIndex, direction)].symbol}</span>
-              </div>
-              <div className="flex items-center justify-between">
-                <span className="text-2xl font-bold">{assets[getNextIndex(currentIndex, direction)].price}</span>
-                <span className={`text-lg font-medium ${assets[getNextIndex(currentIndex, direction)].isUp ? 'text-green-500' : 'text-red-500'}`}>
-                  {assets[getNextIndex(currentIndex, direction)].change}
-                </span>
-              </div>
+        {/* Right Asset */}
+        <Card className="w-1/4 bg-card/50 border-border/50 scale-90 opacity-70">
+          <CardContent className="p-4">
+            <div className="flex items-center justify-between mb-2">
+              <h3 className="text-lg font-bold">{assets[getAssetIndex(1)].name}</h3>
+              <span className="text-muted-foreground text-sm">{assets[getAssetIndex(1)].symbol}</span>
             </div>
-          </div>
-        </CardContent>
-      </Card>
+            <div className="flex items-center justify-between">
+              <span className="text-xl font-bold">{assets[getAssetIndex(1)].price}</span>
+              <span className={`text-sm font-medium ${assets[getAssetIndex(1)].isUp ? 'text-green-500' : 'text-red-500'}`}>
+                {assets[getAssetIndex(1)].change}
+              </span>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
       
       <div className="absolute top-1/2 -translate-y-1/2 left-0 right-0 flex justify-between -mx-8">
         <Button

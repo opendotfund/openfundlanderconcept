@@ -248,7 +248,7 @@ const FundDetail = () => {
                     <h3 className="text-sm md:text-lg font-semibold text-gray-900 dark:text-white">Price Chart</h3>
                   </div>
                   <div className="relative">
-                    <div className="h-[250px] md:h-[450px] -ml-2 md:ml-0">
+                    <div className="h-[250px] md:h-[380px] -ml-2 md:ml-0">
                       <AssetChart
                         asset={fund.name}
                         timeframe={timeframe}
