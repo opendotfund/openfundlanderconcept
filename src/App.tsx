@@ -1,14 +1,12 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Toaster } from "@/components/ui/toaster";
-import { useEffect, Suspense } from 'react';
+import { useEffect } from 'react';
 import { HelmetProvider } from 'react-helmet-async';
 import { ThirdwebProvider } from '@thirdweb-dev/react';
 import MobileBanner from './components/MobileBanner';
 import Auth from './components/Auth';
 import { AuthProvider } from './components/AuthContext';
 import { SEO } from './components/SEO';
-import Navbar from './components/Navbar';
-import Footer from './components/Footer';
 
 import Index from './pages/Index';
 import Account from './pages/Account';
@@ -104,49 +102,54 @@ function App() {
       document.documentElement.style.setProperty('--color-primary', 'var(--color-blue)');
       document.documentElement.style.setProperty('--color-primary-light', 'var(--color-blue-light)');
       document.documentElement.style.setProperty('--color-primary-dark', 'var(--color-blue-dark)');
-      document.documentElement.style.setProperty('--color-text-subdued', '#666666');
-      document.documentElement.style.setProperty('--color-border', '#E5E7EB');
-      document.documentElement.style.setProperty('--logo-color', '#3B82F6');
-      document.documentElement.style.setProperty('--logo-dot-color', '#3B82F6');
-      document.documentElement.style.setProperty('--glow-color', 'rgba(59, 130, 246, 0.7)');
+      document.documentElement.style.setProperty('--color-text-subdued', '#555555');
+      document.documentElement.style.setProperty('--color-border', '#e5e5e5');
+      document.documentElement.style.setProperty('--logo-color', '#0EA5E9');
+      document.documentElement.style.setProperty('--logo-dot-color', '#0EA5E9');
+      document.documentElement.style.setProperty('--glow-color', 'rgba(14, 165, 233, 0.7)');
     }
   };
-
+  
   return (
     <HelmetProvider>
       <ThirdwebProvider
         activeChain="ethereum"
         clientId={import.meta.env.VITE_THIRDWEB_CLIENT_ID}
-        secretKey={import.meta.env.VITE_THIRDWEB_SECRET_KEY}
       >
         <AuthProvider>
           <Router>
-            <div className="min-h-screen bg-background text-foreground">
-              <Navbar />
-              <Suspense fallback={<div className="flex items-center justify-center min-h-screen">Loading...</div>}>
-                <Routes>
-                  <Route path="/" element={<Index />} />
-                  <Route path="/account" element={<Account />} />
-                  <Route path="/assets" element={<Assets />} />
-                  <Route path="/my-assets" element={<MyAssets />} />
-                  <Route path="/trade" element={<Trade />} />
-                  <Route path="/explore" element={<ExploreFunds />} />
-                  <Route path="/fund" element={<Fund />} />
-                  <Route path="/fund/:id" element={<FundDetail />} />
-                  <Route path="/fund-manager" element={<FundManager />} />
-                  <Route path="/coming-soon" element={<ComingSoon />} />
-                  <Route path="/careers" element={<Careers />} />
-                  <Route path="/contact" element={<Contact />} />
-                  <Route path="/legal" element={<Legal />} />
-                  <Route path="/about" element={<AboutUs />} />
-                  <Route path="/blog" element={<Blog />} />
-                  <Route path="/api-docs" element={<ApiDocs />} />
-                  <Route path="*" element={<NotFound />} />
-                </Routes>
-              </Suspense>
-              <Footer />
-              <Toaster />
+            <div className="app">
+              <SEO 
+                title="OpenFund - Modern Investment Platform"
+                description="Trade stocks, crypto, commodities and more on a single platform with OpenFund. Create or join community-managed funds with transparent performance."
+                keywords="OpenFund, crypto trading, investment platform, community funds, transparent investing"
+                canonicalUrl="https://openfund.com"
+              />
+              
+              <MobileBanner />
+              <Routes>
+                <Route path="/" element={<Index />} />
+                <Route path="/account" element={<Account />} />
+                <Route path="/assets" element={<Assets />} />
+                <Route path="/my-assets" element={<MyAssets />} />
+                <Route path="/trade" element={<Trade />} />
+                <Route path="/explore" element={<ExploreFunds />} />
+                <Route path="/explore-funds" element={<ExploreFunds />} />
+                <Route path="/fund" element={<Fund />} />
+                <Route path="/fund-detail/:type/:fundId" element={<FundDetail />} />
+                <Route path="/fund-manager" element={<FundManager />} />
+                <Route path="/coming-soon" element={<ComingSoon />} />
+                <Route path="/careers" element={<Careers />} />
+                <Route path="/contact" element={<Contact />} />
+                <Route path="/legal" element={<Legal />} />
+                <Route path="/about-us" element={<AboutUs />} />
+                <Route path="/blog" element={<Blog />} />
+                <Route path="/api" element={<ApiDocs />} />
+                <Route path="/auth" element={<Auth />} />
+                <Route path="*" element={<NotFound />} />
+              </Routes>
             </div>
+            <Toaster />
           </Router>
         </AuthProvider>
       </ThirdwebProvider>
