@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Logo from './Logo';
@@ -27,7 +26,12 @@ const Footer = () => {
               >
                 <Twitter className="h-5 w-5" />
               </a>
-              <a href="#" className="text-gray-700 dark:text-gray-400 hover:text-openfund-blue dark:hover:text-openfund-green transition-colors duration-300">
+              <a 
+                href="https://github.com/opendotfund/OpenFund" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="text-gray-700 dark:text-gray-400 hover:text-openfund-blue dark:hover:text-openfund-green transition-colors duration-300"
+              >
                 <Github className="h-5 w-5" />
               </a>
               <a 
