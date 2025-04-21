@@ -6,14 +6,10 @@ import path from 'path';
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
-  base: '/',
   server: {
     host: true,
-    port: parseInt(process.env.VITE_PORT || '3000'),
-    strictPort: false,
-  },
-  define: {
-    'process.env.NODE_ENV': `"${mode}"`,
+    port: 3001,
+    strictPort: true,
   },
   plugins: [
     react(),
@@ -25,14 +21,8 @@ export default defineConfig(({ mode }) => ({
       "@": path.resolve(__dirname, "./src"),
     },
   },
-  publicDir: 'public',
   build: {
-    outDir: 'dist',
-    assetsDir: 'assets',
     rollupOptions: {
-      input: {
-        main: resolve(__dirname, 'index.html'),
-      },
       output: {
         manualChunks: {
           'react-vendor': ['react', 'react-dom', 'react-router-dom'],
