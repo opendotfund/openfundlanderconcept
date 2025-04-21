@@ -11,22 +11,39 @@ export default defineConfig(({ mode }) => {
   return {
     server: {
       host: true,
-      port: parseInt(env.VITE_PORT || '3000'),
+      port: parseInt(env.VITE_PORT || '5173'),
       strictPort: true,
+      hmr: {
+        protocol: 'ws',
+        host: 'localhost',
+      },
     },
     plugins: [
-      react(),
+      react({
+        jsxImportSource: '@emotion/react',
+        babel: {
+          plugins: ['@emotion/babel-plugin'],
+        },
+      }),
       mode === 'development' &&
       componentTagger(),
     ].filter(Boolean),
     resolve: {
       alias: {
         "@": path.resolve(__dirname, "./src"),
+        'use-sync-external-store': path.resolve(__dirname, 'node_modules/use-sync-external-store'),
+        'bn.js': path.resolve(__dirname, 'node_modules/bn.js/lib/bn.js'),
       },
+      dedupe: ['react', 'react-dom', 'use-sync-external-store', 'bn.js'],
+      mainFields: ['module', 'jsnext:main', 'jsnext', 'main'],
     },
     build: {
       outDir: 'dist',
-      sourcemap: mode === 'development',
+      sourcemap: true,
+      commonjsOptions: {
+        transformMixedEsModules: true,
+        include: [/bn\.js/, /node_modules/],
+      },
       rollupOptions: {
         output: {
           manualChunks: {
@@ -61,24 +78,39 @@ export default defineConfig(({ mode }) => {
               '@radix-ui/react-tooltip',
             ],
             'charts-vendor': ['recharts', 'd3-scale', 'd3-shape', 'd3-path'],
+            'crypto-vendor': ['bn.js', 'bignumber.js', 'ethers'],
           },
         },
       },
       chunkSizeWarningLimit: 2000,
-      minify: mode === 'production' ? 'terser' : false,
+      minify: 'terser',
       terserOptions: {
         compress: {
-          drop_console: mode === 'production',
-          drop_debugger: mode === 'production',
+          drop_console: false,
+          drop_debugger: false,
         },
       },
     },
     optimizeDeps: {
-      include: ['react', 'react-dom', 'react-router-dom'],
+      include: [
+        'react',
+        'react-dom',
+        'react-router-dom',
+        '@emotion/react',
+        '@emotion/styled',
+        'hoist-non-react-statics',
+        'use-sync-external-store',
+        'bn.js',
+        'bignumber.js',
+        'ethers',
+      ],
       exclude: ['@thirdweb-dev/react', '@thirdweb-dev/sdk'],
-    },
-    define: {
-      'process.env.NODE_ENV': JSON.stringify(mode),
+      esbuildOptions: {
+        target: 'es2020',
+        supported: { 
+          bigint: true 
+        },
+      },
     },
   };
 });
