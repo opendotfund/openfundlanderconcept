@@ -69,11 +69,14 @@ const Navbar = () => {
       <Link to="/trade" className={`text-lg font-medium ${location.pathname === '/trade' ? 'text-primary' : 'text-muted-foreground hover:text-primary'}`}>
         Trade
       </Link>
-      <Link to="/funds" className={`text-lg font-medium ${location.pathname === '/funds' ? 'text-primary' : 'text-muted-foreground hover:text-primary'}`}>
-        Funds
+      <Link to="/explore-funds" className={`text-lg font-medium ${location.pathname === '/explore-funds' ? 'text-primary' : 'text-muted-foreground hover:text-primary'}`}>
+        Explore Funds
       </Link>
-      <Link to="/about" className={`text-lg font-medium ${location.pathname === '/about' ? 'text-primary' : 'text-muted-foreground hover:text-primary'}`}>
-        About
+      <Link to="/fund" className={`text-lg font-medium ${location.pathname === '/fund' ? 'text-primary' : 'text-muted-foreground hover:text-primary'}`}>
+        Start a Fund
+      </Link>
+      <Link to="/my-assets" className={`text-lg font-medium ${location.pathname === '/my-assets' ? 'text-primary' : 'text-muted-foreground hover:text-primary'}`}>
+        My Assets
       </Link>
       
       {connectionStatus === "connected" && address ? (
@@ -161,18 +164,25 @@ const Navbar = () => {
             Trade
           </Link>
           <Link 
-            to="/funds" 
-            className={`text-xl font-medium ${location.pathname === '/funds' ? 'text-primary' : 'text-muted-foreground'}`}
+            to="/explore-funds" 
+            className={`text-xl font-medium ${location.pathname === '/explore-funds' ? 'text-primary' : 'text-muted-foreground'}`}
             onClick={() => setIsOpen(false)}
           >
-            Funds
+            Explore Funds
           </Link>
           <Link 
-            to="/about" 
-            className={`text-xl font-medium ${location.pathname === '/about' ? 'text-primary' : 'text-muted-foreground'}`}
+            to="/fund" 
+            className={`text-xl font-medium ${location.pathname === '/fund' ? 'text-primary' : 'text-muted-foreground'}`}
             onClick={() => setIsOpen(false)}
           >
-            About
+            Start a Fund
+          </Link>
+          <Link 
+            to="/my-assets" 
+            className={`text-xl font-medium ${location.pathname === '/my-assets' ? 'text-primary' : 'text-muted-foreground'}`}
+            onClick={() => setIsOpen(false)}
+          >
+            My Assets
           </Link>
           
           {connectionStatus === "connected" && address ? (
