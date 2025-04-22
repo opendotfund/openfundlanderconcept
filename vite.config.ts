@@ -17,7 +17,17 @@ export default defineConfig(({ mode }) => {
       },
       global: 'globalThis',
     },
-    plugins: [react()],
+    plugins: [
+      react({
+        jsxRuntime: 'automatic',
+        jsxImportSource: 'react',
+        babel: {
+          plugins: [
+            ['@babel/plugin-transform-react-jsx', { runtime: 'automatic' }]
+          ]
+        }
+      })
+    ],
     resolve: {
       alias: {
         "@": path.resolve(__dirname, "./src"),
