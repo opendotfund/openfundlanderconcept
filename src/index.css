@@ -1,4 +1,3 @@
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -289,6 +288,44 @@
     }
     to {
       opacity: 1;
+    }
+  }
+
+  /* Mobile-first container */
+  .container {
+    @apply w-full px-4 mx-auto;
+    min-width: 320px;
+    max-width: 100vw;
+    overflow-x: hidden;
+  }
+  
+  @screen sm {
+    .container {
+      max-width: 640px;
+      padding-left: 1rem;
+      padding-right: 1rem;
+    }
+  }
+  
+  @screen md {
+    .container {
+      max-width: 768px;
+      padding-left: 2rem;
+      padding-right: 2rem;
+    }
+  }
+  
+  @screen lg {
+    .container {
+      max-width: 1024px;
+      padding-left: 3rem;
+      padding-right: 3rem;
+    }
+  }
+  
+  @screen xl {
+    .container {
+      max-width: 1280px;
     }
   }
 }

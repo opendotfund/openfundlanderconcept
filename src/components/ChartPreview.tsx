@@ -66,8 +66,8 @@ const ChartPreview = () => {
   const isMobile = useIsMobile();
 
   return (
-    <Card className="bg-card border-primary/20 overflow-hidden h-[200px] md:h-[320px]">
-      <div className="p-2 md:p-4 h-full">
+    <Card className="bg-card border-primary/20 overflow-hidden h-[200px] md:h-[320px] w-full">
+      <div className="p-2 md:p-4 h-full w-full">
         <div className="flex justify-between items-center mb-1 md:mb-2">
           <div className="flex items-center">
             <div className="h-2 w-2 md:h-3 md:w-3 rounded-full bg-primary mr-1 md:mr-2"></div>
@@ -75,60 +75,62 @@ const ChartPreview = () => {
           </div>
           <span className="text-primary text-xs md:text-base">+4.8%</span>
         </div>
-        <ResponsiveContainer width="100%" height="90%">
-          <AreaChart data={data} margin={isMobile ? {
-            top: 5,
-            right: 5,
-            left: 0,
-            bottom: 5
-          } : {
-            top: 5,
-            right: 20,
-            left: 0,
-            bottom: 25
-          }}>
-            <defs>
-              <linearGradient id="colorPrice" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="var(--color-primary)" stopOpacity={0.8} />
-                <stop offset="95%" stopColor="var(--color-primary)" stopOpacity={0} />
-              </linearGradient>
-            </defs>
-            <XAxis 
-              dataKey="date" 
-              tick={{
-                fill: 'var(--color-text-subdued)',
-                fontSize: isMobile ? 8 : 11
-              }} 
-              dy={isMobile ? 3 : 15} 
-              height={isMobile ? 20 : 40} 
-              tickMargin={isMobile ? 2 : 8} 
-              interval={isMobile ? 3 : 1} 
-            />
-            <YAxis 
-              tick={{
-                fill: 'var(--color-text-subdued)',
-                fontSize: isMobile ? 8 : 12
-              }} 
-              tickFormatter={value => `$${value / 1000}k`} 
-              width={isMobile ? 35 : 50} 
-              tickCount={isMobile ? 4 : 6} 
-              domain={[540000, 575000]} 
-            />
-            <CartesianGrid 
-              strokeDasharray="3 3" 
-              stroke="var(--color-border)" 
-              vertical={!isMobile}
-            />
-            <Tooltip content={<CustomTooltip />} />
-            <Area 
-              type="monotone" 
-              dataKey="price" 
-              stroke="var(--color-primary)" 
-              fillOpacity={1} 
-              fill="url(#colorPrice)" 
-            />
-          </AreaChart>
-        </ResponsiveContainer>
+        <div className="w-full h-[85%] md:h-[90%]">
+          <ResponsiveContainer width="100%" height="100%">
+            <AreaChart data={data} margin={isMobile ? {
+              top: 5,
+              right: 0,
+              left: 0,
+              bottom: 5
+            } : {
+              top: 5,
+              right: 20,
+              left: 0,
+              bottom: 25
+            }}>
+              <defs>
+                <linearGradient id="colorPrice" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="5%" stopColor="var(--color-primary)" stopOpacity={0.8} />
+                  <stop offset="95%" stopColor="var(--color-primary)" stopOpacity={0} />
+                </linearGradient>
+              </defs>
+              <XAxis 
+                dataKey="date" 
+                tick={{
+                  fill: 'var(--color-text-subdued)',
+                  fontSize: isMobile ? 8 : 11
+                }} 
+                dy={isMobile ? 3 : 15} 
+                height={isMobile ? 20 : 40} 
+                tickMargin={isMobile ? 2 : 8} 
+                interval={isMobile ? 3 : 1} 
+              />
+              <YAxis 
+                tick={{
+                  fill: 'var(--color-text-subdued)',
+                  fontSize: isMobile ? 8 : 12
+                }} 
+                tickFormatter={value => `$${value / 1000}k`} 
+                width={isMobile ? 35 : 50} 
+                tickCount={isMobile ? 4 : 6} 
+                domain={[540000, 575000]} 
+              />
+              <CartesianGrid 
+                strokeDasharray="3 3" 
+                stroke="var(--color-border)" 
+                vertical={!isMobile}
+              />
+              <Tooltip content={<CustomTooltip />} />
+              <Area 
+                type="monotone" 
+                dataKey="price" 
+                stroke="var(--color-primary)" 
+                fillOpacity={1} 
+                fill="url(#colorPrice)" 
+              />
+            </AreaChart>
+          </ResponsiveContainer>
+        </div>
       </div>
     </Card>
   );
