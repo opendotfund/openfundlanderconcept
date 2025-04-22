@@ -8,7 +8,13 @@ export default defineConfig(({ mode }) => {
     define: {
       'process.env.NODE_ENV': JSON.stringify(mode),
       'process.env.VITE_THIRDWEB_CLIENT_ID': JSON.stringify(env.VITE_THIRDWEB_CLIENT_ID),
-      'process.env': {},
+      'process.env': {
+        NODE_ENV: JSON.stringify(mode),
+        VITE_THIRDWEB_CLIENT_ID: JSON.stringify(env.VITE_THIRDWEB_CLIENT_ID),
+        VITE_SUPABASE_URL: JSON.stringify(env.VITE_SUPABASE_URL),
+        VITE_SUPABASE_ANON_KEY: JSON.stringify(env.VITE_SUPABASE_ANON_KEY),
+        VITE_API_URL: JSON.stringify(env.VITE_API_URL)
+      },
       global: 'globalThis',
     },
     plugins: [react()],
@@ -20,17 +26,17 @@ export default defineConfig(({ mode }) => {
         "assert": "assert",
         "http": "stream-http",
         "https": "https-browserify",
-        "os": "os-browserify",
+        "os": "os-browserify/browser",
         "url": "url",
         "buffer": "buffer",
-        "process": path.resolve(__dirname, "node_modules/process/browser"),
+        "process": "process/browser",
         "zlib": "browserify-zlib",
         "path": "path-browserify",
         "util": "util",
-        "fs": path.resolve(__dirname, "node_modules/browserify-fs"),
-        "net": path.resolve(__dirname, "node_modules/stream-browserify"),
-        "tls": path.resolve(__dirname, "node_modules/tls-browserify"),
-        "vm": path.resolve(__dirname, "node_modules/vm-browserify")
+        "fs": "browserify-fs",
+        "net": "stream-browserify",
+        "tls": path.resolve(__dirname, "src/polyfills/minimal-tls.js"),
+        "vm": path.resolve(__dirname, "src/polyfills/vm-polyfill.js")
       },
     },
     build: {
@@ -40,23 +46,7 @@ export default defineConfig(({ mode }) => {
       },
       rollupOptions: {
         external: [
-          "@rollup/rollup-linux-x64-gnu",
-          "crypto",
-          "stream",
-          "assert",
-          "http",
-          "https",
-          "os",
-          "url",
-          "buffer",
-          "process",
-          "zlib",
-          "path",
-          "util",
-          "fs",
-          "net",
-          "tls",
-          "vm"
+          "@rollup/rollup-linux-x64-gnu"
         ],
         output: {
           manualChunks: {
@@ -70,6 +60,10 @@ export default defineConfig(({ mode }) => {
       esbuildOptions: {
         define: {
           global: 'globalThis'
+        },
+        target: 'es2020',
+        supported: {
+          'top-level-await': true
         }
       },
       include: [
@@ -91,9 +85,10 @@ export default defineConfig(({ mode }) => {
         "buffer",
         "browserify-zlib",
         "path-browserify",
-        "util"
+        "util",
+        "browserify-fs"
       ],
-      exclude: ["@rollup/rollup-linux-x64-gnu", "process/browser"]
+      exclude: ["@rollup/rollup-linux-x64-gnu"]
     },
     server: {
       port: parseInt(env.PORT || '3000'),
