@@ -23,6 +23,7 @@ export default defineConfig(({ mode }) => {
         util: "util",
         zlib: "browserify-zlib",
         https: "agent-base",
+        crypto: "crypto-browserify",
       },
     },
     build: {
@@ -30,7 +31,7 @@ export default defineConfig(({ mode }) => {
         transformMixedEsModules: true,
       },
       rollupOptions: {
-        external: ["stream", "http", "https", "crypto"],
+        external: ["stream", "http", "https"],
         output: {
           manualChunks: {
             'react-vendor': ['react', 'react-dom', 'react-router-dom'],
@@ -85,9 +86,10 @@ export default defineConfig(({ mode }) => {
         "@thirdweb-dev/sdk",
         "process/browser",
         "util",
-        "stream-browserify"
+        "stream-browserify",
+        "crypto-browserify"
       ],
-      exclude: ["stream", "http", "https", "crypto"],
+      exclude: ["stream", "http", "https"],
       esbuildOptions: {
         define: {
           global: 'globalThis'
@@ -97,6 +99,9 @@ export default defineConfig(({ mode }) => {
     server: {
       port: parseInt(env.PORT || '3000'),
       host: true,
+      headers: {
+        'Content-Security-Policy': "default-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self' https://*.thirdweb.com https://*.thirdweb.dev https://*.openfund.io https://*.lovable.app;"
+      }
     },
   };
 });
