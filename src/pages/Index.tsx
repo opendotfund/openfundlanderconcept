@@ -95,28 +95,33 @@ const Index = () => {
                       name: "Crypto Momentum",
                       return: "+47.3%",
                       aum: "$3.2M",
-                      traders: 1876
+                      traders: 1876,
+                      link: "/trade?view=chart&asset=BTC"
                     }, {
                       name: "Commodity Futures",
                       return: "+31.8%",
                       aum: "$5.7M",
-                      traders: 2341
+                      traders: 2341,
+                      link: "/trade?view=chart&asset=GC"
                     }, {
                       name: "Global Stock Index",
                       return: "+22.5%",
                       aum: "$8.1M",
-                      traders: 3502
+                      traders: 3502,
+                      link: "/trade?view=chart&asset=AAPL"
                     }].map((fund, idx) => (
-                      <div key={idx} className="flex items-center justify-between p-3 bg-card rounded-lg border border-border min-w-[280px]">
-                        <div>
-                          <div className="font-medium">{fund.name}</div>
-                          <div className="text-xs text-muted-foreground">{fund.traders} traders</div>
+                      <Link key={idx} to={fund.link} className="block">
+                        <div className="flex items-center justify-between p-2 sm:p-3 bg-card rounded-lg border border-border min-w-[240px] sm:min-w-[280px] hover:border-primary transition-colors">
+                          <div>
+                            <div className="font-medium text-sm sm:text-base">{fund.name}</div>
+                            <div className="text-xs text-muted-foreground">{fund.traders} traders</div>
+                          </div>
+                          <div className="text-right">
+                            <div className="text-primary font-bold text-sm sm:text-base">{fund.return}</div>
+                            <div className="text-xs text-muted-foreground">AUM: {fund.aum}</div>
+                          </div>
                         </div>
-                        <div className="text-right">
-                          <div className="text-primary font-bold">{fund.return}</div>
-                          <div className="text-xs text-muted-foreground">AUM: {fund.aum}</div>
-                        </div>
-                      </div>
+                      </Link>
                     ))}
                   </div>
                 </div>

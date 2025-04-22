@@ -13,7 +13,7 @@ const Features = () => {
       icon: <BarChart3 className="w-12 h-12 text-primary" />,
       title: "Commodities",
       description: "Trade gold, silver, oil, and more with competitive spreads and high liquidity.",
-      link: "/trade?asset=gold"
+      link: "/trade?view=chart&asset=GC"
     },
     {
       icon: <TrendingUp className="w-12 h-12 text-primary" />,
