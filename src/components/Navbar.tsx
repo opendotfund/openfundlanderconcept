@@ -26,6 +26,11 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback } from './ui/avatar';
 import { useAuth } from './AuthContext';
+import { useAddress, useConnectionStatus, useDisconnect, useWallet } from '@thirdweb-dev/react';
+import WalletConnectWrapper from './WalletConnectWrapper';
+import AccountModal from './AccountModal';
+
+// Extend Window interface to include web3 wallet types
 declare global {
   interface Window {
     ethereum?: any;
