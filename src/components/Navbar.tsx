@@ -141,7 +141,9 @@ const Navbar = () => {
     <nav className={`lg:hidden fixed inset-0 bg-background z-50 transform ${isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'} transition-transform duration-300 ease-in-out`}>
       <div className="flex flex-col h-full p-6 bg-background w-full">
         <div className="flex justify-between items-center mb-8">
-          <Logo />
+          <Link to="/" onClick={() => setIsMobileMenuOpen(false)}>
+            <Logo />
+          </Link>
           <Button variant="ghost" size="icon" onClick={() => setIsMobileMenuOpen(false)}>
             <X className="h-6 w-6" />
           </Button>
@@ -256,25 +258,37 @@ const Navbar = () => {
   );
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b lg:bg-background/95 lg:backdrop-blur lg:supports-[backdrop-filter]:bg-background/60 bg-background">
+    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-16 items-center">
-        <Logo />
+        <Link to="/" className="mr-8 transition-opacity hover:opacity-80">
+          <Logo />
+        </Link>
+        
         <div className="flex-1" />
+
         <DesktopNav />
+
+        {/* Mobile menu button */}
         <Button
           variant="ghost"
-          size="icon"
           className="lg:hidden"
+          size="icon"
           onClick={() => setIsMobileMenuOpen(true)}
         >
           <Menu className="h-6 w-6" />
         </Button>
+
+        {/* Mobile menu */}
         <MobileNav />
+
+        {/* Account Modal */}
+        <AccountModal
+          isOpen={isAccountModalOpen}
+          onClose={() => setIsAccountModalOpen(false)}
+          address={address}
+          onDisconnect={handleDisconnect}
+        />
       </div>
-      <AccountModal 
-        isOpen={isAccountModalOpen} 
-        onClose={() => setIsAccountModalOpen(false)} 
-      />
     </header>
   );
 };
