@@ -39,7 +39,7 @@ const Index = () => {
               </div>
               
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12 px-4 sm:px-0">
-                <div className="bg-background p-6 rounded-xl border border-border hover:border-primary transition-colors duration-300">
+                <a href="https://sol.openfund.online" target="_blank" rel="noopener noreferrer" className="bg-background p-6 rounded-xl border border-border hover:border-primary transition-colors duration-300">
                   <div className="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center mb-4">
                     <Users className="text-primary" size={24} />
                   </div>
@@ -49,9 +49,9 @@ const Index = () => {
                     <span className="text-sm text-muted-foreground">Committed Funds</span>
                     <span className="text-primary font-bold">324</span>
                   </div>
-                </div>
+                </a>
                 
-                <div className="bg-background p-6 rounded-xl border border-border hover:border-primary transition-colors duration-300">
+                <a href="https://sol.openfund.online" target="_blank" rel="noopener noreferrer" className="bg-background p-6 rounded-xl border border-border hover:border-primary transition-colors duration-300">
                   <div className="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center mb-4">
                     <TrendingUp className="text-primary" size={24} />
                   </div>
@@ -61,9 +61,9 @@ const Index = () => {
                     <span className="text-sm text-muted-foreground">Average ROI</span>
                     <span className="text-primary font-bold">+17.7%</span>
                   </div>
-                </div>
+                </a>
                 
-                <div className="bg-background p-6 rounded-xl border border-border hover:border-primary transition-colors duration-300">
+                <a href="https://sol.openfund.online" target="_blank" rel="noopener noreferrer" className="bg-background p-6 rounded-xl border border-border hover:border-primary transition-colors duration-300">
                   <div className="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center mb-4">
                     <Shield className="text-primary" size={24} />
                   </div>
@@ -73,7 +73,7 @@ const Index = () => {
                     <span className="text-sm text-muted-foreground">Committed Total Value Locked</span>
                     <span className="text-primary font-bold">$3.75M</span>
                   </div>
-                </div>
+                </a>
               </div>
               
               <div className="bg-background p-6 sm:p-8 rounded-xl border border-border relative overflow-hidden mx-4 sm:mx-0">

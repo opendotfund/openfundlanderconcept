@@ -8,24 +8,32 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { useAuth } from './AuthContext';
 
 const HowItWorks = () => {
+  const { user } = useAuth();
+  const isAuthenticated = !!user;
+  
   const steps = [{
     icon: <Wallet className="w-10 h-10 text-primary transition-colors duration-300" />,
     title: "Connect Wallet",
-    description: "Connect your crypto wallet for immediate decentralized access to DeFi funds and tokenized assets."
+    description: "Connect your crypto wallet for immediate decentralized access to DeFi funds and tokenized assets.",
+    link: "/auth?tab=connect"
   }, {
     icon: <ShieldCheck className="w-10 h-10 text-primary transition-colors duration-300" />,
     title: "Optional KYC",
-    description: "Verify your identity to unlock TradFi funds, partner funds, fund creation and bank transfer deposits."
+    description: "Verify your identity to unlock TradFi funds, partner funds, fund creation and bank transfer deposits.",
+    link: isAuthenticated ? "/account?tab=kyc" : "/auth?tab=login"
   }, {
     icon: <BarChart2 className="w-10 h-10 text-primary transition-colors duration-300" />,
     title: "Choose Assets",
-    description: "Select from DeFi funds, tokenized stocks, and commodities based on your verification level."
+    description: "Select from DeFi funds, tokenized stocks, and commodities based on your verification level.",
+    link: "/trade?view=chart"
   }, {
     icon: <ArrowUpCircle className="w-10 h-10 text-primary transition-colors duration-300" />,
     title: "Start Trading",
-    description: "Execute trades with our intuitive platform and monitor performance in real-time."
+    description: "Execute trades with our intuitive platform and monitor performance in real-time.",
+    link: "/trade"
   }];
   return <section className="py-20 bg-card transition-colors duration-300">
       <div className="container mx-auto px-4">
@@ -46,11 +54,13 @@ const HowItWorks = () => {
               
               {index < steps.length - 1 && <div className="hidden lg:block absolute top-10 left-full w-full h-0.5 bg-primary/30 -z-10 transition-colors duration-300"></div>}
               
-              <div className="card-gradient p-6 rounded-xl border border-border hover:border-primary h-full transition-all duration-300">
-                <div className="mb-4 transition-colors duration-300">{step.icon}</div>
-                <h3 className="text-xl font-bold mb-3 transition-colors duration-300">{step.title}</h3>
-                <p className="text-muted-foreground transition-colors duration-300">{step.description}</p>
-              </div>
+              <Link to={step.link} className="block">
+                <div className="card-gradient p-6 rounded-xl border border-border hover:border-primary h-full transition-all duration-300">
+                  <div className="mb-4 transition-colors duration-300">{step.icon}</div>
+                  <h3 className="text-xl font-bold mb-3 transition-colors duration-300">{step.title}</h3>
+                  <p className="text-muted-foreground transition-colors duration-300">{step.description}</p>
+                </div>
+              </Link>
             </div>)}
         </div>
         
@@ -79,7 +89,7 @@ const HowItWorks = () => {
                 </li>
               </ul>
               <Button variant="outline" className="border-primary text-primary hover:bg-primary/10 mt-6 transition-colors duration-300 block mx-auto" asChild>
-                <Link to="/trade">
+                <Link to="/auth?tab=connect">
                   Connect Wallet
                 </Link>
               </Button>
@@ -117,8 +127,8 @@ const HowItWorks = () => {
                 </li>
               </ul>
               <Button className="bg-primary hover:bg-primary/90 text-primary-foreground mt-6 transition-colors duration-300 block mx-auto" asChild>
-                <Link to="/account">
-                  Complete KYC
+                <Link to={isAuthenticated ? "/account?tab=kyc" : "/auth?tab=login"}>
+                  {isAuthenticated ? "Complete KYC" : "Sign In to Verify"}
                 </Link>
               </Button>
             </div>
