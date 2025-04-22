@@ -7,7 +7,7 @@ export default defineConfig(({ mode }) => {
   const isLovable = process.env.LOVABLE === 'true';
   
   return {
-    base: isLovable ? '/' : '',
+    base: '/',
     define: {
       'process.env.NODE_ENV': JSON.stringify(mode),
       'process.env.VITE_THIRDWEB_CLIENT_ID': JSON.stringify(env.VITE_THIRDWEB_CLIENT_ID),
