@@ -285,8 +285,6 @@ const Navbar = () => {
         <AccountModal
           isOpen={isAccountModalOpen}
           onClose={() => setIsAccountModalOpen(false)}
-          address={address}
-          onDisconnect={handleDisconnect}
         />
       </div>
     </header>
