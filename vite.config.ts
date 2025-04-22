@@ -28,7 +28,7 @@ export default defineConfig(({ mode }) => {
         include: [/node_modules/],
       },
       rollupOptions: {
-        external: ["stream", "http", "https", "crypto"],
+        external: ["stream", "http", "https", "crypto", "@rollup/rollup-linux-x64-gnu"],
         output: {
           manualChunks: {
             'react-vendor': ['react', 'react-dom', 'react-router-dom'],
@@ -81,7 +81,7 @@ export default defineConfig(({ mode }) => {
         "util",
         "stream-browserify"
       ],
-      exclude: ["stream", "http", "https", "crypto"],
+      exclude: ["stream", "http", "https", "crypto", "@rollup/rollup-linux-x64-gnu"],
       esbuildOptions: {
         define: {
           global: 'globalThis'
