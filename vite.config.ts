@@ -4,10 +4,7 @@ import path from "path";
 
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '');
-  const isLovable = process.env.LOVABLE === 'true';
-  
   return {
-    base: '/',
     define: {
       'process.env.NODE_ENV': JSON.stringify(mode),
       'process.env.VITE_THIRDWEB_CLIENT_ID': JSON.stringify(env.VITE_THIRDWEB_CLIENT_ID),
@@ -22,21 +19,7 @@ export default defineConfig(({ mode }) => {
         stream: "stream-browserify",
         util: "util",
         zlib: "browserify-zlib",
-        https: "https-browserify",
-        crypto: "crypto-browserify",
-        buffer: "buffer",
-        assert: "assert",
-        http: "stream-http",
-        os: "os-browserify",
-        url: "url",
-        querystring: "querystring-es3",
-        punycode: "punycode",
-        string_decoder: "string_decoder",
-        path: "path-browserify",
-        events: "events",
-        timers: "timers-browserify",
-        tty: "tty-browserify",
-        "crypto-browserify": "crypto-browserify",
+        https: "agent-base",
       },
     },
     build: {
@@ -44,7 +27,7 @@ export default defineConfig(({ mode }) => {
         transformMixedEsModules: true,
       },
       rollupOptions: {
-        external: ["stream", "http", "https"],
+        external: ["stream", "http", "https", "crypto"],
         output: {
           manualChunks: {
             'react-vendor': ['react', 'react-dom', 'react-router-dom'],
@@ -82,10 +65,6 @@ export default defineConfig(({ mode }) => {
           },
         },
       },
-      assetsDir: 'assets',
-      copyPublicDir: true,
-      outDir: 'dist',
-      emptyOutDir: true,
     },
     optimizeDeps: {
       include: [
@@ -99,22 +78,9 @@ export default defineConfig(({ mode }) => {
         "@thirdweb-dev/sdk",
         "process/browser",
         "util",
-        "stream-browserify",
-        "crypto-browserify",
-        "buffer",
-        "assert",
-        "stream-http",
-        "os-browserify",
-        "url",
-        "querystring-es3",
-        "punycode",
-        "string_decoder",
-        "path-browserify",
-        "events",
-        "timers-browserify",
-        "tty-browserify"
+        "stream-browserify"
       ],
-      exclude: ["stream", "http", "https"],
+      exclude: ["stream", "http", "https", "crypto"],
       esbuildOptions: {
         define: {
           global: 'globalThis'
@@ -124,9 +90,6 @@ export default defineConfig(({ mode }) => {
     server: {
       port: parseInt(env.PORT || '3000'),
       host: true,
-      headers: {
-        'Content-Security-Policy': "default-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline' https://*.thirdweb.com https://*.thirdweb.dev blob:; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://* blob:; font-src 'self' data:; connect-src 'self' https://*.thirdweb.com https://*.thirdweb.dev https://*.openfund.io https://*.lovable.app https://*.solana.com https://*.solana.rpcpool.com wss://*.thirdweb.com wss://*.thirdweb.dev https://* ws://localhost:* wss://localhost:*; worker-src 'self' blob:; frame-src 'self' https://*.thirdweb.com https://*.thirdweb.dev;"
-      }
     },
   };
 });

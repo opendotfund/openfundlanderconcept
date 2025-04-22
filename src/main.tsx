@@ -20,6 +20,18 @@ import {
 } from '@thirdweb-dev/react'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
+// Extend Window interface to include Phantom
+declare global {
+  interface Window {
+    phantom?: {
+      solana?: {
+        connect: () => Promise<any>;
+        isPhantom: boolean;
+      };
+    };
+  }
+}
+
 // Create a client
 const queryClient = new QueryClient({
   defaultOptions: {
