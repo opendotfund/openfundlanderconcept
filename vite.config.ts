@@ -20,17 +20,15 @@ export default defineConfig(({ mode }) => {
         util: "util",
         zlib: "browserify-zlib",
         https: "agent-base",
-        vm: "false",
       },
     },
     build: {
       commonjsOptions: {
         transformMixedEsModules: true,
         include: [/node_modules/],
-        exclude: [/@rollup\/rollup-linux-x64-gnu/],
       },
       rollupOptions: {
-        external: ["stream", "http", "https", "crypto", "@rollup/rollup-linux-x64-gnu", "vm"],
+        external: ["stream", "http", "https", "crypto"],
         output: {
           manualChunks: {
             'react-vendor': ['react', 'react-dom', 'react-router-dom'],
@@ -83,7 +81,7 @@ export default defineConfig(({ mode }) => {
         "util",
         "stream-browserify"
       ],
-      exclude: ["stream", "http", "https", "crypto", "@rollup/rollup-linux-x64-gnu", "vm"],
+      exclude: ["stream", "http", "https", "crypto"],
       esbuildOptions: {
         define: {
           global: 'globalThis'
