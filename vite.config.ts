@@ -15,13 +15,11 @@ export default defineConfig(({ mode }) => {
     resolve: {
       alias: {
         "@": path.resolve(__dirname, "./src"),
-        process: "process/browser",
         stream: "stream-browserify",
-        util: "util",
-        zlib: "browserify-zlib",
-        https: "agent-base",
-        vm: "false",
         crypto: "crypto-browserify",
+        util: "util",
+        buffer: "buffer",
+        process: "process/browser",
       },
     },
     build: {
@@ -30,7 +28,7 @@ export default defineConfig(({ mode }) => {
         include: [/node_modules/],
       },
       rollupOptions: {
-        external: ["stream", "http", "https", "crypto", "@rollup/rollup-linux-x64-gnu"],
+        external: ["@rollup/rollup-linux-x64-gnu"],
         output: {
           manualChunks: {
             'react-vendor': ['react', 'react-dom', 'react-router-dom'],
@@ -70,6 +68,11 @@ export default defineConfig(({ mode }) => {
       },
     },
     optimizeDeps: {
+      esbuildOptions: {
+        define: {
+          global: 'globalThis'
+        }
+      },
       include: [
         "react",
         "react-dom",
@@ -79,17 +82,10 @@ export default defineConfig(({ mode }) => {
         "@radix-ui/react-dialog",
         "@thirdweb-dev/react",
         "@thirdweb-dev/sdk",
-        "process/browser",
-        "util",
-        "stream-browserify",
-        "crypto-browserify"
+        "buffer",
+        "process",
       ],
-      exclude: ["stream", "http", "https", "crypto", "@rollup/rollup-linux-x64-gnu"],
-      esbuildOptions: {
-        define: {
-          global: 'globalThis'
-        }
-      }
+      exclude: ["@rollup/rollup-linux-x64-gnu"]
     },
     server: {
       port: parseInt(env.PORT || '3000'),
@@ -98,7 +94,7 @@ export default defineConfig(({ mode }) => {
         'Access-Control-Allow-Origin': '*',
         'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
         'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-      },
-    },
+      }
+    }
   };
 });
