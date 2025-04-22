@@ -100,7 +100,7 @@ export default defineConfig(({ mode }) => {
       port: parseInt(env.PORT || '3000'),
       host: true,
       headers: {
-        'Content-Security-Policy': "default-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline' blob:; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self' https://*.thirdweb.com https://*.thirdweb.dev https://*.openfund.io https://*.lovable.app https://*.solana.com https://*.solana.rpcpool.com; worker-src 'self' blob:; frame-src 'self' https://*.thirdweb.com https://*.thirdweb.dev;"
+        'Content-Security-Policy': "default-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline' https://*.thirdweb.com https://*.thirdweb.dev blob:; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://* blob:; font-src 'self' data:; connect-src 'self' https://*.thirdweb.com https://*.thirdweb.dev https://*.openfund.io https://*.lovable.app https://*.solana.com https://*.solana.rpcpool.com wss://*.thirdweb.com wss://*.thirdweb.dev https://* ws://localhost:* wss://localhost:*; worker-src 'self' blob:; frame-src 'self' https://*.thirdweb.com https://*.thirdweb.dev;"
       }
     },
   };
