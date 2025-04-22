@@ -21,6 +21,7 @@ export default defineConfig(({ mode }) => {
         zlib: "browserify-zlib",
         https: "agent-base",
         vm: "false",
+        crypto: "crypto-browserify",
       },
     },
     build: {
@@ -80,7 +81,8 @@ export default defineConfig(({ mode }) => {
         "@thirdweb-dev/sdk",
         "process/browser",
         "util",
-        "stream-browserify"
+        "stream-browserify",
+        "crypto-browserify"
       ],
       exclude: ["stream", "http", "https", "crypto", "@rollup/rollup-linux-x64-gnu"],
       esbuildOptions: {
