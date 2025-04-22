@@ -20,6 +20,7 @@ export default defineConfig(({ mode }) => {
         util: "util",
         zlib: "browserify-zlib",
         https: "agent-base",
+        vm: "false",
       },
     },
     build: {
