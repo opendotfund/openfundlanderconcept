@@ -5,6 +5,7 @@ import path from "path";
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '');
   return {
+    base: './',
     define: {
       'process.env.NODE_ENV': JSON.stringify(mode),
       'process.env.VITE_THIRDWEB_CLIENT_ID': JSON.stringify(env.VITE_THIRDWEB_CLIENT_ID),
@@ -65,6 +66,8 @@ export default defineConfig(({ mode }) => {
           },
         },
       },
+      assetsDir: 'assets',
+      copyPublicDir: true,
     },
     optimizeDeps: {
       include: [
