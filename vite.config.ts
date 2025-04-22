@@ -4,8 +4,10 @@ import path from "path";
 
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '');
+  const isLovable = process.env.LOVABLE === 'true';
+  
   return {
-    base: './',
+    base: isLovable ? '/preview-2fe30f4f--openfundlanderconcept.lovable.app/' : './',
     define: {
       'process.env.NODE_ENV': JSON.stringify(mode),
       'process.env.VITE_THIRDWEB_CLIENT_ID': JSON.stringify(env.VITE_THIRDWEB_CLIENT_ID),
