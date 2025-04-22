@@ -22,25 +22,6 @@ const Index = () => {
         <Navbar />
         <Hero />
         
-        {/* BRKA Chart Section - Hidden on mobile, shown below CTA on mobile */}
-        <section className="py-10 bg-background relative overflow-hidden hidden md:block">
-          <div className="container mx-auto px-4 sm:px-6 relative z-10 overflow-hidden">
-            <div className="max-w-5xl mx-auto">
-              <div className="text-center mb-6 px-4 sm:px-0">
-                <h2 className="text-2xl md:text-3xl font-bold mb-2">
-                  <span className="text-primary">Berkshire Hathaway</span> Performance
-                </h2>
-                <p className="text-muted-foreground">
-                  Track the performance of Berkshire Hathaway Class A shares in real-time.
-                </p>
-              </div>
-              <div className="w-full overflow-x-auto -mx-4 sm:mx-0 px-4 sm:px-0">
-                <ChartPreview />
-              </div>
-            </div>
-          </div>
-        </section>
-        
         <Features />
         <HowItWorks />
         
@@ -182,8 +163,8 @@ const Index = () => {
           <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-primary/5 rounded-full blur-3xl -z-0"></div>
         </section>
         
-        {/* BRKA Chart Section - Mobile only, shown below CTA */}
-        <section className="py-10 bg-background relative overflow-hidden md:hidden">
+        {/* BRKA Chart Section - Now shown below CTA for both mobile and desktop */}
+        <section className="py-10 bg-background relative overflow-hidden">
           <div className="container mx-auto px-4 sm:px-6 relative z-10 overflow-hidden">
             <div className="max-w-5xl mx-auto">
               <div className="text-center mb-6 px-4 sm:px-0">

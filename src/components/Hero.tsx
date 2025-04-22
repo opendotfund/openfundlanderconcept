@@ -64,7 +64,7 @@ const Hero = () => {
                 A <span className="text-primary">Modern Platform</span> for Global Investment
               </h1>
               <p className="text-lg md:text-xl text-muted-foreground mb-6 md:mb-8 max-w-xl mx-auto md:mx-0">
-                Access decentralized funds, trade with confidence, and earn rewards through our innovative platform.
+                Access decentralized funds, trade RWAs with confidence, and earn rewards through our innovative platform.
               </p>
               <div className="flex flex-col sm:flex-row justify-center md:justify-start gap-4 mb-8 md:mb-0">
                 <Button size="lg" className="text-base md:text-lg px-6 py-3 h-auto" asChild>
@@ -73,8 +73,8 @@ const Hero = () => {
                   </Link>
                 </Button>
                 <Button variant="outline" size="lg" className="text-base md:text-lg px-6 py-3 h-auto border-2" asChild>
-                  <Link to="/about">
-                    Learn More
+                  <Link to="/fund-manager?tab=create">
+                    Start a Fund
                   </Link>
                 </Button>
               </div>
